@@ -25,7 +25,11 @@
 
 อ้างอิงขั้นตอน: [GitHub Docs: Configuring a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site) และ [Creating a GitHub Pages site](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)
 
-ยังไม่ได้สร้าง repository หรือเผยแพร่เว็บไซต์ให้บัญชีใด ชุดนี้เป็นไฟล์พร้อมอัปโหลด
+Repository ของชุดนี้: [Title5656/study-garden](https://github.com/Title5656/study-garden)
+
+เว็บไซต์: [Study Garden](https://title5656.github.io/study-garden/)
+
+ตั้งค่า GitHub Pages ให้เผยแพร่จาก `main` ที่ `/(root)` แล้ว การ push ไฟล์ขึ้น `main` จะเริ่มการเผยแพร่เวอร์ชันใหม่อัตโนมัติ
 
 ## โครงสร้างไฟล์
 
