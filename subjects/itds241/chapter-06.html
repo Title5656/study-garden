@@ -7,10 +7,11 @@
       name="description"
       content="สรุปเตรียมสอบ ITDS241 บท 6–8 พร้อมกิจกรรมทีละขั้น Flashcards และ Quiz พร้อมเฉลย"
     />
-    <meta name="theme-color" content="#f8f7f3" />
+    <meta name="theme-color" content="#f5f5f7" />
     <title>บท 6 · JavaScript Essentials · Study Garden</title>
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../../assets/style.css" />
+    <link rel="stylesheet" href="../../assets/library.css" />
     <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
     <script defer src="../../assets/core.js"></script>
     <script defer src="../../assets/content.js"></script>
@@ -26,22 +27,10 @@
     <header class="site-header">
       <nav class="wrap nav" aria-label="เมนูหลัก">
         <a class="brand" href="../../index.html"
-          ><svg
-            class="brand-mark"
-            viewBox="0 0 40 40"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M20 34V17M20 25C7 25 7 15 7 15s12-1 13 10ZM20 19C20 8 33 6 33 6s2 14-13 13Z"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linejoin="round"
-            /></svg
-          >study garden<span class="accent">.</span></a
+          ><svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="3" y="3" width="11" height="11" rx="3" fill="currentColor"/><rect x="18" y="3" width="11" height="11" rx="3" fill="currentColor" opacity=".4"/><rect x="3" y="18" width="11" height="11" rx="3" fill="currentColor" opacity=".4"/><rect x="18" y="18" width="11" height="11" rx="3" fill="currentColor"/></svg>Study Garden</a
         >
         <div class="nav-links">
-          <a href="../../index.html#subjects">วิชาของฉัน</a
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
           ><a class="desktop-link" href="../../subjects/itds241/index.html"
             >บทเรียน</a
           >
@@ -63,7 +52,7 @@
     >
     <main id="main" class="wrap">
       <nav class="breadcrumb" aria-label="เส้นทาง">
-        <a href="../../index.html">วิชาของฉัน</a><span>/</span
+        <a href="../../index.html">วิชาทั้งหมด</a><span>/</span
         ><a href="index.html">ITDS241</a><span>/</span><span>บทที่ 6</span>
       </nav>
       <header class="chapter-hero">
@@ -73,7 +62,7 @@
         <div class="tags">
           <span class="pill lilac">เวลาอ่านโดยประมาณ 25–35 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
-          ><span class="tag" data-chapter-status="06">พร้อมให้เริ่มอ่าน</span>
+          ><span class="tag" data-chapter-status="06">ยังไม่ได้อ่าน</span>
         </div>
       </header>
       <div class="lesson-layout">
@@ -93,7 +82,6 @@
         </aside>
         <article class="lesson-content">
           <section class="lesson-section" id="big-picture">
-            <div class="section-kicker">01 / STUDY NOTES</div>
             <h2>01 · JavaScript อยู่ตรงไหน?</h2>
             <p>
               นึกถึงเว็บเป็นโต๊ะอ่านหนังสือ:
@@ -125,7 +113,7 @@
                   <tr>
                     <td>CSS</td>
                     <td>รูปแบบการแสดงผล</td>
-                    <td>สีม่วงอ่อนและเลย์เอาต์มือถือ</td>
+                    <td>สี ฟอนต์ และเลย์เอาต์มือถือ</td>
                   </tr>
                   <tr>
                     <td>JavaScript</td>
@@ -135,7 +123,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>&lt;!-- เรียกไฟล์ภายนอก และรอให้ HTML ถูก parse ก่อนทำงาน --&gt;
 &lt;script defer src=&quot;assets/app.js&quot;&gt;&lt;/script&gt;</code></pre>
             <p>
@@ -150,7 +138,6 @@
             </div>
           </section>
           <section class="lesson-section" id="variables">
-            <div class="section-kicker">02 / STUDY NOTES</div>
             <h2>02 · ตัวแปรและชนิดข้อมูล</h2>
             <p>
               ตัวแปรคือชื่อที่เราใช้เรียกค่า
@@ -159,7 +146,7 @@
               <strong>กำหนดค่าเริ่มต้น</strong> คือทำทั้งสองอย่างพร้อมกัน
               เครื่องหมาย <code>=</code> จึงไม่ใช่การถามว่าเท่ากันหรือไม่
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>let points;             // ประกาศ: ค่าเริ่มต้นเป็น undefined
 points = 10;            // กำหนดค่า
 points += 5;            // ตอนนี้ 15
@@ -262,7 +249,7 @@ console.log(points);    // 15</code></pre>
             </div>
             <div class="reveal">
               <p>
-                <strong>ลองคิดก่อนเปิด</strong> · const bag = { count: 1 };
+                <strong>คำถาม</strong> · const bag = { count: 1 };
                 bag.count++; ผิดไหม?
               </p>
               <button
@@ -280,7 +267,6 @@ console.log(points);    // 15</code></pre>
             </div>
           </section>
           <section class="lesson-section" id="objects">
-            <div class="section-kicker">03 / STUDY NOTES</div>
             <h2>03 · Object และเครื่องมือพื้นฐาน</h2>
             <p>
               Object รวมข้อมูลที่เกี่ยวข้องไว้ด้วยกัน อ่าน property ด้วยจุด
@@ -288,7 +274,7 @@ console.log(points);    // 15</code></pre>
               ให้ตัวแปรอีกตัวจะคัดลอก
               <strong>การอ้างอิง</strong> ไม่ได้คัดลอกข้อมูลทั้งก้อน
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>const student = { name: &quot;Mint&quot;, points: 8 };
 const friend = student;
 friend.points = 10;
@@ -394,14 +380,13 @@ console.log(student[key]);   // &quot;Mint&quot;</code></pre>
                 </tbody>
               </table>
             </div>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>const scores = [4, 7, 9];
 scores.map(n =&gt; n * 2);              // [8, 14, 18]
 scores.filter(n =&gt; n &gt;= 7);          // [7, 9]
 scores.reduce((sum, n) =&gt; sum + n, 0); // 20</code></pre>
           </section>
           <section class="lesson-section" id="operators">
-            <div class="section-kicker">04 / STUDY NOTES</div>
             <h2>04 · เปรียบเทียบและตัดสินใจ</h2>
             <p>
               เริ่มจากแยก <code>=</code> (กำหนดค่า),
@@ -467,7 +452,7 @@ scores.reduce((sum, n) =&gt; sum + n, 0); // 20</code></pre>
               <code>false, 0, "", null, undefined, NaN</code> แต่
               <code>[]</code> และ <code>{}</code> เป็น truthy
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>const score = 72;
 let grade;
 if (score &gt;= 80) {
@@ -489,7 +474,7 @@ const passed = score &gt;= 50 ? &quot;ผ่าน&quot; : &quot;ทบทวน
             </p>
             <div class="reveal">
               <p>
-                <strong>ลองคิดก่อนเปิด</strong> · let x = 2; const y = x++;
+                <strong>คำถาม</strong> · let x = 2; const y = x++;
                 หลังสองคำสั่งนี้ x และ y เป็นเท่าไร?
               </p>
               <button
@@ -506,7 +491,6 @@ const passed = score &gt;= 50 ? &quot;ผ่าน&quot; : &quot;ทบทวน
             </div>
           </section>
           <section class="lesson-section" id="loops">
-            <div class="section-kicker">05 / STUDY NOTES</div>
             <h2>05 · มองเห็น loop ทีละขั้น</h2>
             <p>
               Loop คือการกลับมาทำงานเดิมเมื่อเงื่อนไขยังผ่าน ตรวจให้ครบสามอย่าง:
@@ -543,7 +527,7 @@ const passed = score &gt;= 50 ? &quot;ผ่าน&quot; : &quot;ทบทวน
                 </tbody>
               </table>
             </div>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>let sum = 0;
 for (let i = 1; i &lt;= limit; i++) {
   sum += i;
@@ -611,7 +595,7 @@ for (let i = 1; i &lt;= limit; i++) {
             </ul>
             <div class="reveal">
               <p>
-                <strong>ลองคิดก่อนเปิด</strong> · ทำไม loop 1 ถึง 3 จบด้วย i = 4
+                <strong>คำถาม</strong> · ทำไม loop 1 ถึง 3 จบด้วย i = 4
                 แต่ sum = 6?
               </p>
               <button
@@ -630,7 +614,6 @@ for (let i = 1; i &lt;= limit; i++) {
             </div>
           </section>
           <section class="lesson-section" id="game">
-            <div class="section-kicker">06 / STUDY NOTES</div>
             <h2>06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</h2>
             <p>
               เกมในสไลด์เป็นตัวอย่างว่า UI และข้อมูลต้องไปด้วยกัน ใช้ array
@@ -673,10 +656,9 @@ for (let i = 1; i &lt;= limit; i++) {
             </div>
           </section>
           <section class="lesson-section" id="flashcards">
-            <div class="section-kicker">ACTIVE RECALL</div>
-            <h2>ศัพท์สำคัญ จำทีละใบ</h2>
+            <h2>Flashcards</h2>
             <p class="muted small">
-              ลองอธิบายคำศัพท์ก่อนกดพลิก ใช้ Enter หรือ Space แทนการคลิกได้
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
             </p>
             <button
               id="flashcard"
@@ -685,7 +667,7 @@ for (let i = 1; i &lt;= limit; i++) {
               aria-labelledby="flash-label flash-text"
               aria-describedby="flash-instruction"
             >
-              <small id="flash-label">นึกคำตอบก่อนพลิก</small
+              <small id="flash-label">คำศัพท์</small
               ><span
                 id="flash-text"
                 class="flashcard-term"
@@ -705,7 +687,6 @@ for (let i = 1; i &lt;= limit; i++) {
             </div>
           </section>
           <section class="lesson-section" id="quiz">
-            <div class="section-kicker">CHECK YOUR UNDERSTANDING</div>
             <h2>Quiz ท้ายบท · 10 ข้อ</h2>
             <p class="quiz-intro">
               เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
@@ -721,7 +702,7 @@ for (let i = 1; i &lt;= limit; i++) {
                 <button id="quiz-submit" class="btn primary" type="submit">
                   ตรวจคำตอบ →</button
                 ><button id="quiz-retry" class="btn" type="button" hidden>
-                  ลองทำใหม่ ↻
+                  ทำใหม่ ↻
                 </button>
               </div>
               <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
@@ -759,8 +740,8 @@ for (let i = 1; i &lt;= limit; i++) {
     </main>
     <footer class="site-footer">
       <div class="wrap footer-row">
-        <span>study garden. &nbsp; เติบโตทีละบท ทบทวนทีละนิด 🌱</span
-        ><span>สร้างเพื่อทบทวนด้วยตัวเอง · ITDS241 · 2026</span>
+        <span>Study Garden</span
+        ><span>ITDS241 · 2026</span>
       </div>
     </footer>
   </body>

@@ -7,10 +7,11 @@
       name="description"
       content="สรุปเตรียมสอบ ITDS241 บท 6–8 พร้อมกิจกรรมทีละขั้น Flashcards และ Quiz พร้อมเฉลย"
     />
-    <meta name="theme-color" content="#f8f7f3" />
+    <meta name="theme-color" content="#f5f5f7" />
     <title>บท 7 · Functions, Objects & DOM · Study Garden</title>
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../../assets/style.css" />
+    <link rel="stylesheet" href="../../assets/library.css" />
     <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
     <script defer src="../../assets/core.js"></script>
     <script defer src="../../assets/content.js"></script>
@@ -26,22 +27,10 @@
     <header class="site-header">
       <nav class="wrap nav" aria-label="เมนูหลัก">
         <a class="brand" href="../../index.html"
-          ><svg
-            class="brand-mark"
-            viewBox="0 0 40 40"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M20 34V17M20 25C7 25 7 15 7 15s12-1 13 10ZM20 19C20 8 33 6 33 6s2 14-13 13Z"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linejoin="round"
-            /></svg
-          >study garden<span class="accent">.</span></a
+          ><svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="3" y="3" width="11" height="11" rx="3" fill="currentColor"/><rect x="18" y="3" width="11" height="11" rx="3" fill="currentColor" opacity=".4"/><rect x="3" y="18" width="11" height="11" rx="3" fill="currentColor" opacity=".4"/><rect x="18" y="18" width="11" height="11" rx="3" fill="currentColor"/></svg>Study Garden</a
         >
         <div class="nav-links">
-          <a href="../../index.html#subjects">วิชาของฉัน</a
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
           ><a class="desktop-link" href="../../subjects/itds241/index.html"
             >บทเรียน</a
           >
@@ -63,7 +52,7 @@
     >
     <main id="main" class="wrap">
       <nav class="breadcrumb" aria-label="เส้นทาง">
-        <a href="../../index.html">วิชาของฉัน</a><span>/</span
+        <a href="../../index.html">วิชาทั้งหมด</a><span>/</span
         ><a href="index.html">ITDS241</a><span>/</span><span>บทที่ 7</span>
       </nav>
       <header class="chapter-hero">
@@ -73,7 +62,7 @@
         <div class="tags">
           <span class="pill lilac">เวลาอ่านโดยประมาณ 30–40 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
-          ><span class="tag" data-chapter-status="07">พร้อมให้เริ่มอ่าน</span>
+          ><span class="tag" data-chapter-status="07">ยังไม่ได้อ่าน</span>
         </div>
       </header>
       <div class="lesson-layout">
@@ -93,7 +82,6 @@
         </aside>
         <article class="lesson-content">
           <section class="lesson-section" id="functions">
-            <div class="section-kicker">01 / STUDY NOTES</div>
             <h2>01 · ฟังก์ชันคือหน่วยของงาน</h2>
             <p>
               ฟังก์ชันช่วยให้เราเรียกใช้วิธีทำงานเดิมโดยไม่ต้องคัดลอกโค้ด
@@ -106,7 +94,7 @@
               <code>return</code> ส่งค่ากลับและจบการทำงานของฟังก์ชันทันที ถ้าไม่
               return ค่า ผลลัพธ์คือ undefined
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>function finalPrice(price, discount = 0) {
   return price - discount;
 }
@@ -154,7 +142,7 @@ const add = (a, b) =&gt; {
             </div>
             <div class="reveal">
               <p>
-                <strong>ลองคิดก่อนเปิด</strong> · const f = x => { x * 2; };
+                <strong>คำถาม</strong> · const f = x => { x * 2; };
                 f(3) ได้ 6 หรือไม่?
               </p>
               <button
@@ -172,7 +160,6 @@ const add = (a, b) =&gt; {
             </div>
           </section>
           <section class="lesson-section" id="callbacks">
-            <div class="section-kicker">02 / STUDY NOTES</div>
             <h2>02 · ส่งฟังก์ชันให้ฟังก์ชัน</h2>
             <p>
               ใน JavaScript ฟังก์ชันเป็น <strong>first-class value</strong>:
@@ -186,7 +173,7 @@ const add = (a, b) =&gt; {
               <strong>callback</strong>
               สองคำนี้มองคนละฝั่งของความสัมพันธ์เดียวกัน
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>function applyTo(value, operation) { // higher-order function
   return operation(value);
 }
@@ -212,7 +199,7 @@ setTimeout(() =&gt; console.log(&quot;พักสายตา&quot;), 1000);</c
             </div>
             <div class="reveal">
               <p>
-                <strong>ลองคิดก่อนเปิด</strong> · setTimeout(sayHi, 1000)
+                <strong>คำถาม</strong> · setTimeout(sayHi, 1000)
                 ต่างจาก setTimeout(sayHi(), 1000) อย่างไร?
               </p>
               <button
@@ -230,7 +217,6 @@ setTimeout(() =&gt; console.log(&quot;พักสายตา&quot;), 1000);</c
             </div>
           </section>
           <section class="lesson-section" id="scope">
-            <div class="section-kicker">03 / STUDY NOTES</div>
             <h2>03 · Scope และ Closure</h2>
             <p>
               <strong>Scope</strong> ตอบว่าอ่านตัวแปรจากจุดไหนได้ ส่วน
@@ -282,7 +268,7 @@ setTimeout(() =&gt; console.log(&quot;พักสายตา&quot;), 1000);</c
               environment เดิมได้ จึงไม่ถูกตัดขาดเพียงเพราะฟังก์ชันภายนอกจบแล้ว
               แต่ไม่ได้แปลว่าตัวแปร local ทุกตัวจะถูกเก็บตลอดไป
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>function makeCounter() {
   let count = 0;
   return () =&gt; ++count; // ปิดครอบ environment ที่มี count
@@ -324,7 +310,7 @@ counterB(); // 1: อีก environment หนึ่ง</code></pre>
             </div>
             <div class="reveal">
               <p>
-                <strong>ลองคิดก่อนเปิด</strong> · ถ้าเขียน const c = counterA;
+                <strong>คำถาม</strong> · ถ้าเขียน const c = counterA;
                 แล้วเรียก c() จะมี count ใหม่ไหม?
               </p>
               <button
@@ -343,7 +329,6 @@ counterB(); // 1: อีก environment หนึ่ง</code></pre>
             </div>
           </section>
           <section class="lesson-section" id="oop">
-            <div class="section-kicker">04 / STUDY NOTES</div>
             <h2>04 · Class, Object และการสืบทอด</h2>
             <p>
               OOP รวมข้อมูล (<strong>properties</strong>) และงานที่ทำกับข้อมูล
@@ -357,7 +342,7 @@ counterB(); // 1: อีก environment หนึ่ง</code></pre>
               <code>class</code> เป็นรูปแบบที่ช่วยจัดโค้ดให้ชัดขึ้น โดย
               JavaScript ยังคงมีระบบ prototype เป็นพื้นฐาน
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>function Student(name) { // constructor function
   this.name = name;
 }
@@ -422,7 +407,6 @@ console.log(learner.introduce()); // ฉันชื่อ Mint กำลัง�
             </p>
           </section>
           <section class="lesson-section" id="dom">
-            <div class="section-kicker">05 / STUDY NOTES</div>
             <h2>05 · DOM คือหน้าเว็บในรูปต้นไม้</h2>
             <p>
               เบราว์เซอร์แปลง HTML เป็นต้นไม้ของ node โดย
@@ -478,7 +462,7 @@ console.log(learner.introduce()); // ฉันชื่อ Mint กำลัง�
               หรือ filter ให้แปลงด้วย <code>Array.from(collection)</code> ก่อน
               ส่วน querySelectorAll รองรับ forEach ได้
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>const list = document.querySelector(&quot;#topics&quot;);
 const item = document.createElement(&quot;li&quot;);
 item.textContent = &quot;อ่าน DOM&quot;;      // ใส่เป็นข้อความ
@@ -519,14 +503,13 @@ list.removeChild(item);             // ลบ node ลูกนั้น</code><
             </p>
           </section>
           <section class="lesson-section" id="events">
-            <div class="section-kicker">06 / STUDY NOTES</div>
             <h2>06 · Event เชื่อมการกระทำกับโค้ด</h2>
             <p>
               Event คือสัญญาณที่เกิดขึ้น เช่น click, input, change, keydown หรือ
               submit เราลงทะเบียน listener ไว้ก่อน แล้วให้ browser เรียก
               callback เมื่อเหตุการณ์มาถึง
             </p>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>const button = document.querySelector(&quot;#check&quot;);
 function handleClick(event) {
   console.log(event.target); // element ต้นทางของเหตุการณ์
@@ -579,7 +562,7 @@ button.addEventListener(&quot;click&quot;, handleClick);
               </table>
             </div>
             <h3>ช่อง input ให้ string แม้หน้าตาดูเป็นตัวเลข</h3>
-            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <div class="code-label">JAVASCRIPT</div>
             <pre><code>function addInputs() {
   const first = document.querySelector(&quot;#first&quot;).value.trim();
   const second = document.querySelector(&quot;#second&quot;).value.trim();
@@ -597,10 +580,9 @@ button.addEventListener(&quot;click&quot;, handleClick);
             </div>
           </section>
           <section class="lesson-section" id="flashcards">
-            <div class="section-kicker">ACTIVE RECALL</div>
-            <h2>ศัพท์สำคัญ จำทีละใบ</h2>
+            <h2>Flashcards</h2>
             <p class="muted small">
-              ลองอธิบายคำศัพท์ก่อนกดพลิก ใช้ Enter หรือ Space แทนการคลิกได้
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
             </p>
             <button
               id="flashcard"
@@ -609,7 +591,7 @@ button.addEventListener(&quot;click&quot;, handleClick);
               aria-labelledby="flash-label flash-text"
               aria-describedby="flash-instruction"
             >
-              <small id="flash-label">นึกคำตอบก่อนพลิก</small
+              <small id="flash-label">คำศัพท์</small
               ><span
                 id="flash-text"
                 class="flashcard-term"
@@ -629,7 +611,6 @@ button.addEventListener(&quot;click&quot;, handleClick);
             </div>
           </section>
           <section class="lesson-section" id="quiz">
-            <div class="section-kicker">CHECK YOUR UNDERSTANDING</div>
             <h2>Quiz ท้ายบท · 10 ข้อ</h2>
             <p class="quiz-intro">
               เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
@@ -645,7 +626,7 @@ button.addEventListener(&quot;click&quot;, handleClick);
                 <button id="quiz-submit" class="btn primary" type="submit">
                   ตรวจคำตอบ →</button
                 ><button id="quiz-retry" class="btn" type="button" hidden>
-                  ลองทำใหม่ ↻
+                  ทำใหม่ ↻
                 </button>
               </div>
               <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
@@ -683,8 +664,8 @@ button.addEventListener(&quot;click&quot;, handleClick);
     </main>
     <footer class="site-footer">
       <div class="wrap footer-row">
-        <span>study garden. &nbsp; เติบโตทีละบท ทบทวนทีละนิด 🌱</span
-        ><span>สร้างเพื่อทบทวนด้วยตัวเอง · ITDS241 · 2026</span>
+        <span>Study Garden</span
+        ><span>ITDS241 · 2026</span>
       </div>
     </footer>
   </body>

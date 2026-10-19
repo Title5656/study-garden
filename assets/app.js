@@ -178,7 +178,7 @@
           ? `คะแนนดีที่สุด ${score}/10`
           : entry.read === true
             ? "อ่านแล้ว ✓"
-            : "พร้อมให้เริ่มอ่าน";
+            : "ยังไม่ได้อ่าน";
     });
     if ($("#score-summary")) {
       $("#score-summary").textContent = ids
@@ -229,7 +229,7 @@
     function renderCard() {
       card.classList.toggle("is-flipped", flipped);
       card.setAttribute("aria-pressed", String(flipped));
-      $("#flash-label").textContent = flipped ? "คำอธิบาย" : "นึกคำตอบก่อนพลิก";
+      $("#flash-label").textContent = flipped ? "คำอธิบาย" : "คำศัพท์";
       $("#flash-text").textContent = data.cards[index][flipped ? 1 : 0];
       $("#flash-text").className = flipped ? "" : "flashcard-term";
       $("#flash-position").textContent = `${index + 1} / ${data.cards.length}`;
@@ -295,7 +295,7 @@
       const result = StudyCore.gradeQuiz(data.quiz, answers);
       if (result.unanswered) {
         $("#quiz-error").textContent =
-          `ยังเหลือ ${result.unanswered} ข้อ ลองตอบให้ครบก่อนตรวจนะ`;
+          `ยังเหลือ ${result.unanswered} ข้อ กรุณาตอบให้ครบก่อนตรวจ`;
         $(`input[name="q${answers.indexOf(null)}"]`, form).focus();
         return;
       }
@@ -306,7 +306,7 @@
         labels[q.answer].classList.add("correct");
         if (answers[i] !== q.answer) labels[answers[i]].classList.add("wrong");
         const explanation = $(".explanation", fieldset);
-        explanation.textContent = `${answers[i] === q.answer ? "✓ ถูกต้อง" : "↺ ลองทบทวนอีกนิด"} — เฉลย: ${q.options[q.answer]} · ${q.explanation}`;
+        explanation.textContent = `${answers[i] === q.answer ? "✓ ถูกต้อง" : "ไม่ถูกต้อง"} — เฉลย: ${q.options[q.answer]} · ${q.explanation}`;
         explanation.hidden = false;
       });
       $$("input", form).forEach((input) => {
@@ -319,8 +319,8 @@
         `ได้ ${result.score} / ${result.total} คะแนน`;
       $("#quiz-message").textContent =
         result.score === 10
-          ? "เยี่ยมเลย! ลองอธิบายแนวคิดแต่ละข้อด้วยภาษาของตัวเองอีกครั้ง"
-          : "อ่านเหตุผลใต้แต่ละข้อ แล้วกลับมาลองใหม่ได้เสมอ การทบทวนคือส่วนหนึ่งของการเรียนรู้";
+          ? "ตอบถูกทุกข้อ"
+          : "ดูเฉลยและคำอธิบายใต้แต่ละข้อ";
       updateProgress(chapter, {
         last: result.score,
         best: Math.max(

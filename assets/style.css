@@ -1,38 +1,38 @@
 /* โทนสีส่วนกลาง: เปลี่ยนตัวแปรที่นี่เพื่อปรับทุกวิชา */
 :root {
   color-scheme: light;
-  --bg: #f8f7f3;
-  --paper: #fffefa;
-  --ink: #303331;
-  --muted: #686e68;
-  --line: #e3e5dd;
-  --accent: #695492;
-  --purple: #eee8f7;
-  --sage: #e7eee1;
-  --green: #436443;
-  --peach: #f9e8dc;
-  --soft: #f1f2ec;
-  --code: #2f3534;
-  --code-ink: #e5eee8;
+  --bg: #f5f5f7;
+  --paper: #ffffff;
+  --ink: #24252a;
+  --muted: #696b76;
+  --line: #dedee5;
+  --accent: #415ca8;
+  --purple: #eceff8;
+  --sage: #eceff2;
+  --green: #4b5667;
+  --peach: #f3eee8;
+  --soft: #ededf1;
+  --code: #202127;
+  --code-ink: #e7e9ef;
   --shadow: 0 8px 30px #34332806;
   --bad: #9e3535;
   --good: #306640;
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #1d2220;
-  --paper: #252c28;
-  --ink: #e8ece4;
-  --muted: #b2bdb2;
-  --line: #414b43;
-  --accent: #c9afea;
-  --purple: #393044;
-  --sage: #303f31;
-  --green: #b7d4a6;
-  --peach: #48392f;
-  --soft: #303831;
-  --code: #171c19;
-  --code-ink: #e1ebdf;
+  --bg: #141519;
+  --paper: #1c1d22;
+  --ink: #eeeef2;
+  --muted: #a2a4b0;
+  --line: #35363f;
+  --accent: #a9b9ed;
+  --purple: #292e40;
+  --sage: #252a33;
+  --green: #c0c9dc;
+  --peach: #332e29;
+  --soft: #25262e;
+  --code: #111217;
+  --code-ink: #e7e9ef;
   --shadow: none;
   --bad: #ffb3b3;
   --good: #b0e2be;
@@ -48,7 +48,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: "Leelawadee UI", Tahoma, system-ui, sans-serif;
+  font-family: "Segoe UI", "Leelawadee UI", Tahoma, sans-serif;
   font-size: 16px;
   line-height: 1.85;
 }
