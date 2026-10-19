@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="สรุปเตรียมสอบ ITDS241 บท 6–8 พร้อมกิจกรรมทีละขั้น Flashcards และ Quiz พร้อมเฉลย"
+    />
+    <meta name="theme-color" content="#f8f7f3" />
+    <title>บท 7 · Functions, Objects & DOM · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/style.css" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js"></script>
+    <script defer src="../../assets/content.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
+    ></script>
+    <script defer src="../../assets/app.js"></script>
+    <script defer src="../../assets/labs.js"></script>
+  </head>
+  <body data-subject="itds241" data-chapter="07">
+    <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><svg
+            class="brand-mark"
+            viewBox="0 0 40 40"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M20 34V17M20 25C7 25 7 15 7 15s12-1 13 10ZM20 19C20 8 33 6 33 6s2 14-13 13Z"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+            /></svg
+          >study garden<span class="accent">.</span></a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาของฉัน</a
+          ><a class="desktop-link" href="../../subjects/itds241/index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap">
+      <nav class="breadcrumb" aria-label="เส้นทาง">
+        <a href="../../index.html">วิชาของฉัน</a><span>/</span
+        ><a href="index.html">ITDS241</a><span>/</span><span>บทที่ 7</span>
+      </nav>
+      <header class="chapter-hero">
+        <div class="eyebrow">CHAPTER 07 · JS Part 2</div>
+        <h1>Functions, Objects & DOM</h1>
+        <p>จากฟังก์ชันและ closure สู่ object และหน้าเว็บที่โต้ตอบได้</p>
+        <div class="tags">
+          <span class="pill lilac">เวลาอ่านโดยประมาณ 30–40 นาที</span
+          ><span class="pill">Quiz 10 ข้อ</span
+          ><span class="tag" data-chapter-status="07">พร้อมให้เริ่มอ่าน</span>
+        </div>
+      </header>
+      <div class="lesson-layout">
+        <aside class="toc" aria-label="สารบัญบทเรียน">
+          <h2>ในบทนี้</h2>
+          <a href="#functions">01 · ฟังก์ชันคือหน่วยของงาน</a
+          ><a href="#callbacks">02 · ส่งฟังก์ชันให้ฟังก์ชัน</a
+          ><a href="#scope">03 · Scope และ Closure</a
+          ><a href="#oop">04 · Class, Object และการสืบทอด</a
+          ><a href="#dom">05 · DOM คือหน้าเว็บในรูปต้นไม้</a
+          ><a href="#events">06 · Event เชื่อมการกระทำกับโค้ด</a>
+          <div class="toc-tools">
+            <a href="#flashcards">▧ Flashcards</a
+            ><a href="#quiz">✓ Quiz ท้ายบท</a
+            ><a href="#sources">ที่มาและหมายเหตุ</a>
+          </div>
+        </aside>
+        <article class="lesson-content">
+          <section class="lesson-section" id="functions">
+            <div class="section-kicker">01 / STUDY NOTES</div>
+            <h2>01 · ฟังก์ชันคือหน่วยของงาน</h2>
+            <p>
+              ฟังก์ชันช่วยให้เราเรียกใช้วิธีทำงานเดิมโดยไม่ต้องคัดลอกโค้ด
+              คิดเป็นกล่องที่รับข้อมูล ทำงาน และอาจส่งผลลัพธ์กลับ
+              การแยกฟังก์ชันตามหน้าที่ทำให้อ่าน ทดสอบ และแก้ไขได้ตรงจุด
+            </p>
+            <p>
+              <strong>Parameter</strong> คือชื่อในนิยาม เช่น price;
+              <strong>argument</strong> คือค่าตอนเรียก เช่น 100 ส่วน
+              <code>return</code> ส่งค่ากลับและจบการทำงานของฟังก์ชันทันที ถ้าไม่
+              return ค่า ผลลัพธ์คือ undefined
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>function finalPrice(price, discount = 0) {
+  return price - discount;
+}
+finalPrice(100, 20); // 80
+finalPrice(100);     // 100: ใช้ default
+const double = n =&gt; n * 2;
+const add = (a, b) =&gt; {
+  return a + b;      // มี { } จึงต้องเขียน return
+};</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">รูปแบบ</th>
+                    <th scope="col">จุดเด่น</th>
+                    <th scope="col">ข้อควรระวัง</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Function declaration</td>
+                    <td>function sum() { … } มีชื่อชัด</td>
+                    <td>
+                      declaration ถูก hoist จึงเรียกก่อนตำแหน่งนิยามได้ใน scope
+                      ที่เกี่ยวข้อง
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Function expression</td>
+                    <td>เก็บเป็นค่า เช่น const sum = function() { … }</td>
+                    <td>ใช้ก่อน initialization ของ const ไม่ได้</td>
+                  </tr>
+                  <tr>
+                    <td>Arrow function</td>
+                    <td>สั้น เหมาะกับ callback</td>
+                    <td>ไม่มี this ของตัวเอง และใช้ new ไม่ได้</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="note warm">
+              Arrow ไม่ได้แทน function ได้ทุกกรณี: this มาจาก lexical
+              environment รอบตัว ถ้าต้องการ method ที่ this เปลี่ยนตาม object
+              ผู้เรียก ให้เลือก method syntax หรือ function ให้เหมาะ
+            </div>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · const f = x => { x * 2; };
+                f(3) ได้ 6 หรือไม่?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="return-answer"
+                aria-expanded="false"
+                aria-controls="return-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="return-answer" hidden>
+                ไม่ได้ ได้ undefined เพราะมีบล็อก { } แต่ไม่มี return แก้เป็น x
+                => x * 2 หรือ x => { return x * 2; }
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="callbacks">
+            <div class="section-kicker">02 / STUDY NOTES</div>
+            <h2>02 · ส่งฟังก์ชันให้ฟังก์ชัน</h2>
+            <p>
+              ใน JavaScript ฟังก์ชันเป็น <strong>first-class value</strong>:
+              เก็บในตัวแปร ใส่ใน array ส่งเป็น argument และคืนจากฟังก์ชันอื่นได้
+              ด้วยเหตุนี้เราจึงแยก “ขั้นตอนทั่วไป” ออกจาก “วิธีทำงานเฉพาะ” ได้
+            </p>
+            <p>
+              ฟังก์ชันที่รับหรือคืนฟังก์ชันเรียกว่า
+              <strong>higher-order function</strong>
+              ส่วนฟังก์ชันที่เราส่งเข้าไปเพื่อให้ถูกเรียกต่อเรียกว่า
+              <strong>callback</strong>
+              สองคำนี้มองคนละฝั่งของความสัมพันธ์เดียวกัน
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>function applyTo(value, operation) { // higher-order function
+  return operation(value);
+}
+const square = n =&gt; n * n;
+applyTo(4, square);                  // 16; square คือ callback
+[1, 2, 3].map(square);              // [1, 4, 9]
+setTimeout(() =&gt; console.log(&quot;พักสายตา&quot;), 1000);</code></pre>
+            <div class="two-col">
+              <div class="mini-card">
+                <h3>Synchronous callback</h3>
+                <p>
+                  <code>map</code> เรียก callback ระหว่างการทำงานของมัน และคืน
+                  array หลังประมวลผลครบ
+                </p>
+              </div>
+              <div class="mini-card">
+                <h3>Asynchronous callback</h3>
+                <p>
+                  <code>setTimeout</code> ลงทะเบียน callback ให้ทำภายหลัง เวลา
+                  1000 ms ไม่รับประกันว่าจะเรียกตรงเป๊ะ หากงานอื่นยังครอง thread
+                </p>
+              </div>
+            </div>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · setTimeout(sayHi, 1000)
+                ต่างจาก setTimeout(sayHi(), 1000) อย่างไร?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="callback-answer"
+                aria-expanded="false"
+                aria-controls="callback-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="callback-answer" hidden>
+                แบบแรกส่งตัวฟังก์ชันให้เรียกภายหลัง แบบที่สองเรียก sayHi ทันที
+                แล้วนำค่าที่คืนไปส่งต่อ ซึ่งมักไม่ใช่ callback ที่ต้องการ
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="scope">
+            <div class="section-kicker">03 / STUDY NOTES</div>
+            <h2>03 · Scope และ Closure</h2>
+            <p>
+              <strong>Scope</strong> ตอบว่าอ่านตัวแปรจากจุดไหนได้ ส่วน
+              <strong>lifetime</strong> ตอบว่าข้อมูลยังมีชีวิตอยู่นานเท่าไร
+              JavaScript ใช้ lexical scope คือดูจากตำแหน่งที่เขียนฟังก์ชัน
+              ไม่ใช่ที่ที่เรียกมัน
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">ขอบเขต</th>
+                    <th scope="col">ลักษณะ</th>
+                    <th scope="col">ตัวอย่าง</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Global</td>
+                    <td>เข้าถึงจากโค้ดในขอบเขตรวมได้</td>
+                    <td>ตัวแปรระดับบนของ classic script</td>
+                  </tr>
+                  <tr>
+                    <td>Module</td>
+                    <td>แต่ละ module มี scope ของตัวเอง</td>
+                    <td>export/import ใช้แชร์ชื่ออย่างชัดเจน</td>
+                  </tr>
+                  <tr>
+                    <td>Function</td>
+                    <td>ตัวแปรภายในฟังก์ชัน</td>
+                    <td>var ยึด function scope ไม่ใช่ block</td>
+                  </tr>
+                  <tr>
+                    <td>Block</td>
+                    <td>จำกัดใน { … }</td>
+                    <td>let และ const ใน if หรือ for</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              เมื่อมีชื่อซ้ำ การค้นหาจะเลือกตัวแปรใน scope ใกล้ที่สุดก่อน
+              (shadowing) ข้อสำคัญคือ var ก็อยู่ในระบบ lexical scope
+              แต่ไม่สร้างขอบเขตใหม่ตาม block แบบ let/const
+            </p>
+            <h3>Closure: ฟังก์ชันที่พกทางเข้าถึงความจำเดิม</h3>
+            <p>
+              เมื่อคืนฟังก์ชันที่ใช้ตัวแปรภายนอกออกมา ฟังก์ชันนั้นยังอ้างอิง
+              environment เดิมได้ จึงไม่ถูกตัดขาดเพียงเพราะฟังก์ชันภายนอกจบแล้ว
+              แต่ไม่ได้แปลว่าตัวแปร local ทุกตัวจะถูกเก็บตลอดไป
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>function makeCounter() {
+  let count = 0;
+  return () =&gt; ++count; // ปิดครอบ environment ที่มี count
+}
+const counterA = makeCounter();
+const counterB = makeCounter();
+counterA(); // 1
+counterA(); // 2
+counterB(); // 1: อีก environment หนึ่ง</code></pre>
+            <div class="lab" id="closure-lab">
+              <h3>Closure lab · สองกล่องความจำ</h3>
+              <p class="small muted">
+                ลองเพิ่ม A หลายครั้ง แล้วดูว่า B เปลี่ยนตามหรือไม่
+              </p>
+              <div class="two-col">
+                <div class="mini-card">
+                  <div class="variable">
+                    environment A <b id="count-a">0</b>
+                  </div>
+                  <button class="btn soft" id="counter-a">
+                    เรียก counterA()
+                  </button>
+                </div>
+                <div class="mini-card">
+                  <div class="variable">
+                    environment B <b id="count-b">0</b>
+                  </div>
+                  <button class="btn soft" id="counter-b">
+                    เรียก counterB()
+                  </button>
+                </div>
+              </div>
+              <p class="lab-output" id="closure-message" aria-live="polite">
+                makeCounter() ถูกเรียกสองครั้ง จึงมี count สองชุดแยกกัน
+              </p>
+              <button class="btn tiny" id="closure-reset">
+                สร้างใหม่ทั้งสองชุด
+              </button>
+            </div>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · ถ้าเขียน const c = counterA;
+                แล้วเรียก c() จะมี count ใหม่ไหม?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="closure-answer"
+                aria-expanded="false"
+                aria-controls="closure-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="closure-answer" hidden>
+                ไม่มี เพราะเพียงคัดลอกการอ้างอิงฟังก์ชันเดิม c และ counterA
+                จึงใช้ environment เดียวกัน ต้องเรียก makeCounter()
+                ใหม่จึงได้อีกชุด
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="oop">
+            <div class="section-kicker">04 / STUDY NOTES</div>
+            <h2>04 · Class, Object และการสืบทอด</h2>
+            <p>
+              OOP รวมข้อมูล (<strong>properties</strong>) และงานที่ทำกับข้อมูล
+              (<strong>methods</strong>) ให้อยู่ใน object เดียวกัน Class
+              คือแบบแผน ส่วน instance คือ object ที่สร้างขึ้นจริง เช่น
+              แบบแผนบัตรนักเรียน กับบัตรของแต่ละคน
+            </p>
+            <p>
+              Constructor function ใช้ <code>new</code> และกำหนดข้อมูลผ่าน
+              <code>this</code> ได้ ส่วน
+              <code>class</code> เป็นรูปแบบที่ช่วยจัดโค้ดให้ชัดขึ้น โดย
+              JavaScript ยังคงมีระบบ prototype เป็นพื้นฐาน
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>function Student(name) { // constructor function
+  this.name = name;
+}
+const mint = new Student(&quot;Mint&quot;);
+
+class Learner {
+  constructor(name) { this.name = name; }
+  introduce() { return `ฉันชื่อ ${this.name}`; }
+}
+class WebLearner extends Learner {
+  constructor(name, topic) {
+    super(name); // เรียก constructor แม่ก่อนใช้ this
+    this.topic = topic;
+  }
+  introduce() { // override: ชื่อ method เดิม แต่พฤติกรรมต่าง
+    return `${super.introduce()} กำลังเรียน ${this.topic}`;
+  }
+}
+const learner = new WebLearner(&quot;Mint&quot;, &quot;DOM&quot;);
+console.log(learner.introduce()); // ฉันชื่อ Mint กำลังเรียน DOM</code></pre>
+            <div class="flow">
+              <span>class Learner</span><span>extends → WebLearner</span
+              ><span>new → learner</span><span>introduce() → ข้อความ</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">แนวคิด</th>
+                    <th scope="col">ความหมาย</th>
+                    <th scope="col">ในตัวอย่าง</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Instantiation</td>
+                    <td>สร้าง object จริงจากแบบแผน</td>
+                    <td>new WebLearner(...)</td>
+                  </tr>
+                  <tr>
+                    <td>Inheritance</td>
+                    <td>รับพฤติกรรมจากต้นแบบแม่</td>
+                    <td>extends Learner</td>
+                  </tr>
+                  <tr>
+                    <td>Override</td>
+                    <td>กำหนด method ของลูกทับพฤติกรรมที่สืบทอด</td>
+                    <td>introduce() ใน WebLearner</td>
+                  </tr>
+                  <tr>
+                    <td>Polymorphism</td>
+                    <td>เรียก interface เดียวกันแต่ผลตามชนิด object</td>
+                    <td>Learner กับ WebLearner ตอบ introduce() ต่างกัน</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              อ่าน property ที่ไม่มีจะได้ undefined แต่เรียก method
+              ที่ไม่มีจะเกิด TypeError การเพิ่ม property ภายหลังทำได้กับ object
+              ปกติที่ยังขยายได้ แต่ควรออกแบบข้อมูลให้สม่ำเสมอเพื่ออ่านโค้ดง่าย
+            </p>
+          </section>
+          <section class="lesson-section" id="dom">
+            <div class="section-kicker">05 / STUDY NOTES</div>
+            <h2>05 · DOM คือหน้าเว็บในรูปต้นไม้</h2>
+            <p>
+              เบราว์เซอร์แปลง HTML เป็นต้นไม้ของ node โดย
+              <code>document</code> เป็นจุดเริ่มต้น Element อย่าง h1 หรือ p มี
+              text node เป็นลูก Node ที่มี parent เดียวกันเป็น siblings ส่วน
+              descendant อยู่ลึกลงไปได้หลายระดับ
+            </p>
+            <p>
+              Attribute อยู่กับ element แต่ไม่ใช่ child ในต้นไม้แบบ text node;
+              และ <code>childNodes</code> รวม text/comment ด้วย ต่างจาก
+              <code>children</code> ที่มีเฉพาะ element
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">คำสั่ง</th>
+                    <th scope="col">ผลลัพธ์</th>
+                    <th scope="col">การเปลี่ยนตาม DOM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>getElementById("id")</td>
+                    <td>Element หรือ null</td>
+                    <td>เลือก element เดียว</td>
+                  </tr>
+                  <tr>
+                    <td>querySelector(".item")</td>
+                    <td>Element แรกหรือ null</td>
+                    <td>ใช้ CSS selector</td>
+                  </tr>
+                  <tr>
+                    <td>querySelectorAll(".item")</td>
+                    <td>NodeList</td>
+                    <td>static: ชุดสมาชิกไม่เปลี่ยนตามการเพิ่ม/ลบภายหลัง</td>
+                  </tr>
+                  <tr>
+                    <td>getElementsByClassName("item")</td>
+                    <td>HTMLCollection</td>
+                    <td>live: ชุดสมาชิกอัปเดตตาม DOM</td>
+                  </tr>
+                  <tr>
+                    <td>getElementsByTagName("li")</td>
+                    <td>HTMLCollection</td>
+                    <td>live เช่นกัน</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              NodeList และ HTMLCollection ไม่ใช่ Array โดยตรง ถ้าต้องการใช้ map
+              หรือ filter ให้แปลงด้วย <code>Array.from(collection)</code> ก่อน
+              ส่วน querySelectorAll รองรับ forEach ได้
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const list = document.querySelector(&quot;#topics&quot;);
+const item = document.createElement(&quot;li&quot;);
+item.textContent = &quot;อ่าน DOM&quot;;      // ใส่เป็นข้อความ
+list.appendChild(item);             // แนบเข้าเอกสาร
+item.setAttribute(&quot;class&quot;, &quot;done&quot;); // กำหนด attribute
+list.removeChild(item);             // ลบ node ลูกนั้น</code></pre>
+            <div class="lab" id="dom-lab">
+              <h3>DOM playground · เปลี่ยนต้นไม้ด้วยมือเรา</h3>
+              <label for="dom-input">ข้อความสำหรับ node</label><br /><input
+                id="dom-input"
+                type="text"
+                maxlength="60"
+                placeholder="เช่น อ่านเรื่อง Events"
+              />
+              <div class="actions" style="margin-top: 12px">
+                <button class="btn soft" id="dom-add">+ เพิ่ม li</button
+                ><button class="btn" id="dom-edit">แก้ตัวแรก</button
+                ><button class="btn" id="dom-remove">ลบตัวท้าย</button>
+              </div>
+              <div class="tree" style="margin-top: 18px">
+                <code>ul#topics</code>
+                <ul id="dom-list">
+                  <li>li · อ่าน JavaScript</li>
+                </ul>
+              </div>
+              <p class="lab-output small" id="dom-message" aria-live="polite">
+                รายการนี้เป็น DOM จริง ลองเพิ่ม แก้ไข และลบ node
+              </p>
+            </div>
+            <h3>textContent หรือ innerHTML?</h3>
+            <p>
+              <code>textContent</code> ใส่ข้อความตรง ๆ ส่วน
+              <code>innerHTML</code> แปลข้อความเป็น HTML markup
+              ถ้าข้อมูลมาจากผู้ใช้และต้องการเพียงข้อความ ให้ใช้ textContent
+              เพื่อไม่เปิดช่องให้แทรก markup/script ที่ไม่ต้องการ การใช้
+              <code>document.write()</code> หลังโหลดหน้าแล้วอาจแทนเอกสารทั้งหน้า
+              จึงไม่เหมาะกับการอัปเดต UI แบบนี้
+            </p>
+          </section>
+          <section class="lesson-section" id="events">
+            <div class="section-kicker">06 / STUDY NOTES</div>
+            <h2>06 · Event เชื่อมการกระทำกับโค้ด</h2>
+            <p>
+              Event คือสัญญาณที่เกิดขึ้น เช่น click, input, change, keydown หรือ
+              submit เราลงทะเบียน listener ไว้ก่อน แล้วให้ browser เรียก
+              callback เมื่อเหตุการณ์มาถึง
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const button = document.querySelector(&quot;#check&quot;);
+function handleClick(event) {
+  console.log(event.target); // element ต้นทางของเหตุการณ์
+}
+button.addEventListener(&quot;click&quot;, handleClick);
+// ไม่เขียน handleClick() เพราะจะเรียกทันที</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Event</th>
+                    <th scope="col">ใช้เมื่อ</th>
+                    <th scope="col">จุดที่มักสับสน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>click</td>
+                    <td>ปุ่มถูกกด</td>
+                    <td>ใช้ได้กับการเปิดใช้งานปุ่มด้วย keyboard ด้วย</td>
+                  </tr>
+                  <tr>
+                    <td>input</td>
+                    <td>ค่าช่องกรอกเปลี่ยนระหว่างพิมพ์</td>
+                    <td>เหมาะกับ preview ทันที</td>
+                  </tr>
+                  <tr>
+                    <td>change</td>
+                    <td>ผู้ใช้ยืนยันการเปลี่ยนค่า</td>
+                    <td>สำหรับ text input มักเกิดเมื่อเปลี่ยนแล้วออกจากช่อง</td>
+                  </tr>
+                  <tr>
+                    <td>keydown / keyup</td>
+                    <td>กด / ปล่อยปุ่ม keyboard</td>
+                    <td>ใช้ event.key ตรวจปุ่ม; keypress เป็น API เก่า</td>
+                  </tr>
+                  <tr>
+                    <td>submit</td>
+                    <td>ส่งฟอร์ม</td>
+                    <td>event.preventDefault() หยุดการส่งตามพฤติกรรมปกติ</td>
+                  </tr>
+                  <tr>
+                    <td>load</td>
+                    <td>ทรัพยากรโหลดเสร็จ</td>
+                    <td>
+                      DOMContentLoaded คือ HTML parse เสร็จ ไม่ต้องรอรูปทั้งหมด
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>ช่อง input ให้ string แม้หน้าตาดูเป็นตัวเลข</h3>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>function addInputs() {
+  const first = document.querySelector(&quot;#first&quot;).value.trim();
+  const second = document.querySelector(&quot;#second&quot;).value.trim();
+  const a = Number(first);
+  const b = Number(second);
+  if (!first || !second || !Number.isFinite(a) || !Number.isFinite(b)) {
+    return &quot;กรุณากรอกตัวเลขทั้งสองช่อง&quot;;
+  }
+  return a + b;
+}</code></pre>
+            <div class="note">
+              ภาพรวมทั้งบท: Event เรียก function → function อ่านหรือเปลี่ยน
+              state → ใช้ DOM สะท้อนผลกลับไปยังหน้าเว็บ
+              สิ่งที่เห็นกับข้อมูลที่เก็บควรสอดคล้องกันเสมอ
+            </div>
+          </section>
+          <section class="lesson-section" id="flashcards">
+            <div class="section-kicker">ACTIVE RECALL</div>
+            <h2>ศัพท์สำคัญ จำทีละใบ</h2>
+            <p class="muted small">
+              ลองอธิบายคำศัพท์ก่อนกดพลิก ใช้ Enter หรือ Space แทนการคลิกได้
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">นึกคำตอบก่อนพลิก</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <div class="section-kicker">CHECK YOUR UNDERSTANDING</div>
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ลองทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources">
+            <h2>ที่มาและหมายเหตุ</h2>
+            <p>
+              สไลด์หลัก: ITDS241-Lecture07-JavaScript Part 2.pdf หน้า 4–22
+              (functions), 23–30 (scope/closure), 31–42 (OOP), 43–61 (DOM),
+              62–67 (events)
+            </p>
+            <p>
+              เสริมความแม่นยำเรื่อง callback ที่ไม่จำเป็นต้อง asynchronous,
+              lexical scope ของ var, lifetime เมื่อมี closure
+              และชนิดคอลเลกชันจาก DOM
+            </p>
+            <p>
+              เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF (อาจต่างจากเลขที่พิมพ์บนสไลด์)
+              ตัวอย่างและคำถามในเว็บเขียนขึ้นใหม่เพื่อทบทวน ไม่ได้คัดลอกข้อสอบ
+            </p>
+          </section>
+          <button class="btn soft" data-mark-read aria-pressed="false">
+            ทำเครื่องหมายว่าอ่านแล้ว ✓
+          </button>
+          <nav class="chapter-end" aria-label="เปลี่ยนบท">
+            <a class="btn" href="chapter-06.html">← บทก่อนหน้า</a
+            ><a class="btn primary" href="chapter-08.html">อ่านบท 8 ต่อ →</a>
+          </nav>
+        </article>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span>study garden. &nbsp; เติบโตทีละบท ทบทวนทีละนิด 🌱</span
+        ><span>สร้างเพื่อทบทวนด้วยตัวเอง · ITDS241 · 2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

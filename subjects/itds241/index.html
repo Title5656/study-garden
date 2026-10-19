@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="สรุปเตรียมสอบ ITDS241 บท 6–8 พร้อมกิจกรรมทีละขั้น Flashcards และ Quiz พร้อมเฉลย"
+    />
+    <meta name="theme-color" content="#f8f7f3" />
+    <title>ITDS241 · เลือกบทเรียน · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/style.css" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js"></script>
+    <script defer src="../../assets/content.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
+    ></script>
+    <script defer src="../../assets/app.js"></script>
+    <script defer src="../../assets/labs.js"></script>
+  </head>
+  <body data-subject="itds241">
+    <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><svg
+            class="brand-mark"
+            viewBox="0 0 40 40"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M20 34V17M20 25C7 25 7 15 7 15s12-1 13 10ZM20 19C20 8 33 6 33 6s2 14-13 13Z"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+            /></svg
+          >study garden<span class="accent">.</span></a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาของฉัน</a
+          ><a class="desktop-link" href="../../subjects/itds241/index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap">
+      <nav class="breadcrumb" aria-label="เส้นทาง">
+        <a href="../../index.html">วิชาของฉัน</a><span>/</span
+        ><span>ITDS241</span>
+      </nav>
+      <section class="course-hero">
+        <div class="eyebrow">ITDS241 · YOUR STUDY PATH</div>
+        <h1>
+          Web Technologies<br /><span class="accent">and Applications</span>
+        </h1>
+        <p class="muted">
+          จากโค้ดบรรทัดแรก สู่หน้าเว็บที่โต้ตอบได้<br />สามบทที่ต่อกันเป็นภาพใหญ่ของ
+          JavaScript
+        </p>
+        <div class="tags">
+          <span class="pill lilac">3 บทเรียน</span
+          ><span class="pill">30 คำถาม</span
+          ><span class="pill">32 Flashcards</span>
+        </div>
+      </section>
+      <div class="chapter-grid">
+        <a class="chapter-card" href="chapter-06.html"
+          ><div class="chapter-number">06</div>
+          <div class="eyebrow">JS Part 1</div>
+          <h3>JavaScript Essentials</h3>
+          <p>ตัวแปร ชนิดข้อมูล ตัวดำเนินการ และการควบคุมลำดับการทำงาน</p>
+          <div class="card-footer">
+            <span data-chapter-status="06">พร้อมให้เริ่มอ่าน</span
+            ><span aria-hidden="true">↗</span>
+          </div></a
+        ><a class="chapter-card" href="chapter-07.html"
+          ><div class="chapter-number">07</div>
+          <div class="eyebrow">JS Part 2</div>
+          <h3>Functions, Objects & DOM</h3>
+          <p>จากฟังก์ชันและ closure สู่ object และหน้าเว็บที่โต้ตอบได้</p>
+          <div class="card-footer">
+            <span data-chapter-status="07">พร้อมให้เริ่มอ่าน</span
+            ><span aria-hidden="true">↗</span>
+          </div></a
+        ><a class="chapter-card" href="chapter-08.html"
+          ><div class="chapter-number">08</div>
+          <div class="eyebrow">ECMAScript</div>
+          <h3>Modern JavaScript</h3>
+          <p>
+            เข้าใจ ECMAScript, Promise และฟีเจอร์ที่ช่วยให้เขียนโค้ดง่ายขึ้น
+          </p>
+          <div class="card-footer">
+            <span data-chapter-status="08">พร้อมให้เริ่มอ่าน</span
+            ><span aria-hidden="true">↗</span>
+          </div></a
+        >
+      </div>
+      <section class="panel" style="margin-top: 28px">
+        <h2>เส้นทางอ่านที่แนะนำ</h2>
+        <div class="howto" style="margin-top: 15px">
+          <div>
+            <h3>บท 6 · รากฐาน</h3>
+            <p>
+              รู้ว่าข้อมูลเก็บอย่างไร เปรียบเทียบอย่างไร และโค้ดวิ่งไปทางไหน
+            </p>
+          </div>
+          <div>
+            <h3>บท 7 · ประกอบเป็นเว็บ</h3>
+            <p>จัดโค้ดเป็นฟังก์ชันและ object แล้วเชื่อมเข้ากับ DOM และ event</p>
+          </div>
+          <div>
+            <h3>บท 8 · เขียนให้คล่องขึ้น</h3>
+            <p>เข้าใจงาน asynchronous และเลือกใช้เครื่องมือของภาษาแต่ละรุ่น</p>
+          </div>
+        </div>
+        <p class="source-note">
+          เรียบเรียงจากสไลด์สามไฟล์ที่ให้มา โดยใช้ไฟล์ ECMAScript Version
+          เป็นบทที่ 8 ตามที่ยืนยัน สรุปนี้เป็นสื่อทบทวน ไม่ใช่ข้อสอบจริง
+          และไม่ใช่เอกสารทางการของรายวิชา
+        </p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span>study garden. &nbsp; เติบโตทีละบท ทบทวนทีละนิด 🌱</span
+        ><span>สร้างเพื่อทบทวนด้วยตัวเอง · ITDS241 · 2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

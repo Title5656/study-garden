@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="สรุปเตรียมสอบ ITDS241 บท 6–8 พร้อมกิจกรรมทีละขั้น Flashcards และ Quiz พร้อมเฉลย"
+    />
+    <meta name="theme-color" content="#f8f7f3" />
+    <title>บท 8 · Modern JavaScript · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/style.css" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js"></script>
+    <script defer src="../../assets/content.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
+    ></script>
+    <script defer src="../../assets/app.js"></script>
+    <script defer src="../../assets/labs.js"></script>
+  </head>
+  <body data-subject="itds241" data-chapter="08">
+    <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><svg
+            class="brand-mark"
+            viewBox="0 0 40 40"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M20 34V17M20 25C7 25 7 15 7 15s12-1 13 10ZM20 19C20 8 33 6 33 6s2 14-13 13Z"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+            /></svg
+          >study garden<span class="accent">.</span></a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาของฉัน</a
+          ><a class="desktop-link" href="../../subjects/itds241/index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap">
+      <nav class="breadcrumb" aria-label="เส้นทาง">
+        <a href="../../index.html">วิชาของฉัน</a><span>/</span
+        ><a href="index.html">ITDS241</a><span>/</span><span>บทที่ 8</span>
+      </nav>
+      <header class="chapter-hero">
+        <div class="eyebrow">CHAPTER 08 · ECMAScript</div>
+        <h1>Modern JavaScript</h1>
+        <p>เข้าใจ ECMAScript, Promise และฟีเจอร์ที่ช่วยให้เขียนโค้ดง่ายขึ้น</p>
+        <div class="tags">
+          <span class="pill lilac">เวลาอ่านโดยประมาณ 35–45 นาที</span
+          ><span class="pill">Quiz 10 ข้อ</span
+          ><span class="tag" data-chapter-status="08">พร้อมให้เริ่มอ่าน</span>
+        </div>
+      </header>
+      <div class="lesson-layout">
+        <aside class="toc" aria-label="สารบัญบทเรียน">
+          <h2>ในบทนี้</h2>
+          <a href="#standard">01 · มาตรฐานภาษา ≠ การรองรับ</a
+          ><a href="#es2015">02 · ES2015: เขียนให้น้อย แต่ชัดขึ้น</a
+          ><a href="#async">03 · Promise และ async/await</a
+          ><a href="#timeline">04 · แผนที่ฟีเจอร์ ES2016–ES2023</a
+          ><a href="#nullish">05 · เลือกค่า default ให้ถูก</a
+          ><a href="#recent">06 · ES2024–2026 และจุดที่ต้องแยกให้ออก</a>
+          <div class="toc-tools">
+            <a href="#flashcards">▧ Flashcards</a
+            ><a href="#quiz">✓ Quiz ท้ายบท</a
+            ><a href="#sources">ที่มาและหมายเหตุ</a>
+          </div>
+        </aside>
+        <article class="lesson-content">
+          <section class="lesson-section" id="standard">
+            <div class="section-kicker">01 / STUDY NOTES</div>
+            <h2>01 · มาตรฐานภาษา ≠ การรองรับ</h2>
+            <p>
+              <strong>ECMAScript (ES)</strong> คือข้อกำหนดว่าภาษาทำงานอย่างไร
+              ส่วน JavaScript engine เป็นผู้ทำให้ข้อกำหนดนั้นทำงานจริง HTML DOM
+              และ API ของเบราว์เซอร์เป็นอีกชั้นหนึ่ง การรู้ว่าฟีเจอร์อยู่ใน ES
+              รุ่นใดจึงไม่ใช่หลักฐานว่าใช้ได้ในทุกเครื่อง
+            </p>
+            <p>
+              ES6 คือชื่อรุ่นเดียวกับ ES2015 จากนั้นมีการตั้งชื่อรุ่นตามปี
+              จำเส้นทางแบบ “ปัญหาที่ฟีเจอร์ช่วยแก้”
+              จะเข้าใจง่ายกว่าท่องรายการคำศัพท์อย่างเดียว
+            </p>
+            <div class="note warm">
+              <strong>อ่านสไลด์อย่างมีบริบท</strong
+              ><br />ไฟล์นี้รวมฟีเจอร์หลายปีและข้อเสนอทดลองไว้ด้วยกัน
+              เว็บแยกแนวคิดออกจากสถานะมาตรฐาน
+              และมีหมายเหตุแก้จุดคลาดเคลื่อนท้ายบท ตรวจเอกสารอ้างอิงเมื่อ 18
+              ตุลาคม 2026
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">สิ่งที่ต้องแยก</th>
+                    <th scope="col">คำถามที่ควรถาม</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>มาตรฐาน (specification)</td>
+                    <td>ภาษาได้กำหนดพฤติกรรมนี้อย่างเป็นทางการหรือยัง?</td>
+                  </tr>
+                  <tr>
+                    <td>ข้อเสนอ (proposal)</td>
+                    <td>กำลังพัฒนา เปลี่ยนแปลง หรือถูกยุติไปหรือไม่?</td>
+                  </tr>
+                  <tr>
+                    <td>Runtime support</td>
+                    <td>browser ที่ใช้อยู่มี API นี้จริงไหม?</td>
+                  </tr>
+                  <tr>
+                    <td>Polyfill / Transpilation</td>
+                    <td>
+                      ขาด method ที่เสริมได้ หรือ syntax ที่ต้องแปลงก่อนรัน?
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              สำหรับเว็บนี้ ทุกกิจกรรมใช้ JavaScript ที่รองรับแพร่หลาย
+              ส่วนฟีเจอร์ใหม่บางตัวเป็นตัวอย่างให้อ่าน ไม่ได้เรียก API
+              รุ่นใหม่โดยไม่มีการตรวจ
+            </p>
+          </section>
+          <section class="lesson-section" id="es2015">
+            <div class="section-kicker">02 / STUDY NOTES</div>
+            <h2>02 · ES2015: เขียนให้น้อย แต่ชัดขึ้น</h2>
+            <p>
+              ES2015 ทำให้การจัดข้อมูลและฟังก์ชันคล่องขึ้น: let/const
+              จำกัดขอบเขต, arrow ย่อ callback, class จัดแบบแผน object, template
+              literal แทรกค่าในข้อความ และ default parameter ลดการตรวจค่าซ้ำ
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const topic = &quot;JavaScript&quot;;
+const greeting = `วันนี้อ่าน ${topic}`;
+const welcome = (name = &quot;เพื่อน&quot;) =&gt; `สวัสดี ${name}`;
+const scores = [5, 8, 10];
+const [first, ...others] = scores; // destructuring + rest
+const copy = [...scores, 12];     // spread → [5, 8, 10, 12]
+const user = { name: &quot;Mint&quot;, level: 2 };
+const { name } = user;
+for (const score of scores) { console.log(score); }</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">เครื่องมือ</th>
+                    <th scope="col">จำเป็นภาพ</th>
+                    <th scope="col">ระวัง</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Template literal</td>
+                    <td>ข้อความที่มีช่อง ${expression}</td>
+                    <td>
+                      ใช้ backtick; tagged template
+                      ส่งส่วนข้อความกับค่าให้ฟังก์ชันจัดการ
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Default parameter</td>
+                    <td>ค่าเริ่มต้นของช่องรับค่า</td>
+                    <td>
+                      ใช้เมื่อ argument เป็น undefined หรือไม่ได้ส่ง ไม่แทน null
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Spread (...)</td>
+                    <td>กระจายสมาชิกออก</td>
+                    <td>
+                      สำเนาเป็น shallow copy; object spread มาตรฐานใน ES2018
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Rest (...)</td>
+                    <td>รวบรวมค่าที่เหลือ</td>
+                    <td>rest parameter ต้องอยู่ท้ายพารามิเตอร์</td>
+                  </tr>
+                  <tr>
+                    <td>Destructuring</td>
+                    <td>หยิบข้อมูลตามตำแหน่งหรือชื่อ</td>
+                    <td>ไม่ได้ deep clone object</td>
+                  </tr>
+                  <tr>
+                    <td>for…of</td>
+                    <td>หยิบค่าทีละตัวจาก iterable</td>
+                    <td>plain object ไม่ iterable โดยอัตโนมัติ</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>Map / Set และกลุ่ม Weak</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">โครงสร้าง</th>
+                    <th scope="col">สิ่งที่เก็บ</th>
+                    <th scope="col">เมื่อไรควรใช้</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Map</td>
+                    <td>key–value; key เป็นค่าได้หลายชนิด</td>
+                    <td>ต้องวนรายการหรืออ่าน size</td>
+                  </tr>
+                  <tr>
+                    <td>Set</td>
+                    <td>ค่าที่ไม่ซ้ำ</td>
+                    <td>ตัดค่าซ้ำหรือเช็กสมาชิก</td>
+                  </tr>
+                  <tr>
+                    <td>WeakMap</td>
+                    <td>key แบบ weak reference</td>
+                    <td>
+                      ผูก metadata กับ object โดยไม่ยืดอายุ object เพราะ key
+                      นี้เพียงอย่างเดียว
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>WeakSet</td>
+                    <td>สมาชิกที่ถือแบบ weak reference</td>
+                    <td>ติดตาม object โดยไม่ต้องไล่สมาชิกทั้งหมด</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              WeakMap ไม่มี size หรือ iterator สำหรับไล่รายการ key ปัจจุบันใช้
+              object และ non-registered symbol เป็น key ได้ (การรองรับ symbol
+              เป็นส่วนเพิ่มใน ES2023) อย่าสรุปว่า Map “เร็วกว่าเสมอ”
+              เพราะความเร็วขึ้นกับงานและ engine
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const unique = [...new Set([&quot;DOM&quot;, &quot;JS&quot;, &quot;DOM&quot;])]; // [&quot;DOM&quot;, &quot;JS&quot;]
+const points = new Map();
+points.set(&quot;Mint&quot;, 10);
+points.get(&quot;Mint&quot;); // 10
+&quot;ha&quot;.repeat(2); // &quot;haha&quot;
+[4, 9, 12].find(n =&gt; n &gt; 5);      // 9
+[4, 9, 12].findIndex(n =&gt; n &gt; 5); // 1
+Object.is(NaN, NaN);              // true ต่างจาก NaN === NaN</code></pre>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · const a = [{x: 1}]; const b =
+                [...a]; b[0].x = 9; a เปลี่ยนไหม?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="spread-answer"
+                aria-expanded="false"
+                aria-controls="spread-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="spread-answer" hidden>
+                a[0].x เป็น 9 เพราะ array ใหม่ยังเก็บการอ้างอิง object ก้อนเดิม
+                spread คัดลอกเพียงชั้นนอก
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="async">
+            <div class="section-kicker">03 / STUDY NOTES</div>
+            <h2>03 · Promise และ async/await</h2>
+            <p>
+              งานอย่างขอข้อมูลใช้เวลาจบไม่เท่ากัน Promise
+              เป็นตัวแทนผลลัพธ์ที่ยังไม่มาถึง คล้ายใบรับงาน: ตอนรับงานยัง
+              <strong>pending</strong> แล้วเปลี่ยนเป็น
+              <strong>fulfilled</strong> เมื่อสำเร็จ หรือ
+              <strong>rejected</strong> เมื่อล้มเหลว สองสถานะหลังเรียกรวมว่า
+              settled
+            </p>
+            <p>
+              Promise เดิม settled ได้ครั้งเดียว; <code>then</code> รับผลสำเร็จ
+              <code>catch</code> รับข้อผิดพลาด และ
+              <code>finally</code> ทำงานปิดท้ายโดยทั่วไปไม่ว่าผลจะเป็นอย่างไร
+              โดย finally เป็นส่วนเพิ่มภายหลัง ES2015
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>function loadNote(ok) {
+  return new Promise((resolve, reject) =&gt; {
+    if (ok) resolve(&quot;บทเรียนพร้อมแล้ว&quot;);
+    else reject(new Error(&quot;โหลดไม่สำเร็จ&quot;));
+  });
+}
+loadNote(true)
+  .then(note =&gt; console.log(note))
+  .catch(error =&gt; console.log(error.message))
+  .finally(() =&gt; console.log(&quot;หยุดแสดงตัวหมุน&quot;));</code></pre>
+            <div class="lab" id="promise-lab">
+              <h3>Promise lab · เลือกผลของงาน</h3>
+              <p class="small muted">
+                แบบจำลองสถานะเพื่อการเรียนรู้ ไม่มีการส่งคำขอเครือข่ายจริง
+                กดสร้างใหม่เพื่อเริ่มจาก pending อีกครั้ง
+              </p>
+              <div id="promise-state" class="promise-state" aria-live="polite">
+                pending …
+              </div>
+              <div class="actions">
+                <button class="btn soft" id="promise-resolve">
+                  จำลอง resolve</button
+                ><button class="btn" id="promise-reject">จำลอง reject</button
+                ><button class="btn" id="promise-reset">
+                  สร้าง Promise ใหม่
+                </button>
+              </div>
+              <p id="promise-log" class="lab-output small" aria-live="polite">
+                สร้าง Promise ใหม่ ยังไม่มีผลลัพธ์ เลือกจำลองผลสำเร็จหรือล้มเหลว
+              </p>
+            </div>
+            <h3>async/await อ่านเหมือนลำดับงาน แต่ไม่หยุดทั้งเว็บ</h3>
+            <p>
+              async function คืน Promise เสมอ ส่วน await
+              พักการทำงานต่อของฟังก์ชันนั้นจน Promise settled ถ้า rejected จะ
+              throw ที่จุด await จึงใช้ try…catch ได้
+              งานส่วนอื่นของเว็บยังทำต่อได้เมื่อไม่ถูกโค้ด synchronous
+              ที่หนักบล็อกไว้
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>async function readNote() {
+  try {
+    const note = await loadNote(true);
+    console.log(note);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+readNote();
+console.log(&quot;ข้อความนี้ไม่ต้องรอ readNote จบ&quot;);</code></pre>
+            <p>
+              <code>for await…of</code> วนค่าจาก async iterable
+              โดยรอค่าที่ได้ในแต่ละรอบ แต่ถ้าภายใน body เรียกฟังก์ชัน async
+              อีกตัวแล้วไม่ await งานนั้น
+              ก็ไม่ได้แปลว่าจะรอให้งานนั้นเสร็จก่อนรอบถัดไป
+            </p>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · async function f() { return 3;
+                } แล้ว f() === 3 เป็น true ไหม?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="async-answer"
+                aria-expanded="false"
+                aria-controls="async-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="async-answer" hidden>
+                เป็น false เพราะ f() คืน Promise ไม่ใช่เลข 3 โดยตรง ต้องใช้
+                await f() ภายในบริบทที่อนุญาต หรือ f().then(...) เพื่ออ่านค่า
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="timeline">
+            <div class="section-kicker">04 / STUDY NOTES</div>
+            <h2>04 · แผนที่ฟีเจอร์ ES2016–ES2023</h2>
+            <p>
+              ตารางนี้จับคู่รุ่นกับปัญหาที่แก้ ใช้เป็นจุดทวนก่อนทำโจทย์
+              ไม่ใช่รายการฟีเจอร์ทั้งหมดของแต่ละมาตรฐาน
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">รุ่น</th>
+                    <th scope="col">เครื่องมือในสไลด์</th>
+                    <th scope="col">ภาพจำ / ตัวอย่าง</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2016</td>
+                    <td>includes, **</td>
+                    <td>[2, 4].includes(4) → true; 2 ** 3 → 8</td>
+                  </tr>
+                  <tr>
+                    <td>2017</td>
+                    <td>
+                      padStart/padEnd, Object.values/entries, descriptors,
+                      async/await
+                    </td>
+                    <td>
+                      "7".padStart(2, "0") → "07"; entries ได้คู่ [key, value]
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2018</td>
+                    <td>Object rest/spread, for await…of</td>
+                    <td>แยก/รวม property และวนข้อมูลที่มาภายหลัง</td>
+                  </tr>
+                  <tr>
+                    <td>2019</td>
+                    <td>flat, flatMap, fromEntries, trimStart/trimEnd</td>
+                    <td>
+                      [1, [2]].flat() → [1, 2]; flatMap ทำ map แล้ว flatten
+                      หนึ่งระดับ
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2020</td>
+                    <td>BigInt, ??, ?., matchAll</td>
+                    <td>
+                      เก็บจำนวนเต็มใหญ่; เลือก fallback; อ่าน property
+                      ที่อาจไม่มี
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2021</td>
+                    <td>1_000, replaceAll, &&= / ||= / ??=, WeakRef</td>
+                    <td>
+                      คั่นหลักเลขเพื่ออ่านง่าย; แทนข้อความทุกตำแหน่ง;
+                      กำหนดค่าตามเงื่อนไข
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2022</td>
+                    <td>at, Object.hasOwn, Error cause, top-level await</td>
+                    <td>
+                      at(-1) อ่านตัวท้าย; hasOwn ไม่รวม property ที่สืบทอด;
+                      await ระดับบนใน module
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2023</td>
+                    <td>
+                      findLast/findLastIndex, symbol WeakMap keys,
+                      change-by-copy
+                    </td>
+                    <td>ค้นย้อนจากท้าย และแก้ array ผ่านสำเนาใหม่</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h3>รายละเอียดสั้น ๆ ที่ช่วยอ่านโจทย์</h3>
+            <ul>
+              <li>
+                <code>Object.entries()</code> คืนคู่ key–value ของ own
+                enumerable string-keyed properties ส่วน
+                <code>Object.fromEntries()</code> ประกอบคู่กลับเป็น object ใหม่
+                และ
+                <code>Object.getOwnPropertyDescriptors()</code>
+                อ่านรายละเอียดอย่าง writable/get/set
+              </li>
+              <li>
+                Trailing comma ในพารามิเตอร์/อาร์กิวเมนต์ช่วยจัดหลายบรรทัด แต่
+                JSON ไม่อนุญาต trailing comma
+              </li>
+              <li>
+                <code>matchAll()</code> คืน iterator ของผล match; ถ้าส่ง RegExp
+                ให้ใช้ flag g เมื่อต้องการจับทุกตำแหน่ง
+              </li>
+              <li>
+                <code>WeakRef</code> และ finalization ไม่รับประกันเวลาที่
+                garbage collection จะเกิด อย่าใช้เป็นกำหนดเวลางานสำคัญ
+              </li>
+              <li>
+                <code>toSorted()</code> และ <code>toReversed()</code> คืน array
+                ใหม่ ขณะที่ sort/reverse แก้ต้นฉบับ แต่การคัดลอกยังไม่ใช่ deep
+                copy
+              </li>
+            </ul>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const original = [30, 2, 10];
+const sorted = original.toSorted((a, b) =&gt; a - b);
+// original: [30, 2, 10]   sorted: [2, 10, 30]
+const last = original.at(-1); // 10
+const latest = [3, 8, 12].findLast(n =&gt; n &lt; 10); // 8</code></pre>
+          </section>
+          <section class="lesson-section" id="nullish">
+            <div class="section-kicker">05 / STUDY NOTES</div>
+            <h2>05 · เลือกค่า default ให้ถูก</h2>
+            <p>
+              ค่า 0 อาจหมายถึงคะแนนจริง ไม่ใช่ข้อมูลที่หายไป การใช้
+              <code>||</code> จึงอาจแทนค่าที่ตั้งใจเก็บด้วย fallback
+              โดยไม่รู้ตัว ส่วน <code>??</code> ถามเฉพาะว่าเป็น null หรือ
+              undefined หรือไม่
+            </p>
+            <div class="lab" id="nullish-lab">
+              <h3>ลองเปลี่ยนค่า แล้วเทียบ || กับ ??</h3>
+              <label for="nullish-value">ค่าเริ่มต้น </label
+              ><select id="nullish-value">
+                <option value="zero">0</option>
+                <option value="empty">"" (ข้อความว่าง)</option>
+                <option value="no">false</option>
+                <option value="nil">null</option>
+                <option value="undef">undefined</option>
+                <option value="text">"พร้อม"</option>
+              </select>
+              <div class="two-col" style="margin-top: 18px">
+                <div class="mini-card">
+                  <code>value || "สำรอง"</code>
+                  <p id="or-output" class="lab-output" aria-live="polite"></p>
+                </div>
+                <div class="mini-card">
+                  <code>value ?? "สำรอง"</code>
+                  <p
+                    id="nullish-output"
+                    class="lab-output"
+                    aria-live="polite"
+                  ></p>
+                </div>
+              </div>
+            </div>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const user = { score: 0 };
+const score = user.score ?? 10;        // 0
+const city = user.address?.city ?? &quot;ยังไม่ระบุ&quot;;
+let settings = { volume: 0 };
+settings.volume ??= 50;                // ยังคงเป็น 0
+settings.language ??= &quot;th&quot;;           // เพิ่ม language</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Operator</th>
+                    <th scope="col">จะใช้/กำหนดค่าฝั่งขวาเมื่อ</th>
+                    <th scope="col">รักษาค่า 0 ไหม</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>|| / ||=</td>
+                    <td>ฝั่งซ้ายเป็น falsy</td>
+                    <td>ไม่รักษา</td>
+                  </tr>
+                  <tr>
+                    <td>?? / ??=</td>
+                    <td>ฝั่งซ้ายเป็น null หรือ undefined</td>
+                    <td>รักษา</td>
+                  </tr>
+                  <tr>
+                    <td>&& / &&=</td>
+                    <td>ฝั่งซ้ายเป็น truthy</td>
+                    <td>กรณี 0 ไม่ประเมินฝั่งขวา</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <code>?.</code> ช่วยเมื่อฐานของการเข้าถึงเป็น null/undefined
+              แต่ไม่ได้ทำให้ตัวแปรที่ไม่เคยประกาศใช้ได้ และไม่ได้ดักทุก
+              exception เช่น <code>missingVariable?.name</code> ยัง
+              ReferenceError ได้
+            </p>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · 9007199254740993n + 1
+                ทำได้ไหม?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="bigint-answer"
+                aria-expanded="false"
+                aria-controls="bigint-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="bigint-answer" hidden>
+                ไม่ได้ เป็น TypeError เพราะกำลังบวก BigInt กับ Number ต้องใช้ 1n
+                ให้ชนิดตรงกัน การแปลง BigInt ใหญ่เป็น Number
+                อาจสูญเสียความแม่นยำ
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="recent">
+            <div class="section-kicker">06 / STUDY NOTES</div>
+            <h2>06 · ES2024–2026 และจุดที่ต้องแยกให้ออก</h2>
+            <p>
+              หัวข้อช่วงท้ายของสไลด์ควรอ่านทั้งแนวคิดและหมายเหตุประกอบ
+              โดยเฉพาะเรื่องชื่อ API ปีมาตรฐาน และ syntax ทดลอง
+            </p>
+            <h3>ฟีเจอร์ช่วงใหม่ที่ปรากฏในเอกสาร</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">กลุ่ม</th>
+                    <th scope="col">แนวคิดหลัก</th>
+                    <th scope="col">ข้อควรระวัง</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Unicode ที่สมบูรณ์</td>
+                    <td>
+                      isWellFormed / toWellFormed ตรวจหรือแก้ lone surrogate ใน
+                      string
+                    </td>
+                    <td>toWellFormed ไม่ใช่การ normalize หรือแปลภาษา</td>
+                  </tr>
+                  <tr>
+                    <td>Shared memory</td>
+                    <td>Atomics.waitAsync รอเงื่อนไขแบบไม่บล็อก thread</td>
+                    <td>
+                      ชื่อ Atomics.waitSync ในสไลด์ไม่ใช่ API มาตรฐาน;
+                      แบบบล็อกชื่อ Atomics.wait
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>JSON modules</td>
+                    <td>import … with { type: "json" } ระบุชนิดข้อมูล</td>
+                    <td>ตัวอย่างเป็น module; ขึ้นกับ browser/server support</td>
+                  </tr>
+                  <tr>
+                    <td>Iterator helpers</td>
+                    <td>map/filter/take บน iterator ช่วยประมวลผลตามที่ขอ</td>
+                    <td>lazy ต่างจาก array.map ที่สร้าง array ทันที</td>
+                  </tr>
+                  <tr>
+                    <td>Set methods</td>
+                    <td>
+                      union, intersection, difference, symmetricDifference
+                      และการตรวจความสัมพันธ์
+                    </td>
+                    <td>
+                      เช่น A={1,2}, B={2,3}: union={1,2,3}; intersection={2}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>RegExp รุ่นใหม่</td>
+                    <td>
+                      escape ข้อความ literal, modifier เฉพาะส่วน, ชื่อ capture
+                      ซ้ำในทางเลือกที่อนุญาต
+                    </td>
+                    <td>อย่าใช้ RegExp.escape เป็นการ escape HTML</td>
+                  </tr>
+                  <tr>
+                    <td>Promise.try</td>
+                    <td>
+                      เรียกงานที่อาจ throw หรือคืน Promise แล้วจัดผลเป็น Promise
+                    </td>
+                    <td>ช่วยรวมเส้นทางจัดการข้อผิดพลาด</td>
+                  </tr>
+                  <tr>
+                    <td>Float16Array</td>
+                    <td>เก็บ float ขนาด 16 บิต</td>
+                    <td>ใช้พื้นที่น้อยลงแต่ precision และช่วงค่าลดลง</td>
+                  </tr>
+                  <tr>
+                    <td>Math.sumPrecise</td>
+                    <td>ลดความคลาดเคลื่อนจากการรวม Number ทีละค่า</td>
+                    <td>
+                      ผลสุดท้ายยังเป็น floating point;
+                      ไม่ได้แก้ปัญหาทศนิยมทั้งหมด
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Error.isError</td>
+                    <td>ตรวจ Error ข้าม realm เช่น iframe</td>
+                    <td>ต่างจาก instanceof ที่อาจไม่ผ่านข้าม realm</td>
+                  </tr>
+                  <tr>
+                    <td>Array.fromAsync</td>
+                    <td>รวบรวมค่าจาก iterable/async iterable เป็น array</td>
+                    <td>คืน Promise; ต้อง await เมื่อต้องการ array</td>
+                  </tr>
+                  <tr>
+                    <td>Map.getOrInsert</td>
+                    <td>อ่านค่าหรือใส่ค่าเริ่มต้นถ้ายังไม่มี key</td>
+                    <td>
+                      รับค่าโดยตรง; แบบคำนวณผ่าน callback คือ
+                      getOrInsertComputed
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>JSON.rawJSON</td>
+                    <td>เก็บ raw JSON text เพื่อใช้ขณะ stringify</td>
+                    <td>
+                      ไม่ย้อนแก้ Number ที่เสีย precision ไปแล้ว และไม่ทำให้การ
+                      parse ฝั่งรับแม่นยำอัตโนมัติ
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Uint8Array encodings</td>
+                    <td>toBase64/toHex และ fromBase64/fromHex</td>
+                    <td>
+                      ทำงานกับ byte; Base64 เป็น encoding ไม่ใช่ encryption
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="source-note">
+              ชื่อ API และข้อจำกัดเสริมตรวจจาก
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/waitAsync"
+                >MDN: Atomics.waitAsync</a
+              >,
+              <a
+                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sumPrecise"
+                >MDN: Math.sumPrecise</a
+              >
+              และ
+              <a
+                href="https://github.com/tc39/proposals/blob/main/finished-proposals.md"
+                >TC39: Finished proposals</a
+              >
+            </p>
+            <h3>หมายเหตุแก้ความคลาดเคลื่อนจากสไลด์</h3>
+            <ul>
+              <li>
+                <strong>Top-level await</strong> อยู่ใน ES2022 และใช้ใน module
+                ไม่ใช่ฟีเจอร์ที่เพิ่งมีใน ES2024
+              </li>
+              <li>
+                <strong>Pipeline operator</strong> และ
+                <strong>decorators</strong> ไม่ควรถูกจำรวมว่าเป็นฟีเจอร์ ES2024
+                ทั้งหมด ต้องตรวจสถานะข้อเสนอและ syntax ที่ใช้จริง
+              </li>
+              <li>
+                <strong>Records / Tuples</strong> รูปแบบ <code>#{…}</code> และ
+                <code>#[…]</code> ในสไลด์ไม่ใช่ syntax มาตรฐานที่นำไปเปิดใน
+                browser ได้ตามปกติ
+              </li>
+              <li>
+                <strong>Temporal</strong> จัดการวัน เวลา
+                และเขตเวลาได้ละเอียดกว่า Date; รายการ TC39
+                ที่ตรวจระบุเป็นข้อเสนอที่เสร็จแล้วและคาดเผยแพร่ปี 2027
+                จึงไม่ควรยึดหมายเหตุ Stage 3 ในสไลด์เป็นสถานะปัจจุบัน
+              </li>
+            </ul>
+            <p class="source-note">
+              ตรวจสถานะได้จาก
+              <a href="https://github.com/tc39/proposals"
+                >TC39 Active proposals</a
+              >,
+              <a
+                href="https://github.com/tc39/proposals/blob/main/inactive-proposals.md"
+                >Inactive proposals</a
+              >
+              และ
+              <a
+                href="https://github.com/tc39/proposals/blob/main/finished-proposals.md"
+                >Finished proposals</a
+              >
+              สถานะข้อเสนอเปลี่ยนตามเวลา
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>// ตรวจความสามารถก่อนใช้ method ใหม่
+if (typeof Math.sumPrecise === &quot;function&quot;) {
+  console.log(Math.sumPrecise([1e16, 1, -1e16])); // 1
+} else {
+  console.log(&quot;เครื่องนี้ยังไม่มี Math.sumPrecise&quot;);
+}
+// ไม่ใช้การบวกธรรมดาเป็น fallback ที่อ้างว่าแม่นยำเท่ากัน</code></pre>
+            <div class="note">
+              เวลาอ่านสอบ: จำวัตถุประสงค์และตัวอย่างของแต่ละฟีเจอร์ก่อน
+              แล้วใช้หมายเหตุแยก “เนื้อหาในสไลด์” จาก “ข้อกำหนดและการรองรับจริง”
+              หากข้อสอบถามอิงปีหรือ syntax ที่คลาดเคลื่อน ควรสอบถามผู้สอนให้ชัด
+            </div>
+          </section>
+          <section class="lesson-section" id="flashcards">
+            <div class="section-kicker">ACTIVE RECALL</div>
+            <h2>ศัพท์สำคัญ จำทีละใบ</h2>
+            <p class="muted small">
+              ลองอธิบายคำศัพท์ก่อนกดพลิก ใช้ Enter หรือ Space แทนการคลิกได้
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">นึกคำตอบก่อนพลิก</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <div class="section-kicker">CHECK YOUR UNDERSTANDING</div>
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ลองทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources">
+            <h2>ที่มาและหมายเหตุ</h2>
+            <p>
+              สไลด์หลัก: ITDS241-ECMAScript Version_Updated_2026Aug06.pdf
+              (ยืนยันเป็นบท 8) หน้า 4–7 (มาตรฐาน), 9–33 (ES2015), 35–81
+              (ES2016–2023), 83–123 (ES2024–2026 และข้อเสนอ)
+            </p>
+            <p>
+              มีการเสริมความถูกต้องของ shallow copy, async/await, WeakMap,
+              Atomics, top-level await, Math.sumPrecise และสถานะข้อเสนอ
+              โดยแยกหมายเหตุจากสรุปบทเรียน
+              ลิงก์เอกสารทางการอยู่ใกล้เนื้อหาที่เกี่ยวข้อง
+            </p>
+            <p>
+              เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF (อาจต่างจากเลขที่พิมพ์บนสไลด์)
+              ตัวอย่างและคำถามในเว็บเขียนขึ้นใหม่เพื่อทบทวน ไม่ได้คัดลอกข้อสอบ
+            </p>
+          </section>
+          <button class="btn soft" data-mark-read aria-pressed="false">
+            ทำเครื่องหมายว่าอ่านแล้ว ✓
+          </button>
+          <nav class="chapter-end" aria-label="เปลี่ยนบท">
+            <a class="btn" href="chapter-07.html">← บทก่อนหน้า</a
+            ><a class="btn primary" href="index.html">กลับไปดูความคืบหน้า →</a>
+          </nav>
+        </article>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span>study garden. &nbsp; เติบโตทีละบท ทบทวนทีละนิด 🌱</span
+        ><span>สร้างเพื่อทบทวนด้วยตัวเอง · ITDS241 · 2026</span>
+      </div>
+    </footer>
+  </body>
+</html>

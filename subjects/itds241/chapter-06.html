@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="สรุปเตรียมสอบ ITDS241 บท 6–8 พร้อมกิจกรรมทีละขั้น Flashcards และ Quiz พร้อมเฉลย"
+    />
+    <meta name="theme-color" content="#f8f7f3" />
+    <title>บท 6 · JavaScript Essentials · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../assets/style.css" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js"></script>
+    <script defer src="../../assets/content.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
+    ></script>
+    <script defer src="../../assets/app.js"></script>
+    <script defer src="../../assets/labs.js"></script>
+  </head>
+  <body data-subject="itds241" data-chapter="06">
+    <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><svg
+            class="brand-mark"
+            viewBox="0 0 40 40"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M20 34V17M20 25C7 25 7 15 7 15s12-1 13 10ZM20 19C20 8 33 6 33 6s2 14-13 13Z"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+            /></svg
+          >study garden<span class="accent">.</span></a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาของฉัน</a
+          ><a class="desktop-link" href="../../subjects/itds241/index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap">
+      <nav class="breadcrumb" aria-label="เส้นทาง">
+        <a href="../../index.html">วิชาของฉัน</a><span>/</span
+        ><a href="index.html">ITDS241</a><span>/</span><span>บทที่ 6</span>
+      </nav>
+      <header class="chapter-hero">
+        <div class="eyebrow">CHAPTER 06 · JS Part 1</div>
+        <h1>JavaScript Essentials</h1>
+        <p>ตัวแปร ชนิดข้อมูล ตัวดำเนินการ และการควบคุมลำดับการทำงาน</p>
+        <div class="tags">
+          <span class="pill lilac">เวลาอ่านโดยประมาณ 25–35 นาที</span
+          ><span class="pill">Quiz 10 ข้อ</span
+          ><span class="tag" data-chapter-status="06">พร้อมให้เริ่มอ่าน</span>
+        </div>
+      </header>
+      <div class="lesson-layout">
+        <aside class="toc" aria-label="สารบัญบทเรียน">
+          <h2>ในบทนี้</h2>
+          <a href="#big-picture">01 · JavaScript อยู่ตรงไหน?</a
+          ><a href="#variables">02 · ตัวแปรและชนิดข้อมูล</a
+          ><a href="#objects">03 · Object และเครื่องมือพื้นฐาน</a
+          ><a href="#operators">04 · เปรียบเทียบและตัดสินใจ</a
+          ><a href="#loops">05 · มองเห็น loop ทีละขั้น</a
+          ><a href="#game">06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</a>
+          <div class="toc-tools">
+            <a href="#flashcards">▧ Flashcards</a
+            ><a href="#quiz">✓ Quiz ท้ายบท</a
+            ><a href="#sources">ที่มาและหมายเหตุ</a>
+          </div>
+        </aside>
+        <article class="lesson-content">
+          <section class="lesson-section" id="big-picture">
+            <div class="section-kicker">01 / STUDY NOTES</div>
+            <h2>01 · JavaScript อยู่ตรงไหน?</h2>
+            <p>
+              นึกถึงเว็บเป็นโต๊ะอ่านหนังสือ:
+              <strong>HTML</strong> บอกว่ามีอะไรอยู่บนโต๊ะ
+              <strong>CSS</strong> จัดให้สวยและอ่านง่าย ส่วน
+              <strong>JavaScript</strong> ทำให้สิ่งบนโต๊ะตอบสนอง เช่น
+              กดเปิดเฉลยแล้วเห็นคำตอบ หรือเลือกคำตอบแล้วได้คะแนน
+            </p>
+            <p>
+              เบราว์เซอร์มี JavaScript engine สำหรับรันภาษา และมี Web API อย่าง
+              DOM ให้โค้ดจัดการหน้าเว็บได้ ตัวภาษาไม่ได้เท่ากับ DOM และ
+              JavaScript ก็ทำงานนอกเบราว์เซอร์ได้ด้วย
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">ส่วน</th>
+                    <th scope="col">หน้าที่</th>
+                    <th scope="col">ตัวอย่างในเว็บนี้</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>HTML</td>
+                    <td>โครงสร้างและเนื้อหา</td>
+                    <td>หัวข้อบทเรียนกับปุ่ม Quiz</td>
+                  </tr>
+                  <tr>
+                    <td>CSS</td>
+                    <td>รูปแบบการแสดงผล</td>
+                    <td>สีม่วงอ่อนและเลย์เอาต์มือถือ</td>
+                  </tr>
+                  <tr>
+                    <td>JavaScript</td>
+                    <td>ข้อมูลและพฤติกรรม</td>
+                    <td>ตรวจคำตอบและพลิก Flashcard</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>&lt;!-- เรียกไฟล์ภายนอก และรอให้ HTML ถูก parse ก่อนทำงาน --&gt;
+&lt;script defer src=&quot;assets/app.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <p>
+              เขียนโค้ดระหว่างแท็ก <code>&lt;script&gt;</code> หรือแยกไฟล์
+              <code>.js</code> ก็ได้ โดยในไฟล์ .js ไม่ต้องใส่แท็ก script อีก ใช้
+              <code>console.log()</code> ตรวจค่าระหว่างพัฒนา
+              ส่วนข้อความให้ผู้อ่านเห็นต้องอัปเดต DOM
+            </p>
+            <div class="note">
+              เป้าหมายบทนี้: อ่านโค้ดแล้วบอกได้ว่า “ค่าอะไรเปลี่ยน” และ
+              “บรรทัดถัดไปคืออะไร”
+            </div>
+          </section>
+          <section class="lesson-section" id="variables">
+            <div class="section-kicker">02 / STUDY NOTES</div>
+            <h2>02 · ตัวแปรและชนิดข้อมูล</h2>
+            <p>
+              ตัวแปรคือชื่อที่เราใช้เรียกค่า
+              <strong>ประกาศ</strong> คือสร้างชื่อ
+              <strong>กำหนดค่า</strong> คือผูกชื่อกับค่า และ
+              <strong>กำหนดค่าเริ่มต้น</strong> คือทำทั้งสองอย่างพร้อมกัน
+              เครื่องหมาย <code>=</code> จึงไม่ใช่การถามว่าเท่ากันหรือไม่
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>let points;             // ประกาศ: ค่าเริ่มต้นเป็น undefined
+points = 10;            // กำหนดค่า
+points += 5;            // ตอนนี้ 15
+const course = &quot;ITDS241&quot;;
+console.log(points);    // 15</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">คำสั่ง</th>
+                    <th scope="col">ขอบเขต</th>
+                    <th scope="col">กำหนดใหม่ / ประกาศซ้ำใน scope เดิม</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>var</td>
+                    <td>function หรือ global</td>
+                    <td>ได้ / ได้</td>
+                  </tr>
+                  <tr>
+                    <td>let</td>
+                    <td>block { … }</td>
+                    <td>ได้ / ไม่ได้</td>
+                  </tr>
+                  <tr>
+                    <td>const</td>
+                    <td>block { … }</td>
+                    <td>ไม่ได้ / ไม่ได้</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              เริ่มด้วย <code>const</code> เมื่อไม่ต้องเปลี่ยน binding และใช้
+              <code>let</code> เมื่อจะกำหนดค่าใหม่
+              ชื่อตัวแปรแยกตัวพิมพ์เล็ก–ใหญ่ เริ่มด้วยตัวอักษร
+              <code>_</code> หรือ <code>$</code> ได้
+              แต่ห้ามเริ่มด้วยเลขหรือใช้คำสงวนอย่าง <code>class</code>
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">ชนิดข้อมูล</th>
+                    <th scope="col">ตัวอย่าง</th>
+                    <th scope="col">จำอย่างไร</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Number</td>
+                    <td>42, 3.14, NaN</td>
+                    <td>จำนวนทั่วไปและทศนิยมแบบ floating point</td>
+                  </tr>
+                  <tr>
+                    <td>String</td>
+                    <td>"hello"</td>
+                    <td>ข้อความ</td>
+                  </tr>
+                  <tr>
+                    <td>Boolean</td>
+                    <td>true, false</td>
+                    <td>ผลตัดสินใจ</td>
+                  </tr>
+                  <tr>
+                    <td>Undefined</td>
+                    <td>let x;</td>
+                    <td>ยังไม่ได้กำหนดค่า</td>
+                  </tr>
+                  <tr>
+                    <td>Null</td>
+                    <td>let selected = null</td>
+                    <td>ว่างโดยตั้งใจ</td>
+                  </tr>
+                  <tr>
+                    <td>Object</td>
+                    <td>{ name: "Mint" }, [1, 2]</td>
+                    <td>ข้อมูลเป็นกลุ่มหรือโครงสร้าง</td>
+                  </tr>
+                  <tr>
+                    <td>BigInt / Symbol</td>
+                    <td>42n / Symbol("id")</td>
+                    <td>ชนิด primitive เพิ่มเติมของ JavaScript สมัยใหม่</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              JavaScript เป็น <strong>dynamically typed</strong>: ชนิดผูกกับค่า
+              ไม่ใช่ชื่อ เช่น <code>let x = 1; x = "one";</code> ทำได้ ส่วน
+              <code>typeof null</code> ได้
+              <code>"object"</code> เพราะพฤติกรรมเก่าของภาษา ไม่ได้หมายความว่า
+              null เป็น object ปกติ
+            </p>
+            <div class="note warm">
+              อย่าสับสนช่วง “จำนวนเต็มที่แทนค่าได้อย่างปลอดภัย”
+              ±(2<sup>53</sup>−1) กับช่วงค่าทั้งหมดของ Number ซึ่งกว้างกว่านั้น
+              แต่ไม่ได้แทนจำนวนเต็มทุกค่าได้แม่นยำ
+            </div>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · const bag = { count: 1 };
+                bag.count++; ผิดไหม?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="const-answer"
+                aria-expanded="false"
+                aria-controls="const-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="const-answer" hidden>
+                ไม่ผิด count เป็น 2 เพราะแก้ property ของ object เดิม แต่ bag =
+                {} จะผิด เพราะพยายามเปลี่ยน binding ของ const
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="objects">
+            <div class="section-kicker">03 / STUDY NOTES</div>
+            <h2>03 · Object และเครื่องมือพื้นฐาน</h2>
+            <p>
+              Object รวมข้อมูลที่เกี่ยวข้องไว้ด้วยกัน อ่าน property ด้วยจุด
+              หรือใช้วงเล็บเหลี่ยมเมื่อชื่อมาจากตัวแปร การกำหนด object
+              ให้ตัวแปรอีกตัวจะคัดลอก
+              <strong>การอ้างอิง</strong> ไม่ได้คัดลอกข้อมูลทั้งก้อน
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const student = { name: &quot;Mint&quot;, points: 8 };
+const friend = student;
+friend.points = 10;
+console.log(student.points); // 10: อ้างถึง object เดียวกัน
+const key = &quot;name&quot;;
+console.log(student[key]);   // &quot;Mint&quot;</code></pre>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">เครื่องมือ</th>
+                    <th scope="col">ใช้ทำอะไร</th>
+                    <th scope="col">ตัวอย่างและผล</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Number</td>
+                    <td>แปลง/ตรวจตัวเลข</td>
+                    <td>
+                      parseInt("12.5", 10) → 12; parseFloat("12.5") → 12.5
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Math</td>
+                    <td>คำนวณโดยไม่ต้อง new</td>
+                    <td>Math.round(2.6) → 3; Math.pow(2, 3) → 8</td>
+                  </tr>
+                  <tr>
+                    <td>Date</td>
+                    <td>เก็บจุดเวลาหนึ่ง</td>
+                    <td>
+                      new Date(); getDate() = วันในเดือน; getDay() =
+                      วันในสัปดาห์ 0–6
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>String</td>
+                    <td>จัดการข้อความ</td>
+                    <td>"web tech".split(" ") → ["web", "tech"]</td>
+                  </tr>
+                  <tr>
+                    <td>Array</td>
+                    <td>รายการเริ่ม index ที่ 0</td>
+                    <td>["a", "b"][0] → "a"; length → 2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              <code>Number.isNaN()</code> ใช้ตรวจค่า NaN;
+              <code>Number.isInteger()</code> ตรวจจำนวนเต็ม การแปลงค่าจากช่อง
+              input จำเป็นเพราะ <code>input.value</code> เป็น string โดยปกติ
+              งานทั่วไปใช้ primitive number/string ได้เลย ไม่จำเป็นต้องห่อด้วย
+              <code>new Number()</code> หรือ <code>new String()</code>
+            </p>
+            <h3>เลือก method ของ Array ให้ตรงคำถาม</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Method</th>
+                    <th scope="col">คำถามที่ตอบ</th>
+                    <th scope="col">เปลี่ยน array เดิมไหม</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>push / pop</td>
+                    <td>เพิ่มท้าย / นำตัวท้ายออก</td>
+                    <td>เปลี่ยน</td>
+                  </tr>
+                  <tr>
+                    <td>indexOf</td>
+                    <td>อยู่ตำแหน่งไหน? ไม่พบคืน −1</td>
+                    <td>ไม่เปลี่ยน</td>
+                  </tr>
+                  <tr>
+                    <td>forEach</td>
+                    <td>ทำอะไรสักอย่างกับแต่ละตัว</td>
+                    <td>ไม่สร้างผลลัพธ์ array; callback อาจแก้ข้อมูลได้</td>
+                  </tr>
+                  <tr>
+                    <td>map</td>
+                    <td>แต่ละตัวจะกลายเป็นอะไร?</td>
+                    <td>คืน array ใหม่</td>
+                  </tr>
+                  <tr>
+                    <td>filter</td>
+                    <td>เก็บตัวไหนบ้าง?</td>
+                    <td>คืน array ใหม่</td>
+                  </tr>
+                  <tr>
+                    <td>reduce / reduceRight</td>
+                    <td>รวมเป็นผลลัพธ์เดียวจากซ้าย / ขวา</td>
+                    <td>ขึ้นกับ callback; ใช้ initial value ให้ชัด</td>
+                  </tr>
+                  <tr>
+                    <td>every / some</td>
+                    <td>ทุกตัวผ่านไหม / มีอย่างน้อยหนึ่งตัวผ่านไหม</td>
+                    <td>คืน Boolean</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const scores = [4, 7, 9];
+scores.map(n =&gt; n * 2);              // [8, 14, 18]
+scores.filter(n =&gt; n &gt;= 7);          // [7, 9]
+scores.reduce((sum, n) =&gt; sum + n, 0); // 20</code></pre>
+          </section>
+          <section class="lesson-section" id="operators">
+            <div class="section-kicker">04 / STUDY NOTES</div>
+            <h2>04 · เปรียบเทียบและตัดสินใจ</h2>
+            <p>
+              เริ่มจากแยก <code>=</code> (กำหนดค่า),
+              <code>==</code> (เทียบแบบอาจแปลงชนิด) และ
+              <code>===</code> (เทียบโดยไม่แปลงชนิด) ออกจากกัน งานทั่วไปนิยม ===
+              เพราะผลคาดเดาง่ายกว่า สำหรับ object การเทียบ ===
+              ตรวจว่าอ้างอิงก้อนเดียวกันหรือไม่
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Expression</th>
+                    <th scope="col">ผล</th>
+                    <th scope="col">เหตุผล</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>"5" + 2</td>
+                    <td>"52"</td>
+                    <td>+ ต่อข้อความเมื่อมี string</td>
+                  </tr>
+                  <tr>
+                    <td>"5" - 2</td>
+                    <td>3</td>
+                    <td>− แปลง string เป็น number เพื่อคำนวณ</td>
+                  </tr>
+                  <tr>
+                    <td>"5" == 5</td>
+                    <td>true</td>
+                    <td>มีการแปลงชนิด</td>
+                  </tr>
+                  <tr>
+                    <td>"5" === 5</td>
+                    <td>false</td>
+                    <td>ชนิดต่างกัน</td>
+                  </tr>
+                  <tr>
+                    <td>7 % 3</td>
+                    <td>1</td>
+                    <td>เศษจากการหาร</td>
+                  </tr>
+                  <tr>
+                    <td>2 + 3 * 4</td>
+                    <td>14</td>
+                    <td>คูณก่อนบวก; วงเล็บเปลี่ยนลำดับได้</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              ตัวดำเนินการ <code>++</code> และ <code>--</code> เพิ่ม/ลดหนึ่ง โดย
+              <code>x++</code> ให้ค่าเดิมก่อนเพิ่ม ส่วน
+              <code>++x</code> เพิ่มก่อนให้ค่า และ <code>+=</code>,
+              <code>*=</code> คือเขียนย่อของการอ่านค่าเดิมแล้วกำหนดค่าใหม่
+            </p>
+            <p>
+              <code>&amp;&amp;</code> หยุดเมื่อเจอ falsy ส่วน
+              <code>||</code> หยุดเมื่อเจอ truthy และคืน operand
+              ไม่จำเป็นต้องคืน Boolean; <code>!</code> กลับค่าความจริง
+              ค่าที่พบบ่อยว่า falsy คือ
+              <code>false, 0, "", null, undefined, NaN</code> แต่
+              <code>[]</code> และ <code>{}</code> เป็น truthy
+            </p>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>const score = 72;
+let grade;
+if (score &gt;= 80) {
+  grade = &quot;A&quot;;
+} else if (score &gt;= 70) {
+  grade = &quot;B&quot;;
+} else {
+  grade = &quot;ทบทวนเพิ่ม&quot;;
+}
+const passed = score &gt;= 50 ? &quot;ผ่าน&quot; : &quot;ทบทวน&quot;;
+// ตัวอย่างนี้สมมติ score เป็นตัวเลขในช่วง 0–100</code></pre>
+            <p>
+              <code>if / else if / else</code> เลือกแขนงแรกที่เงื่อนไขเป็นจริง
+              ส่วน ternary
+              <code>condition ? yes : no</code> เหมาะกับการเลือกค่าสั้น ๆ
+              <code>switch</code> เลือก case ที่ตรงแบบ strict equality; หากไม่มี
+              <code>break</code> อาจทำ case ถัดไปต่อ (fall-through) และใช้
+              <code>default</code> เมื่อไม่พบ case
+            </p>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · let x = 2; const y = x++;
+                หลังสองคำสั่งนี้ x และ y เป็นเท่าไร?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="operator-answer"
+                aria-expanded="false"
+                aria-controls="operator-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="operator-answer" hidden>
+                x = 3 และ y = 2 เพราะ postfix ให้ค่าเดิมกับ y ก่อนเพิ่ม x
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="loops">
+            <div class="section-kicker">05 / STUDY NOTES</div>
+            <h2>05 · มองเห็น loop ทีละขั้น</h2>
+            <p>
+              Loop คือการกลับมาทำงานเดิมเมื่อเงื่อนไขยังผ่าน ตรวจให้ครบสามอย่าง:
+              <strong
+                >เริ่มที่ไหน → ตรวจอะไร → เปลี่ยนค่าอย่างไรให้หยุดได้</strong
+              >
+              การลืมอัปเดตค่าที่ใช้ตรวจอาจทำให้เกิด infinite loop
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">โครงสร้าง</th>
+                    <th scope="col">ตรวจเมื่อไร</th>
+                    <th scope="col">เหมาะกับ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>for</td>
+                    <td>ก่อนเข้า body แต่ละรอบ</td>
+                    <td>มีตัวนับหรือรู้ช่วงที่จะวน</td>
+                  </tr>
+                  <tr>
+                    <td>while</td>
+                    <td>ก่อนเข้า body แต่ละรอบ</td>
+                    <td>ยังไม่รู้จำนวนครั้ง รอเงื่อนไขหรือ sentinel</td>
+                  </tr>
+                  <tr>
+                    <td>do…while</td>
+                    <td>หลัง body</td>
+                    <td>ต้องทำอย่างน้อยหนึ่งครั้ง</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="code-label">JAVASCRIPT · ลองไล่ค่าทีละบรรทัด</div>
+            <pre><code>let sum = 0;
+for (let i = 1; i &lt;= limit; i++) {
+  sum += i;
+}
+// ลำดับ: เริ่มตัวนับ → ตรวจ → บวก → เพิ่มตัวนับ → กลับไปตรวจ</code></pre>
+            <div class="lab" id="loop-lab">
+              <h3>Loop lab · ผลรวม 1 ถึง n</h3>
+              <p class="small muted">
+                กดทีละขั้นแล้วสังเกตว่า i เพิ่มเมื่อไร และ sum เปลี่ยนตรงไหน
+              </p>
+              <label for="loop-limit">ค่า n </label
+              ><select id="loop-limit">
+                <option value="3">3</option>
+                <option value="5">5</option>
+              </select>
+              <div class="flow" aria-label="ขั้นตอน">
+                <span data-phase="init">เริ่ม</span
+                ><span data-phase="check">ตรวจ</span
+                ><span data-phase="add">บวก</span
+                ><span data-phase="increment">i++</span
+                ><span data-phase="done">จบ</span>
+              </div>
+              <div class="variables">
+                <div class="variable">i <b id="loop-i">1</b></div>
+                <div class="variable">sum <b id="loop-sum">0</b></div>
+              </div>
+              <p id="loop-message" class="lab-output" aria-live="polite"></p>
+              <div class="actions">
+                <button class="btn" id="loop-prev">← ย้อน</button
+                ><button class="btn primary" id="loop-next">ขั้นถัดไป →</button
+                ><button class="btn" id="loop-reset">เริ่มใหม่</button
+                ><span id="loop-step" class="small muted"></span>
+              </div>
+              <div class="chart-box">
+                <canvas
+                  id="loop-chart"
+                  role="img"
+                  aria-label="กราฟผลรวมสะสมแต่ละรอบ ข้อมูลเดียวกับข้อความใต้กราฟ"
+                ></canvas>
+              </div>
+              <p id="loop-values" class="chart-caption" aria-live="polite"></p>
+            </div>
+            <h3>คำสั่งที่เปลี่ยนทางเดิน</h3>
+            <ul>
+              <li>
+                <code>break</code> ออกจาก loop ที่ใกล้ที่สุด;
+                <code>continue</code> ข้ามส่วนที่เหลือของรอบนั้น ใน for
+                จะยังไปทำตัวเพิ่มก่อนตรวจรอบใหม่
+              </li>
+              <li>
+                <strong>Counter-controlled</strong> ใช้ตัวนับ;
+                <strong>sentinel-controlled</strong> ใช้ค่าพิเศษ เช่น "stop";
+                loop ซ้อนใช้ตัวนับคนละตัวเพื่อไม่ชนกัน
+              </li>
+              <li>
+                <strong>Label</strong> เป็นชื่อกำกับ statement ใช้ break
+                ออกไปยังบล็อกที่มีชื่อ หรือ continue ไปยัง loop ที่มีชื่อนั้น
+                ไม่ใช่คำสั่งกระโดดไปที่ใดก็ได้
+              </li>
+              <li>
+                <code>for…in</code> วนชื่อ property ที่ enumerable รวม inherited
+                properties; <code>for…of</code> วนค่าของ iterable เช่น Array
+                (เจาะลึกในบท 8)
+              </li>
+            </ul>
+            <div class="reveal">
+              <p>
+                <strong>ลองคิดก่อนเปิด</strong> · ทำไม loop 1 ถึง 3 จบด้วย i = 4
+                แต่ sum = 6?
+              </p>
+              <button
+                class="btn tiny"
+                data-reveal="loop-answer"
+                aria-expanded="false"
+                aria-controls="loop-answer"
+              >
+                ดูคำตอบ ↓
+              </button>
+              <div class="answer" id="loop-answer" hidden>
+                หลังบวก 3 แล้ว i++ ทำให้ตัวนับเป็น 4 จากนั้นเงื่อนไข 4 <= 3 เป็น
+                false จึงออกโดยไม่บวก 4 อีก หมายเหตุ: i ที่ประกาศด้วย let ใน for
+                จะอ่านไม่ได้จากนอก loop; lab แสดงสถานะภายในเพื่อการเรียนรู้
+              </div>
+            </div>
+          </section>
+          <section class="lesson-section" id="game">
+            <div class="section-kicker">06 / STUDY NOTES</div>
+            <h2>06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</h2>
+            <p>
+              เกมในสไลด์เป็นตัวอย่างว่า UI และข้อมูลต้องไปด้วยกัน ใช้ array
+              เก็บกระดาน ใช้ตัวแปรเก็บผู้เล่นปัจจุบัน และตรวจรูปแบบชนะ 8
+              แบบหลังเดินแต่ละครั้ง ลำดับสำคัญคือ
+              <strong>ตรวจชนะก่อนตรวจเสมอ</strong>
+              เพราะตาสุดท้ายอาจเต็มกระดานและชนะพร้อมกัน
+            </p>
+            <div class="flow">
+              <span>รับ click</span><span>ตรวจช่องว่าง</span
+              ><span>แก้ state</span><span>ตรวจจบเกม</span
+              ><span>อัปเดต UI</span>
+            </div>
+            <div class="lab">
+              <h3>ลองเล่น แล้วอ่านทางเดินของโค้ด</h3>
+              <p id="game-status" aria-live="polite">ตาของ X</p>
+              <div
+                class="board"
+                id="game-board"
+                aria-label="กระดาน Tic-tac-toe"
+              >
+                <button aria-label="ช่อง 1: ว่าง"></button
+                ><button aria-label="ช่อง 2: ว่าง"></button
+                ><button aria-label="ช่อง 3: ว่าง"></button
+                ><button aria-label="ช่อง 4: ว่าง"></button
+                ><button aria-label="ช่อง 5: ว่าง"></button
+                ><button aria-label="ช่อง 6: ว่าง"></button
+                ><button aria-label="ช่อง 7: ว่าง"></button
+                ><button aria-label="ช่อง 8: ว่าง"></button
+                ><button aria-label="ช่อง 9: ว่าง"></button>
+              </div>
+              <button class="btn" id="game-reset">เริ่มเกมใหม่ ↻</button>
+              <p class="lab-output small" id="game-trace" aria-live="polite">
+                คลิกช่องว่างเพื่อเริ่ม แล้วติดตามค่าที่เปลี่ยน
+              </p>
+            </div>
+            <div class="note">
+              ก่อนสอบ ลองอธิบายได้ว่า: ทำไมต้องห้ามลงช่องเดิม? ทำไมต้องหยุดรับ
+              click เมื่อชนะ? และ restart ต้องรีเซ็ตข้อมูลใดบ้าง?
+            </div>
+          </section>
+          <section class="lesson-section" id="flashcards">
+            <div class="section-kicker">ACTIVE RECALL</div>
+            <h2>ศัพท์สำคัญ จำทีละใบ</h2>
+            <p class="muted small">
+              ลองอธิบายคำศัพท์ก่อนกดพลิก ใช้ Enter หรือ Space แทนการคลิกได้
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">นึกคำตอบก่อนพลิก</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <div class="section-kicker">CHECK YOUR UNDERSTANDING</div>
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ลองทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources">
+            <h2>ที่มาและหมายเหตุ</h2>
+            <p>
+              สไลด์หลัก: ITDS241-Lecture06-JavaScript Part 1.pdf หน้า 3–15
+              (เกม), 18–24 (เว็บและ JS), 27–48 (ตัวแปรและข้อมูล), 49–56
+              (ตัวดำเนินการ), 58–77 (control flow)
+            </p>
+            <p>
+              เสริมความชัดเจนเรื่อง const, ชนิดข้อมูลสมัยใหม่, การอ้างอิง และ
+              Number safe integer
+              เพื่อไม่ให้การย่อความในสไลด์ทำให้เข้าใจคลาดเคลื่อน
+            </p>
+            <p>
+              เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF (อาจต่างจากเลขที่พิมพ์บนสไลด์)
+              ตัวอย่างและคำถามในเว็บเขียนขึ้นใหม่เพื่อทบทวน ไม่ได้คัดลอกข้อสอบ
+            </p>
+          </section>
+          <button class="btn soft" data-mark-read aria-pressed="false">
+            ทำเครื่องหมายว่าอ่านแล้ว ✓
+          </button>
+          <nav class="chapter-end" aria-label="เปลี่ยนบท">
+            <a class="btn" href="index.html">← ภาพรวมวิชา</a
+            ><a class="btn primary" href="chapter-07.html">อ่านบท 7 ต่อ →</a>
+          </nav>
+        </article>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <span>study garden. &nbsp; เติบโตทีละบท ทบทวนทีละนิด 🌱</span
+        ><span>สร้างเพื่อทบทวนด้วยตัวเอง · ITDS241 · 2026</span>
+      </div>
+    </footer>
+  </body>
+</html>
