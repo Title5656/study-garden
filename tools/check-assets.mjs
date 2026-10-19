@@ -22,12 +22,12 @@ let checked = 0;
 for (const file of files(root).filter(path => /\.(html|css)$/.test(path))) {
   const text = readFileSync(file, 'utf8');
   const references = file.endsWith('.html')
-    ? [...text.matchAll(/(?:src|href)="([^"]+)"/g)].map(match => match[1])
+    ? [...text.matchAll(/\b(?:data-src|src|href|poster)="([^"]+)"/g)].map(match => match[1])
     : [...text.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g)].map(match => match[1]);
   for (const reference of references) {
     if (/^(?:[a-z]+:|\/\/|#)/i.test(reference)) continue;
     const [path, query = ''] = reference.split('?');
-    if (!/\.(?:css|js|svg|png|ttf)$/.test(path)) continue;
+    if (!/\.(?:css|js|svg|png|webp|mp4|ttf)$/.test(path)) continue;
     const target = resolve(dirname(file), path);
     assert.equal(new URLSearchParams(query).get('v'), hash(target),
       `${file}: ${reference} must use its current content hash to avoid stale browser assets`);

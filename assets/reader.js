@@ -6,10 +6,48 @@
   const reveal = document.querySelector(".footer-reveal");
   if (footer && reveal) {
     const printMedia = matchMedia("print");
-    const footerLinks = [...footer.querySelectorAll("a")];
+    const footerLinks = [...footer.querySelectorAll("a, button")];
     const curtain = reveal.querySelector(".footer-curtain");
     const stage = reveal.querySelector(".footer-stage");
+    const artwork = footer.querySelector(".footer-art");
+    const video = artwork?.querySelector("video");
+    const motionToggle = footer.querySelector(".footer-motion-toggle");
+    let artworkPaused = false;
     let scheduled = false;
+    function artworkCanPlay() {
+      if (!artwork || reducedMotion.matches || printMedia.matches || document.hidden || artworkPaused) return false;
+      const bounds = artwork.getBoundingClientRect();
+      const visibleTop = reveal.classList.contains("reveal-enabled")
+        ? Math.max(0, curtain.getBoundingClientRect().bottom) : 0;
+      return bounds.bottom > visibleTop && bounds.top < innerHeight && bounds.bottom > 0;
+    }
+    function updateArtwork() {
+      if (!video) return;
+      motionToggle.hidden = reducedMotion.matches || printMedia.matches;
+      if (!artworkCanPlay()) {
+        video.pause();
+        artwork.classList.remove("is-playing");
+        return;
+      }
+      // Fetch the small baked animation only after the curtain uncovers the art.
+      if (!video.getAttribute("src")) video.src = video.dataset.src;
+      if (video.paused) video.play().catch(() => artwork.classList.remove("is-playing"));
+    }
+    if (video) {
+      video.muted = true;
+      video.addEventListener("playing", () => {
+        if (artworkCanPlay()) artwork.classList.add("is-playing");
+        else video.pause();
+      });
+      video.addEventListener("error", () => artwork.classList.remove("is-playing"));
+      document.addEventListener("visibilitychange", updateArtwork);
+      motionToggle?.addEventListener("click", () => {
+        artworkPaused = !artworkPaused;
+        motionToggle.setAttribute("aria-pressed", String(artworkPaused));
+        motionToggle.setAttribute("aria-label", artworkPaused ? "เล่นภาพเคลื่อนไหว" : "หยุดภาพเคลื่อนไหว");
+        updateArtwork();
+      });
+    }
     function updateReveal() {
       scheduled = false;
       const enabled = !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
@@ -17,6 +55,7 @@
       if (!enabled) {
         footer.inert = false;
         footerLinks.forEach(link => { link.inert = false; });
+        updateArtwork();
         return;
       }
       const bounds = reveal.getBoundingClientRect();
@@ -31,6 +70,7 @@
         const rect = link.getBoundingClientRect();
         link.inert = rect.top < visibleTop || rect.bottom > visibleBottom;
       });
+      updateArtwork();
     }
     function scheduleReveal() {
       if (!scheduled) {

@@ -24,7 +24,7 @@ function version(reference, file) {
   if (/^(?:[a-z]+:|\/\/|#)/i.test(reference)) return reference;
   const [resource, fragment] = reference.split('#');
   const [path, query = ''] = resource.split('?');
-  if (!/\.(?:css|js|svg|png|ttf)$/.test(path)) return reference;
+  if (!/\.(?:css|js|svg|png|webp|mp4|ttf)$/.test(path)) return reference;
   const params = new URLSearchParams(query);
   params.set('v', hash(resolve(dirname(file), path)));
   return `${path}?${params}${fragment === undefined ? '' : '#' + fragment}`;
@@ -36,7 +36,7 @@ for (const extension of ['.css', '.html']) {
   for (const file of paths.filter(path => path.endsWith(extension))) {
     const before = readFileSync(file, 'utf8');
     const after = extension === '.html'
-      ? before.replace(/((?:src|href)=")([^"]+)(")/g,
+      ? before.replace(/(\b(?:data-src|src|href|poster)=")([^"]+)(")/g,
           (_, start, reference, end) => start + version(reference, file) + end)
       : before.replace(/(url\(['"]?)([^)'"\s]+)(['"]?\))/g,
           (_, start, reference, end) => start + version(reference, file) + end);
