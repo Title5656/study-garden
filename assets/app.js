@@ -174,6 +174,12 @@
     $$("[data-progress-bar]").forEach((el) => {
       el.style.width = `${allChapters.length ? (readCount / allChapters.length) * 100 : 0}%`;
     });
+    $$("[data-course-read-count]").forEach((el) => {
+      const course = el.dataset.courseReadCount;
+      el.textContent = Object.keys(window.StudyContent?.[course] || {}).filter(
+        (id) => progressEntry(id, course).read === true,
+      ).length;
+    });
     $$("[data-chapter-status]").forEach((el) => {
       const entry = progressEntry(el.dataset.chapterStatus, el.dataset.progressSubject || subject);
       const score = scoreValue(entry.best);

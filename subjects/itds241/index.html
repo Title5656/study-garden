@@ -11,11 +11,11 @@
     <title>ITDS241 · เลือกบทเรียน · Study Garden</title>
     <link rel="icon" href="../../assets/favicon.svg?v=c8eed43489e2" type="image/svg+xml" />
     <link rel="stylesheet" href="../../assets/style.css?v=57402278ef28" />
-    <link rel="stylesheet" href="../../assets/library.css?v=eab62e8ae182" />
+    <link rel="stylesheet" href="../../assets/library.css?v=f0898c0159c1" />
     <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
     <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
     <script defer src="../../assets/content.js?v=4c369c9d194f"></script>
-<script defer src="../../assets/app.js?v=af947fc8820f"></script>
+<script defer src="../../assets/app.js?v=7a5204e59036"></script>
   </head>
   <body data-subject="itds241">
     <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
@@ -45,11 +45,16 @@
         เนื้อหาสรุปยังอ่านได้ตามปกติ
       </p></noscript
     >
-    <main id="main" class="wrap">
+    <main id="main" class="wrap library-main">
       <nav class="breadcrumb" aria-label="เส้นทาง">
         <a href="../../index.html">วิชาทั้งหมด</a><span>/</span
         ><span>ITDS241</span>
       </nav>
+      <div class="page-heading">
+        <div><h1>Web Technologies</h1><p>ITDS241 · Web Technologies and Applications</p></div>
+        <label class="search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="subject-search" type="search" placeholder="ค้นหาบทเรียนหรือหัวข้อ" aria-label="ค้นหาบทเรียนหรือหัวข้อ"/></label>
+      </div>
+      <div class="library-toolbar"><span class="active-tab">บทเรียนทั้งหมด <span>3</span></span><div class="reading-progress"><span>อ่านแล้ว <strong data-read-count>0</strong> / 3</span><div class="progress-bar" aria-hidden="true"><span data-progress-bar></span></div></div></div>
 <section id="subjects" class="library" aria-labelledby="library-title">
       <div class="library-heading"><div><span class="course-id">ITDS241</span><h2 id="library-title">Web Technologies and Applications</h2></div><span class="library-count">3 บทเรียน</span></div>
       <div class="folder-grid"><article class="folder-card" data-search-text="ITDS241 Web Technologies and Applications JavaScript เทคโนโลยีเว็บ บท 6 JavaScript Essentials ตัวแปร · ชนิดข้อมูล · Operators · Control flow">
@@ -112,8 +117,9 @@
           <div class="folder-caption"><a href="chapter-08.html">บทที่ 8 <span>↗</span></a><span data-chapter-status="08">ยังไม่ได้อ่าน</span></div>
           <p class="folder-topics">ECMAScript · Promise · Async / Await</p>
         </article></div>
-      <p id="search-empty" class="filter-empty" role="status" hidden>ไม่พบวิชาหรือบทเรียนที่ค้นหา</p>
+      <p id="search-empty" class="filter-empty" role="status" hidden>ไม่พบบทเรียนที่ค้นหา</p>
     </section>
+      <section class="results-strip" aria-label="ผลแบบทดสอบ"><h2>คะแนน Quiz</h2><p id="score-summary"></p><span class="local-note">บันทึกในเบราว์เซอร์นี้</span></section>
       <p class="source-note">สรุปจากเอกสารประกอบวิชา ITDS241 บท 6–8 · ดูแหล่งอ้างอิงในแต่ละบท</p>
     </main>
     <footer class="site-footer">

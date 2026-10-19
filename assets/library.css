@@ -30,6 +30,22 @@ body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
 .library-count { color: var(--muted); font-size: .72rem; white-space: nowrap; }
 .folder-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 38px; padding: 35px 0 0; align-items: start; }
 .folder-card { min-width: 0; }
+.subject-folder { display: block; border-radius: 15px; -webkit-tap-highlight-color: transparent; }
+.subject-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 780px; margin-inline: auto; gap: 48px; padding-bottom: 8px; }
+.subject-folder .folder-label strong { font-size: clamp(1rem, 1.65vw, 1.3rem); overflow-wrap: anywhere; }
+.subject-folder .folder-code { font-size: .65rem; }
+.subject-folder .folder-meta { font-size: .66rem; }
+.subject-grid .folder-caption { align-items: baseline; }
+.subject-grid .folder-caption h3 { margin: 0; font-size: .85rem; }
+.subject-grid .folder-caption > span { white-space: nowrap; }
+.subject-grid .folder-topics { font-size: .72rem; }
+.subject-folder:focus-visible .folder-front { transform: rotateX(-18deg); }
+@media (hover: hover) {
+  .subject-folder:hover .folder-front { transform: rotateX(-18deg); }
+  .subject-folder:hover .sheet-one { transform: translate(-19%, -15%) rotate(-12deg); }
+  .subject-folder:hover .sheet-two { transform: translate(19%, -15%) rotate(12deg); }
+  .subject-folder:hover .sheet-three { transform: translate(0, -9%); }
+}
 .glass-folder { position: relative; }
 .glass-folder summary { display: block; cursor: pointer; list-style: none; border-radius: 15px; -webkit-tap-highlight-color: transparent; }
 .glass-folder summary::-webkit-details-marker { display: none; }
@@ -133,6 +149,9 @@ body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
   .folder-topics { font-size: .67rem; }
   .folder-caption { margin-top: 22px; }
   .library-count { font-size: .65rem; }
+  .subject-grid { gap: 38px; }
+  .subject-folder .folder-label strong { font-size: 1.12rem; }
+  .subject-folder .folder-meta { font-size: .6rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .folder-object *, .glass-folder[open] .folder-front { transition: none !important; }
