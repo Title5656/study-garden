@@ -3,14 +3,57 @@
   "use strict";
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const footer = document.querySelector(".motion-footer");
-  if (footer && "IntersectionObserver" in window && !reducedMotion.matches) {
-    const observer = new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) {
-        footer.classList.add("footer-entered");
-        observer.disconnect();
+  const reveal = document.querySelector(".footer-reveal");
+  if (footer && reveal) {
+    const printMedia = matchMedia("print");
+    const footerLinks = [...footer.querySelectorAll("a")];
+    const curtain = reveal.querySelector(".footer-curtain");
+    const stage = reveal.querySelector(".footer-stage");
+    let scheduled = false;
+    function updateReveal() {
+      scheduled = false;
+      const enabled = !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
+      reveal.classList.toggle("reveal-enabled", enabled);
+      if (!enabled) {
+        footer.inert = false;
+        footerLinks.forEach(link => { link.inert = false; });
+        return;
       }
-    }, { threshold: 0.12 });
-    observer.observe(footer);
+      const bounds = reveal.getBoundingClientRect();
+      const distance = bounds.height - innerHeight;
+      const progress = Math.min(1, Math.max(0, -bounds.top / Math.max(1, distance)));
+      reveal.style.setProperty("--reveal-progress", progress.toFixed(4));
+      // Enable each link as soon as the curtain uncovers it.
+      footer.inert = progress === 0;
+      const visibleTop = Math.max(0, curtain.getBoundingClientRect().bottom);
+      const visibleBottom = Math.min(innerHeight, stage.getBoundingClientRect().bottom);
+      footerLinks.forEach(link => {
+        const rect = link.getBoundingClientRect();
+        link.inert = rect.top < visibleTop || rect.bottom > visibleBottom;
+      });
+    }
+    function scheduleReveal() {
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(updateReveal);
+      }
+    }
+    window.addEventListener("scroll", scheduleReveal, { passive: true });
+    window.addEventListener("resize", scheduleReveal);
+    reducedMotion.addEventListener("change", updateReveal);
+    printMedia.addEventListener("change", updateReveal);
+    // Topic changes alter the document height even when the viewport stays still.
+    if ("ResizeObserver" in window) new ResizeObserver(scheduleReveal).observe(document.body);
+    reveal.querySelector(".footer-reveal-link")?.addEventListener("click", event => {
+      if (!reveal.classList.contains("reveal-enabled") || event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const bounds = reveal.getBoundingClientRect();
+      window.scrollTo({ top: scrollY + bounds.top + bounds.height - innerHeight, behavior: "instant" });
+      updateReveal();
+      footer.querySelector(".footer-contact")?.focus({ preventScroll: true });
+    });
+    updateReveal();
   }
 
   const article = document.querySelector(".lesson-content");
