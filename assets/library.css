@@ -2,7 +2,7 @@
 @font-face { font-family: "Noto Sans Thai"; src: url('fonts/NotoSansThai.ttf?v=5a1c559bb539') format('truetype'); font-weight: 100 900; font-style: normal; font-display: swap; }
 body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
 .brand { font-family: inherit; font-size: 1.08rem; font-weight: 650; letter-spacing: -.035em; gap: 10px; }
-.brand-mark { width: 26px; height: 26px; color: var(--ink); }
+.brand-mark { display: block; width: 36px; height: 36px; flex-shrink: 0; object-fit: contain; }
 .nav { height: 72px; }
 .site-header { background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(18px); }
 .nav-links { font-size: .82rem; }
@@ -134,7 +134,7 @@ body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
 @media (max-width: 500px) {
   .nav { gap: 12px; height: 65px; }
   .brand { font-size: .92rem; }
-  .brand-mark { width: 22px; height: 22px; }
+  .brand-mark { width: 30px; height: 30px; }
   .nav-links { font-size: .7rem; }
   .theme-toggle { padding: 6px 9px; font-size: .68rem; }
   .wrap { padding-left: 20px; padding-right: 20px; }
