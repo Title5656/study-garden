@@ -38,14 +38,14 @@
       storageNotice();
     }
   }
-  function getProgress() {
-    const saved = read(subject, {});
+  function getProgress(course = subject) {
+    const saved = read(course, {});
     return saved && typeof saved === "object" && !Array.isArray(saved)
       ? saved
       : {};
   }
-  function progressEntry(id) {
-    const entry = getProgress()[id];
+  function progressEntry(id, course = subject) {
+    const entry = getProgress(course)[id];
     return entry && typeof entry === "object" ? entry : {};
   }
   function scoreValue(value) {
@@ -161,17 +161,21 @@
     $("#progress-chart").parentElement.hidden = true;
   function refreshProgress() {
     const ids = chapterIds;
-    const readCount = ids.filter(
-      (id) => progressEntry(id).read === true,
+    const courses = document.body.hasAttribute("data-all-courses")
+      ? Object.keys(window.StudyContent || {}) : [subject];
+    const allChapters = courses.flatMap(course =>
+      Object.keys(window.StudyContent?.[course] || {}).sort().map(id => ({course, id})));
+    const readCount = allChapters.filter(
+      ({course, id}) => progressEntry(id, course).read === true,
     ).length;
     $$("[data-read-count]").forEach((el) => {
       el.textContent = readCount;
     });
     $$("[data-progress-bar]").forEach((el) => {
-      el.style.width = `${ids.length ? (readCount / ids.length) * 100 : 0}%`;
+      el.style.width = `${allChapters.length ? (readCount / allChapters.length) * 100 : 0}%`;
     });
     $$("[data-chapter-status]").forEach((el) => {
-      const entry = progressEntry(el.dataset.chapterStatus);
+      const entry = progressEntry(el.dataset.chapterStatus, el.dataset.progressSubject || subject);
       const score = scoreValue(entry.best);
       el.textContent =
         score !== null
@@ -181,10 +185,10 @@
             : "ยังไม่ได้อ่าน";
     });
     if ($("#score-summary")) {
-      $("#score-summary").textContent = ids
-        .map((id) => {
-          const score = scoreValue(progressEntry(id).best);
-          return `บท ${Number(id)}: ${score === null ? "ยังไม่ทำ quiz" : score + "/10"}`;
+      $("#score-summary").textContent = allChapters
+        .map(({course, id}) => {
+          const score = scoreValue(progressEntry(id, course).best);
+          return `${courses.length > 1 ? course.toUpperCase() + " · " : ""}บท ${Number(id)}: ${score === null ? "ยังไม่ทำ quiz" : score + "/10"}`;
         })
         .join(" · ");
     }
