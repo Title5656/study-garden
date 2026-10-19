@@ -218,6 +218,14 @@
   );
   refreshProgress();
 
+  // Explicitly finishing a chapter is idempotent, unlike the manual toggle.
+  document.addEventListener("click", (event) => {
+    if (chapter && event.target.closest("[data-complete-chapter]") &&
+        event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {
+      updateProgress(chapter, { read: true });
+    }
+  });
+
   const search = $("#subject-search");
   search?.addEventListener("input", () => {
     const term = search.value.trim().toLocaleLowerCase("th");
