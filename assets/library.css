@@ -1,5 +1,5 @@
 /* Glass folder library, adapted for the existing static site. */
-@font-face { font-family: "Noto Sans Thai"; src: url('fonts/NotoSansThai.ttf') format('truetype'); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Noto Sans Thai"; src: url('fonts/NotoSansThai.ttf?v=5a1c559bb539') format('truetype'); font-weight: 100 900; font-style: normal; font-display: swap; }
 body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
 .brand { font-family: inherit; font-size: 1.08rem; font-weight: 650; letter-spacing: -.035em; gap: 10px; }
 .brand-mark { width: 26px; height: 26px; color: var(--ink); }
@@ -35,9 +35,9 @@ body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
 .glass-folder summary::-webkit-details-marker { display: none; }
 .folder-object { display: block; height: auto; aspect-ratio: 1.24; position: relative; perspective: 900px; isolation: isolate; }
 .folder-back { position: absolute; inset: 8% 0 3%; border-radius: 16px; clip-path: polygon(0 0, 35% 0, 43% 10%, 100% 10%, 100% 100%, 0 100%); background-size: cover; background-position: center; box-shadow: inset 0 0 0 1px #ffffff80; }
-.art-aurora { background-image: url('folder-aurora.png'); background-color: #9a7382; }
-.art-glacier { background-image: url('folder-glacier.png'); background-color: #aabccc; }
-.art-ember { background-image: url('folder-ember.png'); background-color: #993e35; }
+.art-aurora { background-image: url('folder-aurora.png?v=129e9c1177b0'); background-color: #9a7382; }
+.art-glacier { background-image: url('folder-glacier.png?v=17e6db5accbf'); background-color: #aabccc; }
+.art-ember { background-image: url('folder-ember.png?v=97710a7919bf'); background-color: #993e35; }
 .folder-sheet { position: absolute; width: 67%; height: 65%; top: 20%; left: 16.5%; display: block; padding: 15px; background: linear-gradient(145deg, #fff, #ececf0); border: 1px solid #fff; border-radius: 8px; color: #626570; box-shadow: 0 4px 12px #14141b24; transform-origin: 50% 100%; transition: transform .45s cubic-bezier(.2,.8,.2,1); }
 .folder-sheet > span { display: block; font-size: .6rem; font-weight: 600; border-bottom: 1px solid #dcdde3; padding-bottom: 8px; }
 .folder-sheet i { display: block; background: #dfe1e8; height: 4px; width: 75%; margin-top: 13px; border-radius: 5px; }

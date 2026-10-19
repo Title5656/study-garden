@@ -39,6 +39,8 @@ Repository ของชุดนี้: [Title5656/study-garden](https://github.
 
 ตั้งค่า GitHub Pages ให้เผยแพร่จาก `main` ที่ `/(root)` แล้ว การ push ไฟล์ขึ้น `main` จะเริ่มการเผยแพร่เวอร์ชันใหม่อัตโนมัติ
 
+ก่อน commit/push หลังแก้ CSS, JavaScript, รูป หรือฟอนต์ ให้รัน `node tools/version-assets.mjs` แล้ว `node tools/check-assets.mjs` เพื่ออัปเดตและตรวจรหัสเวอร์ชันตามเนื้อหาไฟล์ การเปลี่ยน URL ของไฟล์ที่แก้ช่วยให้เบราว์เซอร์โหลดเวอร์ชันใหม่แทนไฟล์เก่าที่ cache ไว้ โดยไม่ล้างคะแนนหรือธีมของผู้ใช้
+
 ## โครงสร้างไฟล์
 
 ```text
