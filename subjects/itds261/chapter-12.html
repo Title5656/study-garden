@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="สรุป ITDS261 ภาษาไทย พร้อมภาพอธิบาย แบบฝึกหัด แนวคำตอบ Flashcards และ Quiz">
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>Lab3 PHTRS: User Stories และ Given–When–Then · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.png?v=66f8b58bffb5" type="image/png" />
+    <link rel="stylesheet" href="../../assets/style.css?v=57402278ef28" />
+    <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
+    <script defer src="../../assets/software-content.js?v=72b939c26f0a"></script>
+<script defer src="../../assets/app.js?v=187c0a39763c"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+<link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
+<script defer src="../../assets/study-halftone-footer.js?v=b4e324035bb9"></script>
+<script defer src="../../assets/reader.js?v=6909a53af50d"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
+<link rel="stylesheet" href="../../assets/software.css?v=4cad62b4c628">
+</head>
+  <body data-subject="itds261" data-chapter="12"><a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><img class="brand-mark" src="../../assets/study-garden-logo.png?v=4d3c7e4e5b15" alt="" width="36" height="36" decoding="async">Study Garden</a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
+          ><a class="desktop-link" href="index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap"><nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS261</a><span>/</span><span>บท 12</span></nav><header class="chapter-hero"><div class="eyebrow">CHAPTER 12 · Lab 3 + L3</div><h1>Lab3 PHTRS: User Stories และ Given–When–Then</h1><p>ฝึกห้าstoriesครอบคลุมทุกบทบาท พร้อมacceptancecriteriaและปรับNFRให้วัดได้ภายใต้workloadที่ชัด</p><div class="tags"><span class="pill lilac">ITDS261 · อ่านพร้อมภาพและตัวอย่าง</span><span class="pill">Flashcards 10 · Quiz 10</span><span class="tag" data-chapter-status="12">ยังไม่ได้อ่าน</span></div></header><div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#phtrs-scope">อ่านโจทย์ PHTRS ก่อนแก้คำตอบ</a><a href="#story-ac">เขียน story ให้เห็นบทบาท เป้าหมาย และคุณค่า</a><a href="#practice-stories-citizen">แนวคำตอบเพิ่ม: stories 1–3 ของประชาชน</a><a href="#practice-stories-staff">แนวคำตอบเพิ่ม: stories 4–5 ของเจ้าหน้าที่และหัวหน้า</a><a href="#nfr-review">วิจารณ์ NFR เดิมอย่างเป็นเหตุเป็นผล</a><a href="#practice-nfr">ห้า NFR ที่ปรับให้ตรวจได้ พร้อม workload สมมติ</a><div class="toc-tools"><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz</a><a href="#sources">แหล่งที่มา</a></div></aside><article class="lesson-content"><section class="lesson-section" id="phtrs-scope" data-reader-category="practice"><div class="section-kicker">01 / ITDS261</div><h2>อ่านโจทย์ PHTRS ก่อนแก้คำตอบ</h2><p>Lab3ของITDS262ให้เขียนFRในรูปuserstory5stories ครอบคลุมทุกactor storyละ2acceptancecriteria และNFR5ข้อ กรณีPothole Tracking and Repair System (PHTRS) มีประชาชนรายงานถนน เจ้าหน้าที่โยธารับworkorder/บันทึกซ่อม และหัวหน้างานดูรายงาน ชุดที่ได้รับเป็นใบงานพร้อมคำตอบของผู้เรียน จึงแยกคำอธิบายโจทย์ออกจากคุณภาพคำตอบ ไม่ถือว่าคำตอบทุกข้อเป็นเฉลยอาจารย์ และไม่แสดงชื่อหรือรหัสผู้เรียน</p><figure class="se-figure se-concept"><a href="../../assets/software-visuals/12-concept.svg?v=49c07bff6e3d" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: แผนภาพแนวคิด: Lab3 PHTRS: User Stories และ Given–When–Then"><img src="../../assets/software-visuals/12-concept.svg?v=49c07bff6e3d" alt="แผนภาพแนวคิด: Lab3 PHTRS: User Stories และ Given–When–Then" loading="lazy" decoding="async"></a><figcaption><strong>เปลี่ยนความต้องการเป็นหลักฐาน:</strong> Story ระบุคุณค่า; Given ระบุสภาพตั้งต้น; When ระบุเหตุการณ์; Then ระบุผลที่สังเกตและตรวจสอบได้ <a class="se-zoom" href="../../assets/software-visuals/12-concept.svg?v=49c07bff6e3d" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><p>ข้อมูลรายงานประกอบด้วยเลขที่ถนน ความรุนแรง/ขนาดระดับ1–10 ตำแหน่งผ่านGoogleMaps เขต และรูปประกอบที่แนบได้ ระบบสร้างReportIDและWorkOrder ส่วนงานซ่อมบันทึกตำแหน่ง/ขนาด จำนวนคน วัสดุ/อุปกรณ์ ชั่วโมง สถานะ และค่าใช้จ่าย หัวหน้าต้องดูสรุปตามเขต/ความรุนแรง ความคืบหน้า และต้นทุน ไม่เพิ่มactorวิศวกรหรือผู้ดูแลเขตเป็นข้อบังคับหากโจทย์ยังไม่ระบุ</p><p>สูตรในโจทย์กล่าวถึงจำนวนเจ้าหน้าที่×ชั่วโมงและวัสดุจริง แต่จำนวนคน×ชั่วโมงมีหน่วยเป็นperson-hours ยังไม่ใช่เงิน ต้องถามอัตราแรงงาน ราคาวัสดุ และค่าอุปกรณ์ ตัวอย่างคำนวณที่เพิ่มต้องติดป้ายสมมติฐาน ห้ามทำให้ผู้อ่านเข้าใจว่าค่าจ้างหนึ่งชั่วโมงหรือราคาวัสดุถูกกำหนดแล้วในต้นฉบับ</p></section><section class="lesson-section" id="story-ac" data-reader-category="practice"><div class="section-kicker">02 / ITDS261</div><h2>เขียน story ให้เห็นบทบาท เป้าหมาย และคุณค่า</h2><p>Templateคือ “ในฐานะ[บทบาท] ฉันต้องการ[ความสามารถ] เพื่อที่[คุณค่า]” ไม่ใส่ทั้งกระบวนงานองค์กรจนทดสอบไม่ได้ในstoryเดียว Acceptancecriteriaระบุเงื่อนไขที่storyนี้ต้องผ่าน Givenคือบริบท/ข้อมูลตั้งต้น Whenคือการกระทำที่กระตุ้น Thenคือผลสังเกตได้ เช่นบันทึกข้อมูลหรือแสดงเหตุผล หลีกเลี่ยง“ถูกต้อง/รวดเร็ว/ประมวลผลเสร็จ”โดยไม่บอกวัดอย่างไร</p><p>Submittedanswerบางข้อมีGiven/Whenคล้ายกันแต่Thenต่างกันโดยไม่บอกเหตุสำเร็จ/ล้มเหลว เช่นuploadรูป จึงต้องแยกinputที่validกับinvalid บางThenขยายไปถึงการที่เจ้าหน้าที่ลงมือซ่อมซึ่งเกินstoryการส่งรายงาน ควรจบที่ระบบสร้างและส่งworkorderตามเงื่อนไข ไม่รับประกันว่าคนทำงานจริงทันที กรณีรายงานให้หัวหน้าไม่ควรเขียนแค่“ข้อมูลถูกต้อง” ต้องระบุการกรอง กลุ่มและยอดที่ตรวจเทียบได้</p><figure class="se-figure"><figcaption><strong>ตัวอย่างเพิ่มเติม: ติดตามรายงานถนนชำรุด</strong></figcaption><div class="se-provenance"><p><strong>Given</strong> ประชาชนเข้าสู่ระบบ และรายงาน R-001 เป็นของบัญชีนี้ สถานะปัจจุบันคือ Work in Progress</p><p>↓ <strong>When</strong> เปิดหน้าติดตามรายงาน R-001</p><p>↓ <strong>Then</strong> ระบบแสดง Work in Progress และเวลาที่อัปเดตล่าสุดจากข้อมูลที่บันทึกไว้</p></div><p>กรณีผิดสิทธิ์: หาก R-001 เป็นของผู้อื่น ระบบต้องไม่เปิดเผยรายละเอียด ตัวอย่างนี้เพิ่มเพื่อฝึกเขียนเกณฑ์ทดสอบ ไม่ใช่เฉลยอาจารย์</p></figure></section><section class="lesson-section" id="practice-stories-citizen" data-reader-category="practice"><div class="section-kicker">03 / ITDS261</div><h2>แนวคำตอบเพิ่ม: stories 1–3 ของประชาชน</h2><p><strong>แนวคำตอบที่จัดทำเพิ่มเพื่อทบทวน ไม่ใช่เฉลยอาจารย์</strong> รายละเอียด validation/สิทธิ์ที่ไม่ระบุในโจทย์เป็นข้อเสนอให้ยืนยันก่อนใช้งานจริง</p><div class="table-wrap" tabindex="0" role="region" aria-label="ตารางประกอบบทเรียน เลื่อนแนวนอนได้"><table><thead><tr><th>Story</th><th>Acceptancecriterion 1</th><th>Acceptancecriterion 2</th></tr></thead><tbody><tr><td><strong>1 รายงานถนน:</strong> ในฐานะประชาชน ฉันต้องการส่งตำแหน่งและรายละเอียดถนนชำรุด เพื่อให้หน่วยงานรับเรื่องและติดตามด้วยReportIDได้</td><td>Givenเข้าสู่ระบบและกรอกเลขถนน ความรุนแรง1–10 ตำแหน่งและเขตครบ Whenกดส่งรายงาน Thenระบบบันทึกreport สร้างReportIDไม่ซ้ำ และสร้างWorkOrderที่อ้างreportนั้น</td><td>Givenความรุนแรงเป็น0หรือ11 หรือขาดตำแหน่ง Whenส่ง Thenระบบแจ้งfieldและเหตุผล ไม่สร้างreport/workorderที่ไม่ผ่านตรวจ</td></tr><tr><td><strong>2 แนบรูป:</strong> ในฐานะประชาชน ฉันต้องการแนบรูปถนนชำรุด เพื่อให้เจ้าหน้าที่เห็นสภาพปัญหา</td><td>Givenอยู่ในแบบฟอร์มและมีรูปชนิด/ขนาดที่อนุญาต Whenเลือกอัปโหลด Thenระบบแสดงว่ารับรูปและผูกกับรายงาน/ฉบับร่างที่ถูกต้อง</td><td>Givenไฟล์ชนิดหรือขนาดไม่ผ่านข้อกำหนด Whenอัปโหลด Thenระบบระบุสาเหตุและคงข้อมูลอื่นเพื่อให้เลือกไฟล์ใหม่ โดยไม่แสดงว่าสำเร็จ</td></tr><tr><td><strong>3 ติดตาม:</strong> ในฐานะประชาชน ฉันต้องการค้นด้วยReportID เพื่อทราบสถานะซ่อมของเรื่องที่ส่ง</td><td>GivenมีReportIDที่เข้าถึงได้และสถานะWorkinProgress Whenค้น Thenแสดงเลขอ้างอิงและสถานะปัจจุบันตรงกับworkorder</td><td>Givenเจ้าหน้าที่บันทึกTemporaryRepairedแล้ว Whenประชาชนค้นอีกครั้ง Thenแสดงสถานะใหม่พร้อมข้อมูลอัปเดตที่นโยบายอนุญาต</td></tr></tbody></table></div><p>ข้อเสนอเพิ่มที่ยังต้องยืนยันคือชนิด/ขนาดไฟล์ที่อนุญาต การเก็บdraft การเข้าถึงreportของผู้อื่น และmetadataแสดงต่อสาธารณะ ไม่บังคับให้ต้องแนบรูปเพราะโจทย์ใช้คำว่า“สามารถแนบ” และไม่เพิ่มemail/SMSแจ้งทุกครั้งเป็นFRเดิม หากต้องการเกณฑ์negativecaseของstory3ควรตกลงผลเมื่อไม่พบReportIDเพิ่ม</p></section><section class="lesson-section" id="practice-stories-staff" data-reader-category="practice"><div class="section-kicker">04 / ITDS261</div><h2>แนวคำตอบเพิ่ม: stories 4–5 ของเจ้าหน้าที่และหัวหน้า</h2><div class="table-wrap" tabindex="0" role="region" aria-label="ตารางประกอบบทเรียน เลื่อนแนวนอนได้"><table><thead><tr><th>Story</th><th>Acceptancecriterion 1</th><th>Acceptancecriterion 2</th></tr></thead><tbody><tr><td><strong>4 บันทึกซ่อม:</strong> ในฐานะเจ้าหน้าที่โยธา ฉันต้องการบันทึกคน ชั่วโมง วัสดุ อุปกรณ์ และสถานะของworkorder เพื่อให้ติดตามงานและต้นทุนได้</td><td>Givenเจ้าหน้าที่มีสิทธิ์ในworkorderและอัตราต้นทุนยืนยันแล้ว Whenบันทึกข้อมูลที่valid Thenระบบเก็บรายการและคำนวณตามอัตราที่ตกลง แสดงส่วนแรงงาน/วัสดุ/อุปกรณ์และยอดรวม</td><td>Givenworkorderอยู่ระหว่างซ่อม WhenเลือกTemporaryRepairedและบันทึก Thenระบบเก็บสถานะนี้และเวลาที่แก้ และผลค้นที่ได้รับสิทธิ์แสดงสถานะใหม่</td></tr><tr><td><strong>5 ดูรายงาน:</strong> ในฐานะหัวหน้างาน ฉันต้องการดูถนนชำรุด ความคืบหน้า และค่าใช้จ่ายแยกตามเงื่อนไข เพื่อจัดลำดับทรัพยากรซ่อม</td><td>Givenมีข้อมูลหลายเขต/ความรุนแรง Whenเลือกเขตและระดับที่ต้องการ Thenรายงานนับเฉพาะรายการเข้าเงื่อนไขและยอดตรงกับชุดข้อมูลที่ตรวจเทียบได้</td><td>Givenมีworkordersหลายสถานะและต้นทุนบันทึกแล้ว Whenเปิดรายงานซ่อม/ต้นทุนตามช่วงที่ตกลง Thenแสดงจำนวนแยกสถานะและผลรวมแรงงาน วัสดุ อุปกรณ์ และยอดรวม โดยไม่รวมรายการนอกเงื่อนไข</td></tr></tbody></table></div><details class='worked-answer'><summary>ตัวอย่างคำนวณต้นทุนที่ติดป้ายสมมติฐาน</summary><p>สมมติอัตราแรงงาน100บาทต่อคนต่อชั่วโมง มี3คนทำ4ชั่วโมง ใช้วัสดุ500บาทและอุปกรณ์200บาท: labor=3×4×100=1,200 รวม=1,200+500+200=1,900บาท ตัวเลขและการคิดอุปกรณ์นี้เสนอเพื่อสาธิตหน่วยเท่านั้น ไม่ได้มาจากโจทย์ ต้องถามว่าคิดequipmentเป็นรายครั้ง/รายชั่วโมงและมีอัตราคนต่างกันหรือไม่</p></details><p>การเขียนครบ5storiesไม่แปลว่าครอบคลุมระบบทั้งหมดโดยอัตโนมัติ ต้องตรวจmappingบทบาท→story→criteria และจุดเชื่อมreport/workorder รายการตัวอย่างนี้รักษา5storiesและ2criteriaตามใบงาน แต่ในการพัฒนาจริงอาจแตกเรื่องย่อยเพิ่มเพื่อส่งมอบและทดสอบได้ง่าย</p></section><section class="lesson-section" id="nfr-review" data-reader-category="practice"><div class="section-kicker">05 / ITDS261</div><h2>วิจารณ์ NFR เดิมอย่างเป็นเหตุเป็นผล</h2><div class="table-wrap" tabindex="0" role="region" aria-label="ตารางประกอบบทเรียน เลื่อนแนวนอนได้"><table><thead><tr><th>ข้อความที่พบในคำตอบผู้เรียน</th><th>สิ่งที่ยังต้องแก้</th></tr></thead><tbody><tr><td>ทุกข้อมูลและแผนที่แสดงใน3วินาที</td><td>ต้องระบุoperation จุดวัด percentile ปริมาณข้อมูล/network และการพึ่งบริการแผนที่</td></tr><tr><td>รองรับผู้ใช้มากกว่า20ล้านคนตลอดเวลา</td><td>ไม่แยกregistered/concurrentusersหรือrequest rate และไม่มีเหตุผลfeasibilityรองรับ</td></tr><tr><td>พร้อมใช้99%ตลอดปี</td><td>มีตัวเลขแล้ว แต่ต้องระบุmeasurementwindow endpointsและข้อยกเว้นmaintenance/บริการภายนอก</td></tr><tr><td>อัปเดตfeatureทุกไตรมาส</td><td>เป็นแผนrelease/ข้อกำหนดกระบวนการมากกว่าคุณภาพruntime; ถ้าจะเป็นconstraintต้องตกลงความหมายและหลักฐาน</td></tr><tr><td>responseรวดเร็วให้กรอกได้ทันที</td><td>กำกวมและทับกับข้อแรก ต้องแยกinteractionlocalกับserverresponseและเกณฑ์เวลา</td></tr></tbody></table></div><p>อย่าตัดสินว่าNFRทุกข้อที่มีตัวเลขดีแล้ว ตัวเลขต้องสัมพันธ์กับงานและวัดซ้ำได้ อีกด้านการlogin/สร้างReportIDเป็นFR แม้ช่วยsecurity/traceability ส่วนข้อจำกัดการปกป้องข้อมูลหรือเวลาตอบสนองเป็นNFR/constraintsที่ต้องนิยามเพิ่มเติม การจัดหมวดมองพฤติกรรมที่ต้องทำเทียบกับคุณภาพที่ต้องเป็น</p></section><section class="lesson-section" id="practice-nfr" data-reader-category="practice"><div class="section-kicker">06 / ITDS261</div><h2>ห้า NFR ที่ปรับให้ตรวจได้ พร้อม workload สมมติ</h2><p><strong>ข้อเสนอสมมติสำหรับการฝึก ไม่ใช่ข้อกำหนดเดิมหรือค่าที่อาจารย์กำหนด:</strong> ให้stakeholdersยืนยันชุดข้อมูล100,000reports, concurrent sessions200, readrequests40ต่อวินาทีและsubmitreport5ต่อวินาที ทดสอบ30นาทีบนenvironmentที่บันทึกconfigurationและnetworkไว้ แยกการโหลดGoogleMapsออกจากAPIที่ระบบควบคุม และรายงานdependencytimeแยกต่างหาก</p><ol><li><strong>Performance:</strong> ภายใต้workloadข้างต้น95%ของคำขอค้นReportIDและรายการถนนตอบสำเร็จภายใน2วินาที วัดจากclientส่งคำขอจนรับข้อมูลครบ; errorrateต่ำกว่า1%ตามนิยามที่ตกลง</li><li><strong>Capacity:</strong> รองรับ200sessionsและrequestmixที่กำหนดโดยไม่สูญเสียreportที่ตอบยืนยันสำเร็จ ตรวจเทียบจำนวนส่งสำเร็จกับข้อมูลที่บันทึก และวัดperformanceตามข้อ1 ไม่ใช้คำว่า20ล้านคนแทนloadtest</li><li><strong>Availability:</strong> endpointหลักพร้อมใช้ไม่น้อยกว่า99%ต่อเดือน ตรวจจากภายนอกทุก1นาที กำหนดรายการendpointและนโยบายนับplannedmaintenanceก่อนเริ่มวัด ไม่เปลี่ยนwindowจากปีเป็นเดือนเงียบๆ</li><li><strong>Usability:</strong> ในการทดสอบผู้ใช้เป้าหมายใหม่10คนที่กำหนดทักษะ/อุปกรณ์ไว้ อย่างน้อย9คนรายงานถนนพร้อมตำแหน่งและได้รับReportIDภายใน3นาทีโดยไม่รับคำแนะนำจากผู้ทดสอบ</li><li><strong>Recoverability:</strong> จากbackupและenvironmentทดสอบที่ระบุ สามารถกู้บริการหลักภายใน4ชั่วโมง และสูญเสียข้อมูลย้อนหลังไม่เกิน24ชั่วโมงที่ตกลง ตรวจด้วยrestoreexerciseและเทียบข้อมูลจริง ไม่อนุมานจากแค่มีไฟล์backup</li></ol><p>NFRเหล่านี้เลือกมิติต่างกันเพื่อฝึก ไม่อ้างว่าระบบจริงต้องมีตัวเลขนี้ทั้งหมด หากเปลี่ยนloadหรือข้อจำกัดเครื่องต้องreviewผลใหม่ การตรวจสิทธิ์แก้workorderยังต้องมีFRชัดด้วย และหากเพิ่มsecurityNFRควรระบุขอบเขตข้อมูล/ภัยคุกคาม/หลักฐาน ไม่เขียนเพียง“ปลอดภัยมาก”</p></section><section class="lesson-section" id="flashcards">
+            <h2>Flashcards</h2>
+            <p class="muted small">
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">คำศัพท์</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources"><h2>แหล่งที่มาและขอบเขตของบทนี้</h2><ul><li><strong>Lab3 (ไฟล์งานตัวอย่างที่แนบมา).pdf</strong> · หน้า PDF 1–5 · ต้นฉบับLab3ในชุดเอกสาร: หน้า1เป็นโจทย์ หน้า2–5เป็นคำตอบผู้เรียนที่นำมาวิจารณ์โดยปกปิดชื่อ/รหัส; source labelปกปิดข้อมูลส่วนบุคคล</li><li><strong>2026 - ITDS261 - L3 - Requirement Engineering.pdf</strong> · หน้า PDF 12–16, 34–44 · FR/NFR specification userstoriesและacceptancecriteria</li></ul><p>เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงกับเลขที่พิมพ์บนสไลด์ ภาพ concept map และตัวอย่างอธิบายจัดทำเพิ่มเติมจากเนื้อหาเพื่อทบทวน แบบทดสอบไม่ใช่ข้อสอบจริง</p><p>เลขบทเว็บไซต์เรียงเพื่อให้อ่านสะดวก อ้างอิง Lecture ต้นฉบับตามที่ระบุ ไม่มีไฟล์ L5 ในชุดที่ได้รับ</p><p><a href="index.html#source-inventory">ดูรายการไฟล์ทั้งวิชา ↗</a></p></section><button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="index.html">← ภาพรวมวิชา</a><a class="btn primary" href="index.html">อ่านบทถัดไป →</a></nav></article></div></main><div class="footer-reveal">
+      <div class="footer-stage">
+        <div class="footer-curtain">
+          <a class="footer-reveal-link" href="#footer" aria-label="เลื่อนลงเพื่อดูส่วนท้ายเว็บไซต์">SCROLL DOWN TO REVEAL</a>
+        </div>
+        <footer id="footer" class="site-footer motion-footer garden-footer" aria-label="ส่วนท้ายเว็บไซต์">
+
+          <div class="wrap footer-content">
+            <div class="footer-art" aria-hidden="true">
+              <img src="../../assets/ascii/ink-garden.jpg?v=df253ede8012" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+              <video data-src="../../assets/ascii/ink-garden.mp4?v=42821eac656a" poster="../../assets/ascii/ink-garden.jpg?v=df253ede8012" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+            </div>
+            <h2 class="footer-contact-title">GitHub</h2>
+            <a class="footer-contact" href="https://github.com/Title5656" target="_blank" rel="noopener noreferrer" aria-label="GitHub ของ Title5656 (เปิดแท็บใหม่)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.64 1.23 3.29.94.1-.73.39-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.8 10.8 0 0 1 12 6.15c.96 0 1.92.13 2.82.38 2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+              <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
+              <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
+              <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
+              <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>
+            </nav>
+            <div class="footer-wordmark" aria-hidden="true"><span class="garden-wordmark-label">Garden</span></div>
+          </div>
+          <div class="wrap footer-bottom"><a href="../../index.html">Study Garden © 2026</a><div class="footer-controls"><button class="footer-motion-toggle" type="button" aria-label="หยุดภาพเคลื่อนไหว" aria-pressed="false" hidden>
+            <svg class="art-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg class="art-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+          </button><a class="footer-back-top" href="#main" aria-label="กลับด้านบน">↑</a></div></div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="สรุป ITDS261 ภาษาไทย พร้อมภาพอธิบาย แบบฝึกหัด แนวคำตอบ Flashcards และ Quiz">
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>Requirements Engineering: จากความต้องการสู่หลักฐานตรวจรับ · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.png?v=66f8b58bffb5" type="image/png" />
+    <link rel="stylesheet" href="../../assets/style.css?v=57402278ef28" />
+    <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
+    <script defer src="../../assets/software-content.js?v=72b939c26f0a"></script>
+<script defer src="../../assets/app.js?v=187c0a39763c"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+<link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
+<script defer src="../../assets/study-halftone-footer.js?v=b4e324035bb9"></script>
+<script defer src="../../assets/reader.js?v=6909a53af50d"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
+<link rel="stylesheet" href="../../assets/software.css?v=4cad62b4c628">
+</head>
+  <body data-subject="itds261" data-chapter="03"><a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><img class="brand-mark" src="../../assets/study-garden-logo.png?v=4d3c7e4e5b15" alt="" width="36" height="36" decoding="async">Study Garden</a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
+          ><a class="desktop-link" href="index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap"><nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS261</a><span>/</span><span>บท 3</span></nav><header class="chapter-hero"><div class="eyebrow">CHAPTER 03 · L3</div><h1>Requirements Engineering: จากความต้องการสู่หลักฐานตรวจรับ</h1><p>แยกชนิดของ requirement เก็บข้อมูล เขียน specification ตรวจความถูกต้อง และจัดการการเปลี่ยนแปลง</p><div class="tags"><span class="pill lilac">ITDS261 · อ่านพร้อมภาพและตัวอย่าง</span><span class="pill">Flashcards 10 · Quiz 10</span><span class="tag" data-chapter-status="03">ยังไม่ได้อ่าน</span></div></header><div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#requirement-types">สองแกนที่ต้องแยก: ระดับรายละเอียดและชนิดความต้องการ</a><a href="#elicitation">Feasibility และ elicitation: ค้นหาสิ่งที่ผู้ใช้ไม่ได้พูด</a><a href="#specification">Specification และ SRS: เขียนให้หลายฝ่ายเข้าใจตรงกัน</a><a href="#validation-change">Validation และ change management</a><div class="toc-tools"><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz</a><a href="#sources">แหล่งที่มา</a></div></aside><article class="lesson-content"><section class="lesson-section" id="requirement-types"><div class="section-kicker">01 / ITDS261</div><h2>สองแกนที่ต้องแยก: ระดับรายละเอียดและชนิดความต้องการ</h2><p>Requirement อธิบายบริการที่ระบบต้องให้และข้อจำกัดการทำงาน <strong>User requirements</strong> สื่อสารสิ่งที่ผู้ใช้ต้องการด้วยภาษาที่เข้าใจได้ ส่วน <strong>system requirements</strong> ลงรายละเอียดฟังก์ชัน บริการ และข้อจำกัดจนรู้ว่าต้องสร้างอะไร อีกแกนคือ <strong>functional requirements (FR)</strong> ว่าระบบทำอะไร ตอบ input และสถานการณ์อย่างไร กับ <strong>non-functional requirements (NFR)</strong> ว่าบริการต้องมีคุณภาพหรือเงื่อนไขอย่างไร ทั้งสองแกนใช้ร่วมกันได้ ไม่ใช่หมวดสี่ชนิดที่เลือกได้เพียงอย่างเดียว</p><figure class="se-figure se-concept"><a href="../../assets/software-visuals/03-concept.svg?v=b6b6b19b5103" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: แผนภาพแนวคิด: Requirements Engineering: จากความต้องการสู่หลักฐานตรวจรับ"><img src="../../assets/software-visuals/03-concept.svg?v=b6b6b19b5103" alt="แผนภาพแนวคิด: Requirements Engineering: จากความต้องการสู่หลักฐานตรวจรับ" loading="lazy" decoding="async"></a><figcaption><strong>จำเป็นวงจร:</strong> ถ้าตรวจสอบแล้วพบความต้องการกำกวม ให้กลับไปถามและแก้เอกสาร ไม่ใช่ส่งต่อความกำกวมไปให้ทีมพัฒนา <a class="se-zoom" href="../../assets/software-visuals/03-concept.svg?v=b6b6b19b5103" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><p>“ผู้ใช้ค้นหานัดหมายได้” เป็น FR ส่วน “95% ของคำขอค้นหาตอบภายใน 2 วินาที” เป็น NFR ด้าน performance แต่ยังต้องกำหนด workload และข้อมูลทดสอบ “ระบบใช้ง่าย” ยังทดสอบซ้ำไม่ได้ ต้องระบุผู้ใช้ งาน และเกณฑ์สำเร็จ ความปลอดภัยอาจมีทั้ง FR เช่น ขอรหัสยืนยัน กับ NFR/constraint เช่น ระดับการป้องกันและข้อจำกัดการเก็บข้อมูล จึงไม่ควรจัดหมวดโดยดูคำว่า security เพียงคำเดียว</p><p>Requirement ที่ดีช่วยเชื่อมความต้องการธุรกิจกับ design และ test เช่น R-BOOK-01 ระบบต้องตรวจเวลาว่างก่อนยืนยันนัดหมาย นำไปสู่กฎจองซ้ำ และ test จองช่วงเดียวกันพร้อมกัน การเขียนเพียง “มีหน้าจอจอง” อาจไม่ครอบคลุมพฤติกรรมสำคัญของระบบ</p></section><section class="lesson-section" id="elicitation"><div class="section-kicker">02 / ITDS261</div><h2>Feasibility และ elicitation: ค้นหาสิ่งที่ผู้ใช้ไม่ได้พูด</h2><p>Feasibility study เป็นการศึกษาสั้นช่วงต้นว่าระบบช่วยเป้าหมายองค์กรหรือไม่ ทำได้ภายในงบ/เวลา/เทคโนโลยีหรือไม่ และเชื่อมระบบเดิมได้หรือไม่ จากนั้น RE วนผ่าน elicitation, specification, validation และ change ไม่ใช่คุยครั้งเดียวแล้วหยุด ผู้เกี่ยวข้องอาจไม่รู้ว่าต้องการอะไร อธิบายงานประจำไม่ครบ ใช้ศัพท์เฉพาะ หรือมีความต้องการขัดกัน</p><figure class="se-figure"><a href="../../assets/software-visuals/03-slide.webp?v=2d2ae166f6f3" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: วงจร elicitation และ analysis: การค้นหาความต้องการ การจัดกลุ่ม การต่อรองลำดับความสำคัญ และการบันทึก ทำวนซ้ำได้"><img src="../../assets/software-visuals/03-slide.webp?v=2d2ae166f6f3" alt="วงจร elicitation และ analysis: การค้นหาความต้องการ การจัดกลุ่ม การต่อรองลำดับความสำคัญ และการบันทึก ทำวนซ้ำได้" loading="lazy" decoding="async"></a><figcaption><strong>สไลด์ต้นฉบับ:</strong> 2026 - ITDS261 - L3 - Requirement Engineering.pdf หน้า PDF 25 · วงจร elicitation และ analysis: การค้นหาความต้องการ การจัดกลุ่ม การต่อรองลำดับความสำคัญ และการบันทึก ทำวนซ้ำได้ <a class="se-zoom" href="../../assets/software-visuals/03-slide.webp?v=2d2ae166f6f3" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><p>การสัมภาษณ์แบบ closed ช่วยคำตอบเฉพาะ ส่วน open เปิดเรื่องที่ยังไม่รู้ ถามว่า “ครั้งล่าสุดที่นัดหมายชนกันเกิดอะไรขึ้น” ได้ข้อมูลมากกว่า “อยากได้อะไร” Ethnography/observation ช่วยเห็นงานจริง เช่น เจ้าหน้าที่ใช้กระดาษกันเวลาที่แอปไม่รองรับ แต่ต้องตรวจร่วมกับผู้ปฏิบัติงานว่าข้อสังเกตนั้นเป็นกฎปกติหรือข้อยกเว้น เทคนิคอื่นคืออ่านเอกสาร/แบบฟอร์ม/ฐานข้อมูล แบบสอบถาม site visit และ JRP แต่ละวิธีมีข้อจำกัด จึงควรตรวจเทียบหลายแหล่ง</p><p>หกมิติที่สไลด์ใช้เตือนความครบคือ individual functionality, business workflow, data/data formats, user interfaces, existing/system interfaces และ constraints เช่น reliability/performance หากถามเฉพาะรายการปุ่ม จะพลาดลำดับอนุมัติ ข้อมูลนำเข้า integration และข้อจำกัดที่เปลี่ยนการออกแบบ</p></section><section class="lesson-section" id="specification"><div class="section-kicker">03 / ITDS261</div><h2>Specification และ SRS: เขียนให้หลายฝ่ายเข้าใจตรงกัน</h2><p>Specification บันทึก user/system requirements ให้ชัด ไม่กำกวม ครบ และไม่ขัดกัน ใช้รูปแบบสม่ำเสมอ มีเลขอ้างอิง และแยก mandatory ด้วย shall จาก desirable ด้วย should ตามแนวทางในสไลด์ ใส่เหตุผลและผู้ให้ความต้องการเมื่อทำได้ หลีกเลี่ยงคำว่าเร็ว เหมาะสม หรือปลอดภัยโดยไม่มีนิยาม เพราะแต่ละคนอาจเข้าใจไม่ตรงกัน</p><div class="table-wrap" tabindex="0" role="region" aria-label="ตารางประกอบบทเรียน เลื่อนแนวนอนได้"><table><thead><tr><th>ส่วนของ structured specification</th><th>คำถามที่ตอบ</th></tr></thead><tbody><tr><td>ID, type, description</td><td>ข้อใดและต้องทำอะไร</td></tr><tr><td>Rationale, source</td><td>ทำไมต้องมีและใครให้ข้อมูล</td></tr><tr><td>Inputs, outputs, action</td><td>ข้อมูลและพฤติกรรมคืออะไร</td></tr><tr><td>Precondition, postcondition</td><td>ก่อนเริ่มและหลังจบเป็นอย่างไร</td></tr></tbody></table></div><p>SRS เป็นข้อความทางการว่าผู้พัฒนาต้องสร้างอะไร มีทั้ง user และ system requirements ใช้กับผู้อ่านหลายกลุ่มตั้งแต่ผู้บริหารถึงวิศวกร ช่วยสร้าง test cases คุม scope creep ทำคู่มือและแผน release ใช้ natural language, structured specification, user story, use case หรือ prototype ประกอบตามปัญหาได้ การมีภาพสวยโดยไม่มีเกณฑ์ตรวจไม่แทน SRS ที่ชัดเจน</p><p>User story รูป As a… I want… so that… เน้นบทบาท ความสามารถ และคุณค่า Acceptance criteria ใช้ Given–When–Then บอกสถานการณ์ การกระทำ และผลที่สังเกตได้ ส่วน Definition of Done เป็นเกณฑ์คุณภาพร่วมของงานที่เสร็จ ทั้งสองสัมพันธ์กันแต่ไม่ควรใช้แทนกันโดยไม่อธิบาย</p></section><section class="lesson-section" id="validation-change" data-reader-category="practice"><div class="section-kicker">04 / ITDS261</div><h2>Validation และ change management</h2><p>Validation ตรวจว่า requirements กำหนดระบบที่ลูกค้าต้องการจริงหรือไม่ ใช้ validity, consistency, completeness, realism, clarity, verifiability และ traceability ตัวอย่าง “อนุญาตยกเลิกทุกเวลา” ขัดกับ “ยกเลิกได้ก่อนวันนัดเท่านั้น” คือ consistency ส่วนไม่ได้ระบุว่าชำระเงินล้มเหลวทำอย่างไรคือ completeness การทดสอบซ้ำได้เป็น verifiability ขณะที่การรู้ว่า requirement มาจากเป้าหมายใดและกระทบโมดูลใดเป็น traceability</p><p>ความต้องการเปลี่ยนเมื่อผู้เกี่ยวข้องเข้าใจปัญหาดีขึ้น จึงต้องให้ ID คงที่ กำหนดนโยบาย traceability วิธีเสนอ/ประเมิน/อนุมัติ change และเครื่องมือเก็บความสัมพันธ์ กระบวนการ change ในสไลด์คือวิเคราะห์ปัญหาและข้อเสนอ → วิเคราะห์ผลกระทบและต้นทุน → ปรับ design/implementation และตรวจผล การเปลี่ยนข้อความในเอกสารโดยไม่ตามไปแก้โมเดลและ test ทำให้หลักฐานไม่ตรงกัน</p><details class='worked-answer'><summary>แนวคำตอบเพิ่ม: ทำ NFR ให้ทดสอบได้</summary><p>แทน “ค้นหาต้องเร็ว” เสนอสมมติฐานเพื่อเจรจา: เมื่อผู้ใช้พร้อมกัน 200 sessions ส่งคำขอค้นหานัดหมายรวม 50 requests/second บนชุดข้อมูล 100,000 นัดหมายและสภาพแวดล้อมทดสอบที่ตกลงกัน 95% ของคำขอต้องตอบภายใน 2 วินาที วัดที่ฝั่งผู้ใช้ตลอด 30 นาที ตัวเลขนี้จัดทำเพิ่ม ไม่ได้มาจากโจทย์ ต้องให้ stakeholder ยืนยันก่อนเป็นข้อกำหนดจริง และควรกำหนดวิธีนับคำขอผิดพลาดด้วย</p></details></section><section class="lesson-section" id="flashcards">
+            <h2>Flashcards</h2>
+            <p class="muted small">
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">คำศัพท์</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources"><h2>แหล่งที่มาและขอบเขตของบทนี้</h2><ul><li><strong>2026 - ITDS261 - L3 - Requirement Engineering.pdf</strong> · หน้า PDF 5–20, 22–48, 52–66 · ชนิดความต้องการ RE specification validation และ change; ตัวเลข NFR ในตัวอย่างเป็นสมมติฐานจัดทำเพิ่ม</li></ul><p>เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงกับเลขที่พิมพ์บนสไลด์ ภาพ concept map และตัวอย่างอธิบายจัดทำเพิ่มเติมจากเนื้อหาเพื่อทบทวน แบบทดสอบไม่ใช่ข้อสอบจริง</p><p>เลขบทเว็บไซต์เรียงเพื่อให้อ่านสะดวก อ้างอิง Lecture ต้นฉบับตามที่ระบุ ไม่มีไฟล์ L5 ในชุดที่ได้รับ</p><p><a href="index.html#source-inventory">ดูรายการไฟล์ทั้งวิชา ↗</a></p></section><button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="index.html">← ภาพรวมวิชา</a><a class="btn primary" href="chapter-04.html">อ่านบทถัดไป →</a></nav></article></div></main><div class="footer-reveal">
+      <div class="footer-stage">
+        <div class="footer-curtain">
+          <a class="footer-reveal-link" href="#footer" aria-label="เลื่อนลงเพื่อดูส่วนท้ายเว็บไซต์">SCROLL DOWN TO REVEAL</a>
+        </div>
+        <footer id="footer" class="site-footer motion-footer garden-footer" aria-label="ส่วนท้ายเว็บไซต์">
+
+          <div class="wrap footer-content">
+            <div class="footer-art" aria-hidden="true">
+              <img src="../../assets/ascii/ink-garden.jpg?v=df253ede8012" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+              <video data-src="../../assets/ascii/ink-garden.mp4?v=42821eac656a" poster="../../assets/ascii/ink-garden.jpg?v=df253ede8012" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+            </div>
+            <h2 class="footer-contact-title">GitHub</h2>
+            <a class="footer-contact" href="https://github.com/Title5656" target="_blank" rel="noopener noreferrer" aria-label="GitHub ของ Title5656 (เปิดแท็บใหม่)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.64 1.23 3.29.94.1-.73.39-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.8 10.8 0 0 1 12 6.15c.96 0 1.92.13 2.82.38 2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+              <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
+              <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
+              <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
+              <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>
+            </nav>
+            <div class="footer-wordmark" aria-hidden="true"><span class="garden-wordmark-label">Garden</span></div>
+          </div>
+          <div class="wrap footer-bottom"><a href="../../index.html">Study Garden © 2026</a><div class="footer-controls"><button class="footer-motion-toggle" type="button" aria-label="หยุดภาพเคลื่อนไหว" aria-pressed="false" hidden>
+            <svg class="art-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg class="art-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+          </button><a class="footer-back-top" href="#main" aria-label="กลับด้านบน">↑</a></div></div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

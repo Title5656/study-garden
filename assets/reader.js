@@ -160,7 +160,7 @@
     section, index, id: section.id,
     title: section.querySelector("h2").textContent.trim().replace(/^\d+\s*[·./]\s*/, ""),
     category: ["flashcards", "quiz", "sources"].includes(section.id) ? section.id
-      : activities[subject]?.[chapter]?.includes(section.id) ? "practice" : "learn",
+      : section.dataset.readerCategory === "practice" || activities[subject]?.[chapter]?.includes(section.id) ? "practice" : "learn",
   }));
   const activeCategories = categories.filter(group => topics.some(topic => topic.category === group.id));
   function element(tag, className, text) {

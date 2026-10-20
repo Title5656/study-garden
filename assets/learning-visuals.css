@@ -1,0 +1,119 @@
+/* Local explanatory diagrams. Text stays selectable and reflows on small screens. */
+.learning-visual {
+  margin: 1.7rem 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+}
+.lv-title {
+  display: block;
+  padding: 1rem 1.15rem 0;
+  color: var(--accent);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+.lv-diagram { padding: 1.15rem; }
+.learning-visual figcaption {
+  padding: .9rem 1.15rem;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  font-size: .92rem;
+  line-height: 1.8;
+}
+.learning-visual figcaption strong { color: var(--accent); }
+.lv-box {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: .75rem .9rem;
+  background: var(--paper);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.lv-box > strong, .lv-box > span { display: block; }
+.lv-box > span { font-size: .91rem; color: var(--muted); }
+.lv-box code { white-space: normal; overflow-wrap: anywhere; }
+.lv-accent { background: var(--purple); border-color: var(--accent); }
+.lv-warm { background: var(--peach); }
+.lv-good { border-left: 4px solid var(--good); }
+.lv-bad { border-left: 4px solid var(--bad); }
+.lv-flow {
+  display: flex;
+  flex-direction: column;
+  max-width: 520px;
+  margin-inline: auto;
+  text-align: center;
+}
+.lv-arrow {
+  display: block;
+  padding: .25rem 0;
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+}
+.lv-arrow small { font-size: .85rem; font-weight: 400; }
+.lv-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.lv-column { min-width: 0; }
+.lv-column > .lv-box + .lv-box { margin-top: .6rem; }
+.lv-branch-label { margin: 0 0 .45rem; font-size: .9rem; font-weight: 700; text-align: center; color: var(--accent); }
+.lv-return {
+  border-left: 2px dashed var(--accent);
+  margin: .6rem 0 .2rem .8rem;
+  padding: .4rem .75rem;
+  font-size: .9rem;
+  color: var(--accent);
+}
+.lv-tree, .lv-tree ul { list-style: none; }
+.lesson-section .lv-tree { margin: 0; padding: 0; }
+.lesson-section .lv-tree ul {
+  margin: .7rem 0 0 .8rem;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid var(--accent);
+}
+.lesson-section .lv-tree li { position: relative; margin: .65rem 0 0; }
+.lv-tree ul > li::before {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  left: -1rem;
+  top: 1.45rem;
+  border-top: 2px solid var(--accent);
+}
+.lv-nest { padding: .9rem; border: 2px solid var(--accent); border-radius: 12px; background: var(--purple); }
+.lv-nest > strong, .lv-nest > span { display: block; }
+.lv-nest > span { color: var(--muted); font-size: .91rem; }
+.lv-nest > .lv-nest { margin-top: .8rem; background: var(--paper); }
+.lv-nest .lv-nest .lv-nest { background: var(--sage); }
+.lv-memory { border: 2px dashed var(--accent); padding: .8rem; border-radius: 12px; }
+.lv-memory > .lv-box { margin-top: .6rem; }
+.lv-funnel { display: flex; flex-direction: column; align-items: center; gap: .4rem; }
+.lv-funnel .lv-box { text-align: center; width: 100%; }
+.lv-funnel > .lv-box:nth-child(3) { width: 85%; }
+.lv-funnel > .lv-box:nth-child(5) { width: 70%; }
+.lv-formula { display: grid; gap: .5rem; text-align: center; }
+.lv-formula .lv-box { border-style: dashed; }
+.lv-formula .lv-result { border-style: solid; border-width: 2px; }
+.lv-note { margin: .7rem 0 0; font-size: .85rem; color: var(--muted); }
+.lv-value-map { display: grid; gap: .6rem; }
+.lv-value-map .lv-box { border-left: 4px solid var(--accent); }
+.lv-ledger { display: grid; gap: .6rem; }
+.lv-ledger .lv-row { display: grid; grid-template-columns: 1fr auto; gap: .8rem; padding: .6rem .8rem; border-bottom: 1px solid var(--line); }
+.lv-ledger .lv-row strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lv-ledger .lv-total { background: var(--purple); border-radius: 8px; border-bottom: 0; }
+@media (max-width: 520px) {
+  .lv-columns { grid-template-columns: 1fr; }
+  .lv-diagram { padding: .8rem; }
+  .lv-title { padding: .85rem .8rem 0; }
+  .learning-visual figcaption { padding: .85rem .8rem; }
+  .lv-box { padding: .65rem .7rem; }
+  .lv-funnel > .lv-box:nth-child(3) { width: 92%; }
+  .lv-funnel > .lv-box:nth-child(5) { width: 84%; }
+  .lv-nest { padding: .65rem; }
+}
+@media print {
+  .learning-visual { break-inside: avoid; }
+}

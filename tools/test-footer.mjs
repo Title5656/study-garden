@@ -57,7 +57,7 @@ async function subjectAssertions(page) {
   assert.equal(await footer.locator('.footer-wordmark').innerText(), 'Garden');
   assert.equal(await footer.locator('.footer-contact-title').innerText(), 'GitHub');
   assert.equal(await footer.locator('.footer-contact').getAttribute('href'), 'https://github.com/Title5656');
-  assert.equal(await footer.locator('.footer-pill').count(), 3);
+  assert.equal(await footer.locator('.footer-pill').count(), 4);
   assert.equal(await footer.locator('.footer-ribbon, .sg-hwf-top').count(), 0);
   assert.equal(await footer.locator('[src*="creation-of-adam"], [data-src*="creation-of-adam"]').count(), 0);
   assert.match(await footer.locator('.footer-art img').getAttribute('src'), /ink-garden/);
@@ -67,7 +67,7 @@ async function subjectAssertions(page) {
 
 try {
   const paths = [];
-  for (const subject of ['itds241', 'itds294']) {
+  for (const subject of ['itds241', 'itds294', 'itds261']) {
     for (const name of await readdir(resolve(root, 'subjects', subject))) {
       if (name.endsWith('.html')) paths.push(`subjects/${subject}/${name}`);
     }

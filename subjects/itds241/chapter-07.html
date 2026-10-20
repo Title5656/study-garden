@@ -24,7 +24,8 @@
   <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=b4e324035bb9"></script>
-<script defer src="../../assets/reader.js?v=551fb92b6116"></script>
+<script defer src="../../assets/reader.js?v=6909a53af50d"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
 </head>
   <body data-subject="itds241" data-chapter="07">
     <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
@@ -331,7 +332,9 @@ counterB(); // 1: อีก environment หนึ่ง</code></pre>
                 ใหม่จึงได้อีกชุด
               </div>
             </div>
-          </section>
+
+<figure class="learning-visual"><strong class="lv-title">Closure: ฟังก์ชันจบ แต่ยังมีทางเข้าถึงความจำ</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-box "><strong><code>makeCounter()</code></strong><span>เรียกครั้งที่ 1 สร้าง environment A</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-memory"><strong>Environment A</strong><div class="lv-box "><strong><code>count = 0</code></strong><span>ตัวแปรของการเรียกครั้งนี้</span></div></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box lv-accent"><strong><code>counter = () =&gt; ++count</code></strong><span>ฟังก์ชันที่คืนออกมายังอ้างถึง A</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong><code>counter() → 1 → 2</code></strong><span>แต่ละครั้งแก้ count ตัวเดิม</span></div></div><div class="lv-return">เรียก makeCounter() ใหม่ → environment B → เริ่มนับแยกจาก A</div></div><figcaption><strong>อ่านภาพ:</strong> ลูกศรเชื่อมฟังก์ชันที่คืนมากับ environment ที่มันถูกสร้างไว้ ไม่ได้คัดลอก count ใหม่ทุกครั้งที่เรียก counter ส่วนการเรียก makeCounter อีกครั้งจะสร้างความจำอีกชุดหนึ่ง</figcaption></figure>
+</section>
           <section class="lesson-section" id="oop">
             <h2>04 · Class, Object และการสืบทอด</h2>
             <p>
@@ -505,7 +508,9 @@ list.removeChild(item);             // ลบ node ลูกนั้น</code><
               <code>document.write()</code> หลังโหลดหน้าแล้วอาจแทนเอกสารทั้งหน้า
               จึงไม่เหมาะกับการอัปเดต UI แบบนี้
             </p>
-          </section>
+
+<figure class="learning-visual"><strong class="lv-title">DOM: ความสัมพันธ์ parent / child / sibling</strong><div class="lv-diagram"><ul class="lv-tree"><li><div class="lv-box "><strong><code>document</code></strong></div><ul><li><div class="lv-box "><strong><code>html</code></strong></div><ul><li><div class="lv-box "><strong><code>body</code></strong></div><ul><li><div class="lv-box "><strong><code>h1</code></strong><span>element node</span></div><ul><li><div class="lv-box "><strong><code>"Study Garden"</code></strong><span>text node</span></div></li></ul></li><li><div class="lv-box "><strong><code>p</code></strong><span>เป็น sibling ของ h1</span></div></li></ul></li></ul></li></ul></li></ul></div><figcaption><strong>อ่านภาพ:</strong> เส้นแนวตั้งและกิ่งแสดงความเป็นลูก: h1 กับ p มี parent เป็น body เหมือนกัน จึงเป็น siblings ส่วนข้อความเป็น child ของ h1 การเลือก h1 กับการอ่านข้อความข้างในจึงเป็นคนละขั้น</figcaption></figure>
+</section>
           <section class="lesson-section" id="events">
             <h2>06 · Event เชื่อมการกระทำกับโค้ด</h2>
             <p>
@@ -684,6 +689,7 @@ button.addEventListener(&quot;click&quot;, handleClick);
               <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
             </a>
             <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
               <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
               <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
               <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>

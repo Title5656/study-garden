@@ -24,7 +24,8 @@
   <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=b4e324035bb9"></script>
-<script defer src="../../assets/reader.js?v=551fb92b6116"></script>
+<script defer src="../../assets/reader.js?v=6909a53af50d"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
 </head>
   <body data-subject="itds241" data-chapter="06">
     <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
@@ -389,7 +390,9 @@ console.log(student[key]);   // &quot;Mint&quot;</code></pre>
 scores.map(n =&gt; n * 2);              // [8, 14, 18]
 scores.filter(n =&gt; n &gt;= 7);          // [7, 9]
 scores.reduce((sum, n) =&gt; sum + n, 0); // 20</code></pre>
-          </section>
+
+<figure class="learning-visual"><strong class="lv-title">ชื่อสองชื่อ → ข้อมูลก้อนเดียว</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-columns"><div class="lv-column"><div class="lv-box "><strong><code>student</code></strong><span>อ้างอิง object A</span></div></div><div class="lv-column"><div class="lv-box "><strong><code>friend</code></strong><span>ได้ค่าจาก student</span></div></div></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small>ทั้งสองชี้มาที่เดียวกัน</small></div><div class="lv-box lv-accent"><strong>Object A</strong><span><code>{ name: "Mint", points: 8 }</code></span></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small><code>friend.points = 10</code></small></div><div class="lv-box "><strong>Object A เดิมเปลี่ยนเป็น points: 10</strong><span>อ่าน student.points ก็ได้ 10</span></div></div></div><figcaption><strong>อ่านภาพ:</strong> การคัดลอกตัวแปร object คัดลอกค่าการอ้างอิง ลูกศรจึงมารวมที่ object เดียว การแก้ property ผ่าน friend มองเห็นผ่าน student ได้ด้วย ส่วน const ห้ามเปลี่ยน binding แต่ไม่ได้ห้ามแก้ property ของ object</figcaption></figure>
+</section>
           <section class="lesson-section" id="operators">
             <h2>04 · เปรียบเทียบและตัดสินใจ</h2>
             <p>
@@ -616,7 +619,9 @@ for (let i = 1; i &lt;= limit; i++) {
                 จะอ่านไม่ได้จากนอก loop; lab แสดงสถานะภายในเพื่อการเรียนรู้
               </div>
             </div>
-          </section>
+
+<figure class="learning-visual"><strong class="lv-title">for loop: เส้นทางที่วนกลับและทางออก</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-box "><strong>เริ่มเพียงครั้งเดียว</strong><span><code>i = 1; sum = 0; limit = 3</code></span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box lv-accent"><strong>ตรวจเงื่อนไข <code>i &lt;= limit</code></strong></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small>แยกสองทาง</small></div><div class="lv-columns"><div class="lv-column"><p class="lv-branch-label">ผ่าน → ทำรอบนี้</p><div class="lv-box "><strong><code>sum += i</code></strong><span>รอบแรก: sum = 1</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong><code>i++</code></strong><span>รอบแรก: i = 2</span></div><div class="lv-return">↶ กลับไปตรวจเงื่อนไข</div></div><div class="lv-column"><p class="lv-branch-label">ไม่ผ่าน → ออกจาก loop</p><div class="lv-box "><strong>เมื่อ i = 4</strong><span>4 &lt;= 3 เป็น false</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box lv-good"><strong>อ่านผลลัพธ์</strong><span><code>sum = 6</code></span></div></div></div></div></div><figcaption><strong>อ่านภาพ:</strong> ตัวเริ่มทำครั้งเดียว แต่เงื่อนไขถูกตรวจซ้ำทุกครั้ง หลังบวกต้องเพิ่ม i ก่อนวนกลับ เมื่อ i = 4 จึงออก โดยไม่บวก 4 เข้าไปในผลรวม</figcaption></figure>
+</section>
           <section class="lesson-section" id="game">
             <h2>06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</h2>
             <p>
@@ -760,6 +765,7 @@ for (let i = 1; i &lt;= limit; i++) {
               <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
             </a>
             <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
               <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
               <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
               <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>

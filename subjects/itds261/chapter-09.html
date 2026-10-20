@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="สรุป ITDS261 ภาษาไทย พร้อมภาพอธิบาย แบบฝึกหัด แนวคำตอบ Flashcards และ Quiz">
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>Implementation, Debugging, Refactoring และ Code Review · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.png?v=66f8b58bffb5" type="image/png" />
+    <link rel="stylesheet" href="../../assets/style.css?v=57402278ef28" />
+    <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
+    <script defer src="../../assets/software-content.js?v=72b939c26f0a"></script>
+<script defer src="../../assets/app.js?v=187c0a39763c"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+<link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
+<script defer src="../../assets/study-halftone-footer.js?v=b4e324035bb9"></script>
+<script defer src="../../assets/reader.js?v=6909a53af50d"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
+<link rel="stylesheet" href="../../assets/software.css?v=4cad62b4c628">
+</head>
+  <body data-subject="itds261" data-chapter="09"><a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><img class="brand-mark" src="../../assets/study-garden-logo.png?v=4d3c7e4e5b15" alt="" width="36" height="36" decoding="async">Study Garden</a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
+          ><a class="desktop-link" href="index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap"><nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS261</a><span>/</span><span>บท 9</span></nav><header class="chapter-hero"><div class="eyebrow">CHAPTER 09 · L10</div><h1>Implementation, Debugging, Refactoring และ Code Review</h1><p>พัฒนาโค้ดที่อ่าน ดูแล และตรวจได้ พร้อมทบทวนคุณภาพด้วยหลักฐานและคำแนะนำที่นำไปแก้ได้</p><div class="tags"><span class="pill lilac">ITDS261 · อ่านพร้อมภาพและตัวอย่าง</span><span class="pill">Flashcards 10 · Quiz 10</span><span class="tag" data-chapter-status="09">ยังไม่ได้อ่าน</span></div></header><div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#implementation">Implementation ไม่จบเมื่อโปรแกรมรันได้</a><a href="#style-comments">Style guides และ comments ที่ช่วยผู้อ่าน</a><a href="#debug-refactor">Debugging กับ refactoring เปลี่ยนอะไร</a><a href="#review-process">Inspection และ modern code review</a><a href="#practice-review">แนวคำตอบโจทย์ PR ของ junior developer</a><div class="toc-tools"><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz</a><a href="#sources">แหล่งที่มา</a></div></aside><article class="lesson-content"><section class="lesson-section" id="implementation"><div class="section-kicker">01 / ITDS261</div><h2>Implementation ไม่จบเมื่อโปรแกรมรันได้</h2><p>Implementation แปลง detailed design เป็นโปรแกรมที่ถูกต้อง รวม coding, unit testing, debugging และ configuration management คุณภาพประกอบด้วย readability, maintainability, performance, traceability, correctness และ completeness ต้องสมดุลกัน โค้ดเร็วแต่ให้ผลผิดไม่ผ่านความต้องการ ส่วนโค้ดถูกเฉพาะhappy pathแต่ล้มเมื่อข้อมูลผิดก็ยังไม่ครบ</p><figure class="se-figure se-concept"><a href="../../assets/software-visuals/09-concept.svg?v=33a088f88534" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: แผนภาพแนวคิด: Implementation, Debugging, Refactoring และ Code Review"><img src="../../assets/software-visuals/09-concept.svg?v=33a088f88534" alt="แผนภาพแนวคิด: Implementation, Debugging, Refactoring และ Code Review" loading="lazy" decoding="async"></a><figcaption><strong>วงจรส่งมอบการเปลี่ยนแปลง:</strong> เขียนโค้ด → ทดสอบ → ให้เพื่อนตรวจ → ปรับปรุงและตรวจซ้ำ การ review ช่วยเสริมการทดสอบ <a class="se-zoom" href="../../assets/software-visuals/09-concept.svg?v=33a088f88534" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><p>Imperative บอกขั้นตอนว่าจะทำอย่างไร Declarative บอกผลที่ต้องการ เช่น SQL Object-oriented จัดข้อมูลและพฤติกรรมเป็นobjects ส่วน logic programming ระบุกฎและข้อเท็จจริง ภาษาหนึ่งรองรับหลายparadigmsได้ จึงไม่ควรจำว่าPythonเป็นได้อย่างเดียว No-code, low-code และการสั่งAIผ่านภาษาธรรมชาติช่วยทดลองเร็ว แต่ยังต้องตรวจความถูกต้อง ข้อจำกัดplatform และการบำรุงรักษา</p></section><section class="lesson-section" id="style-comments"><div class="section-kicker">02 / ITDS261</div><h2>Style guides และ comments ที่ช่วยผู้อ่าน</h2><p>Style guide กำหนดกติกาโค้ดองค์กรเพื่อหลีกเลี่ยงอันตราย ส่งเสริมbest practices และรักษาความสม่ำเสมอ ครอบคลุมชื่อ การจัดไฟล์ formatting และแนวทางใช้ความสามารถของภาษา ความสม่ำเสมอช่วยทำเครื่องมือ เคลื่อนย้ายคนระหว่างงาน และอ่านงานเดิมในอนาคต แต่กฎต้องสัมพันธ์กับบริบทและมีวิธีจัดการข้อยกเว้น</p><figure class="se-figure"><a href="../../assets/software-visuals/09-slide.webp?v=3199b5d5d22e" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: Checklist จากสไลด์: ตรวจว่าทำงานตรงเป้าหมาย ออกแบบเรียบง่าย และพิจารณาผลกระทบของ dependency"><img src="../../assets/software-visuals/09-slide.webp?v=3199b5d5d22e" alt="Checklist จากสไลด์: ตรวจว่าทำงานตรงเป้าหมาย ออกแบบเรียบง่าย และพิจารณาผลกระทบของ dependency" loading="lazy" decoding="async"></a><figcaption><strong>สไลด์ต้นฉบับ:</strong> 2026 - ITDS261 - L10 - Implementation  Code review.pdf หน้า PDF 53 · Checklist จากสไลด์: ตรวจว่าทำงานตรงเป้าหมาย ออกแบบเรียบง่าย และพิจารณาผลกระทบของ dependency <a class="se-zoom" href="../../assets/software-visuals/09-slide.webp?v=3199b5d5d22e" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><p>แนวปฏิบัติในL10 คือfunctionเล็กและมีหน้าที่ชัด ลดlogicซ้ำ อ่านชื่อแล้วเข้าใจ จัดการerrorอย่างเปิดเผย commitขนาดเหมาะสม และทดสอบระหว่างสร้าง Commentsควรอธิบายเหตุผล เงื่อนไขที่ไม่ชัด ข้อจำกัด หรือที่มาของแนวทาง ไม่เขียนซ้ำว่า “เพิ่มหนึ่ง” หน้าโค้ดที่เพิ่มหนึ่ง และไม่ใช้commentยาวกลบชื่อ/โครงสร้างที่สับสน</p><pre><code>// ไม่ช่วย: บวกยอดสินค้า
+total += price;
+// ช่วยเมื่อเป็นกฎจริงที่ยืนยันแล้ว:
+// ปัดเศษหลังรวมทั้งบิล เพื่อให้ยอดตรงกับใบเสร็จของผู้ให้บริการ
+</code></pre><p>ข้อคิดเห็นด้านบนเป็นตัวอย่างการสื่อสาร ไม่ได้กำหนดกฎปัดเศษของEx2 Commentsเกี่ยวกับbugควรบอกเหตุผลและเงื่อนไขที่ต้องรักษา มีlinkอ้างอิงเมื่อเหมาะ และTODOควรชี้งานคงเหลือชัดเจน ไม่ปล่อยข้อความล้าสมัยที่ทำให้คนเชื่อสิ่งผิด</p></section><section class="lesson-section" id="debug-refactor"><div class="section-kicker">03 / ITDS261</div><h2>Debugging กับ refactoring เปลี่ยนอะไร</h2><p>Debugging มีสี่ช่วง: stabilization/reproduction ทำให้ปัญหาเกิดซ้ำได้; localization หาแหล่ง; correction แก้; verification ตรวจว่าแก้ปัญหาและไม่สร้างปัญหาใหม่ เครื่องมือเช่นlint, debugger, profiler และtest coverageตอบคนละคำถาม ต้องใช้ข้อมูลนำ ไม่แก้เดาสุ่มเพราะอาการหายครั้งเดียว</p><p>Refactoring ปรับโครงสร้างภายในโดยไม่เปลี่ยนexternal behavior เช่น extract method ลดlong method หรือextract classแยกlarge class ต่างจากเพิ่มfeatureหรือrewriteจากศูนย์ Code smellsเช่นduplicated code, feature envy หรือswitchซับซ้อนเป็นสัญญาณให้ตรวจ ไม่ใช่คำพิพากษาว่าต้องใช้patternใดเสมอ การมีtestsและทำทีละก้าวช่วยรักษาพฤติกรรมเดิม</p></section><section class="lesson-section" id="review-process"><div class="section-kicker">04 / ITDS261</div><h2>Inspection และ modern code review</h2><p>Fagan inspection เป็นกระบวนการมีplanning, overview, preparation, inspection, rework และfollow-up ช่วงinspectionเน้นหาdefects ไม่ใช้เวลาทั้งหมดถกวิธีออกแบบใหม่ ส่วนmodern code reviewมักทำผ่านเครื่องมือreviewchanges แม้รูปแบบต่างกัน เป้าหมายคือความถูกต้อง ความเข้าใจร่วม ความสม่ำเสมอ ความเป็นเจ้าของทีม แลกเปลี่ยนความรู้ และมีประวัติการพิจารณา</p><p>Checklistต้องมองimplementation, dependencies/backward compatibility, security/privacy, logic/edge cases, error/logging, testing/testability, readability, usability/accessibility และperformance ควรถามว่าข้อมูลสำคัญถูกบันทึกในlogหรือไม่ และเอกสาร/configที่ต้องเปลี่ยนถูกแก้ครบหรือยัง Reviewไม่แทนautomatedtests และtestsไม่แทนการอ่านผลกระทบทางdesign</p></section><section class="lesson-section" id="practice-review" data-reader-category="practice"><div class="section-kicker">05 / ITDS261</div><h2>แนวคำตอบโจทย์ PR ของ junior developer</h2><details class='worked-answer'><summary>ตรวจกรณีตัวแปรx, logicซ้ำ และไม่มีregression test</summary><p><strong>แนวคำตอบที่จัดทำเพิ่มเพื่อทบทวน ไม่ใช่เฉลยอาจารย์</strong> L10หน้า57ให้พิจารณาbugfixที่ทำงานได้แต่ชื่อxเก็บยอดบัญชี ไม่มีเหตุผลของการแก้ logicซ้ำสองแห่ง และไม่มีtest ข้อกังวลหลักคือความถูกต้องระยะยาวและความเข้าใจ ต้องขอชื่อที่สื่อความหมาย ตรวจว่าควรรวมlogicร่วมกันหรือไม่ และเพิ่มregression testที่ล้มก่อนแก้/ผ่านหลังแก้ในบริบทที่เหมาะสม</p><p>Review commentตัวอย่าง: “กรณีนี้แก้ผลยอดได้แล้ว ช่วยเพิ่มtestสำหรับยอดที่เคยคำนวณผิด เพื่อป้องกันปัญหากลับมา และเปลี่ยนxเป็นaccountBalanceได้ไหม ฉันเห็นlogicเดียวกันอีกสองจุด ช่วยตรวจว่าต้องใช้กฎเดียวกันหรือมีเหตุผลต่างกัน แล้วรวมส่วนที่เหมือนกันหรืออธิบายข้อแตกต่างไว้” คำแนะนำชี้หลักฐาน ผลกระทบ และสิ่งที่ทำต่อได้ โดยวิจารณ์งานไม่วิจารณ์ความสามารถคน</p><p>ไม่จำเป็นต้องบังคับใส่commentทุกบรรทัด หากเปลี่ยนชื่อและโครงสร้างแล้วชัดก็ใช้ได้ จำนวนสิ่งที่ต้องแก้ก่อนapproveขึ้นกับข้อบกพร่องจริงและมาตรฐานทีม โจทย์ไม่ได้ให้กฎว่าต้องแก้กี่ข้อ จึงไม่แต่งเกณฑ์คะแนนหรือapprovalตายตัว</p></details></section><section class="lesson-section" id="flashcards">
+            <h2>Flashcards</h2>
+            <p class="muted small">
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">คำศัพท์</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources"><h2>แหล่งที่มาและขอบเขตของบทนี้</h2><ul><li><strong>2026 - ITDS261 - L10 - Implementation  Code review.pdf</strong> · หน้า PDF 4–7, 10–23, 25–41, 46–58 · paradigms practices debugging refactoring inspectionและreview; แนวคำตอบPRจัดทำเพิ่ม</li></ul><p>เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงกับเลขที่พิมพ์บนสไลด์ ภาพ concept map และตัวอย่างอธิบายจัดทำเพิ่มเติมจากเนื้อหาเพื่อทบทวน แบบทดสอบไม่ใช่ข้อสอบจริง</p><p>เลขบทเว็บไซต์เรียงเพื่อให้อ่านสะดวก อ้างอิง Lecture ต้นฉบับตามที่ระบุ ไม่มีไฟล์ L5 ในชุดที่ได้รับ</p><p><a href="index.html#source-inventory">ดูรายการไฟล์ทั้งวิชา ↗</a></p></section><button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="index.html">← ภาพรวมวิชา</a><a class="btn primary" href="chapter-10.html">อ่านบทถัดไป →</a></nav></article></div></main><div class="footer-reveal">
+      <div class="footer-stage">
+        <div class="footer-curtain">
+          <a class="footer-reveal-link" href="#footer" aria-label="เลื่อนลงเพื่อดูส่วนท้ายเว็บไซต์">SCROLL DOWN TO REVEAL</a>
+        </div>
+        <footer id="footer" class="site-footer motion-footer garden-footer" aria-label="ส่วนท้ายเว็บไซต์">
+
+          <div class="wrap footer-content">
+            <div class="footer-art" aria-hidden="true">
+              <img src="../../assets/ascii/ink-garden.jpg?v=df253ede8012" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+              <video data-src="../../assets/ascii/ink-garden.mp4?v=42821eac656a" poster="../../assets/ascii/ink-garden.jpg?v=df253ede8012" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+            </div>
+            <h2 class="footer-contact-title">GitHub</h2>
+            <a class="footer-contact" href="https://github.com/Title5656" target="_blank" rel="noopener noreferrer" aria-label="GitHub ของ Title5656 (เปิดแท็บใหม่)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.64 1.23 3.29.94.1-.73.39-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.8 10.8 0 0 1 12 6.15c.96 0 1.92.13 2.82.38 2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+              <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
+              <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
+              <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
+              <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>
+            </nav>
+            <div class="footer-wordmark" aria-hidden="true"><span class="garden-wordmark-label">Garden</span></div>
+          </div>
+          <div class="wrap footer-bottom"><a href="../../index.html">Study Garden © 2026</a><div class="footer-controls"><button class="footer-motion-toggle" type="button" aria-label="หยุดภาพเคลื่อนไหว" aria-pressed="false" hidden>
+            <svg class="art-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg class="art-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+          </button><a class="footer-back-top" href="#main" aria-label="กลับด้านบน">↑</a></div></div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

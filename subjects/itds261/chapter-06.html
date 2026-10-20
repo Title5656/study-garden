@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="สรุป ITDS261 ภาษาไทย พร้อมภาพอธิบาย แบบฝึกหัด แนวคำตอบ Flashcards และ Quiz">
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>PSPEC, Decision Table และแบบจำลองพฤติกรรม · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.png?v=66f8b58bffb5" type="image/png" />
+    <link rel="stylesheet" href="../../assets/style.css?v=57402278ef28" />
+    <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
+    <script defer src="../../assets/software-content.js?v=72b939c26f0a"></script>
+<script defer src="../../assets/app.js?v=187c0a39763c"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+<link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
+<script defer src="../../assets/study-halftone-footer.js?v=b4e324035bb9"></script>
+<script defer src="../../assets/reader.js?v=6909a53af50d"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
+<link rel="stylesheet" href="../../assets/software.css?v=4cad62b4c628">
+</head>
+  <body data-subject="itds261" data-chapter="06"><a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><img class="brand-mark" src="../../assets/study-garden-logo.png?v=4d3c7e4e5b15" alt="" width="36" height="36" decoding="async">Study Garden</a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
+          ><a class="desktop-link" href="index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap"><nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS261</a><span>/</span><span>บท 6</span></nav><header class="chapter-hero"><div class="eyebrow">CHAPTER 06 · L7</div><h1>PSPEC, Decision Table และแบบจำลองพฤติกรรม</h1><p>อธิบายตรรกะใน process ด้วย structured English และกฎตัดสินใจ พร้อมตัวอย่าง state transition ที่ระบุว่าเสริมจากบทเรียน</p><div class="tags"><span class="pill lilac">ITDS261 · อ่านพร้อมภาพและตัวอย่าง</span><span class="pill">Flashcards 10 · Quiz 10</span><span class="tag" data-chapter-status="06">ยังไม่ได้อ่าน</span></div></header><div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#pspec">จากวงกลม DFD สู่ process specification</a><a href="#triangle">Structured English และตัวอย่างสามเหลี่ยม</a><a href="#decision-table">Decision table: ตรวจครอบคลุมกฎ ไม่คัดลอกกิ่ง IF</a><a href="#control-state">Control flow, CSPEC และ state transition</a><div class="toc-tools"><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz</a><a href="#sources">แหล่งที่มา</a></div></aside><article class="lesson-content"><section class="lesson-section" id="pspec"><div class="section-kicker">01 / ITDS261</div><h2>จากวงกลม DFD สู่ process specification</h2><p>L7 ไม่ได้มีแต่ state diagram เนื้อหาจริงเริ่มจากทบทวน DFD แล้วขยาย <strong>Process Specification (PSPEC)</strong>, structured English และ decision table ก่อนเข้าสู่ control flow/CSPEC แผนภาพบอกว่าข้อมูลไหลอย่างไร แต่ยังไม่อธิบายการคำนวณและเงื่อนไขภายใน process จึงต้องมี PSPEC สำหรับ primitive process ที่ละเอียดพอจะนำไปออกแบบและตรวจผล</p><figure class="se-figure se-concept"><a href="../../assets/software-visuals/06-concept.svg?v=391198b990f3" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: แผนภาพแนวคิด: PSPEC, Decision Table และแบบจำลองพฤติกรรม"><img src="../../assets/software-visuals/06-concept.svg?v=391198b990f3" alt="แผนภาพแนวคิด: PSPEC, Decision Table และแบบจำลองพฤติกรรม" loading="lazy" decoding="async"></a><figcaption><strong>แบบจำลองเสริมกัน:</strong> DFD บอกข้อมูล ส่วน PSPEC อธิบายตรรกะภายใน process และ CSPEC อธิบายการตอบสนองต่อเหตุการณ์ <a class="se-zoom" href="../../assets/software-visuals/06-concept.svg?v=391198b990f3" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><p>PSPEC อาจใช้ narrative, pseudocode/PDL, สมการ ตาราง หรือ diagram เลือกตามลักษณะตรรกะ เช่น คำนวณค่าใช้จ่ายใช้สมการ แต่กฎยกเลิกตั๋วหลายเงื่อนไขใช้ decision table ชัดกว่า ชื่อและ ID ต้องตรง process ใน DFD และ inputs/outputs ต้องตรงกัน หาก PSPEC ใช้ข้อมูลที่ไม่ได้เข้าหรืออ่านจาก store ใด แสดงว่าต้องทบทวนแบบจำลอง</p></section><section class="lesson-section" id="triangle"><div class="section-kicker">02 / ITDS261</div><h2>Structured English และตัวอย่างสามเหลี่ยม</h2><p>Structured English ผสมภาษาธรรมชาติกับโครงสร้างควบคุมที่จำกัด เช่น sequence, IF–ELSE และ repetition ทำให้ลำดับตรรกะชัดกว่าเขียนย่อหน้ายาว ตัวอย่างสไลด์รับความยาวด้าน A,B,C ตรวจค่าบวกและเงื่อนไขเป็นสามเหลี่ยม แล้วจำแนกด้านเท่า หน้าจั่ว หรือด้านไม่เท่า ต้องตรวจการเป็นสามเหลี่ยมก่อนจำแนกชนิด ไม่ใช่เห็น A=B แล้วสรุปทันที</p><figure class="se-figure"><a href="../../assets/software-visuals/06-slide.webp?v=4cce126f146f" target="_blank" rel="noopener noreferrer" aria-label="เปิดภาพขนาดเต็ม: Decision table: แต่ละคอลัมน์เป็นกฎหนึ่งชุด จับคู่เงื่อนไขด้านบนกับการกระทำด้านล่าง ต้องตรวจว่าครอบคลุมกรณีที่เป็นไปได้"><img src="../../assets/software-visuals/06-slide.webp?v=4cce126f146f" alt="Decision table: แต่ละคอลัมน์เป็นกฎหนึ่งชุด จับคู่เงื่อนไขด้านบนกับการกระทำด้านล่าง ต้องตรวจว่าครอบคลุมกรณีที่เป็นไปได้" loading="lazy" decoding="async"></a><figcaption><strong>สไลด์ต้นฉบับ:</strong> 2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf หน้า PDF 18 · Decision table: แต่ละคอลัมน์เป็นกฎหนึ่งชุด จับคู่เงื่อนไขด้านบนกับการกระทำด้านล่าง ต้องตรวจว่าครอบคลุมกรณีที่เป็นไปได้ <a class="se-zoom" href="../../assets/software-visuals/06-slide.webp?v=4cce126f146f" target="_blank" rel="noopener noreferrer">เปิดภาพขนาดเต็ม ↗</a></figcaption></figure><pre><code>INPUT A, B, C
+IF A &lt;= 0 OR B &lt;= 0 OR C &lt;= 0
+  OUTPUT invalid dimensions
+ELSE IF max(A,B,C) &gt;= sum(other two sides)
+  OUTPUT not a triangle
+ELSE IF A = B AND B = C
+  OUTPUT equilateral
+ELSE IF A = B OR B = C OR A = C
+  OUTPUT isosceles
+ELSE
+  OUTPUT scalene
+END IF
+</code></pre><p><strong>ข้อสังเกตต้นฉบับ:</strong> หน้า12 บอกว่าต้อง positive แต่ตัวอย่าง pseudocode หน้า13 พูดถึง negative อย่างเดียว ต้องตรวจศูนย์ด้วยตามนิยามความยาวด้านจริง และใช้เงื่อนไข strict inequality: ด้านยาวที่สุดต้องน้อยกว่าผลบวกอีกสองด้าน กรณี1,2,3 ไม่ใช่สามเหลี่ยม โค้ดข้างต้นเป็นแนวคำตอบปรับเพื่อทบทวน ไม่ใช่ข้อความเฉลยในสไลด์</p></section><section class="lesson-section" id="decision-table"><div class="section-kicker">03 / ITDS261</div><h2>Decision table: ตรวจครอบคลุมกฎ ไม่คัดลอกกิ่ง IF</h2><p>Policy เป็นชุดกฎที่กำหนดวิธีตัดสินใจ Decision table วางเงื่อนไขและ actions เป็นชุด rules ช่วยเห็นกรณีตกหล่น/ขัดกัน ใช้เครื่องหมาย dash ว่าเงื่อนไขนั้นไม่สำคัญต่อกฎได้ แต่ต้องแน่ใจว่าไม่ได้ซ่อนกรณีผลต่างกัน กฎแต่ละคอลัมน์ควรตอบได้ว่าตรงกับกรณีใดและ actions ที่เกิดมีความสอดคล้องกัน</p><div class="table-wrap" tabindex="0" role="region" aria-label="ตารางประกอบบทเรียน เลื่อนแนวนอนได้"><table><thead><tr><th>ตัวอย่างกฎคืนเงินที่สมมติเพื่อฝึก</th><th>R1</th><th>R2</th><th>R3</th></tr></thead><tbody><tr><td>พบรายการชำระสำเร็จ</td><td>ไม่</td><td>ใช่</td><td>ใช่</td></tr><tr><td>เข้าเงื่อนไขคืนตามนโยบาย</td><td>–</td><td>ไม่</td><td>ใช่</td></tr><tr><td>ปฏิเสธพร้อมเหตุผล</td><td>ทำ</td><td>ทำ</td><td>ไม่</td></tr><tr><td>ส่งคำขอคืนเงิน</td><td>ไม่</td><td>ไม่</td><td>ทำ</td></tr></tbody></table></div><p>นี่เป็นกฎสาธิตเพิ่มเติม ไม่กำหนดนโยบายคืนเงินจริงของ Ex3 เมื่อส่งคำขอคืนเงินต้องแยก “ขอแล้ว” กับ “คืนสำเร็จ” เพราะผลจาก provider อาจยังไม่มา การรวมสถานะสองแบบจะทำให้รายงานเงินไม่ถูกต้อง</p></section><section class="lesson-section" id="control-state" data-reader-category="practice"><div class="section-kicker">04 / ITDS261</div><h2>Control flow, CSPEC และ state transition</h2><p>Data flow ขนข้อมูลที่ถูกแปลง ส่วน control flow เป็นสัญญาณเหตุการณ์/คำสั่งที่เกิด ณ จุดเวลา เช่น paymentConfirmed หรือ timeout สไลด์ใช้ลูกศรเส้นประและชื่อเหตุการณ์ CSPEC อาจแสดงด้วย state diagram, state transition table, decision table หรือ activation table การเปลี่ยนสถานะต้องอธิบาย state เดิม event guard/action และ state ใหม่ให้ชัด</p><details class='worked-answer'><summary>ตัวอย่างเสริม: วงจรตั๋ว ไม่ใช่ state diagram ที่มีอยู่ในสไลด์</summary><div class="table-wrap" tabindex="0" role="region" aria-label="ตารางประกอบบทเรียน เลื่อนแนวนอนได้"><table><thead><tr><th>สถานะเดิม</th><th>เหตุการณ์/เงื่อนไข</th><th>Action</th><th>สถานะใหม่</th></tr></thead><tbody><tr><td>AwaitingPayment</td><td>paymentConfirmed และยอด/referenceถูกต้อง</td><td>บันทึกการชำระและออกตั๋วครั้งเดียว</td><td>Issued</td></tr><tr><td>AwaitingPayment</td><td>paymentFailed</td><td>แจ้งล้มเหลวและคงสิทธิ์ลองใหม่ตามนโยบาย</td><td>AwaitingPayment</td></tr><tr><td>Issued</td><td>cancelRequested และเข้าเงื่อนไขคืน</td><td>ส่งคำขอคืนเงิน</td><td>RefundPending</td></tr><tr><td>RefundPending</td><td>refundConfirmed</td><td>บันทึกผลคืนเงินและยกเลิกตั๋ว</td><td>CancelledRefunded</td></tr><tr><td>Issued</td><td>cancelRequested แต่ไม่เข้าเงื่อนไข</td><td>แสดงเหตุผล ไม่เปลี่ยนตั๋ว</td><td>Issued</td></tr></tbody></table></div><p>สถานะและชื่อ events เป็นข้อเสนอเพื่อฝึก ต้องถามนโยบายยกเลิกและการจัดการ refundFailed เพิ่ม ระวัง callback ซ้ำ: ถ้าสถานะ Issued แล้ว เหตุการณ์ paymentConfirmed เดิมไม่ควรออกตั๋วอีกใบ บทเรียนคือ state model มองการตอบเหตุการณ์ต่อเนื่อง ส่วน DFD มองข้อมูลที่ถูกประมวลผล ทั้งสองต้องให้ความหมายตรงกัน</p></details></section><section class="lesson-section" id="flashcards">
+            <h2>Flashcards</h2>
+            <p class="muted small">
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">คำศัพท์</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <section class="lesson-section source-note" id="sources"><h2>แหล่งที่มาและขอบเขตของบทนี้</h2><ul><li><strong>2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf</strong> · หน้า PDF 10–24 · PSPEC structured English decision table control flow/CSPEC; state example สร้างเสริมและแก้กรณีศูนย์ในtriangle</li></ul><p>เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงกับเลขที่พิมพ์บนสไลด์ ภาพ concept map และตัวอย่างอธิบายจัดทำเพิ่มเติมจากเนื้อหาเพื่อทบทวน แบบทดสอบไม่ใช่ข้อสอบจริง</p><p>เลขบทเว็บไซต์เรียงเพื่อให้อ่านสะดวก อ้างอิง Lecture ต้นฉบับตามที่ระบุ ไม่มีไฟล์ L5 ในชุดที่ได้รับ</p><p><a href="index.html#source-inventory">ดูรายการไฟล์ทั้งวิชา ↗</a></p></section><button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="index.html">← ภาพรวมวิชา</a><a class="btn primary" href="chapter-07.html">อ่านบทถัดไป →</a></nav></article></div></main><div class="footer-reveal">
+      <div class="footer-stage">
+        <div class="footer-curtain">
+          <a class="footer-reveal-link" href="#footer" aria-label="เลื่อนลงเพื่อดูส่วนท้ายเว็บไซต์">SCROLL DOWN TO REVEAL</a>
+        </div>
+        <footer id="footer" class="site-footer motion-footer garden-footer" aria-label="ส่วนท้ายเว็บไซต์">
+
+          <div class="wrap footer-content">
+            <div class="footer-art" aria-hidden="true">
+              <img src="../../assets/ascii/ink-garden.jpg?v=df253ede8012" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+              <video data-src="../../assets/ascii/ink-garden.mp4?v=42821eac656a" poster="../../assets/ascii/ink-garden.jpg?v=df253ede8012" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+            </div>
+            <h2 class="footer-contact-title">GitHub</h2>
+            <a class="footer-contact" href="https://github.com/Title5656" target="_blank" rel="noopener noreferrer" aria-label="GitHub ของ Title5656 (เปิดแท็บใหม่)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.64 1.23 3.29.94.1-.73.39-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.8 10.8 0 0 1 12 6.15c.96 0 1.92.13 2.82.38 2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+              <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
+              <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
+              <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
+              <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>
+            </nav>
+            <div class="footer-wordmark" aria-hidden="true"><span class="garden-wordmark-label">Garden</span></div>
+          </div>
+          <div class="wrap footer-bottom"><a href="../../index.html">Study Garden © 2026</a><div class="footer-controls"><button class="footer-motion-toggle" type="button" aria-label="หยุดภาพเคลื่อนไหว" aria-pressed="false" hidden>
+            <svg class="art-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg class="art-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+          </button><a class="footer-back-top" href="#main" aria-label="กลับด้านบน">↑</a></div></div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
