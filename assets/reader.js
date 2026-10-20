@@ -22,6 +22,12 @@
       return bounds.bottom > visibleTop && bounds.top < innerHeight && bounds.bottom > 0;
     }
     function updateArtwork() {
+      const bounds = footer.getBoundingClientRect();
+      const visible = bounds.top < innerHeight && bounds.bottom > 0 &&
+        (!reveal.classList.contains("reveal-enabled") ||
+         Number(reveal.style.getPropertyValue("--reveal-progress")) > 0.08);
+      footer.classList.toggle("is-motion-active",
+        visible && !reducedMotion.matches && !printMedia.matches && !document.hidden && !artworkPaused);
       if (!video) return;
       motionToggle.hidden = reducedMotion.matches || printMedia.matches;
       if (!artworkCanPlay()) {
@@ -33,6 +39,35 @@
       if (!video.getAttribute("src")) video.src = video.dataset.src;
       if (video.paused) video.play().catch(() => artwork.classList.remove("is-playing"));
     }
+    // Small, bounded magnetic movement; touch and reduced motion stay still.
+    const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
+    footer.querySelectorAll(".footer-contact, .footer-pill, .footer-back-top").forEach(link => {
+      let frame = 0;
+      let x = 0;
+      let y = 0;
+      const reset = () => {
+        cancelAnimationFrame(frame);
+        frame = 0;
+        link.style.removeProperty("--magnetic-x");
+        link.style.removeProperty("--magnetic-y");
+      };
+      link.addEventListener("pointermove", event => {
+        if (event.pointerType === "touch" || reducedMotion.matches || !finePointer.matches || artworkPaused) return;
+        const rect = link.getBoundingClientRect();
+        x = Math.max(-7, Math.min(7, (event.clientX - rect.left - rect.width / 2) * 0.12));
+        y = Math.max(-5, Math.min(5, (event.clientY - rect.top - rect.height / 2) * 0.16));
+        if (!frame) frame = requestAnimationFrame(() => {
+          link.style.setProperty("--magnetic-x", x.toFixed(2) + "px");
+          link.style.setProperty("--magnetic-y", y.toFixed(2) + "px");
+          frame = 0;
+        });
+      });
+      link.addEventListener("pointerleave", reset);
+      link.addEventListener("blur", reset);
+      reducedMotion.addEventListener("change", reset);
+      finePointer.addEventListener("change", reset);
+      motionToggle?.addEventListener("click", reset);
+    });
     if (video) {
       video.muted = true;
       video.addEventListener("playing", () => {

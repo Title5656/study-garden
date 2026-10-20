@@ -4,6 +4,16 @@
 import { writeFileSync } from 'node:fs';
 import { deflateSync } from 'node:zlib';
 export const ART_PRESETS                               = {
+  indigo: {
+    style: "streak",
+    colors: ["#0e1639", "#303c86", "#7479d9", "#c4b5ef", "#f1e9ff", "#6487b0", "#182745"],
+    scale: 0.65, warp: 1.8, angle: -0.62, gloss: 0.3, veins: 0,
+  },
+  honey: {
+    style: "marble",
+    colors: ["#21150c", "#70422a", "#c48b42", "#f7d28d", "#fff1d2", "#657569", "#253d39"],
+    scale: 0.7, warp: 3.2, angle: 0.6, gloss: 0.5, veins: 0.4,
+  },
   // a long exposure: blush, oxblood and steel pulled across the frame
   aurora: {
     style: "streak",
@@ -299,7 +309,7 @@ function chunk(type, data) {
   const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(Buffer.concat([name, data])));
   return Buffer.concat([length, name, data, crc]);
 }
-for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11]]) {
+for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37]]) {
   const job = createArtJob(640, 520, ART_PRESETS[preset], seed);
   while (!job.step(40)) {}
   const header = Buffer.alloc(13);

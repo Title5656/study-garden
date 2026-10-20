@@ -126,3 +126,90 @@
   .reader-sidebar, .reader-categories, .reader-position, .reader-pager, .footer-reveal, .reader-ready .chapter-end { display: none !important; }
   .reader-ready .lesson-layout { display: block; }
 }
+
+/* Motion-footer treatment adapted from @jahed's supplied reference.
+   Existing navigation, artwork and scroll-reveal remain progressively enhanced. */
+.motion-footer::before {
+  inset: 12% -15% -15%;
+  background: radial-gradient(ellipse at 35% 45%, #818cdd30, transparent 52%),
+    radial-gradient(ellipse at 68% 60%, #c184ac28, transparent 52%);
+  filter: blur(50px);
+  animation: footer-breathe 8s ease-in-out infinite alternate paused;
+}
+:root[data-theme="dark"] .motion-footer::before {
+  background: radial-gradient(ellipse at 35% 45%, #727cce32, transparent 52%),
+    radial-gradient(ellipse at 68% 60%, #a05c8430, transparent 52%);
+}
+.motion-footer::after { opacity: .2; background-size: 60px 60px; }
+.footer-contact-title {
+  font-weight: 750;
+  line-height: 1.1;
+  padding: .08em .14em .12em;
+  background: linear-gradient(180deg, var(--ink) 25%, color-mix(in srgb, var(--ink) 48%, transparent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 22px color-mix(in srgb, var(--ink) 9%, transparent));
+}
+.footer-art {
+  opacity: .24;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #0009 48%, #0003 76%, transparent 98%),
+    linear-gradient(transparent, #000 22%, #000 64%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+.footer-art img, .footer-art video { filter: grayscale(1) contrast(1.1); }
+:root[data-theme="dark"] .footer-art { opacity: .27; }
+:root[data-theme="dark"] .footer-art img,
+:root[data-theme="dark"] .footer-art video { filter: grayscale(1) invert(1) contrast(1.1) brightness(.7); }
+.footer-contact, .footer-pill, .footer-back-top {
+  background: linear-gradient(145deg, color-mix(in srgb, var(--ink) 4%, transparent), color-mix(in srgb, var(--paper) 25%, transparent));
+  box-shadow: 0 12px 30px -16px #080b243d, inset 0 1px 1px #ffffff28;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform: translate(var(--magnetic-x, 0px), var(--magnetic-y, 0px));
+  transition: transform .35s cubic-bezier(.16,1,.3,1), background .3s, border-color .3s, box-shadow .3s;
+}
+.footer-contact:hover, .footer-pill:hover, .footer-back-top:hover {
+  transform: translate(var(--magnetic-x, 0px), var(--magnetic-y, -3px));
+  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  border-color: color-mix(in srgb, var(--ink) 28%, transparent);
+  box-shadow: 0 16px 35px -18px #080b2452, inset 0 1px 1px #ffffff38;
+}
+.footer-contact:focus-visible, .footer-pill:focus-visible, .footer-back-top:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 5px;
+}
+.footer-ribbon { backdrop-filter: blur(16px); box-shadow: 0 12px 32px #080b2408; }
+.footer-ribbon-track { transform: none; animation: footer-marquee 48s linear infinite paused; }
+.footer-ribbon-track span { font-weight: 600; }
+.footer-wordmark {
+  bottom: -.05em;
+  font-size: clamp(5rem, 16vw, 18rem);
+  font-weight: 800;
+  opacity: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--ink) 7%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ink) 10%, transparent), transparent 85%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.is-motion-active::before, .is-motion-active .footer-ribbon-track { animation-play-state: running; }
+.reveal-enabled .footer-contact-title {
+  opacity: clamp(0, calc(var(--reveal-progress) * 2.5 - .5), 1);
+  translate: 0 calc((1 - clamp(0, var(--reveal-progress), 1)) * 45px);
+}
+.reveal-enabled .footer-actions {
+  opacity: clamp(0, calc(var(--reveal-progress) * 2.5 - .8), 1);
+  translate: 0 calc((1 - clamp(0, var(--reveal-progress), 1)) * 30px);
+}
+.reveal-enabled .footer-wordmark {
+  transform: translate(-50%, calc((1 - var(--reveal-progress)) * 60px))
+    scale(calc(.92 + var(--reveal-progress) * .08));
+}
+@keyframes footer-breathe { from { scale: .95; opacity: .6; } to { scale: 1.12; opacity: 1; } }
+@keyframes footer-marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .motion-footer::before, .footer-ribbon-track { animation: none; }
+  .footer-contact, .footer-pill, .footer-back-top,
+  .footer-contact:hover, .footer-pill:hover, .footer-back-top:hover { transition: none; transform: none; }
+}
