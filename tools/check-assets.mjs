@@ -27,7 +27,7 @@ for (const file of files(root).filter(path => /\.(html|css)$/.test(path))) {
   for (const reference of references) {
     if (/^(?:[a-z]+:|\/\/|#)/i.test(reference)) continue;
     const [path, query = ''] = reference.split('?');
-    if (!/\.(?:css|js|svg|png|webp|mp4|ttf)$/.test(path)) continue;
+    if (!/\.(?:css|js|svg|png|jpe?g|webp|mp4|ttf)$/.test(path)) continue;
     const target = resolve(dirname(file), path);
     assert.equal(new URLSearchParams(query).get('v'), hash(target),
       `${file}: ${reference} must use its current content hash to avoid stale browser assets`);

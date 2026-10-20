@@ -208,6 +208,18 @@
 }
 @keyframes footer-breathe { from { scale: .95; opacity: .6; } to { scale: 1.12; opacity: 1; } }
 @keyframes footer-marquee { to { transform: translateX(-50%); } }
+/* Home keeps its original artwork. Extend the arms beyond the viewport edges,
+   with enough vertical room to fade naturally before the lower wordmark. */
+body[data-all-courses] .footer-art {
+  top: 3%;
+  width: max(1900px, 145vw);
+  height: min(58%, calc(97% - clamp(5rem, 16vw, 18rem) - 24px));
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(transparent, #000 20%, #000 55%, transparent 96%);
+}
+@media (max-width: 540px) {
+  body[data-all-courses] .footer-art { top: 10%; width: 190vw; height: 44%; }
+}
 @media (prefers-reduced-motion: reduce) {
   .motion-footer::before, .footer-ribbon-track { animation: none; }
   .footer-contact, .footer-pill, .footer-back-top,

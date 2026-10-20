@@ -28,6 +28,7 @@
          Number(reveal.style.getPropertyValue("--reveal-progress")) > 0.08);
       footer.classList.toggle("is-motion-active",
         visible && !reducedMotion.matches && !printMedia.matches && !document.hidden && !artworkPaused);
+      footer.dispatchEvent(new CustomEvent("footer-motion-change"));
       if (!video) return;
       motionToggle.hidden = reducedMotion.matches || printMedia.matches;
       if (!artworkCanPlay()) {

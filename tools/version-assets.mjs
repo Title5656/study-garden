@@ -24,7 +24,7 @@ function version(reference, file) {
   if (/^(?:[a-z]+:|\/\/|#)/i.test(reference)) return reference;
   const [resource, fragment] = reference.split('#');
   const [path, query = ''] = resource.split('?');
-  if (!/\.(?:css|js|svg|png|webp|mp4|ttf)$/.test(path)) return reference;
+  if (!/\.(?:css|js|svg|png|jpe?g|webp|mp4|ttf)$/.test(path)) return reference;
   const params = new URLSearchParams(query);
   params.set('v', hash(resolve(dirname(file), path)));
   return `${path}?${params}${fragment === undefined ? '' : '#' + fragment}`;

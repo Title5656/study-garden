@@ -1,0 +1,77 @@
+/* Keep the original GitHub composition; enhance only the subject artwork/wordmark. */
+.garden-footer {
+  --garden-mark-height: clamp(100px, 27vw, 32svh);
+  --garden-warm: #8b8fc4;
+}
+.garden-footer .footer-content {
+  justify-content: flex-start;
+  padding-top: clamp(60px, 10svh, 110px);
+  padding-bottom: calc(var(--garden-mark-height) + 110px);
+}
+.garden-footer .footer-art {
+  top: 0;
+  width: min(1800px, 120vw);
+  height: 68%;
+  opacity: .22;
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent),
+    linear-gradient(transparent, #000 14%, #000 48%, transparent 96%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+.garden-footer .footer-art img,
+.garden-footer .footer-art video {
+  object-position: 50% 42%;
+  filter: grayscale(1) invert(1);
+}
+:root[data-theme="dark"] .garden-footer .footer-art {
+  opacity: .32;
+  mix-blend-mode: screen;
+}
+:root[data-theme="dark"] .garden-footer .footer-art img,
+:root[data-theme="dark"] .garden-footer .footer-art video {
+  filter: grayscale(1) brightness(.9);
+}
+.garden-footer .footer-wordmark,
+.reveal-enabled .garden-footer .footer-wordmark {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 78px;
+  width: calc(100% - clamp(24px, 5vw, 80px));
+  height: var(--garden-mark-height);
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+  font-size: clamp(5rem, 25vw, 26rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.065em;
+  text-align: center;
+  color: color-mix(in srgb, var(--ink) 48%, var(--paper));
+  background: none;
+  -webkit-text-stroke: 0;
+  opacity: 1;
+  user-select: none;
+}
+.garden-wordmark-label { padding-bottom: .08em; }
+.garden-wordmark-ready .garden-wordmark-label { opacity: 0; }
+.garden-wordmark-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+@media (max-width: 540px) {
+  .garden-footer .footer-art { width: 170vw; height: 62%; }
+  .garden-footer .footer-content { padding-top: max(100px, 15svh); }
+}
+@media (max-height: 700px) and (min-width: 541px) {
+  .garden-footer .footer-content { padding-top: 48px; }
+  .garden-footer .footer-contact-title { margin-bottom: 20px; }
+  .garden-footer .footer-actions { margin-top: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .garden-footer .footer-wordmark { transform: translateX(-50%); }
+}
