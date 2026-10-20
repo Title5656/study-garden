@@ -212,10 +212,6 @@
     });
     menu.append(container);
   }
-  const note = element("div", "reader-sidebar-note", "ทีละหัวข้อ ค่อย ๆ เข้าใจ");
-  note.append(element("span", "", "เลือกหมวดด้านบน หรือกดหัวข้อถัดไป"));
-  sidebar.append(note);
-
   const toolbar = element("nav", "reader-categories");
   toolbar.setAttribute("aria-label", "เลือกหมวดการเรียน");
   activeCategories.forEach(group => {

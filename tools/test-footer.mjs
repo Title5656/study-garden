@@ -217,7 +217,7 @@ try {
       await reveal(page);
       await screenshot(page, `home-${width}-${theme}`);
       assert.equal(await page.locator('.footer-wordmark').innerText(), 'Study Garden');
-      assert.equal(await page.locator('.footer-ribbon').count(), 1);
+      assert.equal(await page.locator('.footer-ribbon').count(), 0);
       assert.equal(await page.locator('.footer-wordmark canvas').count(), 0);
       assert.match(await page.locator('.footer-art img').getAttribute('src'), /creation-of-adam/);
       const geometry = await page.evaluate(() => {
