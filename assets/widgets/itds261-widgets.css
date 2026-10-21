@@ -1,0 +1,95 @@
+.itds261-widget {
+  --panel: var(--paper); --accent-soft: var(--purple); --accent-ink: var(--paper);
+  --ok: var(--good); --ok-soft: var(--sage); --bad-soft: var(--soft);
+  --warn: var(--ink); --warn-soft: var(--peach); --mono: ui-monospace, Consolas, monospace;
+  margin-block: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);
+}
+.itds261-widget h3 { font-size: 1.1rem; line-height: 1.6; }
+.itds261-widget svg { display: block; max-width: 100%; height: auto; margin-inline: auto; }
+.itds261-widget #ch-svg { max-width: 300px; }
+.itds261-widget .muted { color: var(--muted); font-size: .85rem; }
+.itds261-widget .panel { min-width: 0; }
+.itds261-widget .row > * { min-width: 0; }
+.itds261-widget .file { overflow-wrap: anywhere; }
+.itds261-widget .pseudo { color: var(--ink); }
+
+.itds261-widget .panel {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px;
+}/* ปุ่มและช่องกรอก */
+.itds261-widget button, .itds261-widget input, .itds261-widget select { font: inherit; color: inherit; }
+.itds261-widget button:focus-visible, .itds261-widget input:focus-visible, .itds261-widget select:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 2px;
+}
+.itds261-widget .seg { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 14px; }
+.itds261-widget .seg button, .itds261-widget .btn-row button {
+  min-height: 42px; padding: 8px 14px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--panel); border-radius: 999px;
+}
+.itds261-widget .seg button[aria-pressed="true"] {
+  background: var(--accent); color: var(--accent-ink); border-color: var(--accent);
+}
+.itds261-widget .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.itds261-widget .btn-row button.ghost { border-style: dashed; color: var(--muted); }
+.itds261-widget .btn-row button:hover { border-color: var(--accent); }
+.itds261-widget .field-label { font-weight: 600; display: block; margin-top: 4px; }
+.itds261-widget select, .itds261-widget input[type="number"] {
+  min-height: 42px; padding: 6px 10px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel); width: 100%;
+}
+.itds261-widget input[type="range"] { width: 100%; accent-color: var(--accent); }
+.itds261-widget .row { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }/* กล่องผลลัพธ์ — สีไม่ใช่ตัวบอกอย่างเดียว (มีข้อความ/สัญลักษณ์กำกับเสมอ) */
+.itds261-widget .result {
+  margin: 14px 0 0; padding: 12px 14px; border-radius: 10px;
+  background: var(--accent-soft); border-left: 5px solid var(--accent);
+}
+.itds261-widget .result.ok { background: var(--ok-soft); border-left-color: var(--ok); }
+.itds261-widget .result.bad { background: var(--bad-soft); border-left-color: var(--bad); }
+.itds261-widget .result.warn { background: var(--warn-soft); border-left-color: var(--warn); }/* วิดเจ็ต 1: ช่องทางสื่อสาร */
+.itds261-widget .ch-line { stroke: var(--accent); stroke-opacity: 0.35; stroke-width: 1.2; }
+.itds261-widget .ch-node { fill: var(--accent); }/* วิดเจ็ต 3: DFD */
+.itds261-widget .dfd-shape { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
+.itds261-widget .dfd-line { stroke: var(--ink); stroke-width: 1.5; }
+.itds261-widget .dfd-text { fill: var(--ink); font-size: 11px; text-anchor: middle; font-family: inherit; }
+.itds261-widget .flow-ok { stroke: var(--ok); stroke-width: 2.5; }
+.itds261-widget .flow-bad { stroke: var(--bad); stroke-width: 2.5; stroke-dasharray: 5 4; }
+.itds261-widget .m-ok { fill: var(--ok); }
+.itds261-widget .m-bad { fill: var(--bad); }
+.itds261-widget .m-ink { fill: var(--ink); }
+.itds261-widget .flow-mark { font-size: 22px; fill: var(--bad); text-anchor: middle; }/* วิดเจ็ต 4: สามเหลี่ยม + pseudocode */
+.itds261-widget .pseudo {
+  font-family: var(--mono); font-size: 0.85rem; line-height: 1.6;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px; overflow-x: auto; margin: 0 0 12px;
+}
+.itds261-widget .pseudo span { display: block; padding: 0 6px; border-left: 4px solid transparent; white-space: pre; }
+.itds261-widget .pseudo span.hit { background: var(--accent-soft); border-left-color: var(--accent); font-weight: 600; }
+.itds261-widget .tri-shape { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.itds261-widget .tri-label { fill: var(--ink); font-size: 12px; text-anchor: middle; font-family: var(--mono); }/* วิดเจ็ต 5: Git */
+.itds261-widget .git-areas { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); }
+.itds261-widget .area { border: 1px solid var(--line); border-radius: 10px; padding: 10px; background: var(--bg); }
+.itds261-widget .area h3 { font-size: 0.95rem; margin: 0; }
+.itds261-widget .area small { color: var(--muted); display: block; margin-bottom: 8px; line-height: 1.4; }
+.itds261-widget .file {
+  display: inline-block; padding: 6px 10px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel);
+  font-family: var(--mono); transition: background 0.2s, border-color 0.2s;
+}
+.itds261-widget .file.dirty { border-color: var(--warn); background: var(--warn-soft); }
+.itds261-widget .git-diff { margin: 0; display: grid; gap: 6px; }
+.itds261-widget .git-diff div { display: grid; grid-template-columns: minmax(130px, 34%) 1fr; gap: 8px; }
+.itds261-widget .git-diff dt { font-family: var(--mono); font-size: 0.85rem; }
+.itds261-widget .git-diff dd { margin: 0; }
+@media (max-width: 480px) {
+.itds261-widget .git-diff div { grid-template-columns: 1fr; gap: 0; } }/* วิดเจ็ต 6: use case */
+.itds261-widget .uc-shape { fill: var(--panel); stroke: var(--ink); stroke-width: 1.5; }
+.itds261-widget .uc-text { fill: var(--ink); font-size: 12px; text-anchor: middle; font-family: inherit; }
+.itds261-widget .uc-rel { stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 6 4; }
+.itds261-widget .uc-assoc { stroke: var(--ink); stroke-width: 1.5; }
+.itds261-widget .uc-label { fill: var(--accent); font-size: 12px; text-anchor: middle; font-family: var(--mono); font-weight: 700; }
+
+/* เคารพผู้ใช้ที่ปิดแอนิเมชัน */
+@media (prefers-reduced-motion: reduce) {
+.itds261-widget * { transition: none !important; animation: none !important; }
+}
+
