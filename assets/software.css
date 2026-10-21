@@ -2,6 +2,10 @@
 .badge-extra, .se-scope-badge { display: inline-block; border: 1px solid var(--line); border-radius: 8px; padding: .25rem .65rem; background: var(--purple); color: var(--accent); font-size: .8rem; font-weight: 650; line-height: 1.7; }
 .se-source-note, .se-caution { margin-block: 1rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .se-source-note summary, .se-caution summary { cursor: pointer; font-weight: 650; color: var(--accent); }
+.se-recall { margin: 1.2rem 0; padding: 1rem 1.2rem; border: 1px solid var(--accent); border-radius: 14px; background: var(--purple); }
+.se-recall h3 { color: var(--accent); font-size: 1rem; margin: 0 0 .5rem; }
+.se-recall ul { padding-left: 1.2rem; margin: 0; }
+.se-recall li { margin: .35rem 0; }
 .se-figure { margin: 1.7rem 0; border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--soft); }
 .se-figure > a { display: block; border-radius: 10px; overflow: hidden; background: #fff; }
 .se-figure img { width: 100%; height: auto; display: block; border-radius: 10px; }
