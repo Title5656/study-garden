@@ -54,7 +54,7 @@ window.StudyContent.itds261 = {
           "เฉพาะหน้าจอและฐานข้อมูล"
         ],
         "answer": 0,
-        "explanation": "L1 หน้า10 ให้สามองค์ประกอบ จึงต้องรวมเอกสารด้วย"
+        "explanation": "L1 หน้า 10 ให้สามองค์ประกอบ จึงต้องรวมเอกสารด้วย"
       },
       {
         "q": "ความต้องการลดการจองโต๊ะผิดเป็นสิ่งใด",
@@ -76,7 +76,7 @@ window.StudyContent.itds261 = {
           "คนเพิ่มแล้วไม่มีต้นทุน"
         ],
         "answer": 2,
-        "explanation": "L1 หน้า35 ชี้ว่าช่องทางสื่อสารเพิ่มตามจำนวนคน"
+        "explanation": "L1 หน้า 35 ชี้ว่าช่องทางสื่อสารเพิ่มตามจำนวนคน"
       },
       {
         "q": "ทีม 6 คนสื่อสารทุกคู่มีกี่คู่",
@@ -131,7 +131,7 @@ window.StudyContent.itds261 = {
           "Compiler"
         ],
         "answer": 1,
-        "explanation": "บทบาท BA ใน L1 หน้า29 คือ elicitation, analysis, validation และสื่อสารกับทีม"
+        "explanation": "บทบาท BA ใน L1 หน้า 29 คือ elicitation, analysis, validation และสื่อสารกับทีม"
       },
       {
         "q": "โครงการส่งตรงเวลาแต่ไม่แก้ปัญหาลูกค้า ควรสรุปอย่างไร",
@@ -142,7 +142,7 @@ window.StudyContent.itds261 = {
           "พิจารณาจำนวนบรรทัดโค้ดอย่างเดียว"
         ],
         "answer": 0,
-        "explanation": "L1 หน้า66 เสนอหลายมิติของความสำเร็จ"
+        "explanation": "L1 หน้า 66 เสนอหลายมิติของความสำเร็จ"
       },
       {
         "q": "ข้อใดถูกต้องเกี่ยวกับชุดแหล่งเรียนนี้",
@@ -211,7 +211,7 @@ window.StudyContent.itds261 = {
           "ราคาเครื่องคอมพิวเตอร์เท่านั้น"
         ],
         "answer": 0,
-        "explanation": "L2 หน้า11–12 เน้น coordination, tasks และ people"
+        "explanation": "L2 หน้า 11–12 เน้น coordination, tasks และ people"
       },
       {
         "q": "ข้อใดเป็น umbrella activity",
@@ -233,7 +233,7 @@ window.StudyContent.itds261 = {
           "ไม่ต้องมี requirements"
         ],
         "answer": 2,
-        "explanation": "L2 หน้า14–15 ระบุ linear/sequential และ documentation"
+        "explanation": "L2 หน้า 14–15 ระบุ linear/sequential และ documentation"
       },
       {
         "q": "Incremental ต่างจาก multiple release อย่างไร",
@@ -244,7 +244,7 @@ window.StudyContent.itds261 = {
           "increment ห้ามทดสอบ"
         ],
         "answer": 1,
-        "explanation": "หน้า16 กับ17 แสดงกลยุทธ์การรวมและการปล่อยที่ต่างกัน"
+        "explanation": "หน้า 16 กับ 17 แสดงกลยุทธ์การรวมและการปล่อยที่ต่างกัน"
       },
       {
         "q": "Spiral ให้ความสำคัญอะไรในการเลือกรอบถัดไป",
@@ -363,9 +363,9 @@ window.StudyContent.itds261 = {
         "q": "ข้อใดเป็น FR",
         "options": [
           "ระบบให้ผู้ใช้ค้นหานัดหมาย",
-          "ตอบ95%ภายใน2วินาที",
+          "ตอบ 95% ภายใน 2 วินาที",
           "ใช้หน่วยความจำไม่เกินที่กำหนด",
-          "uptimeตามเกณฑ์"
+          "uptime ตามเกณฑ์"
         ],
         "answer": 0,
         "explanation": "FR ระบุบริการและพฤติกรรม"
@@ -384,10 +384,10 @@ window.StudyContent.itds261 = {
       {
         "q": "ข้อใดยังตรวจรับไม่ได้ชัด",
         "options": [
-          "ปฏิเสธค่าความรุนแรงนอก1–10",
+          "ปฏิเสธค่าความรุนแรงนอก 1–10",
           "แสดงยอดรวมตามรายการ",
           "ระบบต้องใช้ง่ายมาก",
-          "ระบบต้องสร้างReport ID"
+          "ระบบต้องสร้าง Report ID"
         ],
         "answer": 2,
         "explanation": "ใช้ง่ายต้องมีงาน กลุ่มผู้ใช้ และเกณฑ์วัด"
@@ -401,7 +401,7 @@ window.StudyContent.itds261 = {
           "แทนการคุยผู้ใช้ได้เสมอ"
         ],
         "answer": 1,
-        "explanation": "L3 หน้า31 เน้น implicit requirements"
+        "explanation": "L3 หน้า 31 เน้น implicit requirements"
       },
       {
         "q": "Feasibility ควรถามอะไร",
@@ -412,7 +412,7 @@ window.StudyContent.itds261 = {
           "ใช้กี่บรรทัดโค้ดเท่านั้น"
         ],
         "answer": 0,
-        "explanation": "L3 หน้า19 ให้สามคำถามหลักเกี่ยวกับเป้าหมาย ความเป็นไปได้ และ integration"
+        "explanation": "L3 หน้า 19 ให้สามคำถามหลักเกี่ยวกับเป้าหมาย ความเป็นไปได้ และ integration"
       },
       {
         "q": "ข้อกำหนดสองข้อขัดกันเป็นปัญหาใด",
@@ -428,7 +428,7 @@ window.StudyContent.itds261 = {
       {
         "q": "Given–When–Then ใช้อธิบายอะไร",
         "options": [
-          "ภาษา IDE และcompiler",
+          "ภาษา IDE และ compiler",
           "ฐานข้อมูลทั้งหมด",
           "บริบท การกระทำ และผลลัพธ์ที่สังเกตได้",
           "ทีม งบ และเวลา"
@@ -456,18 +456,18 @@ window.StudyContent.itds261 = {
           "ใช้ได้เฉพาะนักพัฒนา"
         ],
         "answer": 0,
-        "explanation": "L3 หน้า53 เชื่อม documentation กับ test scenarios"
+        "explanation": "L3 หน้า 53 เชื่อม documentation กับ test scenarios"
       },
       {
         "q": "ก่อนเปลี่ยนข้อกำหนดที่อนุมัติแล้วควรทำอะไร",
         "options": [
           "เปลี่ยนโค้ดทันทีโดยไม่บันทึก",
-          "ลบIDเก่าให้ตามไม่ได้",
+          "ลบ ID เก่าให้ตามไม่ได้",
           "แก้เฉพาะภาพประกอบ",
           "วิเคราะห์ความถูกต้อง ผลกระทบ และต้นทุน"
         ],
         "answer": 3,
-        "explanation": "L3 หน้า66 ให้ลำดับ change analysis ก่อน implementation"
+        "explanation": "L3 หน้า 66 ให้ลำดับ change analysis ก่อน implementation"
       }
     ]
   },
@@ -536,7 +536,7 @@ window.StudyContent.itds261 = {
           "จาก base ไป included use case"
         ],
         "answer": 3,
-        "explanation": "L4 หน้า19 อธิบาย original use case ชี้ไปสิ่งที่ใช้"
+        "explanation": "L4 หน้า 19 อธิบาย original use case ชี้ไปสิ่งที่ใช้"
       },
       {
         "q": "ลูกศร extend ชี้อย่างไร",
@@ -547,7 +547,7 @@ window.StudyContent.itds261 = {
           "จาก base ไป extension"
         ],
         "answer": 2,
-        "explanation": "L4 หน้า20 ระบุ extending use case ชี้ไป base"
+        "explanation": "L4 หน้า 20 ระบุ extending use case ชี้ไป base"
       },
       {
         "q": "Login ที่เสร็จก่อนเริ่มงานอาจอยู่ที่ใด",
@@ -564,8 +564,8 @@ window.StudyContent.itds261 = {
         "q": "ใครในคลินิกดูตารางและบันทึกการพบผู้ป่วย",
         "options": [
           "ทันตแพทย์",
-          "ผู้ให้บริการSMS",
-          "ผู้จัดการร้านPOS",
+          "ผู้ให้บริการ SMS",
+          "ผู้จัดการร้าน POS",
           "ผู้เยี่ยมชมสวนสัตว์"
         ],
         "answer": 0,
@@ -599,7 +599,7 @@ window.StudyContent.itds261 = {
           "ไม่เกี่ยวกับ use case",
           "เป็นทางเลือกในการชำระ",
           "ต้องใช้สามช่องทางทุกการขาย",
-          "เป็นNFRสามข้อ"
+          "เป็น NFR สามข้อ"
         ],
         "answer": 1,
         "explanation": "โจทย์ให้เงินสด บัตร หรือกระเป๋าเงิน"
@@ -648,7 +648,7 @@ window.StudyContent.itds261 = {
         "ข้อมูลคงอยู่เพื่ออ่านหรือแก้ภายหลัง"
       ],
       [
-        "Context / Level0",
+        "Context / Level 0",
         "หนึ่ง process0 แสดงระบบและ interfaces ภายนอก"
       ],
       [
@@ -689,19 +689,19 @@ window.StudyContent.itds261 = {
         "options": [
           "ศูนย์ตัว",
           "สี่ตัวเสมอ",
-          "เท่าจำนวนactors",
-          "หนึ่งตัวหมายเลข0"
+          "เท่าจำนวน actors",
+          "หนึ่งตัวหมายเลข 0"
         ],
         "answer": 3,
-        "explanation": "L6 หน้า20/29 กำหนดหนึ่ง process แทนระบบ"
+        "explanation": "L6 หน้า 20/29 กำหนดหนึ่ง process แทนระบบ"
       },
       {
         "q": "เส้นใดผิดกฎ DFD",
         "options": [
-          "process1เขียนD1",
-          "D2ส่งราคาให้process1",
-          "ผู้เยี่ยมชมส่งตรงเข้าD1โดยไม่มีprocess",
-          "ผู้เยี่ยมชมส่งข้อมูลเข้าprocess1"
+          "process1 เขียน D1",
+          "D2 ส่งราคาให้ process1",
+          "ผู้เยี่ยมชมส่งตรงเข้า D1 โดยไม่มี process",
+          "ผู้เยี่ยมชมส่งข้อมูลเข้า process1"
         ],
         "answer": 2,
         "explanation": "ทุก flow ต้องเริ่มหรือจบที่ process"
@@ -709,7 +709,7 @@ window.StudyContent.itds261 = {
       {
         "q": "Balancing ดูอะไร",
         "options": [
-          "จำนวนactorsเท่าจำนวนstores",
+          "จำนวน actors เท่าจำนวน stores",
           "องค์ประกอบข้อมูลเข้าออก parent และ child",
           "จำนวนวงรีเท่ากัน",
           "สีลูกศรเหมือนกัน"
@@ -718,12 +718,12 @@ window.StudyContent.itds261 = {
         "explanation": "จำนวนเส้นอาจต่างได้หาก flow รวมแตกแล้วข้อมูลตรงกัน"
       },
       {
-        "q": "เลข1.3แสดงอะไร",
+        "q": "เลข 1.3 แสดงอะไร",
         "options": [
-          "processย่อยของ1",
+          "process ย่อยของ 1",
           "ต้องทำเป็นขั้นที่สามเสมอ",
-          "Level3ทั้งหมด",
-          "วันที่1เดือน3"
+          "Level3 ทั้งหมด",
+          "วันที่ 1 เดือน 3"
         ],
         "answer": 0,
         "explanation": "หมายเลข hierarchy ไม่ใช่ลำดับเวลาบังคับ"
@@ -734,24 +734,24 @@ window.StudyContent.itds261 = {
           "เพราะไม่มีสี",
           "เพราะตัวอักษรไทย",
           "เพราะมีมากกว่าหนึ่งหน้าที่",
-          "ไม่แสดงการไหลของข้อมูลและstores"
+          "ไม่แสดงการไหลของข้อมูลและ stores"
         ],
         "answer": 3,
         "explanation": "tree แสดงการแตกหน้าที่ ส่วน DFD ต้องแสดงข้อมูล"
       },
       {
-        "q": "Processรายงานที่ไม่อ่านข้อมูลมีปัญหาใด",
+        "q": "Process รายงานที่ไม่อ่านข้อมูลมีปัญหาใด",
         "options": [
           "ถูกต้องเสมอ",
           "ไม่ต้องแก้ถ้ามีชื่อ",
           "ไม่มีข้อมูลรองรับผลรายงาน",
-          "จำเป็นต้องเป็นactor"
+          "จำเป็นต้องเป็น actor"
         ],
         "answer": 2,
         "explanation": "ต้องเชื่อมแหล่งข้อมูลเพื่อคำนวณผล"
       },
       {
-        "q": "ในEx3ควรออกตั๋วสำเร็จเมื่อใด",
+        "q": "ใน Ex3 ควรออกตั๋วสำเร็จเมื่อใด",
         "options": [
           "ก่อนรู้ยอด",
           "ยืนยันการชำระสำเร็จ",
@@ -762,21 +762,21 @@ window.StudyContent.itds261 = {
         "explanation": "โจทย์กำหนดหลังชำระสำเร็จ"
       },
       {
-        "q": "ถ้าLevel2เพิ่มการคืนเงินที่parentไม่มีต้องทำอย่างไร",
+        "q": "ถ้า Level 2 เพิ่มการคืนเงินที่ parent ไม่มีต้องทำอย่างไร",
         "options": [
-          "ทบทวนและปรับinterface parentให้สมดุล",
+          "ทบทวนและปรับ interface parent ให้สมดุล",
           "ปล่อยไว้เพราะรายละเอียดเพิ่มอะไรก็ได้",
-          "ลบชื่อflow",
+          "ลบชื่อ flow",
           "ใช้สีซ่อนลูกศร"
         ],
         "answer": 0,
         "explanation": "child เพิ่ม内部ได้แต่ external interface ต้องตรง parent"
       },
       {
-        "q": "ข้อใดยังต้องถามเพิ่มจากโจทย์Zoo",
+        "q": "ข้อใดยังต้องถามเพิ่มจากโจทย์ Zoo",
         "options": [
           "มีประเภทเด็กผู้ใหญ่ผู้สูงอายุหรือไม่",
-          "ต้องมีBooking IDหรือไม่",
+          "ต้องมี Booking ID หรือไม่",
           "ผู้ดูแลปรับราคาได้หรือไม่",
           "นิยามสถิติผู้เข้าจริงเทียบกับตั๋วขาย"
         ],
@@ -790,7 +790,7 @@ window.StudyContent.itds261 = {
     "cards": [
       [
         "PSPEC",
-        "รายละเอียดตรรกะของ process ที่ชื่อและข้อมูลตรงกับDFD"
+        "รายละเอียดตรรกะของ process ที่ชื่อและข้อมูลตรงกับ DFD"
       ],
       [
         "Primitive process",
@@ -810,7 +810,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "Decision table",
-        "ตารางชุดเงื่อนไขกับactions"
+        "ตารางชุดเงื่อนไขกับ actions"
       ],
       [
         "Control flow",
@@ -853,7 +853,7 @@ window.StudyContent.itds261 = {
         "explanation": "ความสอดคล้องช่วยตรวจข้อมูลที่ตรรกะต้องใช้"
       },
       {
-        "q": "ด้าน1,2,3 เป็นสามเหลี่ยมหรือไม่",
+        "q": "ด้าน 1,2,3 เป็นสามเหลี่ยมหรือไม่",
         "options": [
           "ใช่เพราะต่างกันหมด",
           "ตอบไม่ได้หากไม่มีภาพ",
@@ -872,15 +872,15 @@ window.StudyContent.itds261 = {
           "ไม่ต้องตรวจความยาว"
         ],
         "answer": 1,
-        "explanation": "ต้นฉบับบอกpositiveจึงต้องมากกว่า0"
+        "explanation": "ต้นฉบับบอก positive จึงต้องมากกว่า 0"
       },
       {
         "q": "Decision table เหมาะกับอะไร",
         "options": [
           "ตรวจชุดเงื่อนไขและผลการตัดสินใจ",
           "แสดงตำแหน่งปุ่ม",
-          "เก็บcommit history",
-          "แทนทุกdata store"
+          "เก็บ commit history",
+          "แทนทุก data store"
         ],
         "answer": 0,
         "explanation": "ช่วยมอง rule coverage และ conflicts"
@@ -890,11 +890,11 @@ window.StudyContent.itds261 = {
         "options": [
           "เป็นข้อมูลคงอยู่เสมอ",
           "ไม่มีทิศทาง",
-          "เป็นactorเท่านั้น",
+          "เป็น actor เท่านั้น",
           "เน้นสัญญาณเหตุการณ์หรือคำสั่ง"
         ],
         "answer": 3,
-        "explanation": "L7 หน้า22 อธิบายการเกิดณจุดเวลา"
+        "explanation": "L7 หน้า 22 อธิบายการเกิดณจุดเวลา"
       },
       {
         "q": "CSPEC ใช้รูปแบบใดได้",
@@ -902,10 +902,10 @@ window.StudyContent.itds261 = {
           "เฉพาะภาพหน้าจอ",
           "เฉพาะรายชื่อผู้ใช้",
           "State transition table",
-          "เฉพาะSQL"
+          "เฉพาะ SQL"
         ],
         "answer": 2,
-        "explanation": "หน้า24 ระบุหลายรูปแบบรวมstate diagram/table"
+        "explanation": "หน้า 24 ระบุหลายรูปแบบรวม state diagram/table"
       },
       {
         "q": "ส่งคำขอคืนเงินแล้วควรถือว่าคืนสำเร็จทันทีหรือไม่",
@@ -923,19 +923,19 @@ window.StudyContent.itds261 = {
         "options": [
           "จำกัด transition ให้เกิดเมื่อเงื่อนไขจริง",
           "เป็นคำอธิบายสีเส้น",
-          "เป็นชื่อdatabase",
+          "เป็นชื่อ database",
           "เป็นข้อมูลทุกอย่างในระบบ"
         ],
         "answer": 0,
         "explanation": "event อาจมาแต่ guard ไม่ผ่านจึงไม่เปลี่ยนสถานะ"
       },
       {
-        "q": "ตัวอย่างstateตั๋วในบทนี้มีสถานะอย่างไร",
+        "q": "ตัวอย่าง state ตั๋วในบทนี้มีสถานะอย่างไร",
         "options": [
-          "เป็นเฉลยทางการEx3",
+          "เป็นเฉลยทางการ Ex3",
           "เป็นนโยบายคืนเงินจริง",
-          "แทนDFDได้ทั้งหมด",
-          "จัดทำเพิ่มเพื่อฝึก ไม่ใช่ภาพเฉลยในL7"
+          "แทน DFD ได้ทั้งหมด",
+          "จัดทำเพิ่มเพื่อฝึก ไม่ใช่ภาพเฉลยใน L7"
         ],
         "answer": 3,
         "explanation": "แยกเนื้อหาต้นทางกับตัวอย่างสอนที่เพิ่ม"
@@ -947,7 +947,7 @@ window.StudyContent.itds261 = {
     "cards": [
       [
         "UI",
-        "ส่วนโต้ตอบที่มีทั้งflowและlook and feel"
+        "ส่วนโต้ตอบที่มีทั้ง flow และ look and feel"
       ],
       [
         "CLI",
@@ -979,7 +979,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "High fidelity",
-        "ต้นแบบรายละเอียดและinteractionใกล้ระบบจริง"
+        "ต้นแบบรายละเอียดและ interaction ใกล้ระบบจริง"
       ],
       [
         "UI validation",
@@ -992,11 +992,11 @@ window.StudyContent.itds261 = {
         "options": [
           "interaction flow และ look and feel",
           "งบและภาษาคอมพิวเตอร์",
-          "จำนวนไฟล์และcommits",
-          "CPUและdisk"
+          "จำนวนไฟล์และ commits",
+          "CPU และ disk"
         ],
         "answer": 0,
-        "explanation": "L8 หน้า4 แยกสองเรื่องที่ต้องคิดร่วมกัน"
+        "explanation": "L8 หน้า 4 แยกสองเรื่องที่ต้องคิดร่วมกัน"
       },
       {
         "q": "จุดขายกลางแจ้งควรพิจารณาอะไร",
@@ -1012,10 +1012,10 @@ window.StudyContent.itds261 = {
       {
         "q": "Undo สนับสนุนกฎใด",
         "options": [
-          "ลดconsistency",
+          "ลด consistency",
           "ซ่อนสถานะ",
           "Place user in control",
-          "เพิ่มmemory load"
+          "เพิ่ม memory load"
         ],
         "answer": 2,
         "explanation": "ทำให้ผู้ใช้ย้อนหรือแก้การกระทำได้"
@@ -1023,7 +1023,7 @@ window.StudyContent.itds261 = {
       {
         "q": "แสดงวันนัดเดิมกับวันใหม่พร้อมกันช่วยอะไร",
         "options": [
-          "ทำให้ไม่ต้องvalidate",
+          "ทำให้ไม่ต้อง validate",
           "ลดภาระจำ",
           "เพิ่มความยาวโค้ดเสมอ",
           "แทนการตรวจสิทธิ์"
@@ -1032,10 +1032,10 @@ window.StudyContent.itds261 = {
         "explanation": "ผู้ใช้เปรียบเทียบโดยไม่ต้องจำจากหน้าก่อน"
       },
       {
-        "q": "ใช้Ctrl+Sเป็นลบรายการผิดกฎใด",
+        "q": "ใช้ Ctrl+S เป็นลบรายการผิดกฎใด",
         "options": [
           "Consistency",
-          "ไม่มีผลกับUI",
+          "ไม่มีผลกับ UI",
           "Data coupling",
           "Git branching"
         ],
@@ -1045,10 +1045,10 @@ window.StudyContent.itds261 = {
       {
         "q": "Low fidelity เหมาะกับอะไร",
         "options": [
-          "ยืนยันproductionperformance",
+          "ยืนยัน productionperformance",
           "ทดสอบการจ่ายเงินจริงเท่านั้น",
-          "แทนrequirementsทุกข้อ",
-          "ลองโครงและflowเร็ว"
+          "แทน requirements ทุกข้อ",
+          "ลองโครงและ flow เร็ว"
         ],
         "answer": 3,
         "explanation": "ต้นแบบหยาบลดต้นทุนเรียนรู้ช่วงต้น"
@@ -1057,17 +1057,17 @@ window.StudyContent.itds261 = {
         "q": "High fidelity พิสูจน์หลังบ้านเสร็จหรือไม่",
         "options": [
           "ไม่ต้องทดสอบต่อ",
-          "ทำให้ไม่มีbug",
+          "ทำให้ไม่มี bug",
           "ไม่จำเป็น ต้องดูสิ่งที่ต้นแบบทำจริง",
           "เสร็จแน่นอน"
         ],
         "answer": 2,
-        "explanation": "ภาพและinteractionใกล้จริงไม่เท่ากับระบบพร้อมใช้"
+        "explanation": "ภาพและ interaction ใกล้จริงไม่เท่ากับระบบพร้อมใช้"
       },
       {
         "q": "UI validation ควรใช้หลักฐานใด",
         "options": [
-          "ไม่พบsyntaxerror",
+          "ไม่พบ syntaxerror",
           "ผู้ใช้ทำงานที่กำหนดได้ด้วยตนเอง",
           "ทีมบอกว่าสวยอย่างเดียว",
           "มีปุ่มครบจำนวน"
@@ -1079,7 +1079,7 @@ window.StudyContent.itds261 = {
         "q": "error message ที่ดีควรทำอะไร",
         "options": [
           "บอกปัญหาและวิธีดำเนินต่อที่เข้าใจได้",
-          "แสดงstack traceเสมอ",
+          "แสดง stack trace เสมอ",
           "ซ่อนปัญหา",
           "ล้างข้อมูลทั้งหมดทันที"
         ],
@@ -1089,10 +1089,10 @@ window.StudyContent.itds261 = {
       {
         "q": "UI process สิ้นสุดโดยไม่วนกลับได้เสมอหรือไม่",
         "options": [
-          "ได้เสมอหลังวาดwireframe",
-          "ต้องข้ามvalidation",
+          "ได้เสมอหลังวาด wireframe",
+          "ต้องข้าม validation",
           "วนได้เฉพาะเปลี่ยนสี",
-          "ไม่ feedback อาจทำให้ปรับdesignและprototype"
+          "ไม่ feedback อาจทำให้ปรับ design และ prototype"
         ],
         "answer": 3,
         "explanation": "L8 อธิบาย iterative design process"
@@ -1108,11 +1108,11 @@ window.StudyContent.itds261 = {
       ],
       [
         "Detailed design",
-        "ออกแบบภายในส่วนรวมalgorithmและdata structures"
+        "ออกแบบภายในส่วนรวม algorithm และ data structures"
       ],
       [
         "Layered architecture",
-        "จัดหน้าที่เป็นชั้นผ่านinterface"
+        "จัดหน้าที่เป็นชั้นผ่าน interface"
       ],
       [
         "Structure chart",
@@ -1128,11 +1128,11 @@ window.StudyContent.itds261 = {
       ],
       [
         "Cohesion",
-        "ระดับความสัมพันธ์ของงานภายในmodule"
+        "ระดับความสัมพันธ์ของงานภายใน module"
       ],
       [
         "Coupling",
-        "ระดับการพึ่งพาระหว่างmodules"
+        "ระดับการพึ่งพาระหว่าง modules"
       ],
       [
         "Design with reuse",
@@ -1145,7 +1145,7 @@ window.StudyContent.itds261 = {
     ],
     "quiz": [
       {
-        "q": "ใช้binary searchในfind()เป็นdesignระดับใด",
+        "q": "ใช้ binary search ใน find()เป็น design ระดับใด",
         "options": [
           "Detailed design",
           "Course policy",
@@ -1153,12 +1153,12 @@ window.StudyContent.itds261 = {
           "Project organization"
         ],
         "answer": 0,
-        "explanation": "เป็นการเลือกalgorithmภายในoperation"
+        "explanation": "เป็นการเลือก algorithm ภายใน operation"
       },
       {
-        "q": "แยกUIออกจากbusinesslogicเกี่ยวข้องกับอะไร",
+        "q": "แยก UI ออกจาก businesslogic เกี่ยวข้องกับอะไร",
         "options": [
-          "ชื่อactorอย่างเดียว",
+          "ชื่อ actor อย่างเดียว",
           "commit message",
           "ข้อสอบเท่านั้น",
           "Architectural design"
@@ -1167,20 +1167,20 @@ window.StudyContent.itds261 = {
         "explanation": "เป็นโครงสร้างและความรับผิดชอบส่วนหลัก"
       },
       {
-        "q": "Cohesionสูงหมายถึงอะไร",
+        "q": "Cohesion สูงหมายถึงอะไร",
         "options": [
           "มีไฟล์มากที่สุด",
-          "ไม่มีinput",
-          "งานในmoduleสัมพันธ์กับหน้าที่เดียวกัน",
-          "moduleเข้าถึงทุกอย่าง"
+          "ไม่มี input",
+          "งานใน module สัมพันธ์กับหน้าที่เดียวกัน",
+          "module เข้าถึงทุกอย่าง"
         ],
         "answer": 2,
         "explanation": "cohesion วัดความสัมพันธ์ภายใน"
       },
       {
-        "q": "Couplingสูงเสี่ยงอย่างไร",
+        "q": "Coupling สูงเสี่ยงอย่างไร",
         "options": [
-          "ไม่มีผลต่อmaintenance",
+          "ไม่มีผลต่อ maintenance",
           "แก้ส่วนหนึ่งกระทบอีกหลายส่วน",
           "ทำให้ทุกอย่างอิสระ",
           "รับประกันเร็ว"
@@ -1189,7 +1189,7 @@ window.StudyContent.itds261 = {
         "explanation": "coupling วัดความพึ่งพาระหว่างส่วน"
       },
       {
-        "q": "การอ่านตัวแปรภายในอีกmoduleขัดกับอะไร",
+        "q": "การอ่านตัวแปรภายในอีก module ขัดกับอะไร",
         "options": [
           "Information hiding",
           "การแสดงผล",
@@ -1202,7 +1202,7 @@ window.StudyContent.itds261 = {
       {
         "q": "Least privilege หมายถึงอะไร",
         "options": [
-          "ทุกmoduleเป็นadmin",
+          "ทุก module เป็น admin",
           "ห้ามติดต่อส่วนอื่น",
           "ไม่ต้องตรวจสิทธิ์",
           "เข้าถึงเฉพาะสิ่งจำเป็น"
@@ -1211,48 +1211,48 @@ window.StudyContent.itds261 = {
         "explanation": "จำกัดทรัพยากร/สิทธิ์ตามหน้าที่"
       },
       {
-        "q": "Microservicesรับประกันว่าระบบง่ายขึ้นหรือไม่",
+        "q": "Microservices รับประกันว่าระบบง่ายขึ้นหรือไม่",
         "options": [
-          "ไม่ต้องมีAPI",
-          "ไม่ต้องทดสอบintegration",
-          "ไม่ ต้องคิดdistributedoperationและdata",
+          "ไม่ต้องมี API",
+          "ไม่ต้องทดสอบ integration",
+          "ไม่ ต้องคิด distributedoperation และ data",
           "ใช่เสมอ"
         ],
         "answer": 2,
-        "explanation": "styleมีtrade-offsไม่ใช่คำตอบอัตโนมัติ"
+        "explanation": "style มี trade-offs ไม่ใช่คำตอบอัตโนมัติ"
       },
       {
-        "q": "Structure chart ต่างจากDFDอย่างไร",
+        "q": "Structure chart ต่างจาก DFD อย่างไร",
         "options": [
-          "ห้ามใช้หลังrequirements",
-          "เน้นการจัดmodule/การเรียกมากกว่าการไหลข้อมูล",
+          "ห้ามใช้หลัง requirements",
+          "เน้นการจัด module/การเรียกมากกว่าการไหลข้อมูล",
           "เหมือนกันทุกประการ",
-          "ต้องมีactorเท่านั้น"
+          "ต้องมี actor เท่านั้น"
         ],
         "answer": 1,
-        "explanation": "analysisกับdesignตอบคำถามคนละระดับ"
+        "explanation": "analysis กับ design ตอบคำถามคนละระดับ"
       },
       {
-        "q": "ส่งcustomerrecordทั้งก้อนดีกว่าแยกfieldsเสมอหรือไม่",
+        "q": "ส่ง customerrecord ทั้งก้อนดีกว่าแยก fields เสมอหรือไม่",
         "options": [
           "ไม่ ต้องดูว่าข้อมูลจำเป็นและใช้ครบหรือไม่",
-          "ใช่เพราะargumentน้อยกว่า",
-          "ใช่เพราะcouplingไม่มีผล",
+          "ใช่เพราะ argument น้อยกว่า",
+          "ใช่เพราะ coupling ไม่มีผล",
           "ไม่ได้ขึ้นกับข้อมูล"
         ],
         "answer": 0,
-        "explanation": "L9หน้า54/57ทำให้พิจารณาข้อมูลจำเป็นแทนตัดสินจากจำนวนargument"
+        "explanation": "L9 หน้า 54/57 ทำให้พิจารณาข้อมูลจำเป็นแทนตัดสินจากจำนวน argument"
       },
       {
-        "q": "Beautyในdesignprinciplesหมายถึงอะไร",
+        "q": "Beauty ใน designprinciples หมายถึงอะไร",
         "options": [
-          "สีUIสวยเท่านั้น",
-          "ใช้animationมากที่สุด",
-          "เพิ่มpatternsทุกแห่ง",
+          "สี UI สวยเท่านั้น",
+          "ใช้ animation มากที่สุด",
+          "เพิ่ม patterns ทุกแห่ง",
           "โครงสร้างชัดและไม่ซับซ้อนเกินจำเป็น"
         ],
         "answer": 3,
-        "explanation": "L9หน้า62แยกaestheticโครงสร้างจากUI"
+        "explanation": "L9 หน้า 62 แยก aesthetic โครงสร้างจาก UI"
       }
     ]
   },
@@ -1261,7 +1261,7 @@ window.StudyContent.itds261 = {
     "cards": [
       [
         "Implementation",
-        "แปลงdesignเป็นโปรแกรมรวมtesting debuggingและconfiguration"
+        "แปลง design เป็นโปรแกรมรวม testing debugging และ configuration"
       ],
       [
         "Imperative",
@@ -1277,7 +1277,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "DRY",
-        "ลดการทำซ้ำของknowledgeหรือlogicที่ควรมีแหล่งเดียว"
+        "ลดการทำซ้ำของ knowledge หรือ logic ที่ควรมีแหล่งเดียว"
       ],
       [
         "Debugging",
@@ -1293,7 +1293,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "Code review",
-        "ทบทวนchangeเพื่อคุณภาพและความเข้าใจร่วม"
+        "ทบทวน change เพื่อคุณภาพและความเข้าใจร่วม"
       ],
       [
         "Regression test",
@@ -1302,29 +1302,29 @@ window.StudyContent.itds261 = {
     ],
     "quiz": [
       {
-        "q": "ImplementationรวมงานใดตามL10",
+        "q": "Implementation รวมงานใดตาม L10",
         "options": [
           "coding testing debugging configuration management",
-          "codingอย่างเดียว",
-          "UIอย่างเดียว",
+          "coding อย่างเดียว",
+          "UI อย่างเดียว",
           "ขายผลิตภัณฑ์อย่างเดียว"
         ],
         "answer": 0,
-        "explanation": "หน้า10ระบุสี่ส่วน"
+        "explanation": "หน้า 10 ระบุสี่ส่วน"
       },
       {
-        "q": "SQLเป็นตัวอย่างparadigmใดในสไลด์",
+        "q": "SQL เป็นตัวอย่าง paradigm ใดในสไลด์",
         "options": [
-          "เฉพาะObject-oriented",
-          "เฉพาะImperative",
-          "No-codeเสมอ",
+          "เฉพาะ Object-oriented",
+          "เฉพาะ Imperative",
+          "No-code เสมอ",
           "Declarative"
         ],
         "answer": 3,
         "explanation": "บอกผลที่ต้องการมากกว่าลำดับขั้น"
       },
       {
-        "q": "Commentใดช่วยมากที่สุด",
+        "q": "Comment ใดช่วยมากที่สุด",
         "options": [
           "บอกชื่อคนที่ไม่เกี่ยวข้อง",
           "ยืนยันว่าโค้ดดีโดยไม่อธิบาย",
@@ -1332,84 +1332,84 @@ window.StudyContent.itds261 = {
           "พูดซ้ำทุกบรรทัด"
         ],
         "answer": 2,
-        "explanation": "commentsควรลดความสับสนและบอกintent"
+        "explanation": "comments ควรลดความสับสนและบอก intent"
       },
       {
-        "q": "ขั้นแรกของdebuggingคืออะไร",
+        "q": "ขั้นแรกของ debugging คืออะไร",
         "options": [
-          "ลบtests",
+          "ลบ tests",
           "ทำให้ปัญหาเกิดซ้ำและสภาพแวดล้อมนิ่ง",
           "แก้ไฟล์แบบสุ่ม",
           "เปลี่ยนภาษา"
         ],
         "answer": 1,
-        "explanation": "stabilization/reproductionก่อนหาแหล่ง"
+        "explanation": "stabilization/reproduction ก่อนหาแหล่ง"
       },
       {
-        "q": "Refactoringมีเงื่อนไขสำคัญใด",
+        "q": "Refactoring มีเงื่อนไขสำคัญใด",
         "options": [
           "รักษาพฤติกรรมภายนอก",
-          "ต้องเพิ่มfeature",
-          "ต้องrewriteทั้งหมด",
+          "ต้องเพิ่ม feature",
+          "ต้อง rewrite ทั้งหมด",
           "ไม่ต้องตรวจผล"
         ],
         "answer": 0,
         "explanation": "การเปลี่ยนโครงสร้างภายในไม่เปลี่ยนสิ่งที่ผู้ใช้สังเกต"
       },
       {
-        "q": "Inspectionช่วงหลักควรเน้นอะไร",
+        "q": "Inspection ช่วงหลักควรเน้นอะไร",
         "options": [
           "ออกแบบระบบใหม่ทุกครั้ง",
           "คัดคนออกจากทีม",
           "ตกแต่งหน้าจอ",
-          "หาdefects"
+          "หา defects"
         ],
         "answer": 3,
-        "explanation": "L10หน้า48แยกfinding defectsจากsolution hunting"
+        "explanation": "L10 หน้า 48 แยก finding defects จาก solution hunting"
       },
       {
-        "q": "Reviewควรดูconfiguration/docด้วยหรือไม่",
+        "q": "Review ควรดู configuration/doc ด้วยหรือไม่",
         "options": [
-          "ดูได้เฉพาะcomment",
+          "ดูได้เฉพาะ comment",
           "ดูเฉพาะจำนวนบรรทัด",
-          "ควรเมื่อchangeต้องพึ่งพาการแก้สิ่งเหล่านั้น",
+          "ควรเมื่อ change ต้องพึ่งพาการแก้สิ่งเหล่านั้น",
           "ไม่ต้องเพราะไม่ใช่โค้ด"
         ],
         "answer": 2,
-        "explanation": "dependenciesและramificationsรวมสิ่งนอกโค้ด"
+        "explanation": "dependencies และ ramifications รวมสิ่งนอกโค้ด"
       },
       {
-        "q": "ท่าทีreviewที่เหมาะคืออะไร",
+        "q": "ท่าที review ที่เหมาะคืออะไร",
         "options": [
-          "approveทันทีเมื่อรันได้",
+          "approve ทันทีเมื่อรันได้",
           "ชี้เหตุผลและสิ่งแก้ที่ทำได้โดยเคารพผู้เขียน",
           "ตำหนิคนว่าไม่เก่ง",
           "ขอเปลี่ยนทุกอย่างตามรสนิยม"
         ],
         "answer": 1,
-        "explanation": "reviewเป็นความรับผิดชอบร่วมเพื่อคุณภาพ"
+        "explanation": "review เป็นความรับผิดชอบร่วมเพื่อคุณภาพ"
       },
       {
-        "q": "ไม่มีcommentอธิบายfixควรทำอย่างไร",
+        "q": "ไม่มี comment อธิบาย fix ควรทำอย่างไร",
         "options": [
           "ดูว่าชื่อและโครงสร้างชัดหรือยังและขอเหตุผลที่จำเป็น",
-          "เพิ่มcommentทุกบรรทัดเสมอ",
-          "ลบfix",
-          "ห้ามreview"
+          "เพิ่ม comment ทุกบรรทัดเสมอ",
+          "ลบ fix",
+          "ห้าม review"
         ],
         "answer": 0,
-        "explanation": "goodcommentsไม่excuseunclearcode"
+        "explanation": "goodcomments ไม่ excuseunclearcode"
       },
       {
-        "q": "Bugfixที่เคยพังควรเพิ่มหลักฐานใด",
+        "q": "Bugfix ที่เคยพังควรเพิ่มหลักฐานใด",
         "options": [
           "ภาพทีมประชุมเท่านั้น",
-          "จำนวนcommitสูงสุด",
+          "จำนวน commit สูงสุด",
           "ข้อความว่าเชื่อใจได้",
-          "testกรณีที่เคยผิดและตรวจผลกระทบที่เกี่ยวข้อง"
+          "test กรณีที่เคยผิดและตรวจผลกระทบที่เกี่ยวข้อง"
         ],
         "answer": 3,
-        "explanation": "regressiontestช่วยตรวจพฤติกรรมเดิมกลับมา"
+        "explanation": "regressiontest ช่วยตรวจพฤติกรรมเดิมกลับมา"
       }
     ]
   },
@@ -1418,11 +1418,11 @@ window.StudyContent.itds261 = {
     "cards": [
       [
         "Configuration item",
-        "สิ่งส่งมอบหรือconfigที่ต้องระบุและควบคุมการเปลี่ยน"
+        "สิ่งส่งมอบหรือ config ที่ต้องระบุและควบคุมการเปลี่ยน"
       ],
       [
         "VCS",
-        "เครื่องมือประสานchangeระบุversionและย้อนประวัติ"
+        "เครื่องมือประสาน change ระบุ version และย้อนประวัติ"
       ],
       [
         "Working tree",
@@ -1430,23 +1430,23 @@ window.StudyContent.itds261 = {
       ],
       [
         "Index / staging area",
-        "snapshotที่เลือกสำหรับcommitถัดไป"
+        "snapshot ที่เลือกสำหรับ commit ถัดไป"
       ],
       [
         "Commit",
-        "snapshotในประวัติlocalพร้อมmetadata"
+        "snapshot ในประวัติ local พร้อม metadata"
       ],
       [
         "Fetch",
-        "รับข้อมูลremoteโดยยังไม่รวมเข้างานปัจจุบัน"
+        "รับข้อมูล remote โดยยังไม่รวมเข้างานปัจจุบัน"
       ],
       [
         "Pull",
-        "รับและintegrateตามconfiguration"
+        "รับและ integrate ตาม configuration"
       ],
       [
         "Push",
-        "ส่งcommitsไปremote"
+        "ส่ง commits ไป remote"
       ],
       [
         "Branch",
@@ -1454,119 +1454,119 @@ window.StudyContent.itds261 = {
       ],
       [
         "Merge conflict",
-        "จุดที่ต้องเลือกผลรวมของchangeอย่างมีความหมาย"
+        "จุดที่ต้องเลือกผลรวมของ change อย่างมีความหมาย"
       ]
     ],
     "quiz": [
       {
-        "q": "CMกว้างกว่าVCSอย่างไร",
+        "q": "CM กว้างกว่า VCS อย่างไร",
         "options": [
-          "ควบคุมconfigurationitemsและchangeหลายชนิด",
-          "CMคือชื่อเก่าของcommit",
-          "CMเก็บเฉพาะรูปภาพ",
-          "VCSแทนCMได้ทุกอย่าง"
+          "ควบคุม configurationitems และ change หลายชนิด",
+          "CM คือชื่อเก่าของ commit",
+          "CM เก็บเฉพาะรูปภาพ",
+          "VCS แทน CM ได้ทุกอย่าง"
         ],
         "answer": 0,
-        "explanation": "L11ระบุVCSเป็นส่วนหนึ่งของCM"
+        "explanation": "L11 ระบุ VCS เป็นส่วนหนึ่งของ CM"
       },
       {
-        "q": "git addเลือกสภาพไฟล์เมื่อใด",
+        "q": "git add เลือกสภาพไฟล์เมื่อใด",
         "options": [
-          "ตอนpushเสมอ",
+          "ตอน push เสมอ",
           "ตอนเปิดโปรแกรม",
-          "ตอนmergeถัดไป",
-          "ตอนเรียกadd"
+          "ตอน merge ถัดไป",
+          "ตอนเรียก add"
         ],
         "answer": 3,
-        "explanation": "แก้ต่อหลังaddต้องaddใหม่ถ้าต้องการให้เข้าcommit"
+        "explanation": "แก้ต่อหลัง add ต้อง add ใหม่ถ้าต้องการให้เข้า commit"
       },
       {
-        "q": "commitโดยไม่pushเกิดที่ไหน",
+        "q": "commit โดยไม่ push เกิดที่ไหน",
         "options": [
           "อีเมลผู้ใช้",
-          "นอกGit",
+          "นอก Git",
           "Local repository",
-          "Remoteเท่านั้น"
+          "Remote เท่านั้น"
         ],
         "answer": 2,
-        "explanation": "distributedworkflowทำcommitofflineได้"
+        "explanation": "distributedworkflow ทำ commitoffline ได้"
       },
       {
-        "q": "ดูสิ่งที่จะcommitใช้คำสั่งใด",
+        "q": "ดูสิ่งที่จะ commit ใช้คำสั่งใด",
         "options": [
           "git clone",
           "git diff --staged",
-          "git diffอย่างเดียว",
+          "git diff อย่างเดียว",
           "git init"
         ],
         "answer": 1,
-        "explanation": "stageddiffเทียบindexกับHEAD"
+        "explanation": "stageddiff เทียบ index กับ HEAD"
       },
       {
-        "q": "fetchต่างจากpullพื้นฐานอย่างไร",
+        "q": "fetch ต่างจาก pull พื้นฐานอย่างไร",
         "options": [
-          "fetchยังไม่integrateเข้าปัจจุบัน",
-          "fetchส่งโค้ดขึ้นremote",
-          "fetchลบbranchทั้งหมด",
-          "pullไม่ติดต่อremote"
+          "fetch ยังไม่ integrate เข้าปัจจุบัน",
+          "fetch ส่งโค้ดขึ้น remote",
+          "fetch ลบ branch ทั้งหมด",
+          "pull ไม่ติดต่อ remote"
         ],
         "answer": 0,
-        "explanation": "สไลด์อธิบายpullเป็นfetch+merge แต่ต้องดูconfiguration"
+        "explanation": "สไลด์อธิบาย pull เป็น fetch+merge แต่ต้องดู configuration"
       },
       {
-        "q": "git branch featureสร้างแล้วสลับbranchเลยหรือไม่",
+        "q": "git branch feature สร้างแล้วสลับ branch เลยหรือไม่",
         "options": [
           "สลับเสมอ",
-          "pushทันที",
-          "mergeทันที",
+          "push ทันที",
+          "merge ทันที",
           "ไม่ สร้างอย่างเดียว"
         ],
         "answer": 3,
-        "explanation": "เปลี่ยนbranchเป็นอีกoperationหนึ่ง"
+        "explanation": "เปลี่ยน branch เป็นอีก operation หนึ่ง"
       },
       {
-        "q": "Conflictควรแก้อย่างไร",
+        "q": "Conflict ควรแก้อย่างไร",
         "options": [
-          "เลือกoursเสมอ",
-          "forcepushทุกครั้ง",
+          "เลือก ours เสมอ",
+          "forcepush ทุกครั้ง",
           "เลือกผลรวมที่ถูกและตรวจงานที่เกี่ยวข้อง",
-          "ลบmarkersโดยไม่อ่าน"
+          "ลบ markers โดยไม่อ่าน"
         ],
         "answer": 2,
-        "explanation": "ต้องรักษาความหมายของchangeไม่เพียงให้syntaxผ่าน"
+        "explanation": "ต้องรักษาความหมายของ change ไม่เพียงให้ syntax ผ่าน"
       },
       {
-        "q": "masterเป็นชื่อบังคับทุกGitrepositoryหรือไม่",
+        "q": "master เป็นชื่อบังคับทุก Gitrepository หรือไม่",
         "options": [
-          "ชื่อbranchกำหนดคุณภาพโค้ดเอง",
-          "ไม่ เป็นชื่อในตัวอย่างworkflow",
+          "ชื่อ branch กำหนดคุณภาพโค้ดเอง",
+          "ไม่ เป็นชื่อในตัวอย่าง workflow",
           "ใช่ทุกกรณี",
-          "mainใช้ไม่ได้"
+          "main ใช้ไม่ได้"
         ],
         "answer": 1,
-        "explanation": "ชื่อdefaultและproductionpolicyขึ้นกับrepository"
+        "explanation": "ชื่อ default และ productionpolicy ขึ้นกับ repository"
       },
       {
-        "q": "git reset pathกับreset--hardเหมือนกันหรือไม่",
+        "q": "git reset path กับ reset--hard เหมือนกันหรือไม่",
         "options": [
-          "ไม่ แบบhardอาจทับงานในworkingtree",
+          "ไม่ แบบ hard อาจทับงานใน workingtree",
           "เหมือนกันทั้งหมด",
-          "ทั้งคู่ส่งremote",
-          "ทั้งคู่สร้างbranch"
+          "ทั้งคู่ส่ง remote",
+          "ทั้งคู่สร้าง branch"
         ],
         "answer": 0,
-        "explanation": "ต้องแยกunstageจากoperationที่กระทบงานจริง"
+        "explanation": "ต้องแยก unstage จาก operation ที่กระทบงานจริง"
       },
       {
-        "q": ".gitignoreทำให้ไฟล์trackedหยุดtrackทันทีหรือไม่",
+        "q": ".gitignore ทำให้ไฟล์ tracked หยุด track ทันทีหรือไม่",
         "options": [
           "ใช่เสมอ",
           "ทำให้ประวัติหาย",
-          "แทนbackupได้",
-          "ไม่ ต้องจัดการtrackingแยก"
+          "แทน backup ได้",
+          "ไม่ ต้องจัดการ tracking แยก"
         ],
         "answer": 3,
-        "explanation": "ignorepatternsมีผลหลักกับไฟล์ที่ยังไม่track"
+        "explanation": "ignorepatterns มีผลหลักกับไฟล์ที่ยังไม่ track"
       }
     ]
   },
@@ -1574,32 +1574,32 @@ window.StudyContent.itds261 = {
     "title": "ทบทวนกลางภาคตาม Guideline ที่ได้รับ",
     "cards": [
       [
-        "Part1",
-        "15points: SE/SPM, process, RE, interface design"
+        "Part 1",
+        "15 points: SE/SPM, process, RE, interface design"
       ],
       [
-        "Part2",
-        "25points: usecase diagram/narrative และcontextDFD"
+        "Part 2",
+        "25 points: usecase diagram/narrative และ context DFD"
       ],
       [
-        "A4ในguideline",
+        "A4 ใน guideline",
         "หนึ่งแผ่นพร้อมชื่อ/รหัสและส่งคืน ตามเอกสารชุดที่ได้รับ"
       ],
       [
         "Exam scope",
-        "ยึดรายการที่ระบุ ไม่เพิ่มจากเลขlectureเอง"
+        "ยึดรายการที่ระบุ ไม่เพิ่มจากเลข lecture เอง"
       ],
       [
-        "Usecase viewpoint",
+        "Use case viewpoint",
         "ผู้ใช้/ระบบภายนอกต้องการบรรลุเป้าหมายอะไร"
       ],
       [
         "Context viewpoint",
-        "ข้อมูลใดข้ามขอบเขตของระบบหนึ่งprocess"
+        "ข้อมูลใดข้ามขอบเขตของระบบหนึ่ง process"
       ],
       [
         "Narrative coverage",
-        "ชื่อ actor goal precondition trigger mainflow exception postcondition"
+        "ชื่อ actor goal precondition trigger main flow exception postcondition"
       ],
       [
         "Active recall",
@@ -1616,7 +1616,7 @@ window.StudyContent.itds261 = {
     ],
     "quiz": [
       {
-        "q": "Part1มีคะแนนเท่าไรตามguideline",
+        "q": "Part 1 มีคะแนนเท่าไรตาม guideline",
         "options": [
           "15",
           "25",
@@ -1624,24 +1624,24 @@ window.StudyContent.itds261 = {
           "20"
         ],
         "answer": 0,
-        "explanation": "หน้า1ระบุ15points ส่วนPart2เป็น25"
+        "explanation": "หน้า 1 ระบุ 15 points ส่วน Part 2 เป็น 25"
       },
       {
-        "q": "Part2แจกแจงโมเดลใด",
+        "q": "Part 2 แจกแจงโมเดลใด",
         "options": [
-          "ERDอย่างเดียว",
-          "architectureและGitflow",
-          "unit testเท่านั้น",
-          "usecase diagram narrative contextDFD"
+          "ERD อย่างเดียว",
+          "architecture และ Gitflow",
+          "unit test เท่านั้น",
+          "usecase diagram narrative context DFD"
         ],
         "answer": 3,
-        "explanation": "ยึดรายการย่อยในหน้า1"
+        "explanation": "ยึดรายการย่อยในหน้า 1"
       },
       {
-        "q": "A4กี่ด้านตามข้อความที่ได้รับ",
+        "q": "A4 กี่ด้านตามข้อความที่ได้รับ",
         "options": [
           "ต้องด้านเดียวแน่นอน",
-          "ห้ามมีA4",
+          "ห้ามมี A4",
           "ไม่ได้ระบุจำนวนด้าน",
           "ต้องสองด้านแน่นอน"
         ],
@@ -1649,48 +1649,48 @@ window.StudyContent.itds261 = {
         "explanation": "ข้อความบอกหนึ่งแผ่นแต่ไม่ขยายเรื่องด้าน"
       },
       {
-        "q": "UIอยู่ในscopeกลางภาคหรือไม่",
+        "q": "UI อยู่ใน scope กลางภาคหรือไม่",
         "options": [
-          "ขึ้นกับชื่อPDF",
-          "อยู่ในPart1ตามหน้า1",
-          "ไม่อยู่เพราะท้ายไฟล์ไม่มีสรุปUI",
+          "ขึ้นกับชื่อ PDF",
+          "อยู่ใน Part 1 ตามหน้า 1",
+          "ไม่อยู่เพราะท้ายไฟล์ไม่มีสรุป UI",
           "อยู่เฉพาะปลายภาคแน่นอน"
         ],
         "answer": 1,
-        "explanation": "แยกscopeที่ระบุจากสไลด์ย่อที่รวบรวม"
+        "explanation": "แยก scope ที่ระบุจากสไลด์ย่อที่รวบรวม"
       },
       {
-        "q": "ContextDFDควรมีprocessหลักกี่ตัว",
+        "q": "ContextDFD ควรมี process หลักกี่ตัว",
         "options": [
-          "หนึ่งหมายเลข0",
-          "เท่าusecases",
-          "เท่าactors",
-          "ไม่มีprocess"
+          "หนึ่งหมายเลข 0",
+          "เท่า usecases",
+          "เท่า actors",
+          "ไม่มี process"
         ],
         "answer": 0,
-        "explanation": "ไม่คัดทุกusecaseไปเป็นprocessในcontext"
+        "explanation": "ไม่คัดทุก usecase ไปเป็น process ใน context"
       },
       {
-        "q": "ควรเพิ่มL9–L11เข้าscopeกลางภาคเองหรือไม่",
+        "q": "ควรเพิ่ม L9–L11 เข้า scope กลางภาคเองหรือไม่",
         "options": [
           "เพิ่มเสมอเพราะมีไฟล์",
-          "เพิ่มเฉพาะGit",
+          "เพิ่มเฉพาะ Git",
           "เปลี่ยนคะแนนเองได้",
-          "ไม่ หากguidelineไม่ได้ระบุ"
+          "ไม่ หาก guideline ไม่ได้ระบุ"
         ],
         "answer": 3,
         "explanation": "ต้องรักษาขอบเขตจากแหล่งที่ได้รับ"
       },
       {
-        "q": "ทิศทางextendที่ควรจำคืออะไร",
+        "q": "ทิศทาง extend ที่ควรจำคืออะไร",
         "options": [
-          "actorไปstore",
+          "actor ไป store",
           "ไม่มีลูกศร",
-          "extensionไปbase",
-          "baseไปextension"
+          "extension ไป base",
+          "base ไป extension"
         ],
         "answer": 2,
-        "explanation": "เชื่อมnotationกับความหมายของพฤติกรรมเพิ่ม"
+        "explanation": "เชื่อม notation กับความหมายของพฤติกรรมเพิ่ม"
       },
       {
         "q": "โจทย์ฝึกในบทนี้เป็นข้อสอบจริงหรือไม่",
@@ -1698,32 +1698,32 @@ window.StudyContent.itds261 = {
           "เป็นเฉลยทางการ",
           "ไม่ เป็นแบบฝึกสังเคราะห์จัดทำเพิ่ม",
           "เป็นข้อสอบแน่นอน",
-          "เป็นrubricอาจารย์"
+          "เป็น rubric อาจารย์"
         ],
         "answer": 1,
         "explanation": "ต้องระบุสถานะแนวคำตอบให้ตรงความจริง"
       },
       {
-        "q": "หากถามเฉพาะscenarioผู้เยี่ยมชมควรทำอย่างไร",
+        "q": "หากถามเฉพาะ scenario ผู้เยี่ยมชมควรทำอย่างไร",
         "options": [
-          "ใช้boundaryตามคำถามและระบุสมมติฐาน",
+          "ใช้ boundary ตามคำถามและระบุสมมติฐาน",
           "เพิ่มทุกงานบริษัทเสมอ",
           "วาดภาพเดิมโดยไม่อ่าน",
-          "ไม่ต้องมีdataflows"
+          "ไม่ต้องมี data flows"
         ],
         "answer": 0,
-        "explanation": "ขอบเขตต่างกันทำให้รายละเอียดและactorsต่างกัน"
+        "explanation": "ขอบเขตต่างกันทำให้รายละเอียดและ actors ต่างกัน"
       },
       {
         "q": "การทบทวนแบบใดตรวจความเข้าใจได้ดี",
         "options": [
           "อ่านผ่านอย่างเดียว",
-          "จำสีdiagram",
+          "จำสี diagram",
           "จำเลขหน้าทั้งหมด",
-          "วาดโมเดลจากข้อความใหม่แล้วอธิบายflow"
+          "วาดโมเดลจากข้อความใหม่แล้วอธิบาย flow"
         ],
         "answer": 3,
-        "explanation": "active recallตรวจว่านำหลักไปใช้ได้จริง"
+        "explanation": "active recall ตรวจว่านำหลักไปใช้ได้จริง"
       }
     ]
   },
@@ -1764,7 +1764,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "Percentile",
-        "สัดส่วนของผลวัดที่อยู่ภายในเกณฑ์ เช่น95%"
+        "สัดส่วนของผลวัดที่อยู่ภายในเกณฑ์ เช่น 95%"
       ],
       [
         "Workload",
@@ -1773,29 +1773,29 @@ window.StudyContent.itds261 = {
     ],
     "quiz": [
       {
-        "q": "Lab3กำหนดกี่storiesและcriteriaต่อstory",
+        "q": "Lab3 กำหนดกี่ stories และ criteria ต่อ story",
         "options": [
-          "5storiesและ2criteria",
-          "2storiesและ5criteria",
-          "10storiesไม่มีcriteria",
+          "5 stories และ 2 criteria",
+          "2 stories และ 5 criteria",
+          "10 stories ไม่มี criteria",
           "กี่ข้อก็ได้"
         ],
         "answer": 0,
-        "explanation": "ใบงานหน้า1กำหนดรูปแบบชัดเจน"
+        "explanation": "ใบงานหน้า 1 กำหนดรูปแบบชัดเจน"
       },
       {
         "q": "บทบาทหลักใดต้องครอบคลุม",
         "options": [
-          "ผู้จัดการร้านPOS",
+          "ผู้จัดการร้าน POS",
           "ทันตแพทย์เท่านั้น",
           "นักพัฒนาอย่างเดียว",
           "ประชาชน เจ้าหน้าที่โยธา หัวหน้างาน"
         ],
         "answer": 3,
-        "explanation": "ยึดactorsของPHTRSตามโจทย์"
+        "explanation": "ยึด actors ของ PHTRS ตามโจทย์"
       },
       {
-        "q": "Thenควรอธิบายอะไร",
+        "q": "Then ควรอธิบายอะไร",
         "options": [
           "ชื่อทีมพัฒนา",
           "เวลาเริ่มเรียน",
@@ -1803,7 +1803,7 @@ window.StudyContent.itds261 = {
           "เหตุผลธุรกิจอย่างเดียว"
         ],
         "answer": 2,
-        "explanation": "ผลต้องเฉพาะและสัมพันธ์กับWhen"
+        "explanation": "ผลต้องเฉพาะและสัมพันธ์กับ When"
       },
       {
         "q": "การแนบรูปควรเป็นข้อบังคับหรือไม่ตามโจทย์",
@@ -1814,24 +1814,24 @@ window.StudyContent.itds261 = {
           "ห้ามแนบ"
         ],
         "answer": 1,
-        "explanation": "ไม่เปลี่ยนoptionalเป็นrequiredเอง"
+        "explanation": "ไม่เปลี่ยน optional เป็น required เอง"
       },
       {
-        "q": "กรณีuploadสำเร็จ/ล้มเหลวต้องแยกอย่างไร",
+        "q": "กรณี upload สำเร็จ/ล้มเหลวต้องแยกอย่างไร",
         "options": [
-          "ระบุinputหรือเงื่อนไขที่ต่างกันให้ชัด",
-          "ใช้GivenWhenเหมือนกันและThenตรงข้าม",
-          "ไม่ต้องมีnegativecase",
+          "ระบุ input หรือเงื่อนไขที่ต่างกันให้ชัด",
+          "ใช้ GivenWhen เหมือนกันและ Then ตรงข้าม",
+          "ไม่ต้องมี negative case",
           "เขียนว่าสำเร็จทุกครั้ง"
         ],
         "answer": 0,
-        "explanation": "criteriaต้องชี้ว่าเหตุใดระบบจึงตอบต่างกัน"
+        "explanation": "criteria ต้องชี้ว่าเหตุใดระบบจึงตอบต่างกัน"
       },
       {
         "q": "จำนวนคน×ชั่วโมงให้หน่วยอะไร",
         "options": [
           "บาทเสมอ",
-          "จำนวนworkorders",
+          "จำนวน workorders",
           "เปอร์เซ็นต์",
           "Person-hours ไม่ใช่เงินจนมีอัตราค่าจ้าง"
         ],
@@ -1839,29 +1839,29 @@ window.StudyContent.itds261 = {
         "explanation": "ตรวจหน่วยก่อนคำนวณต้นทุน"
       },
       {
-        "q": "ผู้ใช้20ล้านคนบอกloadพร้อมกันหรือไม่",
+        "q": "ผู้ใช้ 20 ล้านคนบอก load พร้อมกันหรือไม่",
         "options": [
-          "เท่ากับ20ล้านrequestsต่อวินาทีเสมอ",
-          "แปลว่าuptime99%",
-          "ไม่ ต้องแยกregistered concurrent และrequest rate",
+          "เท่ากับ 20 ล้าน requests ต่อวินาทีเสมอ",
+          "แปลว่า uptime99%",
+          "ไม่ ต้องแยก registered concurrent และ request rate",
           "บอกครบแล้ว"
         ],
         "answer": 2,
-        "explanation": "capacityต้องมีworkloadที่ทดสอบได้"
+        "explanation": "capacity ต้องมี workload ที่ทดสอบได้"
       },
       {
-        "q": "อัปเดตfeatureทุกไตรมาสควรจัดอย่างระมัดระวังอย่างไร",
+        "q": "อัปเดต feature ทุกไตรมาสควรจัดอย่างระมัดระวังอย่างไร",
         "options": [
-          "อัตราerror",
-          "แผนreleaseหรือprocessconstraintที่ต้องตกลง",
-          "runtimeperformanceแน่นอน",
-          "FRค้นหาข้อมูล"
+          "อัตรา error",
+          "แผน release หรือ processconstraint ที่ต้องตกลง",
+          "runtimeperformance แน่นอน",
+          "FR ค้นหาข้อมูล"
         ],
         "answer": 1,
-        "explanation": "ไม่ใช่คุณภาพruntimeอัตโนมัติและต้องนิยามหลักฐาน"
+        "explanation": "ไม่ใช่คุณภาพ runtime อัตโนมัติและต้องนิยามหลักฐาน"
       },
       {
-        "q": "NFR95%ตอบ2วินาทียังควรระบุอะไร",
+        "q": "NFR95% ตอบ 2 วินาทียังควรระบุอะไร",
         "options": [
           "workload ชุดข้อมูล environment และจุดวัด",
           "ชื่อจริงผู้เรียน",
@@ -1872,15 +1872,15 @@ window.StudyContent.itds261 = {
         "explanation": "ตัวเลขเวลาอย่างเดียวไม่พอวัดซ้ำ"
       },
       {
-        "q": "ตัวเลข200sessionsในแนวคำตอบนี้เป็นอะไร",
+        "q": "ตัวเลข 200 sessions ในแนวคำตอบนี้เป็นอะไร",
         "options": [
-          "ข้อกำหนดเดิมในLab3",
+          "ข้อกำหนดเดิมใน Lab3",
           "จำนวนผู้ใช้งานจริง",
           "เกณฑ์ให้คะแนนอาจารย์",
           "สมมติฐานเพื่อฝึกที่ต้องยืนยัน"
         ],
         "answer": 3,
-        "explanation": "แยกsourcefactsจากproposalอย่างชัดเจน"
+        "explanation": "แยก sourcefacts จาก proposal อย่างชัดเจน"
       }
     ]
   }
