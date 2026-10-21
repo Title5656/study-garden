@@ -1,0 +1,5 @@
+# Preserve original document bytes on every platform; do not normalize line endings.
+*.pdf binary
+*.docx binary
+*.pptx binary
+*.png binary

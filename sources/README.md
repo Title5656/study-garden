@@ -262,4 +262,3 @@ foreach ($entry in $manifest.files) {
 [อ่านบทเรียน](../subjects/itds294/chapter-10.html)
 
 - [E-Commerce Project Initiative #3.pdf](itds294/E-Commerce%20Project%20Initiative%20%233.pdf)
-
