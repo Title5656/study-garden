@@ -6,6 +6,8 @@
 .se-recall h3 { color: var(--accent); font-size: 1rem; margin: 0 0 .5rem; }
 .se-recall ul { padding-left: 1.2rem; margin: 0; }
 .se-recall li { margin: .35rem 0; }
+.se-scope-note { color: var(--muted); font-size: .85rem; line-height: 1.8; }
+.folder-card > .se-scope-badge { margin-top: .5rem; }
 .se-figure { margin: 1.7rem 0; border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--soft); }
 .se-figure > a { display: block; border-radius: 10px; overflow: hidden; background: #fff; }
 .se-figure img { width: 100%; height: auto; display: block; border-radius: 10px; }
