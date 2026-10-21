@@ -37,7 +37,7 @@ try {
  await test('Home search exposes ITDS261, course index exposes 12 chapters',async()=>{
   const page=await newPage({viewport:{width:1440,height:1000}});
   await page.goto(base+'/index.html');
-  assert.equal(await page.locator('.subject-folder').count(),3);
+  assert.equal(await page.locator('.subject-folder').count(),4);
   await page.locator('#subject-search').fill('ITDS261');
   assert.equal(await page.locator('.subject-folder:visible').count(),1);
   await page.locator('.subject-folder:visible').click();

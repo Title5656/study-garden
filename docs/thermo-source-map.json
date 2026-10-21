@@ -1,0 +1,379 @@
+{
+  "source": "611201-2569(1).pdf",
+  "source_sha256": "933db55cf163d4e0bffd543cf8c362dde4066a176b2cf0eddb467dc946b5ba89",
+  "source_pdf_pages": 292,
+  "course": "611201",
+  "note": "Do not publish the uploaded original PDF without the copyright holder permission.",
+  "chapters": [
+    {
+      "chapter": 1,
+      "pages": "4–61",
+      "sections": [
+        {
+          "title": "เทอร์โมไดนามิกส์ศึกษาสิ่งใด",
+          "pages": "4–8"
+        },
+        {
+          "title": "ระบบ ขอบเขต เฟส และองค์ประกอบ",
+          "pages": "9–15"
+        },
+        {
+          "title": "ตัวแปรสถานะ Intensive และ Extensive",
+          "pages": "16–20"
+        },
+        {
+          "title": "ชนิดกระบวนการและกฎข้อศูนย์",
+          "pages": "21–24"
+        },
+        {
+          "title": "เครื่องมือคณิตศาสตร์และหน่วยที่ต้องรู้",
+          "pages": "25–36"
+        },
+        {
+          "title": "ความร้อน งาน และพลังงานภายใน",
+          "pages": "37–45"
+        },
+        {
+          "title": "State function งาน P–V และเอนทัลปี",
+          "pages": "46–57"
+        },
+        {
+          "title": "กฎข้อสองและสามก่อนเข้าบทลึก",
+          "pages": "58–61"
+        }
+      ],
+      "example_pages": [
+        7,
+        31,
+        34,
+        42,
+        52
+      ]
+    },
+    {
+      "chapter": 2,
+      "pages": "62–84",
+      "sections": [
+        {
+          "title": "กฎข้อที่หนึ่งและสัญลักษณ์",
+          "pages": "62–65"
+        },
+        {
+          "title": "ระบบปิดและกระบวนการพิเศษ",
+          "pages": "69–75"
+        },
+        {
+          "title": "ความจุความร้อนและการคำนวณ ΔU, ΔH",
+          "pages": "76–79"
+        },
+        {
+          "title": "Control volume และสมดุลมวลของระบบเปิด",
+          "pages": "66–68, 80–81"
+        },
+        {
+          "title": "วิธีอ่านและแก้โจทย์ระบบไหล",
+          "pages": "82–84"
+        }
+      ],
+      "example_pages": [
+        69,
+        75,
+        78,
+        79,
+        82,
+        83,
+        84
+      ]
+    },
+    {
+      "chapter": 3,
+      "pages": "85–121",
+      "sections": [
+        {
+          "title": "แผนภาพเฟสและบริเวณสถานะ",
+          "pages": "85–87"
+        },
+        {
+          "title": "Ideal gas และการเปลี่ยนแบบย้อนกลับได้",
+          "pages": "88, 91–102"
+        },
+        {
+          "title": "Compressibility factor และสมการ Virial",
+          "pages": "89–90, 103–104"
+        },
+        {
+          "title": "Cubic equation of state และจุดวิกฤต",
+          "pages": "105–113"
+        },
+        {
+          "title": "Corresponding states, Pitzer และ acentric factor",
+          "pages": "109–118"
+        },
+        {
+          "title": "ประมาณปริมาตรและความหนาแน่นของเหลว",
+          "pages": "119–121"
+        }
+      ],
+      "example_pages": [
+        93,
+        95,
+        99,
+        101,
+        104,
+        113,
+        116,
+        117,
+        118,
+        121
+      ]
+    },
+    {
+      "chapter": 4,
+      "pages": "122–144",
+      "sections": [
+        {
+          "title": "ทำไมโรงงานเคมีต้องคำนวณ Heat Effects",
+          "pages": "122–125"
+        },
+        {
+          "title": "Sensible heat และ Heat capacity เปลี่ยนตาม T",
+          "pages": "126–132"
+        },
+        {
+          "title": "ความร้อนแฝงของการเปลี่ยนเฟส",
+          "pages": "133–135"
+        },
+        {
+          "title": "Standard state และ Heat of formation/combustion",
+          "pages": "136–138"
+        },
+        {
+          "title": "Hess’s Law และ Kirchhoff’s Law",
+          "pages": "139–141"
+        },
+        {
+          "title": "Adiabatic flame temperature และ Reactor heat balance",
+          "pages": "142–144"
+        }
+      ],
+      "example_pages": [
+        123,
+        131,
+        132,
+        135,
+        141,
+        142,
+        143
+      ]
+    },
+    {
+      "chapter": 5,
+      "pages": "145–167",
+      "sections": [
+        {
+          "title": "ความเป็นไปได้ของกระบวนการ",
+          "pages": "145–147"
+        },
+        {
+          "title": "Heat engine และขีดจำกัด Carnot",
+          "pages": "148–153"
+        },
+        {
+          "title": "นิยามเอนโทรปีและสมการสำหรับ Ideal gas",
+          "pages": "153–157"
+        },
+        {
+          "title": "Entropy balance ของ Closed/Open systems",
+          "pages": "156–160"
+        },
+        {
+          "title": "Maximum work, Exergy และ Lost work",
+          "pages": "160–166"
+        },
+        {
+          "title": "กฎข้อที่สามและ Absolute entropy",
+          "pages": "167"
+        }
+      ],
+      "example_pages": [
+        152,
+        157,
+        159,
+        160,
+        162,
+        165
+      ]
+    },
+    {
+      "chapter": 6,
+      "pages": "168–203",
+      "sections": [
+        {
+          "title": "Fundamental equations และ Thermodynamic potentials",
+          "pages": "168–171"
+        },
+        {
+          "title": "สมการ dH, dS, dU กับ P,T,V",
+          "pages": "172–175"
+        },
+        {
+          "title": "Residual / Departure properties ของก๊าซจริง",
+          "pages": "176–184"
+        },
+        {
+          "title": "Gibbs equilibrium และ Clapeyron",
+          "pages": "185–187"
+        },
+        {
+          "title": "คุณภาพไอและการอ่าน Steam tables",
+          "pages": "188–196"
+        },
+        {
+          "title": "แผนภาพสมบัติ, Generalized correlations และ Mixtures",
+          "pages": "189–203"
+        }
+      ],
+      "example_pages": [
+        173,
+        179,
+        184,
+        193,
+        195,
+        199,
+        203
+      ]
+    },
+    {
+      "chapter": 7,
+      "pages": "204–235",
+      "sections": [
+        {
+          "title": "สมดุล 3 ชุดสำหรับระบบไหล",
+          "pages": "204–209"
+        },
+        {
+          "title": "การไหลในท่อ Compressible และ Mach number",
+          "pages": "210–214"
+        },
+        {
+          "title": "Nozzle, Diffuser และ Choking",
+          "pages": "215–219"
+        },
+        {
+          "title": "Throttling และ Joule–Thomson",
+          "pages": "220–223"
+        },
+        {
+          "title": "Turbine และประสิทธิภาพการขยาย",
+          "pages": "224–229"
+        },
+        {
+          "title": "Compressor, Fan, Blower และ Pump",
+          "pages": "230–234"
+        },
+        {
+          "title": "Ejector และกรอบการเลือกอุปกรณ์",
+          "pages": "235"
+        }
+      ],
+      "example_pages": [
+        213,
+        218,
+        219,
+        221,
+        226,
+        228,
+        231,
+        232,
+        234
+      ]
+    },
+    {
+      "chapter": 8,
+      "pages": "236–268",
+      "sections": [
+        {
+          "title": "เครื่องยนต์ความร้อนกับโรงไฟฟ้า",
+          "pages": "236–240"
+        },
+        {
+          "title": "Rankine cycle และอุปกรณ์ 4 ชิ้น",
+          "pages": "241–245"
+        },
+        {
+          "title": "เพิ่มประสิทธิภาพด้วย Reheat/Regeneration",
+          "pages": "243–251"
+        },
+        {
+          "title": "ทำไม Steam cycle กับ Piston cycle ต่างกัน",
+          "pages": "252–254"
+        },
+        {
+          "title": "เชื้อเพลิงและความปลอดภัยในการเผาไหม้",
+          "pages": "255–256"
+        },
+        {
+          "title": "Otto และ Diesel cycle",
+          "pages": "257–263"
+        },
+        {
+          "title": "Brayton cycle และ Gas turbines",
+          "pages": "263–266"
+        },
+        {
+          "title": "Jet engines และ Rockets",
+          "pages": "267–268"
+        }
+      ],
+      "example_pages": [
+        243,
+        247,
+        250,
+        266,
+        260,
+        262
+      ]
+    },
+    {
+      "chapter": 9,
+      "pages": "269–292",
+      "sections": [
+        {
+          "title": "ระบบทำความเย็นทำงานอย่างไร",
+          "pages": "269–271"
+        },
+        {
+          "title": "วงจร Vapor-compression 4 อุปกรณ์",
+          "pages": "272–276"
+        },
+        {
+          "title": "เลือกสารทำความเย็น",
+          "pages": "277–278"
+        },
+        {
+          "title": "Cascade และ Absorption refrigeration",
+          "pages": "279–281"
+        },
+        {
+          "title": "Heat pump ทำความร้อนบ้าน",
+          "pages": "282–283"
+        },
+        {
+          "title": "เหตุใดต้องทำก๊าซให้เป็นของเหลว",
+          "pages": "284–285"
+        },
+        {
+          "title": "Linde และ Claude processes",
+          "pages": "286–292"
+        }
+      ],
+      "example_pages": [
+        274,
+        283,
+        285,
+        288,
+        290
+      ]
+    }
+  ]
+}

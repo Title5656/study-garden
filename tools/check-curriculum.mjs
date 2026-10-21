@@ -8,12 +8,12 @@ const home = readFileSync(resolve(root, 'index.html'), 'utf8');
 assert.match(home, /subjects\/itds261\/index\.html/, 'New course must be reachable from the home page');
 const context = { window: {} };
 vm.createContext(context);
-for (const name of ['content', 'ecommerce-content', 'software-content']) {
+for (const name of ['content', 'ecommerce-content', 'software-content', 'thermo-content']) {
   vm.runInContext(readFileSync(resolve(root, `assets/${name}.js`), 'utf8'), context);
 }
 const courses = context.window.StudyContent;
 assert.equal(Object.keys(courses.itds261).length, 12);
-assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 25);
+assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 34);
 let figures = 0;
 for (const [course, chapters] of Object.entries(courses)) {
   for (const [id, data] of Object.entries(chapters)) {
@@ -61,4 +61,4 @@ for (const file of walk(root).filter(path => path.endsWith('.html'))) {
   }
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) assert.match(tag[0], /\balt="[^"]*"/, `${file}: image needs alt`);
 }
-console.log(`PASS: 3 courses, 25 chapters, 250 questions, ${figures} learning figures, 20 source files, ${links} local references.`);
+console.log(`PASS: 4 courses, 34 chapters, 340 questions, ${figures} learning figures, 20 source files, ${links} local references.`);

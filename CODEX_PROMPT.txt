@@ -1,0 +1,12 @@
+โปรเจกต์: https://github.com/Title5656/study-garden
+
+ฉันแนบไฟล์ StudyGarden_Thermodynamics_611201.zip ซึ่ง ChatGPT ได้ทำเนื้อหา เทคโนโลยีการแสดงผล แบบทดสอบ และ Interactive ครบถ้วนแล้ว
+
+หน้าที่ของ Codex มีเพียง:
+1) แตก ZIP แล้วคัดลอกโครงสร้างทั้งหมดไปวางที่ root repository โดยไม่ลบไฟล์เดิม
+2) อ่าน CODEX_HANDOFF.md และรัน node tools/install-thermo.mjs, node tools/version-assets.mjs และชุดทดสอบที่ระบุ
+3) แก้เฉพาะปัญหาการ integrate หรือ test ที่เกิดจากการนำเข้าโค้ด ห้ามย่อหรือแก้เนื้อหาวิชาเอง
+4) ทวนการแสดงผลและการทำงานบน GitHub Pages ก่อน commit และ push main โดยไม่ force push
+5) รายงาน commit SHA, URL ของหน้า course และผลทดสอบทั้งหมด
+
+อย่าอัปโหลดไฟล์ PDF ของผู้สอนขึ้น repository สาธารณะ
