@@ -1045,7 +1045,7 @@ window.StudyContent.itds261 = {
       {
         "q": "Low fidelity เหมาะกับอะไร",
         "options": [
-          "ยืนยัน productionperformance",
+          "ยืนยัน production performance",
           "ทดสอบการจ่ายเงินจริงเท่านั้น",
           "แทน requirements ทุกข้อ",
           "ลองโครงและ flow เร็ว"
@@ -1067,7 +1067,7 @@ window.StudyContent.itds261 = {
       {
         "q": "UI validation ควรใช้หลักฐานใด",
         "options": [
-          "ไม่พบ syntaxerror",
+          "ไม่พบ syntax error",
           "ผู้ใช้ทำงานที่กำหนดได้ด้วยตนเอง",
           "ทีมบอกว่าสวยอย่างเดียว",
           "มีปุ่มครบจำนวน"
@@ -1149,14 +1149,14 @@ window.StudyContent.itds261 = {
         "options": [
           "Detailed design",
           "Course policy",
-          "ContextDFD",
+          "Context DFD",
           "Project organization"
         ],
         "answer": 0,
         "explanation": "เป็นการเลือก algorithm ภายใน operation"
       },
       {
-        "q": "แยก UI ออกจาก businesslogic เกี่ยวข้องกับอะไร",
+        "q": "แยก UI ออกจาก business logic เกี่ยวข้องกับอะไร",
         "options": [
           "ชื่อ actor อย่างเดียว",
           "commit message",
@@ -1215,7 +1215,7 @@ window.StudyContent.itds261 = {
         "options": [
           "ไม่ต้องมี API",
           "ไม่ต้องทดสอบ integration",
-          "ไม่ ต้องคิด distributedoperation และ data",
+          "ไม่ ต้องคิด distributed operation และ data",
           "ใช่เสมอ"
         ],
         "answer": 2,
@@ -1233,7 +1233,7 @@ window.StudyContent.itds261 = {
         "explanation": "analysis กับ design ตอบคำถามคนละระดับ"
       },
       {
-        "q": "ส่ง customerrecord ทั้งก้อนดีกว่าแยก fields เสมอหรือไม่",
+        "q": "ส่ง customer record ทั้งก้อนดีกว่าแยก fields เสมอหรือไม่",
         "options": [
           "ไม่ ต้องดูว่าข้อมูลจำเป็นและใช้ครบหรือไม่",
           "ใช่เพราะ argument น้อยกว่า",
@@ -1244,7 +1244,7 @@ window.StudyContent.itds261 = {
         "explanation": "L9 หน้า 54/57 ทำให้พิจารณาข้อมูลจำเป็นแทนตัดสินจากจำนวน argument"
       },
       {
-        "q": "Beauty ใน designprinciples หมายถึงอะไร",
+        "q": "Beauty ใน design principles หมายถึงอะไร",
         "options": [
           "สี UI สวยเท่านั้น",
           "ใช้ animation มากที่สุด",
@@ -1398,7 +1398,7 @@ window.StudyContent.itds261 = {
           "ห้าม review"
         ],
         "answer": 0,
-        "explanation": "goodcomments ไม่ excuseunclearcode"
+        "explanation": "good comments ไม่ excuse unclear code"
       },
       {
         "q": "Bugfix ที่เคยพังควรเพิ่มหลักฐานใด",
@@ -1409,7 +1409,7 @@ window.StudyContent.itds261 = {
           "test กรณีที่เคยผิดและตรวจผลกระทบที่เกี่ยวข้อง"
         ],
         "answer": 3,
-        "explanation": "regressiontest ช่วยตรวจพฤติกรรมเดิมกลับมา"
+        "explanation": "regression test ช่วยตรวจพฤติกรรมเดิมกลับมา"
       }
     ]
   },
@@ -1461,7 +1461,7 @@ window.StudyContent.itds261 = {
       {
         "q": "CM กว้างกว่า VCS อย่างไร",
         "options": [
-          "ควบคุม configurationitems และ change หลายชนิด",
+          "ควบคุม configuration items และ change หลายชนิด",
           "CM คือชื่อเก่าของ commit",
           "CM เก็บเฉพาะรูปภาพ",
           "VCS แทน CM ได้ทุกอย่าง"
@@ -1489,7 +1489,7 @@ window.StudyContent.itds261 = {
           "Remote เท่านั้น"
         ],
         "answer": 2,
-        "explanation": "distributedworkflow ทำ commitoffline ได้"
+        "explanation": "distributed workflow ทำ commit offline ได้"
       },
       {
         "q": "ดูสิ่งที่จะ commit ใช้คำสั่งใด",
@@ -1500,7 +1500,7 @@ window.StudyContent.itds261 = {
           "git init"
         ],
         "answer": 1,
-        "explanation": "stageddiff เทียบ index กับ HEAD"
+        "explanation": "staged diff เทียบ index กับ HEAD"
       },
       {
         "q": "fetch ต่างจาก pull พื้นฐานอย่างไร",
@@ -1528,7 +1528,7 @@ window.StudyContent.itds261 = {
         "q": "Conflict ควรแก้อย่างไร",
         "options": [
           "เลือก ours เสมอ",
-          "forcepush ทุกครั้ง",
+          "force push ทุกครั้ง",
           "เลือกผลรวมที่ถูกและตรวจงานที่เกี่ยวข้อง",
           "ลบ markers โดยไม่อ่าน"
         ],
@@ -1536,7 +1536,7 @@ window.StudyContent.itds261 = {
         "explanation": "ต้องรักษาความหมายของ change ไม่เพียงให้ syntax ผ่าน"
       },
       {
-        "q": "master เป็นชื่อบังคับทุก Gitrepository หรือไม่",
+        "q": "master เป็นชื่อบังคับทุก Git repository หรือไม่",
         "options": [
           "ชื่อ branch กำหนดคุณภาพโค้ดเอง",
           "ไม่ เป็นชื่อในตัวอย่าง workflow",
@@ -1544,12 +1544,12 @@ window.StudyContent.itds261 = {
           "main ใช้ไม่ได้"
         ],
         "answer": 1,
-        "explanation": "ชื่อ default และ productionpolicy ขึ้นกับ repository"
+        "explanation": "ชื่อ default และ production policy ขึ้นกับ repository"
       },
       {
-        "q": "git reset path กับ reset--hard เหมือนกันหรือไม่",
+        "q": "git reset path กับ reset --hard เหมือนกันหรือไม่",
         "options": [
-          "ไม่ แบบ hard อาจทับงานใน workingtree",
+          "ไม่ แบบ hard อาจทับงานใน working tree",
           "เหมือนกันทั้งหมด",
           "ทั้งคู่ส่ง remote",
           "ทั้งคู่สร้าง branch"
@@ -1566,7 +1566,7 @@ window.StudyContent.itds261 = {
           "ไม่ ต้องจัดการ tracking แยก"
         ],
         "answer": 3,
-        "explanation": "ignorepatterns มีผลหลักกับไฟล์ที่ยังไม่ track"
+        "explanation": "ignore patterns มีผลหลักกับไฟล์ที่ยังไม่ track"
       }
     ]
   },
@@ -1579,7 +1579,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "Part 2",
-        "25 points: usecase diagram/narrative และ context DFD"
+        "25 points: use case diagram/narrative และ context DFD"
       ],
       [
         "A4 ใน guideline",
@@ -1632,7 +1632,7 @@ window.StudyContent.itds261 = {
           "ERD อย่างเดียว",
           "architecture และ Gitflow",
           "unit test เท่านั้น",
-          "usecase diagram narrative context DFD"
+          "use case diagram narrative context DFD"
         ],
         "answer": 3,
         "explanation": "ยึดรายการย่อยในหน้า 1"
@@ -1660,15 +1660,15 @@ window.StudyContent.itds261 = {
         "explanation": "แยก scope ที่ระบุจากสไลด์ย่อที่รวบรวม"
       },
       {
-        "q": "ContextDFD ควรมี process หลักกี่ตัว",
+        "q": "Context DFD ควรมี process หลักกี่ตัว",
         "options": [
           "หนึ่งหมายเลข 0",
-          "เท่า usecases",
+          "เท่า use cases",
           "เท่า actors",
           "ไม่มี process"
         ],
         "answer": 0,
-        "explanation": "ไม่คัดทุก usecase ไปเป็น process ใน context"
+        "explanation": "ไม่คัดทุก use case ไปเป็น process ใน context"
       },
       {
         "q": "ควรเพิ่ม L9–L11 เข้า scope กลางภาคเองหรือไม่",
@@ -1853,8 +1853,8 @@ window.StudyContent.itds261 = {
         "q": "อัปเดต feature ทุกไตรมาสควรจัดอย่างระมัดระวังอย่างไร",
         "options": [
           "อัตรา error",
-          "แผน release หรือ processconstraint ที่ต้องตกลง",
-          "runtimeperformance แน่นอน",
+          "แผน release หรือ process constraint ที่ต้องตกลง",
+          "runtime performance แน่นอน",
           "FR ค้นหาข้อมูล"
         ],
         "answer": 1,
@@ -1880,7 +1880,7 @@ window.StudyContent.itds261 = {
           "สมมติฐานเพื่อฝึกที่ต้องยืนยัน"
         ],
         "answer": 3,
-        "explanation": "แยก sourcefacts จาก proposal อย่างชัดเจน"
+        "explanation": "แยก source facts จาก proposal อย่างชัดเจน"
       }
     ]
   }

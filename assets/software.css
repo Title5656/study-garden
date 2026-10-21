@@ -19,7 +19,10 @@
 .se-svg-edge, .se-svg-boundary { fill: none; stroke: var(--ink); stroke-width: 1.8; }
 .se-svg-head { fill: var(--ink); }
 .se-error-edge, .se-svg-uncertain { stroke-dasharray: 6 4; }
+/* Error messages in a DFD are data, so their arrows retain solid data-flow notation. */
+#zoo-l1 .se-error-edge, #zoo-l2 .se-error-edge { stroke-dasharray: none; }
 .se-svg-uncertain { fill: var(--peach); }
+.se-dfd-print { display: none; }
 .se-before-after, .se-style-card, .se-mock, .se-scope-panel { padding: 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); min-width: 0; }
 .se-before-after { margin-block: 1rem; }
 .se-comparison, .se-style-grid, .se-code-compare { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin-block: 1rem; }
@@ -46,6 +49,15 @@
 @media (max-width: 720px) {
   .se-comparison, .se-style-grid, .se-code-compare { grid-template-columns: 1fr; }
   .se-turns { font-size: .85rem; }
+}
+@media print {
+  .se-svg-scroll { overflow: visible; }
+  .se-svg-wide > svg { min-width: 0 !important; max-width: 100%; max-height: 225mm; }
+  .se-diagram-hint, .se-dfd-stepper { display: none; }
+  #zoo-l1, #zoo-l2 { break-inside: auto; }
+  #zoo-l1 .se-svg-scroll, #zoo-l2 .se-svg-scroll { display: none; }
+  .se-dfd-print { display: block; }
+  .se-print-piece { display: block; width: 100%; height: auto; break-inside: avoid; margin-block: 4mm; }
 }
 .se-figure { margin: 1.7rem 0; border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: var(--soft); }
 .se-figure > a { display: block; border-radius: 10px; overflow: hidden; background: #fff; }

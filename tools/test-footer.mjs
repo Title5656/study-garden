@@ -23,11 +23,16 @@ const server = createServer(async (req, res) => {
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
-const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const browser = await chromium.launch({ channel: process.env.STUDY_GARDEN_BROWSER || 'chrome', headless: true });
 const newLocalPage = async options => useLocalFiles(await browser.newPage(options),root);
 let passed = 0;
+let caseIndex = 0;
+const shard = process.env.STUDY_GARDEN_SHARD?.split('/').map(Number);
+if (shard) assert.ok(shard.length === 2 && Number.isInteger(shard[0]) && Number.isInteger(shard[1]) && shard[0] >= 0 && shard[0] < shard[1], 'STUDY_GARDEN_SHARD must be index/count, zero-based');
 const failures = [];
 async function test(name, callback) {
+  const index = caseIndex++;
+  if (shard && index % shard[1] !== shard[0]) return;
   if (process.env.STUDY_GARDEN_TEST && !name.includes(process.env.STUDY_GARDEN_TEST)) return;
   try { await callback(); passed++; console.log('PASS:', name); }
   catch (error) { failures.push(name); console.error('FAIL:', name, error.message); }

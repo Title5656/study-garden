@@ -160,7 +160,9 @@ function initDfd() {
       svgEl('line', { x1: cx - 55, y1: cy - 20, x2: cx + 55, y2: cy - 20, class: 'dfd-line' }, svg);
       svgEl('line', { x1: cx - 55, y1: cy + 20, x2: cx + 55, y2: cy + 20, class: 'dfd-line' }, svg);
     }
-    svgEl('text', { x: cx, y: cy + 4, class: 'dfd-text' }, svg, node.label);
+    const labels = node.kind === 'entity' ? [node.label] : [node.label.split(' ')[0], node.label.split(' ').slice(1).join(' ')];
+    const label = svgEl('text', { x: cx, y: cy + (labels.length === 1 ? 4 : -4), class: 'dfd-text' }, svg);
+    labels.forEach((part, i) => svgEl('tspan', {x:cx,dy:i ? 18 : 0},label,part));
   }
 
   function render() {
@@ -171,17 +173,21 @@ function initDfd() {
     svg.replaceChildren();
     addMarker(svg, 'arrow-ok', 'm-ok');
     addMarker(svg, 'arrow-bad', 'm-bad');
-    drawNode(from, 70, 55);
-    drawNode(to, 290, 55);
+    const compact = matchMedia('(max-width: 600px)').matches;
+    svg.setAttribute('viewBox', compact ? '0 0 220 250' : '0 0 360 110');
+    drawNode(from, compact ? 110 : 70, 55);
+    drawNode(to, compact ? 110 : 290, compact ? 195 : 55);
 
-    const x1 = 70 + halfWidth(from) + 4;
-    const x2 = 290 - halfWidth(to) - 4;
+    const x1 = compact ? 110 : 70 + halfWidth(from) + 4;
+    const x2 = compact ? 110 : 290 - halfWidth(to) - 4;
+    const y1 = compact ? 55 + (from.kind === 'process' ? 40 : 22) + 4 : 55;
+    const y2 = compact ? 195 - (to.kind === 'process' ? 40 : 22) - 4 : 55;
     svgEl('line', {
-      x1, y1: 55, x2, y2: 55,
+      x1, y1, x2, y2,
       class: res.ok ? 'flow-ok' : 'flow-bad',
       'marker-end': `url(#${res.ok ? 'arrow-ok' : 'arrow-bad'})`,
     }, svg);
-    if (!res.ok) svgEl('text', { x: (x1 + x2) / 2, y: 46, class: 'flow-mark' }, svg, '✕');
+    if (!res.ok) svgEl('text', { x: compact ? 133 : (x1 + x2) / 2, y: compact ? 130 : 46, class: 'flow-mark' }, svg, '✕');
 
     out.className = 'result ' + (res.ok ? 'ok' : 'bad');
     out.innerHTML = `<strong>${res.ok ? '✓ ถูกต้อง' : '✕ ไม่ถูกต้อง'}</strong> — ${res.text}`;
@@ -189,6 +195,7 @@ function initDfd() {
 
   selFrom.addEventListener('change', render);
   selTo.addEventListener('change', render);
+  matchMedia('(max-width: 600px)').addEventListener('change', render);
   render();
 }
 
@@ -199,8 +206,11 @@ function classifyTriangle(a, b, c) {
   if (![a, b, c].every(Number.isFinite)) return { line: null, text: 'กรอกตัวเลขให้ครบทั้งสามด้าน', cls: 'warn' };
   if (a <= 0 || b <= 0 || c <= 0)         return { line: 'l1', text: 'ด้านต้องเป็นค่าบวก (รวมถึงห้ามเป็น 0)', cls: 'bad' };
   const longest = Math.max(a, b, c);
-  const others = a + b + c - longest;
-  if (longest >= others)                  return { line: 'l2', text: 'ไม่เป็นสามเหลี่ยม: ด้านยาวที่สุดต้องน้อยกว่าผลบวกของอีกสองด้าน', cls: 'bad' };
+  // Normalize before adding to avoid overflow; allow four ULPs at the strict boundary.
+  // This treats decimal 0.1 + 0.2 = 0.3 as degenerate rather than a spurious thin triangle.
+  const normalized = [a / longest, b / longest, c / longest].sort((x,y) => x-y);
+  const others = normalized[0] + normalized[1];
+  if (others - 1 <= 4 * Number.EPSILON)    return { line: 'l2', text: 'ไม่เป็นสามเหลี่ยม: ด้านยาวที่สุดต้องน้อยกว่าผลบวกของอีกสองด้าน', cls: 'bad' };
   if (a === b && b === c)                 return { line: 'l3', text: '✓ สามเหลี่ยมด้านเท่า (equilateral)', cls: 'ok', draw: true };
   if (a === b || b === c || a === c)      return { line: 'l4', text: '✓ สามเหลี่ยมหน้าจั่ว (isosceles)', cls: 'ok', draw: true };
   return { line: 'l5', text: '✓ สามเหลี่ยมด้านไม่เท่า (scalene)', cls: 'ok', draw: true };
@@ -209,9 +219,11 @@ function classifyTriangle(a, b, c) {
 function drawTriangle(svg, a, b, c) {
   svg.replaceChildren();
   // วางด้าน a เป็นฐาน แล้วหาจุดยอดจากระยะ b (จากซ้าย) และ c (จากขวา)
-  const x = (a * a + b * b - c * c) / (2 * a);
-  const y = Math.sqrt(Math.max(b * b - x * x, 0));
-  const raw = [[0, 0], [a, 0], [x, y]];
+  const magnitude = Math.max(a,b,c);
+  const [A,B,C] = [a/magnitude,b/magnitude,c/magnitude];
+  const x = (A * A + B * B - C * C) / (2 * A);
+  const y = Math.sqrt(Math.max(B * B - x * x, 0));
+  const raw = [[0, 0], [A, 0], [x, y]];
 
   const xs = raw.map(p => p[0]);
   const minX = Math.min(...xs), maxX = Math.max(...xs);
@@ -345,10 +357,16 @@ function initUseCase() {
   function relation(from, to, label) {
     const p = edge(from, to), q = edge(to, from);
     svgEl('line', { x1: p.x, y1: p.y, x2: q.x, y2: q.y, class: 'uc-rel', 'marker-end': 'url(#arrow-uc)' }, svg);
-    svgEl('text', { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 - 8, class: 'uc-label' }, svg, label);
+    const vertical = Math.abs(p.x-q.x) < 20;
+    svgEl('text', { x: (p.x + q.x) / 2 + (vertical ? 75 : 0), y: (p.y + q.y) / 2 + (vertical ? 4 : -8), class: 'uc-label' }, svg, label);
   }
 
   function draw() {
+    const compact = matchMedia('(max-width: 600px)').matches;
+    svg.setAttribute('viewBox', compact ? '0 0 360 340' : '0 0 520 240');
+    Object.assign(N.sale, compact ? {cx:200,cy:160,rx:85} : {cx:250,cy:125,rx:74});
+    Object.assign(N.calc, compact ? {cx:200,cy:44,rx:85} : {cx:430,cy:46,rx:68});
+    Object.assign(N.disc, compact ? {cx:200,cy:286,rx:85} : {cx:90,cy:200,rx:68});
     svg.replaceChildren();
     flip.setAttribute('aria-pressed', String(reversed));
     svg.setAttribute('aria-label', reversed ? 'ตัวอย่างลูกศรผิดทิศ: Calculate total include Complete sale และ Complete sale extend Apply discount' : 'Complete sale include Calculate total และ Apply discount extend Complete sale');
@@ -393,6 +411,7 @@ function initUseCase() {
   }
 
   flip.addEventListener('click', () => { reversed = !reversed; draw(); });
+  matchMedia('(max-width: 600px)').addEventListener('change', draw);
   draw();
 }
 

@@ -31,7 +31,7 @@ try {
     await p.evaluate(id=>location.hash=id,id);await settle(p);
     const overflow=await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
     if(overflow>1)failures.push(`${width}/${theme}/${cid}#${id}: ${overflow}px overflow`);
-    const clipped=await p.locator('.lesson-section:visible svg.se-inline-svg').evaluateAll(svgs=>svgs.flatMap(svg=>{
+    const clipped=await p.locator('.lesson-section:visible svg.se-inline-svg:visible').evaluateAll(svgs=>svgs.flatMap(svg=>{
      const vb=svg.viewBox.baseVal;
      return [...svg.querySelectorAll('text')].filter(t=>{
       const b=t.getBBox();return b.x<vb.x-2 || b.y<vb.y-2 || b.x+b.width>vb.x+vb.width+2 || b.y+b.height>vb.y+vb.height+2;

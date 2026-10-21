@@ -12,6 +12,9 @@
 .itds261-widget .row > * { min-width: 0; }
 .itds261-widget .file { overflow-wrap: anywhere; }
 .itds261-widget .pseudo { color: var(--ink); }
+.itds261-widget #dfd-svg { max-width: 400px; }
+.itds261-widget #uc-svg .uc-text, .itds261-widget #uc-svg .uc-label { font-size: 18px; }
+.itds261-widget #dfd-svg .dfd-text { font-size: 14px; }
 
 .itds261-widget .panel {
   background: var(--panel); border: 1px solid var(--line);

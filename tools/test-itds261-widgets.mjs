@@ -24,7 +24,7 @@ async function pageFor(cid,hash,options={}) {
  assert.equal(new Set(ids).size,ids.length,'duplicate IDs after initialization');
  return page;
 }
-async function check(name,fn){try{await fn();console.log('PASS:',name);}catch(e){failures.push(name);console.error('FAIL:',name,e.message);}}
+async function check(name,fn){if(process.env.STUDY_GARDEN_TEST && !name.includes(process.env.STUDY_GARDEN_TEST))return;try{await fn();console.log('PASS:',name);}catch(e){failures.push(name);console.error('FAIL:',name,e.message);}}
 try {
  await check('Team slider draws 2 and 12 people with 1 and 66 channels',async()=>{
   const p=await pageFor('01','people-quality');
@@ -111,6 +111,21 @@ try {
    assert.equal(await p.locator(`#zoo-l2 .se-dfd-active [data-dfd-store="${store}"]`).count(),1);
    assert.ok((await p.locator('#dfd-step-status').innerText()).includes('1.'+step));
   }
+  await p.close();
+ });
+ await check('Triangle rejects a decimal degenerate shape',async()=>{
+  const p=await pageFor('06','triangle');
+  for(const [id,value] of [['a','0.1'],['b','0.2'],['c','0.3']])await p.locator('#tri-'+id).fill(value);
+  assert.match(await p.locator('#tri-out').innerText(),/ไม่เป็นสามเหลี่ยม/);
+  await p.close();
+ });
+ await check('Triangle keeps very large finite dimensions within valid SVG geometry',async()=>{
+  const p=await pageFor('06','triangle');
+  for(const id of ['a','b','c'])await p.locator('#tri-'+id).fill('1e200');
+  assert.match(await p.locator('#tri-out').innerText(),/ด้านเท่า/);
+  const points=await p.locator('#tri-svg polygon').getAttribute('points');
+  assert.ok(points.split(/[ ,]+/).map(Number).every(Number.isFinite),points);
+  assert.equal(await p.locator('#tri-code .hit').getAttribute('data-line'),'l3');
   await p.close();
  });
  assert.deepEqual(errors,[],'page errors');
