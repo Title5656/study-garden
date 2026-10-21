@@ -5,6 +5,7 @@ import { createServer } from 'node:http';
 import { readFile, readdir, mkdir } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { useLocalFiles } from './local-browser-fixture.mjs';
 
 const { chromium } = await import(process.env.STUDY_GARDEN_PLAYWRIGHT || 'playwright');
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -23,6 +24,7 @@ const server = createServer(async (req, res) => {
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const newLocalPage = async options => useLocalFiles(await browser.newPage(options),root);
 let passed = 0;
 const failures = [];
 async function test(name, callback) {
@@ -69,11 +71,11 @@ try {
   const paths = [];
   for (const subject of ['itds241', 'itds294', 'itds261']) {
     for (const name of await readdir(resolve(root, 'subjects', subject))) {
-      if (name.endsWith('.html')) paths.push(`subjects/${subject}/${name}`);
+      if (name === 'index.html' || /^chapter-.*\.html$/.test(name)) paths.push(`subjects/${subject}/${name}`);
     }
   }
   for (const path of paths) await test(`Garden footer: ${path}`, async () => {
-    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    const page = await newLocalPage({ viewport: { width: 1440, height: 900 } });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     try {
@@ -89,7 +91,7 @@ try {
 
   for (const [width, height] of [[1440, 900], [1920, 698], [390, 844], [320, 568], [844, 390]]) {
     for (const theme of ['dark', 'light']) await test(`${width}x${height} ${theme}: layout and ink`, async () => {
-      const page = await browser.newPage({ viewport: { width, height } });
+      const page = await newLocalPage({ viewport: { width, height } });
       try {
         await page.goto(`${base}/subjects/itds241/index.html`);
         await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);
@@ -115,7 +117,7 @@ try {
   }
 
   await test('Pointer displaces real dots; pause and covered curtain stop canvas/video', async () => {
-    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+    const page = await newLocalPage({ viewport: { width: 1440, height: 900 } });
     try {
       await trackPaints(page);
       await page.goto(`${base}/subjects/itds241/index.html`);
@@ -167,7 +169,7 @@ try {
   });
 
   await test('Reduced motion keeps static dots, no video download, and accessible links', async () => {
-    const page = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+    const page = await newLocalPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
     try {
       await trackPaints(page);
       await page.goto(`${base}/subjects/itds294/chapter-01.html`);
@@ -189,7 +191,7 @@ try {
   });
 
   for (const mode of ['no JavaScript', 'no Canvas']) await test(`${mode}: static Garden fallback and working GitHub link`, async () => {
-    const page = await browser.newPage({ viewport: { width: 390, height: 844 }, javaScriptEnabled: mode !== 'no JavaScript' });
+    const page = await newLocalPage({ viewport: { width: 390, height: 844 }, javaScriptEnabled: mode !== 'no JavaScript' });
     try {
       if (mode === 'no Canvas') await page.addInitScript(() => {
         const getContext = HTMLCanvasElement.prototype.getContext;
@@ -210,7 +212,7 @@ try {
 
   for (const [width, height] of [[1440, 900], [1920, 698], [390, 844], [320, 568], [844, 390]]) {
     for (const theme of ['dark', 'light']) await test(`Home ${width}x${height} ${theme}: original footer and arm framing`, async () => {
-    const page = await browser.newPage({ viewport: { width, height } });
+    const page = await newLocalPage({ viewport: { width, height } });
     try {
       await page.goto(`${base}/index.html`);
       await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);

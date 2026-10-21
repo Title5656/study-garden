@@ -1,0 +1,25 @@
+.a4-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; max-width: 850px; margin: 1rem auto; padding: 1rem; font-size: .85rem; }
+.a4-sheet { max-width: 850px; padding: 2rem; margin: 1rem auto; background: var(--paper); color: var(--ink); font-size: .85rem; line-height: 1.6; }
+.a4-sheet h1 { font-size: 1.7rem; margin: .2rem 0; }
+.a4-sheet header p { margin: .2rem 0; }
+.a4-eyebrow { font-size: .7rem; letter-spacing: .1em; color: var(--accent); }
+.a4-source { color: var(--muted); font-size: .75rem; }
+.a4-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .6rem; margin-top: .8rem; }
+.a4-grid section { padding: .65rem; border: 1px solid var(--line); border-radius: 8px; }
+.a4-grid h2 { font-size: 1rem; color: var(--accent); margin: 0 0 .25rem; }
+.a4-grid p { margin: .2rem 0; }
+.a4-scope { background: var(--purple); }
+.a4-sheet footer { border-top: 1px solid var(--line); margin-top: .8rem; font-size: .72rem; }
+@media (max-width: 600px) { .a4-sheet { padding: 1rem; } .a4-grid { grid-template-columns: 1fr; } }
+@page { size: A4 portrait; margin: 9mm; }
+@media print {
+  .a4-toolbar { display: none !important; }
+  body { background: white; color: black; margin: 0; }
+  .a4-sheet { margin: 0; padding: 0; max-width: none; font-size: 9pt; line-height: 1.4; box-shadow: none; }
+  .a4-sheet h1 { font-size: 17pt; }
+  .a4-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2mm; }
+  .a4-grid section { padding: 2mm; break-inside: avoid; }
+  .a4-grid h2 { font-size: 10pt; }
+  .a4-source, .a4-sheet footer { font-size: 7.5pt; }
+  .a4-grid section, .a4-sheet header, .a4-sheet footer { break-inside: avoid; }
+}

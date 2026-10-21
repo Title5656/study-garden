@@ -101,6 +101,18 @@ try {
   await p.close();
  });
  await check('Pages with no supplied widgets load without errors',async()=>{const p=await pageFor('12','story-ac');assert.equal(await p.locator('.itds261-widget').count(),0);await p.close();});
+ await check('DFD stepper highlights all four processes and their actual stores',async()=>{
+  const p=await pageFor('05','worked-dfd');
+  assert.equal(await p.locator('[data-dfd-select]').count(),4,'DFD steps missing');
+  for(const [step,store] of [[1,'D3'],[2,'D2'],[3,'D4'],[4,'D1']]){
+   const button=p.locator(`[data-dfd-select="${step}"]`);await button.focus();await p.keyboard.press('Enter');
+   assert.equal(await button.getAttribute('aria-pressed'),'true');
+   assert.equal(await p.locator('#zoo-l2 .se-dfd-active').count(),1);
+   assert.equal(await p.locator(`#zoo-l2 .se-dfd-active [data-dfd-store="${store}"]`).count(),1);
+   assert.ok((await p.locator('#dfd-step-status').innerText()).includes('1.'+step));
+  }
+  await p.close();
+ });
  assert.deepEqual(errors,[],'page errors');
 } finally {await browser.close();}
 if(failures.length) throw new Error(failures.join('; '));

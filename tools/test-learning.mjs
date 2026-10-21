@@ -5,6 +5,7 @@ import { createServer } from 'node:http';
 import { readFile, readdir, mkdir } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { useLocalFiles } from './local-browser-fixture.mjs';
 const { chromium } = await import(process.env.STUDY_GARDEN_PLAYWRIGHT || 'playwright');
 const root = resolve(fileURLToPath(new URL('../', import.meta.url)));
 const out = process.env.STUDY_GARDEN_OUTPUT;
@@ -27,6 +28,7 @@ const settle=page=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>re
 async function test(name,fn) { try {await fn(); console.log('PASS:',name);} catch(e) {failures.push(name); console.error('FAIL:',name,e.message);} }
 async function newPage(options={}) {
  const page=await browser.newPage(options);
+ await useLocalFiles(page,root);
  await page.route('https://cdn.jsdelivr.net/**',route=>route.abort());
  page.on('pageerror',e=>errors.push(e.message));
  return page;

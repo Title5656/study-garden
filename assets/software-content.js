@@ -649,7 +649,7 @@ window.StudyContent.itds261 = {
       ],
       [
         "Context / Level 0",
-        "หนึ่ง process0 แสดงระบบและ interfaces ภายนอก"
+        "หนึ่ง process 0 แสดงระบบและ interfaces ภายนอก"
       ],
       [
         "Balancing",
@@ -698,10 +698,10 @@ window.StudyContent.itds261 = {
       {
         "q": "เส้นใดผิดกฎ DFD",
         "options": [
-          "process1 เขียน D1",
-          "D2 ส่งราคาให้ process1",
+          "process 1 เขียน D1",
+          "D2 ส่งราคาให้ process 1",
           "ผู้เยี่ยมชมส่งตรงเข้า D1 โดยไม่มี process",
-          "ผู้เยี่ยมชมส่งข้อมูลเข้า process1"
+          "ผู้เยี่ยมชมส่งข้อมูลเข้า process 1"
         ],
         "answer": 2,
         "explanation": "ทุก flow ต้องเริ่มหรือจบที่ process"
@@ -1728,7 +1728,7 @@ window.StudyContent.itds261 = {
     ]
   },
   "12": {
-    "title": "Lab3 PHTRS: User Stories และ Given–When–Then",
+    "title": "Lab 3 PHTRS: User Stories และ Given–When–Then",
     "cards": [
       [
         "PHTRS",
@@ -1773,7 +1773,7 @@ window.StudyContent.itds261 = {
     ],
     "quiz": [
       {
-        "q": "Lab3 กำหนดกี่ stories และ criteria ต่อ story",
+        "q": "Lab 3 กำหนดกี่ stories และ criteria ต่อ story",
         "options": [
           "5 stories และ 2 criteria",
           "2 stories และ 5 criteria",
@@ -1874,7 +1874,7 @@ window.StudyContent.itds261 = {
       {
         "q": "ตัวเลข 200 sessions ในแนวคำตอบนี้เป็นอะไร",
         "options": [
-          "ข้อกำหนดเดิมใน Lab3",
+          "ข้อกำหนดเดิมใน Lab 3",
           "จำนวนผู้ใช้งานจริง",
           "เกณฑ์ให้คะแนนอาจารย์",
           "สมมติฐานเพื่อฝึกที่ต้องยืนยัน"
