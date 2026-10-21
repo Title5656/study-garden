@@ -1,0 +1,718 @@
+{
+  "schema_version": 1,
+  "scope": "Every file supplied in the three source folders in the LW workspace; not a claim that the complete university syllabus was supplied.",
+  "original_file_count": 40,
+  "total_bytes": 391313708,
+  "chapter_count": 25,
+  "files": [
+    {
+      "course": "itds241",
+      "file": "ITDS241-ECMAScript Version_Updated_2026Aug06.pdf",
+      "path": "sources/itds241/ITDS241-ECMAScript Version_Updated_2026Aug06.pdf",
+      "source_path": "ITDS241_Web Technologies and Applications/ITDS241-ECMAScript Version_Updated_2026Aug06.pdf",
+      "bytes": 2448424,
+      "sha256": "048814ae5407b5500dcc77852310118ed21e12aee4db6c2c5884536c64db9149",
+      "chapters": [
+        "08"
+      ]
+    },
+    {
+      "course": "itds241",
+      "file": "ITDS241-Lecture06-JavaScript Part 1.pdf",
+      "path": "sources/itds241/ITDS241-Lecture06-JavaScript Part 1.pdf",
+      "source_path": "ITDS241_Web Technologies and Applications/ITDS241-Lecture06-JavaScript Part 1.pdf",
+      "bytes": 4463732,
+      "sha256": "4c277629e9b180f68e6edcc3e3787a86b6cb9cae7181cd3aa96c6af40c0a523b",
+      "chapters": [
+        "06"
+      ]
+    },
+    {
+      "course": "itds241",
+      "file": "ITDS241-Lecture07-JavaScript Part 2.pdf",
+      "path": "sources/itds241/ITDS241-Lecture07-JavaScript Part 2.pdf",
+      "source_path": "ITDS241_Web Technologies and Applications/ITDS241-Lecture07-JavaScript Part 2.pdf",
+      "bytes": 2255080,
+      "sha256": "015a0233dad79504a08cb218f17c6d29549cb94438cf62368d22c7a5423d1a69",
+      "chapters": [
+        "07"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling (1).docx",
+      "path": "sources/itds261/2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling (1).docx",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling (1).docx",
+      "bytes": 36969,
+      "sha256": "93a6a46a1971c716647a5c01fe6e5d9406e34fbbd89144cdbec7046139d3176d",
+      "chapters": [
+        "04"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling.pdf",
+      "bytes": 134556,
+      "sha256": "0a85f1840e22c5f91e22fc59d1bd20cfe85d5d2893c384e34260e4ff0fdd7ddf",
+      "chapters": [
+        "04"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - Ex3 - Flow Modeling (Zoo).pdf",
+      "path": "sources/itds261/2026 - ITDS261 - Ex3 - Flow Modeling (Zoo).pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - Ex3 - Flow Modeling (Zoo).pdf",
+      "bytes": 122678,
+      "sha256": "1995e14c4bc6434ab1462a1654b5e61308e8fbca68f509ee7ccdd00497f3f744",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L0 - Course introduction.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L0 - Course introduction.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L0 - Course introduction.pdf",
+      "bytes": 2137776,
+      "sha256": "ed0654759c5d914d0f8a3b127a6e94e46365a4dcf5c1e568737e48b13cb03a99",
+      "chapters": [
+        "01"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L1 - SE foundation  SPM.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L1 - SE foundation  SPM.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L1 - SE foundation  SPM.pdf",
+      "bytes": 7505752,
+      "sha256": "607a7cbdceac920cd0f90ac709b425898945262ee45de2a28b120de22de29005",
+      "chapters": [
+        "01"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L10 - Implementation  Code review.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L10 - Implementation  Code review.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L10 - Implementation  Code review.pdf",
+      "bytes": 4565813,
+      "sha256": "98477276ad0a4419b4f7688d75aa9c6a91454e7d554c82a4fec17c06c16009ba",
+      "chapters": [
+        "09"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L11 - VCS.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L11 - VCS.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L11 - VCS.pdf",
+      "bytes": 4545618,
+      "sha256": "5459bbcb0a2ceb6cea5568433458d334d85503f2015b77affdbee07dbc13cec3",
+      "chapters": [
+        "10"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L2- Process models.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L2- Process models.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L2- Process models.pdf",
+      "bytes": 2930192,
+      "sha256": "cd42bd22a04abb371f7534b5ffbd22dd4cc8175fb6d40da35c57ac09f5e65128",
+      "chapters": [
+        "02"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L3 - Requirement Engineering.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L3 - Requirement Engineering.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L3 - Requirement Engineering.pdf",
+      "bytes": 6157101,
+      "sha256": "c852f24aa9ea6919f302a05a0bc13d4205a930074f40a9b20b1b9ddca011a9a1",
+      "chapters": [
+        "03",
+        "12"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L4 - Use case modeling.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L4 - Use case modeling.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L4 - Use case modeling.pdf",
+      "bytes": 2320790,
+      "sha256": "d7e2015248d40cf7c8dccb37f3f2b362706972c5912a1984cbcd07df14cad5a9",
+      "chapters": [
+        "04"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L6 - Requirements Modeling Flow and Behavior I.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L6 - Requirements Modeling Flow and Behavior I.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L6 - Requirements Modeling Flow and Behavior I.pdf",
+      "bytes": 3154618,
+      "sha256": "7491a020ee8be96b18fd69402efeb698e314bd326b3f30f8995d6d53f7c977a9",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf",
+      "bytes": 4039716,
+      "sha256": "29d43cf8ec643373dfdff62c01af56d352ee8b5c9e6f36bc62e599a350de101a",
+      "chapters": [
+        "06"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L8 - User Interface Design.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L8 - User Interface Design.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L8 - User Interface Design.pdf",
+      "bytes": 4312287,
+      "sha256": "48f3581c5802db574136cf960055ed05e7e9b42181b38a06e8ac21e3b219f35b",
+      "chapters": [
+        "07"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L9 - Design Architecture and Methodology.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - L9 - Design Architecture and Methodology.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - L9 - Design Architecture and Methodology.pdf",
+      "bytes": 5041132,
+      "sha256": "c3cef547afc823b98aca3d392998ad94271146b731a621916794c188980c8b0c",
+      "chapters": [
+        "08"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - Midterm guideline.pdf",
+      "path": "sources/itds261/2026 - ITDS261 - Midterm guideline.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/2026 - ITDS261 - Midterm guideline.pdf",
+      "bytes": 3749992,
+      "sha256": "b107374193f8d5d4993c5b7e704813091a037b81f6e411d3b29f1a9d7d887ab2",
+      "chapters": [
+        "11"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "git-cheat-sheet-education.pdf",
+      "path": "sources/itds261/git-cheat-sheet-education.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/git-cheat-sheet-education.pdf",
+      "bytes": 100194,
+      "sha256": "469157b16528a7282a0bd38e039b71b8c9696d46740d9c0165aa50706fbc460a",
+      "chapters": [
+        "10"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "Lab3-Sec2-id6887054.pdf",
+      "path": "sources/itds261/Lab3-Sec2-id6887054.pdf",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/Lab3-Sec2-id6887054.pdf",
+      "bytes": 127851,
+      "sha256": "0a0f3d6b8f3d4d6f768d088b2170d4350f436a6f387d39e9cb8542fd6dd7f9f7",
+      "chapters": [
+        "12"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "สกรีนช็อต 2026-09-21 170842.png",
+      "path": "sources/itds261/สกรีนช็อต 2026-09-21 170842.png",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/สกรีนช็อต 2026-09-21 170842.png",
+      "bytes": 145125,
+      "sha256": "81875746dc4e4eae744363f75801feb42a774c5f9dadf0f12f75afc914ace7e4",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "สกรีนช็อต 2026-09-21 170946.png",
+      "path": "sources/itds261/สกรีนช็อต 2026-09-21 170946.png",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/สกรีนช็อต 2026-09-21 170946.png",
+      "bytes": 105257,
+      "sha256": "eb15a11692ba8ba1a180a04c8f61dd789ea3024af0eef79aa722503942f9874d",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds261",
+      "file": "สกรีนช็อต 2026-09-21 171010.png",
+      "path": "sources/itds261/สกรีนช็อต 2026-09-21 171010.png",
+      "source_path": "ITDS261_Introduction to Software Engineering Lecture/สกรีนช็อต 2026-09-21 171010.png",
+      "bytes": 117927,
+      "sha256": "9cb27ff6c2621dd301ccd6858069368be5bce20de855d3a2178ada99c162ac30",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "Case Study 0 Uber Everything on Demand.pdf",
+      "path": "sources/itds294/Case Study 0 Uber Everything on Demand.pdf",
+      "source_path": "Electronic Commerce  Lec/Case Study 0 Uber Everything on Demand.pdf",
+      "bytes": 6940903,
+      "sha256": "f076bcd89d845972ab64383ff3031e66b8a514870b917175eb65630b93744322",
+      "chapters": [
+        "01"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "Case Study 1 Weathering the Storm Twitter’s Un-certain Future.pdf",
+      "path": "sources/itds294/Case Study 1 Weathering the Storm Twitter’s Un-certain Future.pdf",
+      "source_path": "Electronic Commerce  Lec/Case Study 1 Weathering the Storm Twitter’s Un-certain Future.pdf",
+      "bytes": 3589484,
+      "sha256": "9b149f7d0337b91c2db386124f8c7be0323c2b6bcaee22d83b3dba6b954e2c8f",
+      "chapters": [
+        "02"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "Case Study 2 Skyscanner  The One-Stop Travel Platform.pdf",
+      "path": "sources/itds294/Case Study 2 Skyscanner  The One-Stop Travel Platform.pdf",
+      "source_path": "Electronic Commerce  Lec/Case Study 2 Skyscanner  The One-Stop Travel Platform.pdf",
+      "bytes": 3145529,
+      "sha256": "42ffd3cff30bcd81ba2b65a63ee2e4ae4783869ca39a8be6204046533cf800fd",
+      "chapters": [
+        "04"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "Case Study 3 Alipay and WeChatPay.pdf",
+      "path": "sources/itds294/Case Study 3 Alipay and WeChatPay.pdf",
+      "source_path": "Electronic Commerce  Lec/Case Study 3 Alipay and WeChatPay.pdf",
+      "bytes": 8677347,
+      "sha256": "f079e4136e32e64f670191a6315acadc718f44f464fe580c8fad377b836bc751",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "E-Commerce Project Initiative #1.pdf",
+      "path": "sources/itds294/E-Commerce Project Initiative #1.pdf",
+      "source_path": "Electronic Commerce  Lec/E-Commerce Project Initiative #1.pdf",
+      "bytes": 49385767,
+      "sha256": "8db24d4d774ba2753c2f8e29f8b7484392deeec18c470f5bf228e3d281a5ac40",
+      "chapters": [
+        "08"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "E-Commerce Project Initiative #2.pdf",
+      "path": "sources/itds294/E-Commerce Project Initiative #2.pdf",
+      "source_path": "Electronic Commerce  Lec/E-Commerce Project Initiative #2.pdf",
+      "bytes": 49116116,
+      "sha256": "3b915da6c71fa352f5b7b01cfd43701bd508f0833664a22226a63464b4ec6059",
+      "chapters": [
+        "09"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "E-Commerce Project Initiative #3.pdf",
+      "path": "sources/itds294/E-Commerce Project Initiative #3.pdf",
+      "source_path": "Electronic Commerce  Lec/E-Commerce Project Initiative #3.pdf",
+      "bytes": 17433706,
+      "sha256": "5a8ecddf211e6f4e9dac9dd392f3b1afce4e89c2c1047d11c6bc11f5095ab7fe",
+      "chapters": [
+        "10"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #1.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #1.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #1.pdf",
+      "bytes": 43066590,
+      "sha256": "2a582e96f0aa9aca3836dab2c704867c252b1bf7799b299979495defdc798dc1",
+      "chapters": [
+        "01"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #2.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #2.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #2.pdf",
+      "bytes": 34592111,
+      "sha256": "2c7dd4b80cd92b3d7fb2eb5b48fe2f2e6f7cb1d09f0359a5a8997e8eb4c53368",
+      "chapters": [
+        "02"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #3.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #3.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #3.pdf",
+      "bytes": 21061339,
+      "sha256": "03408221a82a9bd2413d899b7650db6394415c9de6b21379eed22a129a5b6108",
+      "chapters": [
+        "03"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #4 - 5.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #4 - 5.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #4 - 5.pdf",
+      "bytes": 26447902,
+      "sha256": "f0ddb4a00ad1e32a7d7b401025ded6ddcfd984136542fd891ed636eea84a0d97",
+      "chapters": [
+        "04"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #6.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #6.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #6.pdf",
+      "bytes": 19604174,
+      "sha256": "c04917df8e3ce1978aeda5a09e997ee19e61bdeb849840aa8d1031503acff505",
+      "chapters": [
+        "05"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #7 - 8.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #7 - 8.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #7 - 8.pdf",
+      "bytes": 19187169,
+      "sha256": "4d74ed8cecee231ab66f85a0362008ad7479507f16d5973790a0932db94a7a38",
+      "chapters": [
+        "06"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "ITDS294 eCommerce Session #9 - 10.pdf",
+      "path": "sources/itds294/ITDS294 eCommerce Session #9 - 10.pdf",
+      "source_path": "Electronic Commerce  Lec/ITDS294 eCommerce Session #9 - 10.pdf",
+      "bytes": 28143368,
+      "sha256": "e8bd306f53e2033c1604d48ea7e72d7a6f3c04f4895342f7f74e87acfe03d2bb",
+      "chapters": [
+        "07"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "Lean-Canvas.docx",
+      "path": "sources/itds294/Lean-Canvas.docx",
+      "source_path": "Electronic Commerce  Lec/Lean-Canvas.docx",
+      "bytes": 82439,
+      "sha256": "7a907ade528957d9699cb96e7393de8079a93a55312b8fdf1f04de66bb379674",
+      "chapters": [
+        "08"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "Romans-persona-template.pdf",
+      "path": "sources/itds294/Romans-persona-template.pdf",
+      "source_path": "Electronic Commerce  Lec/Romans-persona-template.pdf",
+      "bytes": 223550,
+      "sha256": "8b0177e545a4f761f16a3f741dbce4a49c4c0e0b7d4a6dc2e082b6f794dea52c",
+      "chapters": [
+        "08"
+      ]
+    },
+    {
+      "course": "itds294",
+      "file": "SCAMPER-Template.pptx",
+      "path": "sources/itds294/SCAMPER-Template.pptx",
+      "source_path": "Electronic Commerce  Lec/SCAMPER-Template.pptx",
+      "bytes": 97634,
+      "sha256": "6988936b11ba6e3ce586e8c2f0502a958c8d3316c8df54e1b96e27fe02d95c5e",
+      "chapters": [
+        "08"
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "course": "itds241",
+      "chapter": "06",
+      "title": "บท 6 · JavaScript Essentials · Study Garden",
+      "page": "subjects/itds241/chapter-06.html",
+      "originals": [
+        "sources/itds241/ITDS241-Lecture06-JavaScript Part 1.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ สไลด์หลัก: ITDS241-Lecture06-JavaScript Part 1.pdf หน้า 3–15 (เกม), 18–24 (เว็บและ JS), 27–48 (ตัวแปรและข้อมูล), 49–56 (ตัวดำเนินการ), 58–77 (control flow) เสริมความชัดเจนเรื่อง const, ชนิดข้อมูลสมัยใหม่, การอ้างอิง และ Number safe integer เพื่อไม่ให้การย่อความในสไลด์ทำให้เข้าใจคลาดเคลื่อน เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF (อาจต่างจากเลขที่พิมพ์บนสไลด์) ตัวอย่างและคำถามในเว็บเขียนขึ้นใหม่เพื่อทบทวน ไม่ได้คัดลอกข้อสอบ"
+    },
+    {
+      "course": "itds241",
+      "chapter": "07",
+      "title": "บท 7 · Functions, Objects & DOM · Study Garden",
+      "page": "subjects/itds241/chapter-07.html",
+      "originals": [
+        "sources/itds241/ITDS241-Lecture07-JavaScript Part 2.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ สไลด์หลัก: ITDS241-Lecture07-JavaScript Part 2.pdf หน้า 4–22 (functions), 23–30 (scope/closure), 31–42 (OOP), 43–61 (DOM), 62–67 (events) เสริมความแม่นยำเรื่อง callback ที่ไม่จำเป็นต้อง asynchronous, lexical scope ของ var, lifetime เมื่อมี closure และชนิดคอลเลกชันจาก DOM เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF (อาจต่างจากเลขที่พิมพ์บนสไลด์) ตัวอย่างและคำถามในเว็บเขียนขึ้นใหม่เพื่อทบทวน ไม่ได้คัดลอกข้อสอบ"
+    },
+    {
+      "course": "itds241",
+      "chapter": "08",
+      "title": "บท 8 · Modern JavaScript · Study Garden",
+      "page": "subjects/itds241/chapter-08.html",
+      "originals": [
+        "sources/itds241/ITDS241-ECMAScript Version_Updated_2026Aug06.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ สไลด์หลัก: ITDS241-ECMAScript Version_Updated_2026Aug06.pdf (ยืนยันเป็นบท 8) หน้า 4–7 (มาตรฐาน), 9–33 (ES2015), 35–81 (ES2016–2023), 83–123 (ES2024–2026 และข้อเสนอ) มีการเสริมความถูกต้องของ shallow copy, async/await, WeakMap, Atomics, top-level await, Math.sumPrecise และสถานะข้อเสนอ โดยแยกหมายเหตุจากสรุปบทเรียน ลิงก์เอกสารทางการอยู่ใกล้เนื้อหาที่เกี่ยวข้อง เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF (อาจต่างจากเลขที่พิมพ์บนสไลด์) ตัวอย่างและคำถามในเว็บเขียนขึ้นใหม่เพื่อทบทวน ไม่ได้คัดลอกข้อสอบ"
+    },
+    {
+      "course": "itds261",
+      "chapter": "01",
+      "title": "พื้นฐานวิศวกรรมซอฟต์แวร์และการบริหารโครงการ · Study Garden",
+      "page": "subjects/itds261/chapter-01.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L0 - Course introduction.pdf",
+        "sources/itds261/2026 - ITDS261 - L1 - SE foundation  SPM.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L0 - Course introduction.pdf · หน้า PDF 4–10, 13 · เป้าหมาย รายวิชาคู่ ตารางหัวข้อ คะแนนและนโยบาย; บรรทัดคะแนน lab มีผลบวกไม่ตรงยอดรวม 2026 - ITDS261 - L1 - SE foundation SPM.pdf · หน้า PDF 5–12, 19–44, 46–76 · พื้นฐาน บทบาท คุณภาพ 4P POMA WBS และเครื่องมือบริหาร หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "02",
+      "title": "กระบวนการพัฒนาซอฟต์แวร์และการเลือกโมเดล · Study Garden",
+      "page": "subjects/itds261/chapter-02.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L2- Process models.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L2- Process models.pdf · หน้า PDF 6–25, 26–31 · กิจกรรม โมเดล เปรียบเทียบ และกรณีศึกษาในสไลด์ หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "03",
+      "title": "Requirements Engineering: จากความต้องการสู่หลักฐานตรวจรับ · Study Garden",
+      "page": "subjects/itds261/chapter-03.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L3 - Requirement Engineering.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L3 - Requirement Engineering.pdf · หน้า PDF 5–20, 22–48, 52–66 · ชนิดความต้องการ RE specification validation และ change; ตัวเลข NFR ในตัวอย่างเป็นสมมติฐานจัดทำเพิ่ม หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "04",
+      "title": "Use Case Modeling และสองกรณี Ex2 · Study Garden",
+      "page": "subjects/itds261/chapter-04.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling (1).docx",
+        "sources/itds261/2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling.pdf",
+        "sources/itds261/2026 - ITDS261 - L4 - Use case modeling.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L4 - Use case modeling.pdf · หน้า PDF 5–24 · หลัก use case และ narrative; แก้รูปคำ stereotype ให้เป็น include/extend และรักษาทิศทาง 2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling.pdf · หน้า PDF 1–2 · สองสถานการณ์ต้นฉบับ; แนวคำตอบเพิ่มและ NFR ตัวเลขเป็นข้อเสนอ 2026 - ITDS261 - Ex2 - Requirements Analysis with Scenario-based Modeling (1).docx · หน้า PDF เอกสารไม่มีเลขหน้าที่เชื่อถือได้ในการดึงข้อความ; ส่วนระบบที่ 1–2 · ตรวจเทียบกับ PDF เป็นโจทย์เดียวกัน ไม่ใช่เฉลยเพิ่ม หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 โจทย์ Ex2 · คลินิกทันตกรรมและ Christmas POS (PDF) ↓ ใบงาน Ex2 สำหรับเขียนคำตอบ (DOCX) ↓ ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "05",
+      "title": "DFD และ Zoo Ticketing: Context ถึง Level 2 · Study Garden",
+      "page": "subjects/itds261/chapter-05.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - Ex3 - Flow Modeling (Zoo).pdf",
+        "sources/itds261/2026 - ITDS261 - L6 - Requirements Modeling Flow and Behavior I.pdf",
+        "sources/itds261/สกรีนช็อต 2026-09-21 170842.png",
+        "sources/itds261/สกรีนช็อต 2026-09-21 170946.png",
+        "sources/itds261/สกรีนช็อต 2026-09-21 171010.png"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L6 - Requirements Modeling Flow and Behavior I.pdf · หน้า PDF 5–37, 43 · DFD notation rules hierarchy balancing; convention ของ external entity อ้างหน้า 30 2026 - ITDS261 - Ex3 - Flow Modeling (Zoo).pdf · หน้า PDF 1 · โจทย์สวนสัตว์และงาน Level 1/2; แนวคำตอบจัดทำเพิ่ม 2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf · หน้า PDF 4–9, 25 · ทบทวนกฎและโจทย์แตก process หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 โจทย์ Ex3 · Zoo Ticketing System (PDF) ↓ ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "06",
+      "title": "PSPEC, Decision Table และแบบจำลองพฤติกรรม · Study Garden",
+      "page": "subjects/itds261/chapter-06.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L7 - Requirements Modeling Flow and Behavior II.pdf · หน้า PDF 10–24 · PSPEC structured English decision table control flow/CSPEC; state example สร้างเสริมและแก้กรณีศูนย์ใน triangle หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "07",
+      "title": "User Interface Design: ออกแบบให้คนทำงานสำเร็จ · Study Garden",
+      "page": "subjects/itds261/chapter-07.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L8 - User Interface Design.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L8 - User Interface Design.pdf · หน้า PDF 4–21, 22–25 · ประเภท UI กระบวนการ golden rules และ prototype; ตัวอย่างทดสอบจัดทำเพิ่ม หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "08",
+      "title": "Architecture และหลักการออกแบบซอฟต์แวร์ · Study Garden",
+      "page": "subjects/itds261/chapter-08.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L9 - Design Architecture and Methodology.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L9 - Design Architecture and Methodology.pdf · หน้า PDF 6–27, 30–43, 44–65 · architecture detailed design structured mapping modularity และ trade-offs หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "09",
+      "title": "Implementation, Debugging, Refactoring และ Code Review · Study Garden",
+      "page": "subjects/itds261/chapter-09.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L10 - Implementation  Code review.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L10 - Implementation Code review.pdf · หน้า PDF 4–7, 10–23, 25–41, 46–58 · paradigms practices debugging refactoring inspection และ review; แนวคำตอบ PR จัดทำเพิ่ม หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "10",
+      "title": "Configuration Management, VCS และ Git Cheat Sheet · Study Garden",
+      "page": "subjects/itds261/chapter-10.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L11 - VCS.pdf",
+        "sources/itds261/git-cheat-sheet-education.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - L11 - VCS.pdf · หน้า PDF 4–7, 10, 15–33 · CM VCS staging และ Gitflow; แก้ความทั่วไปเกินจริงเรื่อง master และ pull git-cheat-sheet-education.pdf · หน้า PDF 1–2 · คำสั่ง snapshot branch history stash และ historyrewrite; อธิบายผลกระทบโดยไม่รันคำสั่ง หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 Git Cheat Sheet ที่แนบมา (PDF) ↓ ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "11",
+      "title": "ทบทวนกลางภาคตาม Guideline ที่ได้รับ · Study Garden",
+      "page": "subjects/itds261/chapter-11.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - Midterm guideline.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ 2026 - ITDS261 - Midterm guideline.pdf · หน้า PDF 1, 3–24, 26–46 · scope40% Part 1/2 A4 และเนื้อหาทบทวน; ไม่เพิ่มรูปแบบข้อสอบหรือ rubric 2026 - ITDS261 - L8 - User Interface Design.pdf · หน้า PDF 9–21 · UI อยู่ใน scope แม้ guideline ย่อไม่มีภาพ UI ครอบคลุม 2026 - ITDS261 - L6 - Requirements Modeling Flow and Behavior I.pdf · หน้า PDF 43 · สถานการณ์ที่นำมาประกอบแบบฝึกเพิ่ม หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds261",
+      "chapter": "12",
+      "title": "Lab 3 PHTRS: User Stories และ Given–When–Then · Study Garden",
+      "page": "subjects/itds261/chapter-12.html",
+      "originals": [
+        "sources/itds261/2026 - ITDS261 - L3 - Requirement Engineering.pdf",
+        "sources/itds261/Lab3-Sec2-id6887054.pdf"
+      ],
+      "source_note": "แหล่งที่มาและขอบเขตของบทนี้ Lab 3 (ไฟล์งานตัวอย่างที่แนบมา).pdf · หน้า PDF 1–5 · ต้นฉบับ Lab 3 ในชุดเอกสาร: หน้า 1 เป็นโจทย์ หน้า 2–5 เป็นคำตอบผู้เรียนที่นำมาวิจารณ์โดยปกปิดชื่อ/รหัส; source label ปกปิดข้อมูลส่วนบุคคล 2026 - ITDS261 - L3 - Requirement Engineering.pdf · หน้า PDF 12–16, 34–44 · FR/NFR specification user stories และ acceptance criteria หมายเหตุเรื่องแหล่งที่มา เลขหน้าอ้างอิงคือหน้าของไฟล์ PDF อาจต่างจากเลขที่พิมพ์บนสไลด์ ภาพแนวคิดและตัวอย่างอธิบายที่ติดป้ายจัดทำเพิ่ม ใช้เพื่อทบทวน ไม่ใช่เฉลยอาจารย์ แบบทดสอบไม่ใช่ข้อสอบจริง เลขบทเว็บไซต์เรียงเพื่อให้อ่านต่อเนื่อง โดยกำกับ Lecture ต้นฉบับ ชุดเอกสารที่ได้รับไม่มีไฟล์ L5 ดูรายการไฟล์ทั้งวิชา ↗"
+    },
+    {
+      "course": "itds294",
+      "chapter": "01",
+      "title": "บท 1 · รู้จักระบบ E-Commerce · Study Garden",
+      "page": "subjects/itds294/chapter-01.html",
+      "originals": [
+        "sources/itds294/Case Study 0 Uber Everything on Demand.pdf",
+        "sources/itds294/ITDS294 eCommerce Session #1.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #1.pdf — หน้า 6–13 ภาพรวมรายวิชา; 16–34 แนวคิด ประเภท และมุมมองในการศึกษา Case Study 0 Uber Everything on Demand.pdf — หน้า PDF 1–5 รวมคำถามท้ายกรณีศึกษา เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "02",
+      "title": "บท 2 · Business Model และกลยุทธ์ · Study Garden",
+      "page": "subjects/itds294/chapter-02.html",
+      "originals": [
+        "sources/itds294/Case Study 1 Weathering the Storm Twitter’s Un-certain Future.pdf",
+        "sources/itds294/ITDS294 eCommerce Session #2.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #2.pdf — หน้า 5–29 โมเดลและองค์ประกอบ; 30–44 B2C/B2B; 45–50 กลยุทธ์ Case Study 1 Weathering the Storm Twitter’s Un-certain Future.pdf — หน้า PDF 1–4 รวมคำถามท้ายกรณีศึกษา เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "03",
+      "title": "บท 3 · โครงสร้างพื้นฐานและทางเลือกแพลตฟอร์ม · Study Garden",
+      "page": "subjects/itds294/chapter-03.html",
+      "originals": [
+        "sources/itds294/ITDS294 eCommerce Session #3.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #3.pdf — หน้า 5–13 Internet และพัฒนาการ; 14–29 บริการและมือถือ; 30–34 นวัตกรรมและกิจกรรมเลือกแพลตฟอร์ม เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "04",
+      "title": "บท 4 · จากไอเดียสู่หน้าร้านที่ใช้งานได้ · Study Garden",
+      "page": "subjects/itds294/chapter-04.html",
+      "originals": [
+        "sources/itds294/Case Study 2 Skyscanner  The One-Stop Travel Platform.pdf",
+        "sources/itds294/ITDS294 eCommerce Session #4 - 5.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #4 - 5.pdf — หน้า 5–18 วิสัยทัศน์และแผน; 19–34 SDLC; 35–44 ซอฟต์แวร์และการออกแบบ; 45–50 mobile presence Case Study 2 Skyscanner The One-Stop Travel Platform.pdf — หน้า PDF 1–4 และคำถามท้ายกรณีศึกษา เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "05",
+      "title": "บท 5 · ความปลอดภัยและการชำระเงิน · Study Garden",
+      "page": "subjects/itds294/chapter-05.html",
+      "originals": [
+        "sources/itds294/Case Study 3 Alipay and WeChatPay.pdf",
+        "sources/itds294/ITDS294 eCommerce Session #6.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #6.pdf — หน้า 5–26 ความปลอดภัยและภัยคุกคาม; 27–31 แผน; 32–43 การชำระเงิน Case Study 3 Alipay and WeChatPay.pdf — หน้า PDF 1–5 รวมคำถามท้ายกรณีศึกษา เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "06",
+      "title": "บท 6 · การตลาดออนไลน์และการวัดผล · Study Garden",
+      "page": "subjects/itds294/chapter-06.html",
+      "originals": [
+        "sources/itds294/ITDS294 eCommerce Session #7 - 8.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #7 - 8.pdf — หน้า 5–13 ผู้บริโภค; 14–33 เครื่องมือการตลาด; 34–50 เทคโนโลยีข้อมูล; 51–57 การวัดผล เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "07",
+      "title": "บท 7 · Social, Mobile และ Local Marketing · Study Garden",
+      "page": "subjects/itds294/chapter-07.html",
+      "originals": [
+        "sources/itds294/ITDS294 eCommerce Session #9 - 10.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ ITDS294 eCommerce Session #9 - 10.pdf — หน้า 5–16 ความเชื่อมโยงและกระบวนการ social; 17–27 ช่องทาง; 28–40 mobile และ local marketing เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "08",
+      "title": "บท 8 · Lab 1 · หาไอเดียและทดสอบปัญหา · Study Garden",
+      "page": "subjects/itds294/chapter-08.html",
+      "originals": [
+        "sources/itds294/E-Commerce Project Initiative #1.pdf",
+        "sources/itds294/Lean-Canvas.docx",
+        "sources/itds294/Romans-persona-template.pdf",
+        "sources/itds294/SCAMPER-Template.pptx"
+      ],
+      "source_note": "ที่มาและหมายเหตุ E-Commerce Project Initiative #1.pdf — หน้า 4–12 ไอเดียและ SCAMPER; 14–29 Lean Canvas; 30–38 Persona และตลาด SCAMPER-Template.pptx — สไลด์ 1–2 คำอธิบายและใบงาน Romans-persona-template.pdf — หน้า 1 หมวดชื่อ รายละเอียด และเป้าหมาย; ต้นฉบับ Roman Pichler, รุ่น 01/2023, CC BY-SA 4.0 Lean-Canvas.docx — ตาราง Lean Canvas และหัวข้อประกอบ; ต้นฉบับ adapted from Business Model Canvas, Neos Chronos, CC BY-SA 3.0 เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "09",
+      "title": "บท 9 · Lab 2 · Business Model Canvas และ Journey · Study Garden",
+      "page": "subjects/itds294/chapter-09.html",
+      "originals": [
+        "sources/itds294/E-Commerce Project Initiative #2.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ E-Commerce Project Initiative #2.pdf — หน้า 3–19 Business Model Canvas; 20–36 Customer Journey; 37–41 ตัวอย่าง เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    },
+    {
+      "course": "itds294",
+      "chapter": "10",
+      "title": "บท 10 · Lab 3 · การเงินและจุดคุ้มทุน · Study Garden",
+      "page": "subjects/itds294/chapter-10.html",
+      "originals": [
+        "sources/itds294/E-Commerce Project Initiative #3.pdf"
+      ],
+      "source_note": "ที่มาและหมายเหตุ E-Commerce Project Initiative #3.pdf — หน้า 4–10 วัตถุประสงค์/วิธีพยากรณ์; 11–15 งบการเงิน; 16–19 break-even และ ROI; 20 การติดตามผล เลขหน้าเป็นหน้าของไฟล์ PDF ไม่จำเป็นต้องตรงเลขที่พิมพ์บนหน้า เรียบเรียงใหม่เพื่ออธิบายและทบทวน ตัวอย่าง Quiz และแนวคำตอบเป็นสื่อประกอบการเรียน ไม่ใช่ข้อสอบจริงหรือเฉลยทางการ ข้อมูลบริษัทและเหตุการณ์ในกรณีศึกษาใช้ตามช่วงเวลาของเอกสาร ตัวเลขในกิจกรรมและ CampusMeal เป็นสมมติฐานที่ใช้ฝึกคิด เนื้อหาเพิ่มเติมแยกระบุไว้ใกล้หัวข้อนั้น"
+    }
+  ]
+}
