@@ -26,14 +26,16 @@
       const visible = bounds.top < innerHeight && bounds.bottom > 0 &&
         (!reveal.classList.contains("reveal-enabled") ||
          Number(reveal.style.getPropertyValue("--reveal-progress")) > 0.08);
+      const canPlay = artworkCanPlay();
       footer.classList.toggle("is-motion-active",
         visible && !reducedMotion.matches && !printMedia.matches && !document.hidden && !artworkPaused);
       footer.dispatchEvent(new CustomEvent("footer-motion-change"));
       if (!video) return;
-      motionToggle.hidden = reducedMotion.matches || printMedia.matches;
-      if (!artworkCanPlay()) {
-        video.pause();
-        artwork.classList.remove("is-playing");
+      const toggleHidden = reducedMotion.matches || printMedia.matches;
+      if (motionToggle.hidden !== toggleHidden) motionToggle.hidden = toggleHidden;
+      if (!canPlay) {
+        if (!video.paused) video.pause();
+        if (artwork.classList.contains("is-playing")) artwork.classList.remove("is-playing");
         return;
       }
       // Fetch the small baked animation only after the curtain uncovers the art.
@@ -89,24 +91,31 @@
       const enabled = !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
       reveal.classList.toggle("reveal-enabled", enabled);
       if (!enabled) {
-        footer.inert = false;
-        footerLinks.forEach(link => { link.inert = false; });
+        if (footer.inert) footer.inert = false;
+        footerLinks.forEach(link => { if (link.inert) link.inert = false; });
         updateArtwork();
         return;
       }
       const bounds = reveal.getBoundingClientRect();
       const distance = bounds.height - innerHeight;
       const progress = Math.min(1, Math.max(0, -bounds.top / Math.max(1, distance)));
-      reveal.style.setProperty("--reveal-progress", progress.toFixed(4));
+      const value = progress.toFixed(4);
+      if (reveal.style.getPropertyValue("--reveal-progress") !== value) {
+        reveal.style.setProperty("--reveal-progress", value);
+      }
       // Enable each link as soon as the curtain uncovers it.
-      footer.inert = progress === 0;
       const visibleTop = Math.max(0, curtain.getBoundingClientRect().bottom);
       const visibleBottom = Math.min(innerHeight, stage.getBoundingClientRect().bottom);
-      footerLinks.forEach(link => {
+      // Read all geometry before changing inert attributes, which invalidate style.
+      const linkStates = footerLinks.map(link => {
         const rect = link.getBoundingClientRect();
-        link.inert = rect.top < visibleTop || rect.bottom > visibleBottom;
+        return rect.top < visibleTop || rect.bottom > visibleBottom;
       });
       updateArtwork();
+      if (footer.inert !== (progress === 0)) footer.inert = progress === 0;
+      footerLinks.forEach((link, index) => {
+        if (link.inert !== linkStates[index]) link.inert = linkStates[index];
+      });
     }
     function scheduleReveal() {
       if (!scheduled) {

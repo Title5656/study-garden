@@ -121,6 +121,82 @@ try {
     });
   }
 
+  await test('Idle Garden stays painted without redrawing while scrolling and reopening', async () => {
+    const page = await newLocalPage({ viewport: { width: 1440, height: 900 } });
+    try {
+      await trackPaints(page);
+      await page.goto(`${base}/subjects/itds241/index.html`);
+      await page.evaluate(() => document.fonts.ready);
+      await reveal(page);
+      await page.mouse.move(0, 0);
+      await frames(page);
+      const before = await page.evaluate(() => ({
+        count: window.gardenPaints,
+        pixels: document.querySelector('.garden-wordmark-canvas').toDataURL(),
+      }));
+      await page.evaluate(async () => {
+        const rect = document.querySelector('.footer-reveal').getBoundingClientRect();
+        const top = scrollY + rect.top;
+        const distance = rect.height - innerHeight;
+        for (const progress of [0.9, 0.8, 0.7, 0.6, 0.5, 0.12, 0, 0.5, 0.8, 1]) {
+          scrollTo({ top: top + distance * progress, behavior: 'instant' });
+          await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        }
+      });
+      await frames(page);
+      assert.equal(await page.evaluate(() => window.gardenPaints), before.count,
+        'scrolling must reuse the settled canvas instead of repainting it');
+      assert.equal(await page.locator('.garden-wordmark-canvas').evaluate(el => el.toDataURL()), before.pixels,
+        'the existing wordmark pixels must stay unchanged');
+      // Sleeping must not disable interaction after the curtain reopens.
+      await page.locator('.garden-wordmark-canvas').click({ position: { x: 100, y: 60 }, force: true });
+      await page.waitForFunction(count => window.gardenPaints > count, before.count);
+    } finally { await page.close(); }
+  });
+
+  await test('Pending Garden motion resumes after pause, curtain and visibility without new pointer input', async () => {
+    const page = await newLocalPage({ viewport: { width: 1440, height: 900 } });
+    try {
+      await trackPaints(page);
+      await page.goto(`${base}/subjects/itds241/index.html`);
+      await reveal(page);
+      const root = page.locator('.footer-wordmark');
+      const bounds = await root.boundingBox();
+      for (const reason of ['pause', 'curtain', 'visibility']) {
+        await page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+        await page.mouse.move(0, 0);
+        await frames(page, 2);
+        await page.evaluate(reason => {
+          if (reason === 'pause') document.querySelector('.footer-motion-toggle').click();
+          if (reason === 'curtain') {
+            const rect = document.querySelector('.footer-reveal').getBoundingClientRect();
+            scrollTo({ top: scrollY + rect.top, behavior: 'instant' });
+          }
+          if (reason === 'visibility') {
+            Object.defineProperty(document, 'hidden', { configurable: true, value: true });
+            document.dispatchEvent(new Event('visibilitychange'));
+          }
+        }, reason);
+        await settle(page);
+        const stopped = await page.evaluate(() => window.gardenPaints);
+        await frames(page);
+        assert.equal(await page.evaluate(() => window.gardenPaints), stopped, `${reason} must stop drawing`);
+        await page.evaluate(reason => {
+          if (reason === 'pause') document.querySelector('.footer-motion-toggle').click();
+          if (reason === 'curtain') {
+            const rect = document.querySelector('.footer-reveal').getBoundingClientRect();
+            scrollTo({ top: scrollY + rect.top + rect.height - innerHeight, behavior: 'instant' });
+          }
+          if (reason === 'visibility') {
+            delete document.hidden;
+            document.dispatchEvent(new Event('visibilitychange'));
+          }
+        }, reason);
+        await page.waitForFunction(count => window.gardenPaints > count, stopped);
+      }
+    } finally { await page.close(); }
+  });
+
   await test('Pointer displaces real dots; pause and covered curtain stop canvas/video', async () => {
     const page = await newLocalPage({ viewport: { width: 1440, height: 900 } });
     try {

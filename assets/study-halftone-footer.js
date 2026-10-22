@@ -57,6 +57,7 @@ class HalftoneCanvas {
     this.visible = false;
     this.intersecting = false;
     this.frame = 0;
+    this.needsFrame = false;
     this.disposed = false;
     this.sprites = null;
     this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -165,7 +166,7 @@ class HalftoneCanvas {
     this.inkRGB = this.colorRGB(this.colors.ink);
     this.warmRGB = this.colorRGB(this.colors.warm);
     this.prepareGrain();
-    this.paint(performance.now());
+    this.needsFrame = this.paint(performance.now());
     this.root.classList.toggle('garden-wordmark-ready', this.count > 0);
     this.syncActivity();
   }
@@ -237,11 +238,13 @@ class HalftoneCanvas {
     return moving || ringActive;
   }
   wake() {
+    this.needsFrame = true;
     if (this.disposed || !this.visible || this.frame) return;
     const tick = now => {
       this.frame = 0;
       if (this.disposed || !this.visible) return;
-      if (this.paint(now)) this.frame = requestAnimationFrame(tick);
+      this.needsFrame = this.paint(now);
+      if (this.needsFrame) this.frame = requestAnimationFrame(tick);
     };
     this.frame = requestAnimationFrame(tick);
   }
@@ -259,7 +262,9 @@ class HalftoneCanvas {
     this.visible = this.intersecting && !document.hidden &&
       this.footer.classList.contains('is-motion-active') &&
       bounds.bottom > coveredTop && bounds.top < innerHeight && bounds.bottom > 0;
-    if (this.visible && !this.reduced) this.wake();
+    // Scrolling changes visibility, not the pixels of a settled wordmark.
+    // Keep pending interaction frames so a paused/covered canvas can resume.
+    if (this.visible && !this.reduced) { if (this.needsFrame) this.wake(); }
     else { cancelAnimationFrame(this.frame); this.frame = 0; }
   }
   destroy() {
