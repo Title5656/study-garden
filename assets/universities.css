@@ -1,0 +1,64 @@
+/* Home page university blocks reuse the library's dotted paper and glass folders. */
+.university-library > .library-heading { margin-bottom: 18px; }
+.university-group { --university-accent: #4567a2; margin-top: 24px; }
+.university-silpakorn { --university-accent: #28746b; }
+.university-group[hidden] { display: none; }
+.university-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.university-identity { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.university-emblem {
+  display: grid;
+  place-items: center;
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  border: 1px solid color-mix(in srgb, var(--university-accent) 15%, #fff);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 3px 12px #24252a04;
+}
+.university-logo { display: block; width: 52px; height: 52px; object-fit: contain; }
+.university-name h3 { margin: 0; color: var(--ink); font-size: 1.06rem; font-weight: 600; letter-spacing: -.02em; }
+.university-name p { margin: 2px 0 0; color: var(--muted); font-size: .72rem; letter-spacing: .025em; }
+.university-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--university-accent) 16%, var(--line));
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--university-accent) 5%, var(--paper));
+  color: var(--muted);
+  font-size: .7rem;
+  white-space: nowrap;
+}
+.university-count::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--university-accent); }
+.university-group .subject-grid { max-width: none; margin-inline: 0; }
+@media (min-width: 901px) {
+  .university-group .subject-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .university-group .subject-folder .folder-label strong { font-size: 1.08rem; }
+  .university-group .subject-folder .folder-meta { font-size: .6rem; }
+}
+@media (max-width: 700px) {
+  .university-library > .library-heading { flex-wrap: wrap; gap: 4px 12px; }
+  .university-heading { gap: 14px; padding-bottom: 20px; }
+  .university-identity { gap: 12px; }
+  .university-emblem { flex-basis: 60px; width: 60px; height: 60px; border-radius: 15px; }
+  .university-logo { width: 44px; height: 44px; }
+  .university-name h3 { font-size: .94rem; }
+  .university-name p { font-size: .66rem; }
+  .university-count { font-size: .65rem; }
+}
+@media (max-width: 380px) {
+  .university-identity { gap: 10px; }
+  .university-emblem { flex-basis: 48px; width: 48px; height: 48px; border-radius: 12px; }
+  .university-logo { width: 36px; height: 36px; }
+  .university-name h3 { font-size: .86rem; }
+}

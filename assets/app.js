@@ -231,10 +231,15 @@
     const term = search.value.trim().toLocaleLowerCase("th");
     let count = 0;
     $$("[data-search-text]").forEach((card) => {
-      card.hidden = !card.dataset.searchText
+      const university = card.closest("[data-university-search]");
+      const searchText = `${card.dataset.searchText} ${university?.dataset.universitySearch || ""}`;
+      card.hidden = !searchText
         .toLocaleLowerCase("th")
         .includes(term);
       if (!card.hidden) count++;
+    });
+    $$("[data-university-search]").forEach((group) => {
+      group.hidden = !group.querySelector("[data-search-text]:not([hidden])");
     });
     $("#search-empty").hidden = count !== 0;
   });
