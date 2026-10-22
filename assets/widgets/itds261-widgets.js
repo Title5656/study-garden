@@ -27,6 +27,33 @@ function addMarker(svg, id, cls) {
 /* =====================================================================
    วิดเจ็ต 1: ช่องทางสื่อสาร n(n-1)/2
    ===================================================================== */
+function initRequirements() {
+  const scenarios = {
+    booking: { answer: 'fr', text: 'ระบบต้องปฏิเสธการจองเวลาที่มีผู้จองแล้ว', reason: 'กำหนดพฤติกรรมเมื่อพบเวลาซ้ำ จึงเป็น functional requirement (FR) และนำไปสร้างกรณีทดสอบจองซ้ำได้' },
+    speed: { answer: 'nfr', text: '95% ของคำขอค้นหาต้องตอบภายใน 2 วินาที ภายใต้ภาระงานที่ตกลงกัน', reason: 'กำหนดคุณภาพด้านเวลา จึงเป็น non-functional requirement (NFR) ยังต้องระบุภาระงาน ชุดข้อมูล และวิธีวัดให้ทดสอบซ้ำได้' },
+    security: { answer: 'fr', text: 'ระบบต้องขอรหัสยืนยันอีกครั้งก่อนเปลี่ยนบัญชีรับเงิน', reason: 'แม้เกี่ยวกับความปลอดภัย แต่ประโยคนี้ระบุพฤติกรรมที่ระบบต้องทำ จึงเป็น FR อย่าจัดประเภทจากคำว่า security เพียงคำเดียว' },
+    platform: { answer: 'nfr', text: 'ระบบต้องติดตั้งได้บนระบบปฏิบัติการที่องค์กรกำหนด', reason: 'เป็นข้อจำกัดของสภาพแวดล้อม จัดเป็น NFR ต้องระบุชื่อและรุ่นระบบปฏิบัติการก่อนตรวจรับจริง' },
+  };
+  const select = $('#req-scenario'), prompt = $('#req-prompt'), feedback = $('#req-feedback');
+  const buttons = $$('[data-req-answer]');
+  function reset() {
+    const item = scenarios[select.value];
+    if (!item) return;
+    prompt.textContent = item.text;
+    feedback.textContent = 'เลือกประเภท แล้วอ่านเหตุผลว่าประโยคกำหนดพฤติกรรมหรือคุณภาพ/ข้อจำกัด';
+    buttons.forEach(button => button.setAttribute('aria-pressed', 'false'));
+  }
+  select.addEventListener('change', reset);
+  buttons.forEach(button => button.addEventListener('click', () => {
+    const item = scenarios[select.value];
+    if (!item) return;
+    buttons.forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    feedback.textContent = (button.dataset.reqAnswer === item.answer ? 'ถูกต้อง — ' : 'ลองทบทวน — ') + item.reason;
+  }));
+  reset();
+  $('#req-controls').hidden = false;
+}
+
 function initChannels() {
   const range = $('#ch-range');
   const svg = $('#ch-svg');
@@ -190,7 +217,7 @@ function initDfd() {
     if (!res.ok) svgEl('text', { x: compact ? 133 : (x1 + x2) / 2, y: compact ? 130 : 46, class: 'flow-mark' }, svg, '✕');
 
     out.className = 'result ' + (res.ok ? 'ok' : 'bad');
-    out.innerHTML = `<strong>${res.ok ? '✓ ถูกต้อง' : '✕ ไม่ถูกต้อง'}</strong> — ${res.text}`;
+    out.innerHTML = `<strong>${res.ok ? '✓ ผ่านกฎชนิดปลายทาง' : '✕ ไม่ผ่านกฎชนิดปลายทาง'}</strong> — ${res.text} การตรวจนี้ยังไม่ตรวจชื่อข้อมูล ความหมาย input/output ของ process หรือ balancing ทั้งแผนภาพ`;
   }
 
   selFrom.addEventListener('change', render);
@@ -419,6 +446,7 @@ function initUseCase() {
    เริ่มทำงานทุกวิดเจ็ตเมื่อหน้าโหลดเสร็จ
    ===================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
+  if ($('#w-requirements')) initRequirements();
   if ($('#w-channels')) initChannels();
   if ($('#w-model')) initModelChooser();
   if ($('#w-dfd')) initDfd();

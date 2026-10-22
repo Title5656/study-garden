@@ -16,7 +16,7 @@ async function page(options={}){
  p.on('response',r=>{if(r.status()===404)errors.push('404 '+r.url());});return p;
 }
 try {
- for(const width of [375,1440])for(const theme of ['light','dark']){
+ for(const width of [375,768,1440])for(const theme of ['light','dark']){
   const p=await page({viewport:{width,height:950}});
   await p.addInitScript(theme=>localStorage.setItem('study-garden-theme',theme),theme);
   for(let n=1;n<=12;n++){

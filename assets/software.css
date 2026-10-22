@@ -1,4 +1,10 @@
 /* Course-specific learning artifacts; the shared reader remains unchanged. */
+.se-static-footer { margin-top: 3rem; }
+.se-static-footer .site-footer { min-height: 0; }
+.se-static-footer .footer-content { min-height: 0; padding-block: 2rem; }
+.se-static-footer .footer-contact-title { font-size: 1.6rem; margin-bottom: 1rem; letter-spacing: normal; }
+.se-static-footer .footer-contact, .se-static-footer .footer-pill { transform: none; backdrop-filter: none; }
+.se-static-footer .footer-bottom { padding-block: 1rem; }
 .badge-extra, .se-scope-badge { display: inline-block; border: 1px solid var(--line); border-radius: 8px; padding: .25rem .65rem; background: var(--purple); color: var(--accent); font-size: .8rem; font-weight: 650; line-height: 1.7; }
 .se-source-note, .se-caution { margin-block: 1rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
 .se-source-note summary, .se-caution summary { cursor: pointer; font-weight: 650; color: var(--accent); }
