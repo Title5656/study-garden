@@ -261,7 +261,8 @@
   function show(topic, focus = false) {
     current = topic;
     topics.forEach(item => {
-      item.section.hidden = item !== topic;
+      // Navigation selects a location; it must not conceal the rest of the lesson.
+      item.section.hidden = false;
       if (item === topic) item.link.setAttribute("aria-current", "location");
       else item.link.removeAttribute("aria-current");
     });
@@ -283,14 +284,12 @@
       next.textContent = "หัวข้อถัดไป →";
       delete next.dataset.completeChapter;
     }
-    closeMenu();
-    // Hidden canvases need their layout updated when their activity is shown.
-    window.dispatchEvent(new Event("resize"));
     if (focus) {
+      closeMenu();
       const heading = topic.section.querySelector("h2");
       heading.tabIndex = -1;
       heading.focus({ preventScroll: true });
-      toolbar.scrollIntoView({ block: "start", behavior: "instant" });
+      topic.section.scrollIntoView({ block: "start", behavior: "instant" });
     }
   }
   function navigate(topic) {
@@ -321,4 +320,21 @@
   window.addEventListener("hashchange", restore);
   document.body.classList.add("reader-ready");
   show(topicFromHash() || topics[0]);
+  // Follow ordinary scrolling without adding history entries or moving focus.
+  // A single animation frame coalesces scroll events; no polling or animation.
+  let readingFrame = 0;
+  window.addEventListener('scroll', () => {
+    if (readingFrame) return;
+    readingFrame = requestAnimationFrame(() => {
+      readingFrame = 0;
+      let visible = topics[0];
+      const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      for (const topic of topics) {
+        const margin = parseFloat(getComputedStyle(topic.section).scrollMarginTop) || 0;
+        if (topic.section.getBoundingClientRect().top > Math.max(170, scrollPadding + margin + 2)) break;
+        visible = topic;
+      }
+      if (visible !== current) show(visible);
+    });
+  }, {passive: true});
 })();
