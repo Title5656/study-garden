@@ -10,6 +10,10 @@
 
 **Spec:** User-approved `C:/Users/wpras/Downloads/study-garden-codex-prompt-clean.md`.
 
+## Execution record — 23 October 2026
+
+This plan's bounded implementation batch is verified. Task 1 delivered a structural inventory and selected source-page audit, not full source verification; tasks 2–3 delivered shared reading behavior and selected ITDS241 improvements; task 4 passed existing/new checks and independent review after a history-restoration correction. Detailed evidence and remaining course-wide work are in `docs/teaching-redesign-report.md`. The original 34-chapter redesign remains in progress.
+
 ## Global constraints
 
 - New branch; meaningful commits; prepare PR without merging or force pushing.
