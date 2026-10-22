@@ -292,10 +292,28 @@
       topic.section.scrollIntoView({ block: "start", behavior: "instant" });
     }
   }
+  const readingHistoryKey = "studyGardenReading";
+  // Native restoration may retain the initial fragment position instead of the
+  // position reached by scrolling. Save each entry explicitly, including entry 1.
+  history.scrollRestoration = "manual";
+  function rememberReadingPosition() {
+    const state = history.state && typeof history.state === "object" ? history.state : {};
+    history.replaceState({ ...state, [readingHistoryKey]: {
+      url: location.href, x: scrollX, y: scrollY,
+    } }, "");
+  }
+  function restoreReadingPosition() {
+    const saved = history.state?.[readingHistoryKey];
+    if (!saved || saved.url !== location.href) return false;
+    window.scrollTo({left: saved.x, top: saved.y, behavior: "instant"});
+    return true;
+  }
   function navigate(topic) {
     if (!topic) return;
+    rememberReadingPosition();
     if (location.hash !== "#" + topic.id) history.pushState(null, "", "#" + topic.id);
     show(topic, true);
+    rememberReadingPosition();
   }
   function topicFromHash() {
     let id;
@@ -316,10 +334,25 @@
     if (topic) show(topic, true);
     else if (!location.hash) show(topics[0], true);
   }
-  window.addEventListener("popstate", restore);
-  window.addEventListener("hashchange", restore);
+  // Back/Forward restores saved reading coordinates, not a potentially stale
+  // fragment. Explicit fragment changes remain separate from history traversal.
+  let restoredHistoryUrl = null;
+  window.addEventListener("popstate", () => {
+    restoredHistoryUrl = location.href;
+    show(topicFromHash() || topics[0]);
+    if (!restoreReadingPosition()) restore();
+  });
+  window.addEventListener("hashchange", () => {
+    if (restoredHistoryUrl === location.href) {
+      restoredHistoryUrl = null;
+      return;
+    }
+    restoredHistoryUrl = null;
+    restore();
+  });
   document.body.classList.add("reader-ready");
   show(topicFromHash() || topics[0]);
+  window.addEventListener("pageshow", restoreReadingPosition);
   // Follow ordinary scrolling without adding history entries or moving focus.
   // A single animation frame coalesces scroll events; no polling or animation.
   let readingFrame = 0;
@@ -335,6 +368,7 @@
         visible = topic;
       }
       if (visible !== current) show(visible);
+      rememberReadingPosition();
     });
   }, {passive: true});
 })();

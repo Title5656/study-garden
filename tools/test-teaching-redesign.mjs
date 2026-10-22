@@ -26,7 +26,15 @@ try {
    assert.equal(await page.locator('.chapter-hero h1').evaluate(e=>getComputedStyle(e).letterSpacing),'normal');
    assert.ok(await page.evaluate(()=>document.fonts.check('17px "Study Thai"')));
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),'document overflow');
-   await page.locator('.reader-category[data-reader-category="quiz"]').click();
+   // Exercise the initial history entry, before any earlier navigation warms it up.
+   await page.locator('#operators').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
+   await page.waitForFunction(()=>document.querySelector('.reader-topic[aria-current]')?.getAttribute('href')==='#operators');
+   const initialReadingY=await page.evaluate(()=>scrollY);
+   await page.locator('.reader-topic[href="#quiz"]').evaluate(a=>a.click());
+   await page.goBack();
+   await page.waitForFunction(y=>Math.abs(scrollY-y)<3,initialReadingY,{timeout:5000});
+   await page.locator('.reader-topic[href="#variables"]').evaluate(a=>a.click());
+   await page.locator('.reader-category[data-reader-category="quiz"]').evaluate(button=>button.click());
    assert.equal(new URL(page.url()).hash,'#quiz');
    assert.ok(await page.locator('#quiz h2').evaluate(e=>e.getBoundingClientRect().top<innerHeight));
    await page.goBack();
@@ -34,6 +42,16 @@ try {
    assert.ok(await page.locator('#variables h2').evaluate(e=>e.getBoundingClientRect().top<innerHeight));
    await page.locator('#operators').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
    await page.waitForFunction(()=>document.querySelector('.reader-topic[aria-current]')?.getAttribute('href')==='#operators');
+   const readingY=await page.evaluate(()=>scrollY);
+   // Sidebar works without scrolling away from the reading position on desktop.
+   // Programmatically activate the same real link on mobile (its menu is collapsed).
+   await page.locator('.reader-topic[href="#quiz"]').evaluate(a=>a.click());
+   await page.waitForFunction(()=>document.querySelector('.reader-topic[aria-current]')?.getAttribute('href')==='#quiz');
+   const quizY=await page.evaluate(()=>scrollY);
+   await page.goBack();
+   await page.waitForFunction(y=>Math.abs(scrollY-y)<3,readingY,{timeout:5000});
+   await page.goForward();
+   await page.waitForFunction(y=>Math.abs(scrollY-y)<3,quizY,{timeout:5000});
   }
   await page.close();
  }
