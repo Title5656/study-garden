@@ -20,7 +20,7 @@ try {
   assert.equal(await page.locator('.folder-card').count(),12);
   assert.equal(await page.locator('.se-guide,.folder-topics,.se-scope-badge,.badge-extra,.se-scope-note').count(),0);
   assert.equal(await page.locator('[data-chapter-status]').count(),12);
-  assert.equal(await page.locator('.footer-reveal, footer video, .garden-wordmark-canvas').count(),0,'Course footer has no decorative continuous motion');
+  assert.equal(await page.locator('.footer-reveal, footer video, .garden-wordmark-canvas').count(),3,'Course footer restores the shared artwork and Garden wordmark');
   assert.equal(await page.locator('#footer a[href="#main"]').count(),1,'Keep back-to-top navigation');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.locator('#subject-search').fill('Requirements');
@@ -35,7 +35,7 @@ try {
    assert.ok(ids.indexOf('key-takeaways')>ids.indexOf('common-confusions'));
    assert.equal(await page.locator('.se-source-note').count(),1);
    assert.equal(await page.locator('#starting-point').count(),1,`chapter ${n}: beginner starting point`);
-   assert.equal(await page.locator('.footer-reveal, footer video, .garden-wordmark-canvas').count(),0);
+   assert.equal(await page.locator('.footer-reveal, footer video, .garden-wordmark-canvas').count(),3,'Chapter footer restores the shared artwork and Garden wordmark');
    assert.equal(await page.locator('#quiz .quiz-question').count(),10);
    chapterChecks++;
   }

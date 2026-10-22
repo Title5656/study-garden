@@ -98,7 +98,7 @@ try {
     for (const theme of ['dark', 'light']) await test(`${width}x${height} ${theme}: layout and ink`, async () => {
       const page = await newLocalPage({ viewport: { width, height } });
       try {
-        await page.goto(`${base}/subjects/itds241/index.html`);
+        await page.goto(`${base}/subjects/itds261/index.html`);
         await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);
         await reveal(page);
         await subjectAssertions(page);
