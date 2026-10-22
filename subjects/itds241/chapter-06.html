@@ -14,17 +14,17 @@
     <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
     <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
     <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
-    <script defer src="../../assets/content.js?v=4c369c9d194f"></script>
+    <script defer src="../../assets/content.js?v=63c2dd018378"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
     ></script>
     <script defer src="../../assets/app.js?v=81f94261d63b"></script>
-    <script defer src="../../assets/labs.js?v=f5d75e1dea73"></script>
-  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+    <script defer src="../../assets/labs.js?v=221da593676f"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=5dcbbd9072f4">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
-<script defer src="../../assets/reader.js?v=6a72082307a8"></script>
+<script defer src="../../assets/reader.js?v=5e706a3526ce"></script>
 <link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
 </head>
   <body data-subject="itds241" data-chapter="06">
@@ -65,27 +65,37 @@
         <h1>JavaScript Essentials</h1>
         <p>ตัวแปร ชนิดข้อมูล ตัวดำเนินการ และการควบคุมลำดับการทำงาน</p>
         <div class="tags">
-          <span class="pill lilac">เวลาอ่านโดยประมาณ 25–35 นาที</span
+          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 27–37 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
           ><span class="tag" data-chapter-status="06">ยังไม่ได้อ่าน</span>
         </div>
       </header>
       <div class="lesson-layout">
         <aside class="toc" aria-label="สารบัญบทเรียน">
-          <h2>ในบทนี้</h2>
+          <h2>ในบทนี้</h2><a href="#before-start">ก่อนเริ่มบทนี้และคำศัพท์</a>
           <a href="#big-picture">01 · JavaScript อยู่ตรงไหน?</a
           ><a href="#variables">02 · ตัวแปรและชนิดข้อมูล</a
           ><a href="#objects">03 · Object และเครื่องมือพื้นฐาน</a
           ><a href="#operators">04 · เปรียบเทียบและตัดสินใจ</a
           ><a href="#loops">05 · มองเห็น loop ทีละขั้น</a
           ><a href="#game">06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</a>
-          <div class="toc-tools">
+          <a href="#chapter-summary">สรุปบท</a><div class="toc-tools">
             <a href="#flashcards">▧ Flashcards</a
             ><a href="#quiz">✓ Quiz ท้ายบท</a
             ><a href="#sources">ที่มาและหมายเหตุ</a>
           </div>
         </aside>
         <article class="lesson-content">
+<section class="lesson-section" id="before-start"><h2>ก่อนเริ่มบทนี้ · เริ่มจากศูนย์ได้ในบทนี้</h2>
+<p>ยังไม่ต้องเขียนโปรแกรมเป็น ให้เริ่มจากความคิดว่าเราสั่งคอมพิวเตอร์ให้ทำงานทีละคำสั่ง เช่น เก็บราคา เก็บจำนวน แล้วคูณหายอดรวม</p><p>คำอธิบายและตัวอย่างสถานการณ์ในบทนี้เรียบเรียงเพิ่มเพื่อช่วยเรียนรู้จากเอกสารรายวิชา ไม่ใช่เฉลยข้อสอบทางการ แหล่งต้นฉบับระบุไว้ท้ายบท</p>
+<h3>คำศัพท์ที่ใช้ในบทนี้</h3><dl class="lesson-glossary"><dt>Program / statement</dt><dd>โปรแกรมคือชุดคำสั่ง ส่วน statement คือคำสั่งหนึ่งหน่วยที่ให้คอมพิวเตอร์ทำงาน</dd>
+<dt>HTML / CSS / JavaScript</dt><dd>HTML อธิบายโครงสร้างหน้าเว็บ CSS กำหนดรูปลักษณ์ และ JavaScript เป็นภาษาที่ใช้เขียนพฤติกรรมและคำนวณ</dd>
+<dt>Variable / value / binding</dt><dd>Variable คือตัวแปรที่ใช้ชื่ออ้างถึง value หรือค่า ส่วน binding คือการผูกชื่อนั้นกับค่า ไม่ใช่กล่องที่บังคับว่าต้องเก็บเลขตลอดไป</dd>
+<dt>Console / output</dt><dd>Console คือพื้นที่แสดงข้อความสำหรับตรวจการทำงานของโปรแกรม ส่วน output คือผลที่โปรแกรมแสดงออกมา console.log แสดงผลใน Console ไม่ได้เขียนลงหน้าเว็บ</dd>
+<dt>Function / scope / block</dt><dd>Function คือชุดคำสั่งที่เรียกใช้เป็นงานหนึ่งหน่วย Scope คือบริเวณที่เข้าถึงชื่อได้ และ block คือกลุ่มคำสั่งในวงเล็บปีกกา { }</dd>
+<dt>Object / property / array / index</dt><dd>Object รวมข้อมูลที่เกี่ยวข้องเป็นกลุ่ม Property คือข้อมูลแต่ละชื่อใน object Array คือรายการที่เรียงลำดับ และ index คือตำแหน่งของสมาชิก โดยตำแหน่งแรกเริ่มที่ 0</dd>
+<dt>DOM / event / loop</dt><dd>DOM คือแบบจำลองหน้าเว็บเป็นโครงสร้างที่โปรแกรมอ่านหรือแก้ได้ Event คือเหตุการณ์ เช่น การคลิก และ loop คือคำสั่งทำงานซ้ำ</dd>
+</dl></section>
           <section class="lesson-section" id="big-picture">
             <h2>01 · JavaScript อยู่ตรงไหน?</h2>
             <p>
@@ -144,6 +154,27 @@
           </section>
           <section class="lesson-section" id="variables">
             <h2>02 · ตัวแปรและชนิดข้อมูล</h2>
+<p>ถ้าสมุดราคาเล่มละ 100 บาท ซื้อ 2 เล่ม โปรแกรมควรเก็บอะไรไว้ก่อนจึงจะคิดยอดได้? เริ่มจาก <strong>ราคา</strong> และ <strong>จำนวน</strong> แล้วค่อยหายอดรวม ตัวแปร (variable) คือชื่อที่ใช้เก็บและอ้างถึงข้อมูลระหว่างการทำงาน ตามแนวคิดเรื่องตัวแปรใน Lecture 06 หน้า PDF 26–30</p>
+<p>ตัวอย่างสมมตินี้ใช้ <code>let</code> ประกาศชื่อพร้อมค่าเริ่มต้น เครื่องหมาย <code>=</code> อ่านค่าทางขวาแล้วผูกกับชื่อทางซ้าย ส่วน <code>*</code> คือการคูณ คัดลอกโค้ดทั้งชุดไปรันใน Console ของเบราว์เซอร์ได้</p>
+<pre><code data-example="price-total"><span class="code-keyword">let</span> price = <span class="code-number">100</span>; <span class="code-comment">// ราคาต่อเล่ม</span>
+<span class="code-keyword">let</span> quantity = <span class="code-number">2</span>; <span class="code-comment">// จำนวนที่ซื้อ</span>
+<span class="code-keyword">let</span> total = price * quantity; <span class="code-comment">// อ่านค่าทั้งสองแล้วคูณ</span>
+console.log(total); <span class="code-comment">// แสดงผลใน Console</span></code></pre>
+<p><strong>ผลใน Console:</strong> <samp>200</samp> ไม่ใช่ข้อความที่เพิ่มลงหน้าเว็บ ลำดับคือสร้าง <code>price</code> เป็น 100 สร้าง <code>quantity</code> เป็น 2 คำนวณ 100 × 2 แล้วผูก 200 กับ <code>total</code> สุดท้ายอ่าน <code>total</code> มาแสดง</p>
+<div data-variable-tracer aria-label="ติดตามค่าตัวแปรทีละบรรทัด">
+<h3>ลองเปลี่ยนราคา แล้วตามค่าทีละบรรทัด</h3>
+<p>ทดลองราคา 12.5 และจำนวน 3 สังเกตว่าค่า total จะปรากฏหลังคูณ ส่วน Console จะแสดงหลังบรรทัดสุดท้าย กิจกรรมนี้จำลองเฉพาะโค้ดสี่บรรทัดที่แสดง ไม่ใช่ช่องรันโค้ดอิสระ</p>
+<div data-trace-enhanced hidden>
+<div class="trace-controls"><label>ราคาต่อหน่วย <input type="number" data-price value="100" min="0" max="1000000" step="0.01" required></label><label>จำนวน <input type="number" data-quantity value="2" min="0" max="1000" step="1" required></label></div>
+<ol class="trace-lines"><li><code>let price = 100;</code></li><li><code>let quantity = 2;</code></li><li><code>let total = price * quantity;</code></li><li><code>console.log(total);</code></li></ol>
+<div class="trace-actions"><button type="button" class="btn" data-trace-prev>บรรทัดก่อนหน้า</button><button type="button" class="btn primary" data-trace-next>บรรทัดถัดไป</button><button type="button" class="btn" data-trace-reset>เริ่มใหม่</button></div>
+<div role="status" aria-live="polite"><p class="trace-state" data-trace-state></p><p data-trace-reason></p><p>ผลใน Console: <samp data-trace-output>—</samp></p></div>
+</div>
+<p><strong>อ่านผลโดยไม่ต้องทดลอง:</strong> ราคา 12.5 × จำนวน 3 = 37.5 หากจำนวนเป็น 0 ผลคือ 0 เพราะไม่มีสินค้าที่ซื้อ ชื่อ <code>total</code> เก็บผลตอนที่คูณ ไม่ได้คำนวณใหม่เองเมื่อเราเปลี่ยนตัวแปรภายหลัง</p>
+<p>ตัวเลขใช้ชนิด Number ของ JavaScript ซึ่งเป็นเลขฐานสองแบบประมาณค่า บางคู่ เช่น 0.1 × 3 อาจแสดง 0.30000000000000004 กิจกรรมนี้สอนค่าตัวแปร ไม่ใช่ระบบคิดเงินจริงที่ต้องกำหนดวิธีปัดเศษ</p>
+</div>
+<details class="teaching-check"><summary>ถ้าเพิ่ม quantity เป็น 3 หลังคำนวณ total แล้ว total จะเปลี่ยนเองหรือไม่?</summary><p>ไม่เปลี่ยน เพราะคำสั่งกำหนดค่าเก็บผลเฉพาะตอนที่บรรทัดนั้นทำงาน ต้องสั่ง <code>total = price * quantity;</code> อีกครั้งจึงจะอ่าน quantity ใหม่ ต่างจากสูตรในตารางคำนวณที่อาจคำนวณอัตโนมัติ</p></details>
+<h3>จากตัวอย่างสู่การประกาศและขอบเขต</h3>
             <p>
               ตัวแปรคือชื่อที่เราใช้เรียกค่า
               <strong>ประกาศ</strong> คือสร้างชื่อ
@@ -192,7 +223,10 @@ console.log(points);    // 15</code></pre>
               <code>_</code> หรือ <code>$</code> ได้
               แต่ห้ามเริ่มด้วยเลขหรือใช้คำสงวนอย่าง <code>class</code>
             </p>
-            <div class="table-wrap">
+            <h3>เลือกชนิดข้อมูลจากสิ่งที่ค่าหมายถึง</h3>
+<p>100 ที่นำไปคูณเป็น <strong>Number (จำนวน)</strong> แต่ "100" ที่อยู่ในเครื่องหมายคำพูดเป็น <strong>String (ข้อความ)</strong> จึงอาจถูกนำไปต่อข้อความแทนการบวก <strong>Boolean (ค่าความจริง)</strong> มี true และ false ใช้บอกผลของเงื่อนไข ส่วน <strong>undefined</strong> คือค่าที่ยังไม่ได้กำหนด และ <strong>null</strong> ใช้แทนความว่างโดยตั้งใจ</p>
+<p><strong>Primitive (ค่าพื้นฐาน)</strong> คือค่าที่ไม่ใช่ object; ค่านั้นแก้ภายในไม่ได้ แต่ตัวแปร let เปลี่ยนไปอ้างค่าอื่นได้ <strong>NaN (Not-a-Number)</strong> เป็นค่า Number ที่บอกว่าผลไม่ใช่ตัวเลขที่ใช้คำนวณได้ เช่น <code>Number("hello")</code> คำว่า floating point หมายถึงรูปแบบเก็บจำนวนที่มีความแม่นยำจำกัด</p>
+<div class="table-wrap">
               <table>
                 <thead>
                   <tr>
@@ -240,18 +274,6 @@ console.log(points);    // 15</code></pre>
                 </tbody>
               </table>
             </div>
-            <p>
-              JavaScript เป็น <strong>dynamically typed</strong>: ชนิดผูกกับค่า
-              ไม่ใช่ชื่อ เช่น <code>let x = 1; x = "one";</code> ทำได้ ส่วน
-              <code>typeof null</code> ได้
-              <code>"object"</code> เพราะพฤติกรรมเก่าของภาษา ไม่ได้หมายความว่า
-              null เป็น object ปกติ
-            </p>
-            <div class="note warm">
-              อย่าสับสนช่วง “จำนวนเต็มที่แทนค่าได้อย่างปลอดภัย”
-              ±(2<sup>53</sup>−1) กับช่วงค่าทั้งหมดของ Number ซึ่งกว้างกว่านั้น
-              แต่ไม่ได้แทนจำนวนเต็มทุกค่าได้แม่นยำ
-            </div>
             <div class="reveal">
               <p>
                 <strong>คำถาม</strong> · const bag = { count: 1 };
@@ -270,7 +292,20 @@ console.log(points);    // 15</code></pre>
                 {} จะผิด เพราะพยายามเปลี่ยน binding ของ const
               </div>
             </div>
-          </section>
+          <h3>เมื่อเข้าใจค่าพื้นฐานแล้ว: ชนิดข้อมูลและกรณีพิเศษ</h3>
+<p><strong>BigInt</strong> เก็บจำนวนเต็มที่ใหญ่เกินช่วงปลอดภัยของ Number ส่วน <strong>Symbol</strong> สร้างค่าเอกลักษณ์ที่ใช้เป็นชื่อ property ได้ รายละเอียดเหล่านี้ช่วยอ่านโค้ดสมัยใหม่ แต่ไม่เปลี่ยนหลักว่าต้องอ่านค่าทางขวาก่อนกำหนดค่าทางซ้าย</p>            <p>
+              JavaScript เป็น <strong>dynamically typed</strong>: ชนิดผูกกับค่า
+              ไม่ใช่ชื่อ เช่น <code>let x = 1; x = "one";</code> ทำได้ ส่วน
+              <code>typeof null</code> ได้
+              <code>"object"</code> เพราะพฤติกรรมเก่าของภาษา ไม่ได้หมายความว่า
+              null เป็น object ปกติ
+            </p>
+            <div class="note warm">
+              อย่าสับสนช่วง “จำนวนเต็มที่แทนค่าได้อย่างปลอดภัย”
+              ±(2<sup>53</sup>−1) กับช่วงค่าทั้งหมดของ Number ซึ่งกว้างกว่านั้น
+              แต่ไม่ได้แทนจำนวนเต็มทุกค่าได้แม่นยำ
+            </div>
+</section>
           <section class="lesson-section" id="objects">
             <h2>03 · Object และเครื่องมือพื้นฐาน</h2>
             <p>
@@ -664,7 +699,8 @@ for (let i = 1; i &lt;= limit; i++) {
               click เมื่อชนะ? และ restart ต้องรีเซ็ตข้อมูลใดบ้าง?
             </div>
           </section>
-          <section class="lesson-section" id="flashcards">
+          <section class="lesson-section" id="chapter-summary"><h2>สรุปบท</h2><p>เราเริ่มจากชื่อที่ผูกกับค่า ใช้ตัวดำเนินการคำนวณและเปรียบเทียบ แล้วใช้เงื่อนไขเลือกทางเดินและ loop ทำซ้ำ Object และ Array ช่วยเก็บข้อมูลที่สัมพันธ์กัน เกมท้ายบทจึงเป็นการเปลี่ยนข้อมูลตามการคลิกแล้วตรวจเงื่อนไขชนะ ไม่ใช่โค้ดลึกลับอีกชุดหนึ่ง เมื่ออ่านโค้ด ให้ถามว่าบรรทัดนี้อ่านค่าใด เปลี่ยนค่าใด และบรรทัดต่อไปคืออะไร บท 7 จะรวมคำสั่งเหล่านี้เป็นฟังก์ชันที่เรียกใช้ซ้ำได้</p></section>
+<section class="lesson-section" id="flashcards">
             <h2>Flashcards</h2>
             <p class="muted small">
               กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย

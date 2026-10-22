@@ -14,17 +14,17 @@
     <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
     <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
     <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
-    <script defer src="../../assets/content.js?v=4c369c9d194f"></script>
+    <script defer src="../../assets/content.js?v=63c2dd018378"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
     ></script>
     <script defer src="../../assets/app.js?v=81f94261d63b"></script>
-    <script defer src="../../assets/labs.js?v=f5d75e1dea73"></script>
-  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+    <script defer src="../../assets/labs.js?v=221da593676f"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=5dcbbd9072f4">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
-<script defer src="../../assets/reader.js?v=6a72082307a8"></script>
+<script defer src="../../assets/reader.js?v=5e706a3526ce"></script>
 <link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
 </head>
   <body data-subject="itds241" data-chapter="07">
@@ -65,29 +65,39 @@
         <h1>Functions, Objects & DOM</h1>
         <p>จากฟังก์ชันและ closure สู่ object และหน้าเว็บที่โต้ตอบได้</p>
         <div class="tags">
-          <span class="pill lilac">เวลาอ่านโดยประมาณ 30–40 นาที</span
+          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 23–33 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
           ><span class="tag" data-chapter-status="07">ยังไม่ได้อ่าน</span>
         </div>
       </header>
       <div class="lesson-layout">
         <aside class="toc" aria-label="สารบัญบทเรียน">
-          <h2>ในบทนี้</h2>
+          <h2>ในบทนี้</h2><a href="#before-start">ก่อนเริ่มบทนี้และคำศัพท์</a>
           <a href="#functions">01 · ฟังก์ชันคือหน่วยของงาน</a
           ><a href="#callbacks">02 · ส่งฟังก์ชันให้ฟังก์ชัน</a
           ><a href="#scope">03 · Scope และ Closure</a
           ><a href="#oop">04 · Class, Object และการสืบทอด</a
           ><a href="#dom">05 · DOM คือหน้าเว็บในรูปต้นไม้</a
           ><a href="#events">06 · Event เชื่อมการกระทำกับโค้ด</a>
-          <div class="toc-tools">
+          <a href="#chapter-summary">สรุปบท</a><div class="toc-tools">
             <a href="#flashcards">▧ Flashcards</a
             ><a href="#quiz">✓ Quiz ท้ายบท</a
             ><a href="#sources">ที่มาและหมายเหตุ</a>
           </div>
         </aside>
         <article class="lesson-content">
+<section class="lesson-section" id="before-start"><h2>ก่อนเริ่มบทนี้ · ต่อจากค่าหนึ่งค่าไปสู่งานหนึ่งชุด</h2>
+<p>ก่อนเริ่ม ให้ลองอธิบายว่า <code>let price = 100;</code> ผูกชื่อกับค่าอย่างไร หากยังไม่ชัด กลับไปอ่าน <a href="chapter-06.html#variables">ตัวแปรในบท 6</a> แล้วต่อที่ <a href="chapter-06.html#objects">Object และ Array</a></p><p>คำอธิบายและตัวอย่างสถานการณ์ในบทนี้เรียบเรียงเพิ่มเพื่อช่วยเรียนรู้จากเอกสารรายวิชา ไม่ใช่เฉลยข้อสอบทางการ แหล่งต้นฉบับระบุไว้ท้ายบท</p>
+<h3>คำศัพท์ที่ใช้ในบทนี้</h3><dl class="lesson-glossary"><dt>Function / call</dt><dd>Function คือชุดคำสั่งสำหรับทำงานหนึ่งหน่วย Call คือการเรียกให้ชุดคำสั่งนั้นทำงาน การเขียนนิยามไว้ยังไม่เท่ากับการเรียก</dd>
+<dt>Parameter / argument / return</dt><dd>Parameter คือชื่อช่องรับข้อมูลในนิยามฟังก์ชัน Argument คือค่าจริงที่ส่งเข้ามาตอนเรียก ส่วน return ส่งค่ากลับให้จุดที่เรียกและจบการทำงานครั้งนั้น</dd>
+<dt>Callback / higher-order function</dt><dd>Callback คือฟังก์ชันที่ส่งให้โค้ดอื่นเรียก Higher-order function คือฟังก์ชันที่รับฟังก์ชันหรือคืนฟังก์ชัน ไม่ได้แปลว่าต้องรอเวลาเสมอ</dd>
+<dt>Scope / closure / lifetime</dt><dd>Scope คือบริเวณที่เข้าถึงชื่อได้ Closure คือฟังก์ชันพร้อมการอ้างถึงตัวแปรแวดล้อมที่ประกาศไว้ ส่วน lifetime คือช่วงที่ข้อมูลนั้นยังคงอยู่</dd>
+<dt>Object / class / method / this</dt><dd>Object คือกลุ่มข้อมูลและพฤติกรรม Class คือแบบกำหนดโครงสร้างสำหรับสร้าง object Method คือฟังก์ชันที่เป็นสมาชิก และ this คือค่าบริบทของการเรียก ซึ่งขึ้นกับรูปแบบฟังก์ชันและวิธีเรียก</dd>
+<dt>DOM / node / element / event</dt><dd>DOM คือแบบจำลองเอกสารเป็นต้นไม้ Node คือหน่วยในต้นไม้นั้น Element คือ node ของแท็ก HTML และ event คือเหตุการณ์ที่โปรแกรมรับรู้ เช่น การคลิก</dd>
+</dl></section>
           <section class="lesson-section" id="functions">
             <h2>01 · ฟังก์ชันคือหน่วยของงาน</h2>
+<p>ถ้าร้านค้าต้องคิดราคาหลังลดให้ลูกค้าหลายคน เราจะคัดลอกคำสั่งลบส่วนลดทุกครั้งหรือเก็บวิธีคิดไว้ให้เรียกซ้ำ? <strong>Function (ฟังก์ชัน)</strong> คือชุดคำสั่งที่รวมเป็นงานหนึ่งหน่วยและเรียกใช้งานได้ ลองตามการส่งค่าจริงเข้าสู่ชื่อรับข้อมูลก่อนดูรูปแบบย่อ</p>
             <p>
               ฟังก์ชันช่วยให้เราเรียกใช้วิธีทำงานเดิมโดยไม่ต้องคัดลอกโค้ด
               คิดเป็นกล่องที่รับข้อมูล ทำงาน และอาจส่งผลลัพธ์กลับ
@@ -99,7 +109,18 @@
               <code>return</code> ส่งค่ากลับและจบการทำงานของฟังก์ชันทันที ถ้าไม่
               return ค่า ผลลัพธ์คือ undefined
             </p>
-            <div class="code-label">JAVASCRIPT</div>
+            <h3>ตัวอย่างสมมติ: ราคาเต็ม 100 ลด 20 เหลือเท่าไร</h3>
+<pre><code data-example="function-price"><span class="code-keyword">function</span> calculatePrice(price, discount) {
+  <span class="code-keyword">return</span> price - discount; <span class="code-comment">// ส่งผลกลับไปยังผู้เรียก</span>
+}
+<span class="code-keyword">const</span> amountToPay = calculatePrice(<span class="code-number">100</span>, <span class="code-number">20</span>);
+console.log(amountToPay);</code></pre>
+<p><strong>ผลใน Console:</strong> <samp>80</samp></p>
+<ol><li>นิยาม calculatePrice บอกวิธีทำงาน แต่ยังไม่ลบตัวเลข</li><li>เมื่อพบ calculatePrice(100, 20) ค่าจริง 100 และ 20 เป็น argument ที่จับคู่กับ parameter price และ discount ตามลำดับ</li><li>ภายในฟังก์ชัน price - discount จึงเป็น 100 - 20 ได้ 80</li><li>return ส่ง 80 กลับมาเป็นค่าของการเรียก และจบการทำงานครั้งนี้ amountToPay จึงเก็บ 80</li><li>console.log แสดง 80 ใน Console การ return เพียงอย่างเดียวไม่แสดงข้อความบนหน้าเว็บ</li></ol>
+<details class="teaching-check"><summary>ลองเปลี่ยนส่วนลดเป็น 0 แล้วทำนายผลก่อนรัน</summary><p>ได้ 100 เพราะ 100 - 0 = 100 ถ้าสลับ argument เป็น calculatePrice(20, 100) จะได้ -80 เพราะจับคู่ตามตำแหน่ง ไม่ได้เดาจากความหมายของตัวเลข</p></details>
+<p><strong>ข้อผิดพลาดที่พบบ่อย:</strong> เขียน console.log ภายในฟังก์ชันแล้วคิดว่าเท่ากับ return ไม่จริง การพิมพ์ผลกับการส่งค่ากลับเป็นคนละงาน หากไม่มี return ค่า ผู้เรียกจะได้รับ undefined</p>
+<h3>ต่อยอด: ค่าตั้งต้นและรูปแบบย่อ</h3>
+<div class="code-label">JAVASCRIPT</div>
             <pre><code>function finalPrice(price, discount = 0) {
   return price - discount;
 }
@@ -588,7 +609,8 @@ button.addEventListener(&quot;click&quot;, handleClick);
               สิ่งที่เห็นกับข้อมูลที่เก็บควรสอดคล้องกันเสมอ
             </div>
           </section>
-          <section class="lesson-section" id="flashcards">
+          <section class="lesson-section" id="chapter-summary"><h2>สรุปบท</h2><p>ฟังก์ชันแยกงานให้เรียกซ้ำได้ โดยรับ argument ผ่าน parameter และส่งผลกลับด้วย return เมื่อส่งฟังก์ชันเป็นค่า เราสร้าง callback ได้ Closure อธิบายว่าฟังก์ชันยังเข้าถึงตัวแปรจากบริเวณที่ประกาศได้อย่างไร ส่วน class จัดข้อมูลกับพฤติกรรมที่เกี่ยวข้องเข้าด้วยกัน เมื่อนำไปใช้กับ DOM และ event การคลิกหนึ่งครั้งจึงเรียกฟังก์ชันเพื่ออ่านหรือเปลี่ยนโครงสร้างหน้าเว็บได้ บทต่อไปจะต่อยอดเมื่อผลของงานยังไม่พร้อมทันที</p></section>
+<section class="lesson-section" id="flashcards">
             <h2>Flashcards</h2>
             <p class="muted small">
               กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย

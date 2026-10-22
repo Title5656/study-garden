@@ -3,6 +3,61 @@
   "use strict";
   const $ = (selector) => document.querySelector(selector);
 
+  // Controlled inputs only: this traces four fixed operations, never learner code.
+  document.querySelectorAll('[data-variable-tracer]').forEach(lab => {
+    const price = lab.querySelector('[data-price]');
+    const quantity = lab.querySelector('[data-quantity]');
+    const next = lab.querySelector('[data-trace-next]');
+    const previous = lab.querySelector('[data-trace-prev]');
+    const state = lab.querySelector('[data-trace-state]');
+    const output = lab.querySelector('[data-trace-output]');
+    const reason = lab.querySelector('[data-trace-reason]');
+    const lines = [...lab.querySelectorAll('.trace-lines li')];
+    let position = 0;
+    function render() {
+      const unitPrice = price.valueAsNumber;
+      const count = quantity.valueAsNumber;
+      const valid = price.value !== '' && quantity.value !== '' &&
+        price.checkValidity() && quantity.checkValidity() &&
+        Number.isFinite(unitPrice) && Number.isFinite(count);
+      next.disabled = !valid || position === 4;
+      previous.disabled = !valid || position === 0;
+      output.textContent = '—';
+      lines.forEach((line, index) => {
+        if (valid && index === position - 1) line.setAttribute('aria-current', 'step');
+        else line.removeAttribute('aria-current');
+      });
+      if (!valid) {
+        state.textContent = 'ยังไม่เริ่มคำนวณ';
+        reason.textContent = 'กรอกราคา 0–1,000,000 ไม่เกินสองตำแหน่งทศนิยม และจำนวนเต็ม 0–1,000 ช่องว่างไม่ใช่เลขศูนย์';
+        return;
+      }
+      const total = unitPrice * count;
+      const code = [`let price = ${unitPrice};`, `let quantity = ${count};`,
+        'let total = price * quantity;', 'console.log(total);'];
+      lines.forEach((line, index) => { line.querySelector('code').textContent = code[index]; });
+      state.textContent = position === 0 ? 'ยังไม่ประกาศตัวแปรทั้งสาม' :
+        `price = ${unitPrice}` + (position >= 2 ? ` · quantity = ${count}` : ' · quantity ยังไม่ประกาศ') +
+        (position >= 3 ? ` · total = ${total}` : ' · total ยังไม่ประกาศ');
+      reason.textContent = [
+        'ก่อนรัน: อ่านโค้ดจากบนลงล่าง แล้วกดบรรทัดถัดไปเพื่อดูว่าชื่อใดเพิ่งมีค่า',
+        `บรรทัด 1: ประกาศ price และผูกกับราคา ${unitPrice} ยังไม่ได้คำนวณยอดรวม`,
+        `บรรทัด 2: ประกาศ quantity และผูกกับจำนวน ${count} ตอนนี้มีข้อมูลทั้งสองตัวพร้อมแล้ว`,
+        `บรรทัด 3: อ่านค่าทางขวาก่อน คูณ ${unitPrice} × ${count} แล้วผูกผล ${total} กับ total`,
+        `บรรทัด 4: console.log อ่าน total แล้วแสดง ${total} ใน Console ไม่ได้เปลี่ยนค่าตัวแปรหรือข้อความบนหน้าเว็บ`,
+      ][position];
+      if (position === 4) output.textContent = String(total);
+    }
+    next.addEventListener('click', () => { position = Math.min(4, position + 1); render(); });
+    previous.addEventListener('click', () => { position = Math.max(0, position - 1); render(); });
+    [price, quantity].forEach(input => input.addEventListener('input', () => { position = 0; render(); }));
+    lab.querySelector('[data-trace-reset]').addEventListener('click', () => {
+      price.value = '100'; quantity.value = '2'; position = 0; render();
+    });
+    lab.querySelectorAll('[data-trace-enhanced]').forEach(node => { node.hidden = false; });
+    render();
+  });
+
   if ($("#loop-lab")) {
     let trace, position, chart;
     const select = $("#loop-limit");

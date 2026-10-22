@@ -1,4 +1,4 @@
-/* Focused reading and shared motion footer, matching the glass folder library. */
+/* Continuous article reading and shared motion footer. */
 .reader-ready .chapter-hero { padding: 10px 0 22px; margin-bottom: 24px; }
 .reader-ready .chapter-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); }
 .reader-ready .chapter-hero p { margin-bottom: 12px; }
@@ -212,4 +212,73 @@ body[data-all-courses] .footer-art {
   .motion-footer::before { animation: none; }
   .footer-contact, .footer-pill, .footer-back-top,
   .footer-contact:hover, .footer-pill:hover, .footer-back-top:hover { transition: none; transform: none; }
+}
+
+/* Reading is the default, including before enhancement and without JavaScript.
+   Tool/figure boundaries retain their meaning; prose does not need a card. */
+@font-face {
+  font-family: "Study Thai";
+  src: url("fonts/NotoSansThai.ttf?v=5a1c559bb539") format("truetype");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+body[data-chapter] :is(.lesson-content,.chapter-hero,.toc) {
+  font-family: "Study Thai", "Segoe UI", sans-serif;
+}
+body[data-chapter] :is(h1,h2,h3,h4,.section-kicker,.reader-group-label,.eyebrow) {
+  letter-spacing: normal;
+}
+body[data-chapter] .lesson-content { font-size: 17px; line-height: 1.85; }
+body[data-chapter] .lesson-section {
+  padding: 26px 0 38px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+body[data-chapter] .lesson-section + .lesson-section { border-top: 1px solid var(--line); }
+body[data-chapter] .lesson-section h2 { line-height: 1.65; margin-bottom: 22px; }
+body[data-chapter] .lesson-section h3 { line-height: 1.7; margin-top: 30px; }
+body[data-chapter] .lesson-section :is(p,li,dd) { overflow-wrap: anywhere; }
+body[data-chapter] .lesson-section :is(.note,.note.warm,.mini-card) {
+  border: 0; border-left: 3px solid var(--accent); border-radius: 0;
+  background: transparent; padding: 6px 0 6px 18px; box-shadow: none;
+  font-size: 1em;
+}
+body[data-chapter] .chapter-hero .pill {
+  padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--muted);
+}
+body[data-chapter] .table-wrap { border: 0; border-radius: 0; }
+body[data-chapter] :is(td,th) { border: 0; border-bottom: 1px solid var(--line); }
+body[data-chapter] .reader-sidebar { background: transparent; box-shadow: none; border: 0; border-left: 1px solid var(--line); border-radius: 0; }
+body[data-chapter] .reader-course { background: transparent; border: 0; padding: 0 8px; }
+.lesson-glossary { margin: 20px 0; }
+.lesson-glossary dt { font-weight: 650; margin-top: 12px; }
+.lesson-glossary dd { margin: 0 0 12px; }
+.teaching-check { margin: 24px 0; padding-left: 18px; border-left: 2px solid var(--accent); }
+.teaching-check summary { cursor: pointer; font-weight: 600; }
+.teaching-check summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.code-keyword { color: #c4b5fd; }
+.code-number { color: #fcd89b; }
+.code-comment { color: #b5c9b3; }
+[data-variable-tracer] { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.trace-controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: end; }
+.trace-controls label { display: grid; gap: 6px; }
+.trace-controls input { width: 130px; max-width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--bg); }
+.trace-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; }
+.trace-state { font-variant-numeric: tabular-nums; }
+.trace-lines { padding-left: 2em; }
+.trace-lines li { padding: 4px 8px; }
+.trace-lines [aria-current="step"] { background: var(--purple); border-left: 3px solid var(--accent); }
+@media (max-width: 540px) {
+  body[data-chapter] .lesson-section { padding: 22px 0 30px; }
+  body[data-chapter] .lesson-section h2 { font-size: 1.35rem; }
+  [data-variable-tracer] { padding: 14px; }
+}
+@media print {
+  body[data-chapter] .lesson-content { font-size: 11pt; }
+  body[data-chapter] .lesson-section { padding: 12pt 0; }
+  .trace-controls,.trace-actions { display: none; }
 }

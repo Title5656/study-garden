@@ -14,17 +14,17 @@
     <link rel="stylesheet" href="../../assets/library.css?v=9fbce0e5a588" />
     <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
     <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
-    <script defer src="../../assets/content.js?v=4c369c9d194f"></script>
+    <script defer src="../../assets/content.js?v=63c2dd018378"></script>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
     ></script>
     <script defer src="../../assets/app.js?v=81f94261d63b"></script>
-    <script defer src="../../assets/labs.js?v=f5d75e1dea73"></script>
-  <link rel="stylesheet" href="../../assets/reader.css?v=e645af8bb978">
+    <script defer src="../../assets/labs.js?v=221da593676f"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=5dcbbd9072f4">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
-<script defer src="../../assets/reader.js?v=6a72082307a8"></script>
+<script defer src="../../assets/reader.js?v=5e706a3526ce"></script>
 <link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
 </head>
   <body data-subject="itds241" data-chapter="08">
@@ -65,27 +65,36 @@
         <h1>Modern JavaScript</h1>
         <p>เข้าใจ ECMAScript, Promise และฟีเจอร์ที่ช่วยให้เขียนโค้ดง่ายขึ้น</p>
         <div class="tags">
-          <span class="pill lilac">เวลาอ่านโดยประมาณ 35–45 นาที</span
+          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 26–36 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
           ><span class="tag" data-chapter-status="08">ยังไม่ได้อ่าน</span>
         </div>
       </header>
       <div class="lesson-layout">
         <aside class="toc" aria-label="สารบัญบทเรียน">
-          <h2>ในบทนี้</h2>
+          <h2>ในบทนี้</h2><a href="#before-start">ก่อนเริ่มบทนี้และคำศัพท์</a>
           <a href="#standard">01 · มาตรฐานภาษา ≠ การรองรับ</a
           ><a href="#es2015">02 · ES2015: เขียนให้น้อย แต่ชัดขึ้น</a
           ><a href="#async">03 · Promise และ async/await</a
           ><a href="#timeline">04 · แผนที่ฟีเจอร์ ES2016–ES2023</a
           ><a href="#nullish">05 · เลือกค่า default ให้ถูก</a
           ><a href="#recent">06 · ES2024–2026 และจุดที่ต้องแยกให้ออก</a>
-          <div class="toc-tools">
+          <a href="#chapter-summary">สรุปบท</a><div class="toc-tools">
             <a href="#flashcards">▧ Flashcards</a
             ><a href="#quiz">✓ Quiz ท้ายบท</a
             ><a href="#sources">ที่มาและหมายเหตุ</a>
           </div>
         </aside>
         <article class="lesson-content">
+<section class="lesson-section" id="before-start"><h2>ก่อนเริ่มบทนี้ · อ่านฟีเจอร์ใหม่ด้วยพื้นฐานเดิม</h2>
+<p>ทบทวน <a href="chapter-06.html#variables">ชนิดข้อมูลในบท 6</a> และ <a href="chapter-07.html#functions">การเรียกฟังก์ชันกับ return ในบท 7</a> ก่อน บทนี้ใช้พื้นฐานเหล่านั้นอ่านรูปแบบภาษาใหม่และงานที่ผลลัพธ์ยังไม่พร้อม</p><p>คำอธิบายและตัวอย่างสถานการณ์ในบทนี้เรียบเรียงเพิ่มเพื่อช่วยเรียนรู้จากเอกสารรายวิชา ไม่ใช่เฉลยข้อสอบทางการ แหล่งต้นฉบับระบุไว้ท้ายบท</p>
+<h3>คำศัพท์ที่ใช้ในบทนี้</h3><dl class="lesson-glossary"><dt>ECMAScript / JavaScript / engine</dt><dd>ECMAScript คือมาตรฐานกติกาของภาษา JavaScript ใช้กติกานี้ ส่วน engine คือโปรแกรมที่นำกติกาไปประมวลผลโค้ด การอยู่ในสไลด์ไม่ได้ยืนยันว่า engine ทุกตัวรองรับ</dd>
+<dt>Syntax / feature / proposal</dt><dd>Syntax คือรูปแบบการเขียนคำสั่ง Feature คือความสามารถของภาษา Proposal คือข้อเสนอที่ต้องแยกจากความสามารถที่บรรจุในมาตรฐานแล้ว</dd>
+<dt>Synchronous / asynchronous</dt><dd>Synchronous คือทำงานตามลำดับในช่วงการเรียกนั้น Asynchronous คือจัดการงานที่ผลอาจพร้อมภายหลัง ทำให้โค้ดส่วนอื่นดำเนินต่อระหว่างรอได้</dd>
+<dt>Promise / pending / fulfilled / rejected</dt><dd>Promise คือ object ที่แทนผลสำเร็จหรือความล้มเหลวของงาน Pending คือยังรอ Fulfilled คือสำเร็จพร้อมค่า และ rejected คือล้มเหลวพร้อมเหตุผล สองอย่างหลังเรียกรวมว่า settled</dd>
+<dt>Callback / async / await</dt><dd>Callback คือฟังก์ชันที่ส่งให้โค้ดอื่นเรียก async ทำให้ฟังก์ชันคืน Promise และ await พักการทำงานของฟังก์ชัน async ณ จุดนั้นจน Promise จบ โดยไม่หยุดทั้งหน้าเว็บ</dd>
+<dt>Nullish / default / shallow copy</dt><dd>Nullish หมายถึง null หรือ undefined Default คือค่าที่ใช้เมื่อไม่มีค่าตามเงื่อนไข ส่วน shallow copy คือสำเนาชั้นนอกที่อาจยังอ้าง object ชั้นในร่วมกัน</dd>
+</dl></section>
           <section class="lesson-section" id="standard">
             <h2>01 · มาตรฐานภาษา ≠ การรองรับ</h2>
             <p>
@@ -282,6 +291,7 @@ Object.is(NaN, NaN);              // true ต่างจาก NaN === NaN</cod
           </section>
           <section class="lesson-section" id="async">
             <h2>03 · Promise และ async/await</h2>
+<p>ระหว่างรอข้อมูล ถ้าหน้าเว็บหยุดตอบสนองทั้งหมด ผู้ใช้จะกดอย่างอื่นไม่ได้ เราจึงต้องแยก “เริ่มงาน” ออกจาก “ใช้ผลเมื่อพร้อม” <strong>Asynchronous operation</strong> คืองานที่ผลพร้อมภายหลัง ส่วน <strong>Promise</strong> คือ object ที่แทนการสำเร็จหรือความล้มเหลวพร้อมผลของงานนั้น ตามเอกสาร ECMAScript หน้า PDF 10–12</p>
             <p>
               งานอย่างขอข้อมูลใช้เวลาจบไม่เท่ากัน Promise
               เป็นตัวแทนผลลัพธ์ที่ยังไม่มาถึง คล้ายใบรับงาน: ตอนรับงานยัง
@@ -296,7 +306,18 @@ Object.is(NaN, NaN);              // true ต่างจาก NaN === NaN</cod
               <code>finally</code> ทำงานปิดท้ายโดยทั่วไปไม่ว่าผลจะเป็นอย่างไร
               โดย finally เป็นส่วนเพิ่มภายหลัง ES2015
             </p>
-            <div class="code-label">JAVASCRIPT</div>
+            <h3>ตามลำดับก่อนใช้ async/await</h3>
+<p>ตัวอย่างสมมตินี้ใช้ Promise.resolve สร้าง Promise ที่สำเร็จแล้ว เพื่อแยกเรื่อง “ค่าพร้อม” ออกจาก “ฟังก์ชันรับผลเริ่มทำงานเมื่อไร” ไม่ส่งคำขอไปเว็บไซต์อื่น</p>
+<pre><code data-example="promise-order">console.log("เริ่ม");
+Promise.resolve("ข้อมูลพร้อม").then(function (message) {
+  console.log(message); <span class="code-comment">// รับผลหลังคำสั่งต่อเนื่องชุดนี้จบ</span>
+});
+console.log("ทำงานอื่นต่อ");</code></pre>
+<p><strong>ผลใน Console ตามลำดับ:</strong> <samp>เริ่ม → ทำงานอื่นต่อ → ข้อมูลพร้อม</samp></p>
+<ol><li>บรรทัดแรกพิมพ์ “เริ่ม” ทันที</li><li>Promise.resolve ทำให้ผลสำเร็จพร้อมค่า “ข้อมูลพร้อม” ส่วน then ลงทะเบียน callback หรือฟังก์ชันรับผลไว้ ยังไม่เรียกมันตรงบรรทัดนี้</li><li>โปรแกรมจึงพิมพ์ “ทำงานอื่นต่อ” ให้จบก่อน</li><li>เมื่อคำสั่งต่อเนื่องชุดปัจจุบันจบ จึงเรียกฟังก์ชันรับผลและพิมพ์ “ข้อมูลพร้อม” แม้ Promise จะสำเร็จอยู่ก่อนแล้ว</li></ol>
+<details class="teaching-check"><summary>Promise สำเร็จแล้ว แปลว่า then ทำงานแทรกทันทีหรือไม่?</summary><p>ไม่ใช่ ความพร้อมของผลกับลำดับการเรียก callback เป็นคนละเรื่อง ในตัวอย่างนี้ then ทำงานหลังคำสั่ง console.log สุดท้าย จึงไม่ควรเขียนโค้ดที่อ่านตัวแปรผลลัพธ์ทันทีแล้วคาดว่ารับค่าจาก then แล้ว</p></details>
+<h3>เมื่อผลอาจสำเร็จหรือล้มเหลว</h3>
+<div class="code-label">JAVASCRIPT</div>
             <pre><code>function loadNote(ok) {
   return new Promise((resolve, reject) =&gt; {
     if (ok) resolve(&quot;บทเรียนพร้อมแล้ว&quot;);
@@ -310,7 +331,7 @@ loadNote(true)
             <div class="lab" id="promise-lab">
               <h3>Promise lab · เลือกผลของงาน</h3>
               <p class="small muted">
-                แบบจำลองสถานะเพื่อการเรียนรู้ ไม่มีการส่งคำขอเครือข่ายจริง
+                ลองเลือกผลสำเร็จหรือล้มเหลว แล้วสังเกตว่าปุ่มอีกทางถูกปิด เพราะ Promise เดิมจบได้ครั้งเดียว แบบจำลองสถานะเพื่อการเรียนรู้ ไม่มีการส่งคำขอเครือข่ายจริง
                 กดสร้างใหม่เพื่อเริ่มจาก pending อีกครั้ง
               </p>
               <div id="promise-state" class="promise-state" aria-live="polite">
@@ -771,7 +792,8 @@ if (typeof Math.sumPrecise === &quot;function&quot;) {
               หากข้อสอบถามอิงปีหรือ syntax ที่คลาดเคลื่อน ควรสอบถามผู้สอนให้ชัด
             </div>
           </section>
-          <section class="lesson-section" id="flashcards">
+          <section class="lesson-section" id="chapter-summary"><h2>สรุปบท</h2><p>ฟีเจอร์ใหม่ช่วยเขียนเจตนาให้ชัดขึ้น แต่ต้องรู้ก่อนว่าต้องการผลแบบใด เช่น คัดลอกเพียงชั้นนอกหรือเก็บค่า 0 ไว้ Promise แยกช่วงรอออกจากผลสำเร็จและความล้มเหลว ส่วน async/await ช่วยเขียนการรับผลตามลำดับโดยไม่หยุดทั้งหน้าเว็บ ก่อนใช้ฟีเจอร์ในส่วนปีล่าสุด ให้แยกข้อมูลในสไลด์ สถานะมาตรฐาน และการรองรับของเครื่องมือเสมอ การจำปีอย่างเดียวไม่พอจะอธิบายพฤติกรรมของโค้ด</p></section>
+<section class="lesson-section" id="flashcards">
             <h2>Flashcards</h2>
             <p class="muted small">
               กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
