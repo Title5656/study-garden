@@ -1,4 +1,6 @@
 /* The Node lesson keeps the site's palette and type, with an open reading surface. */
+/* Deep links and expanding answers must settle before the next interaction. */
+html:has(body[data-reader-mode="paged"]) { scroll-behavior: auto; }
 body[data-reader-mode="paged"] .reader-sidebar { background: none; border: 0; box-shadow: none; border-radius: 0; padding-left: 0; }
 body[data-reader-mode="paged"] .reader-course { background: none; border: 0; border-radius: 0; padding-left: 0; }
 body[data-reader-mode="paged"] .lesson-section { background: none; border: 0; border-radius: 0; box-shadow: none; padding: 12px 0 22px; margin: 0; }

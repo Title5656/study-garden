@@ -64,6 +64,7 @@ function quizBlock(id,body) {
 }
 function quizMarkup(id,questions,final) {
  const fallback=questions.map(q=>`<p>${escape(q.q)}</p>${q.options?.length ? '<ul>'+q.options.map(o=>`<li>${escape(o)}</li>`).join('')+'</ul>' : ''}<details><summary>ดูเฉลย</summary><p>${escape(typeof q.answer==='number' ? q.options[q.answer] : q.answer)}</p><p>${escape(q.explanation)}</p></details>`).join('');
+ if(id==='p1-ch3-quiz')return `<div class="node-review">${fallback}</div>`;
  return `<div class="node-quiz" data-node-quiz data-quiz-key="${id}"${final ? ' data-final-quiz' : ''}><div class="node-quiz-fallback">${fallback}</div><script type="application/json">${json(questions)}</script></div>`;
 }
 function prose(markdown,title) {
