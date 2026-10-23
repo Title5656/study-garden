@@ -15,6 +15,13 @@ try {
   await p.goto(base+'index.html');
   assert.equal(await p.locator('.folder-grid > .folder-card').count(),2);
   assert.equal(await p.locator('[data-exam-folder="final"] .subject-folder').count(),1,'exam folder must navigate to chapter folders');
+  for(const [id,title] of [['midterm','Midterm'],['final','Final']]) {
+   const folder=p.locator(`[data-exam-folder="${id}"]`);
+   assert.equal(await folder.locator('.folder-front .folder-label strong').innerText(),title,'exam name stays inside the folder face');
+   assert.equal(await folder.locator('.folder-caption,.folder-topics').count(),0,'no repeated titles or chapter list below exam folders');
+   assert.ok(await folder.locator('.folder-front').evaluate(front=>{const a=front.getBoundingClientRect(),b=front.querySelector('strong').getBoundingClientRect();return b.top>=a.top&&b.bottom<=a.bottom;}));
+  }
+  if(process.argv.includes('--capture')) {mkdirSync(resolve(root,'docs/screenshots/exam-folders'),{recursive:true});await p.screenshot({path:resolve(root,`docs/screenshots/exam-folders/exams-${width}-${theme}.png`)});}
   await p.locator('[data-exam-folder="midterm"] .subject-folder').press('Enter');await p.waitForURL('**/midterm.html');
   assert.equal(await p.locator('.glass-folder').count(),3);
   await p.locator('.glass-folder').first().locator('summary').press('Enter');

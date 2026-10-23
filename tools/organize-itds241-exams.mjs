@@ -52,7 +52,11 @@ function examFolder(group) {
   .replace(/<details[^>]*>\s*<summary[^>]*>/,`<a class="subject-folder" href="${group.id}.html" aria-label="เปิดโฟลเดอร์ ${group.label}">`)
   .replace('</summary>','</a>')
   .replace(/<nav class="folder-files"[\s\S]*?<\/nav>\s*<\/details>/,'')
-  .replace(`<strong>${group.label}</strong>`,`<a href="${group.id}.html">${group.label} <span>↗</span></a>`);
+  .replace(/<span class="folder-category">[^<]*<\/span>/,'')
+  .replace(/<span class="folder-code">[^<]*<\/span>/,'<span class="folder-code">ITDS241</span>')
+  .replace(/<span class="folder-meta">[^<]*<\/span>/,`<span class="folder-meta">${group.chapters.length} บทเรียน</span>`)
+  .replace(/<div class="folder-caption">[\s\S]*?<\/div>/,'')
+  .replace(/<p class="folder-topics">[\s\S]*?<\/p>/,'');
 }
 function chapterFolder(c,group) {
  let result=folder({...group,id:c.id,label:escape(c.title),thai:`บทที่ ${Number(c.id)}`,chapters:[c]});
