@@ -20,7 +20,7 @@
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
     ></script>
     <script defer src="../../assets/app.js?v=81f94261d63b"></script>
-    <script defer src="../../assets/labs.js?v=221da593676f"></script>
+    <script defer src="../../assets/labs.js?v=665973f17e74"></script>
   <link rel="stylesheet" href="../../assets/reader.css?v=5dcbbd9072f4">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
@@ -65,7 +65,7 @@
         <h1>JavaScript Essentials</h1>
         <p>ตัวแปร ชนิดข้อมูล ตัวดำเนินการ และการควบคุมลำดับการทำงาน</p>
         <div class="tags">
-          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 27–37 นาที</span
+          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 32–42 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
           ><span class="tag" data-chapter-status="06">ยังไม่ได้อ่าน</span>
         </div>
@@ -97,7 +97,7 @@
 <dt>DOM / event / loop</dt><dd>DOM คือแบบจำลองหน้าเว็บเป็นโครงสร้างที่โปรแกรมอ่านหรือแก้ได้ Event คือเหตุการณ์ เช่น การคลิก และ loop คือคำสั่งทำงานซ้ำ</dd>
 </dl></section>
           <section class="lesson-section" id="big-picture">
-            <h2>01 · JavaScript อยู่ตรงไหน?</h2>
+            <h2>01 · JavaScript อยู่ตรงไหน?</h2><p>ทำไมหน้าเว็บแสดงปุ่มได้ แต่กดแล้วไม่คิดคะแนน? การมีปุ่มเป็นเรื่องของโครงสร้าง ส่วนการรับการกดและคำนวณเป็นพฤติกรรม ลองแยกสองงานนี้ก่อนเลือกภาษา <strong>Engine</strong> คือโปรแกรมประมวลผล JavaScript; <strong>API</strong> คือช่องทางที่ระบบเปิดให้โค้ดเรียกใช้งาน และ <strong>parse</strong> คือการอ่านรูปแบบข้อความให้เป็นโครงสร้างที่โปรแกรมทำงานต่อได้</p>
             <p>
               นึกถึงเว็บเป็นโต๊ะอ่านหนังสือ:
               <strong>HTML</strong> บอกว่ามีอะไรอยู่บนโต๊ะ
@@ -151,7 +151,7 @@
               เป้าหมายบทนี้: อ่านโค้ดแล้วบอกได้ว่า “ค่าอะไรเปลี่ยน” และ
               “บรรทัดถัดไปคืออะไร”
             </div>
-          </section>
+          <details class="self-check"><summary>ปิด JavaScript แล้วหัวข้อยังอยู่ แต่ปุ่มตรวจคะแนนไม่ทำงาน อธิบายได้อย่างไร?</summary><p>หัวข้ออยู่ใน HTML และยังจัดรูปลักษณ์ด้วย CSS ได้ ส่วนการคำนวณคะแนนต้องให้ JavaScript รับเหตุการณ์แล้วตรวจคำตอบ นี่เป็นเหตุผลที่เว็บควรมีเนื้อหาให้อ่านแม้กิจกรรมใช้งานไม่ได้</p></details></section>
           <section class="lesson-section" id="variables">
             <h2>02 · ตัวแปรและชนิดข้อมูล</h2>
 <p>ถ้าสมุดราคาเล่มละ 100 บาท ซื้อ 2 เล่ม โปรแกรมควรเก็บอะไรไว้ก่อนจึงจะคิดยอดได้? เริ่มจาก <strong>ราคา</strong> และ <strong>จำนวน</strong> แล้วค่อยหายอดรวม ตัวแปร (variable) คือชื่อที่ใช้เก็บและอ้างถึงข้อมูลระหว่างการทำงาน ตามแนวคิดเรื่องตัวแปรใน Lecture 06 หน้า PDF 26–30</p>
@@ -307,7 +307,7 @@ console.log(points);    // 15</code></pre>
             </div>
 </section>
           <section class="lesson-section" id="objects">
-            <h2>03 · Object และเครื่องมือพื้นฐาน</h2>
+            <h2>03 · Object และเครื่องมือพื้นฐาน</h2><p>ถ้านักศึกษาหนึ่งคนมีทั้งชื่อและคะแนน จะเก็บสองค่านี้ให้รู้ว่าเป็นของคนเดียวกันอย่างไร? Object ทำหน้าที่รวมข้อมูลเป็นชุด การอ้างอิง (reference) คือค่าที่พาเราไปถึงชุดนั้น จึงมีชื่อหลายชื่อที่พาไปถึงข้อมูลชุดเดียวกันได้ ส่วน <strong>method</strong> คือฟังก์ชันที่เรียกผ่าน object เช่น <code>scores.map(...)</code> ไม่ใช่คำสั่งลึกลับชนิดใหม่</p>
             <p>
               Object รวมข้อมูลที่เกี่ยวข้องไว้ด้วยกัน อ่าน property ด้วยจุด
               หรือใช้วงเล็บเหลี่ยมเมื่อชื่อมาจากตัวแปร การกำหนด object
@@ -371,7 +371,7 @@ console.log(student[key]);   // &quot;Mint&quot;</code></pre>
               งานทั่วไปใช้ primitive number/string ได้เลย ไม่จำเป็นต้องห่อด้วย
               <code>new Number()</code> หรือ <code>new String()</code>
             </p>
-            <h3>เลือก method ของ Array ให้ตรงคำถาม</h3>
+            <h3>เลือก method ของ Array ให้ตรงคำถาม</h3><p>Callback คือฟังก์ชันที่ส่งให้ method เรียกกับแต่ละสมาชิก เช่น <code>n =&gt; n * 2</code> รับ n แล้วส่งผลคูณสองกลับ ส่วนการเปลี่ยนข้อมูลเดิมเรียกว่า mutation ตัวอย่างด้านล่างแยกให้เห็นว่า method ใดสร้าง array ใหม่</p>
             <div class="table-wrap">
               <table>
                 <thead>
@@ -389,7 +389,7 @@ console.log(student[key]);   // &quot;Mint&quot;</code></pre>
                   </tr>
                   <tr>
                     <td>indexOf</td>
-                    <td>อยู่ตำแหน่งไหน? ไม่พบคืน −1</td>
+                    <td>อยู่ตำแหน่งไหน? indexOf ค้นจากต้น lastIndexOf ค้นจากท้าย ไม่พบคืน −1</td>
                     <td>ไม่เปลี่ยน</td>
                   </tr>
                   <tr>
@@ -427,9 +427,9 @@ scores.filter(n =&gt; n &gt;= 7);          // [7, 9]
 scores.reduce((sum, n) =&gt; sum + n, 0); // 20</code></pre>
 
 <figure class="learning-visual"><strong class="lv-title">ชื่อสองชื่อ → ข้อมูลก้อนเดียว</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-columns"><div class="lv-column"><div class="lv-box "><strong><code>student</code></strong><span>อ้างอิง object A</span></div></div><div class="lv-column"><div class="lv-box "><strong><code>friend</code></strong><span>ได้ค่าจาก student</span></div></div></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small>ทั้งสองชี้มาที่เดียวกัน</small></div><div class="lv-box lv-accent"><strong>Object A</strong><span><code>{ name: "Mint", points: 8 }</code></span></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small><code>friend.points = 10</code></small></div><div class="lv-box "><strong>Object A เดิมเปลี่ยนเป็น points: 10</strong><span>อ่าน student.points ก็ได้ 10</span></div></div></div><figcaption><strong>อ่านภาพ:</strong> การคัดลอกตัวแปร object คัดลอกค่าการอ้างอิง ลูกศรจึงมารวมที่ object เดียว การแก้ property ผ่าน friend มองเห็นผ่าน student ได้ด้วย ส่วน const ห้ามเปลี่ยน binding แต่ไม่ได้ห้ามแก้ property ของ object</figcaption></figure>
-</section>
+<p>ตามตัวอย่าง <code>scores = [4, 7, 9]</code> ทีละรอบ: <code>map</code> อ่าน 4 แล้วสร้าง 8, อ่าน 7 แล้วสร้าง 14, อ่าน 9 แล้วสร้าง 18 จึงได้รายการใหม่ ส่วน <code>filter</code> ทดสอบว่าแต่ละค่าถึง 7 หรือไม่ แล้วเก็บ 7 กับ 9 เดิมไว้ สำหรับ <code>reduce</code> เริ่มยอดสะสมที่ 0 แล้วได้ 4 → 11 → 20 คำว่า callback คือฟังก์ชันที่ส่งให้ method เรียกกับแต่ละสมาชิก รูปแบบ <code>n =&gt; n * 2</code> รับ n และส่งค่าคูณสองกลับ จะเรียนการเขียนฟังก์ชันละเอียดใน <a href="chapter-07.html#callbacks">บท 7</a></p><details class="self-check"><summary>ต้องการรู้ว่ามีคะแนนต่ำกว่า 5 อย่างน้อยหนึ่งค่าหรือไม่ ควรใช้ map หรือ some?</summary><p>ใช้ <code>scores.some(n =&gt; n &lt; 5)</code> ได้ true เพราะ 4 ผ่านเงื่อนไข map จะสร้างรายการผลลัพธ์ต่อสมาชิก จึงตอบคนละคำถาม อย่าตีความ array ที่ไม่ว่างว่าแปลว่าทุกสมาชิกผ่าน</p></details></section>
           <section class="lesson-section" id="operators">
-            <h2>04 · เปรียบเทียบและตัดสินใจ</h2>
+            <h2>04 · เปรียบเทียบและตัดสินใจ</h2><p>ถ้าร้านให้ส่วนลดเฉพาะผู้ที่มีคะแนนอย่างน้อย 70 โปรแกรมจะเลือกทางไหน? เราต้องสร้าง <strong>expression</strong> หรือสิ่งที่ประเมินออกมาเป็นค่า แล้วใช้ผลนั้นเลือกคำสั่ง <strong>Operator</strong> คือเครื่องหมายที่ทำงานกับค่า และ <strong>operand</strong> คือค่าที่มันรับ เช่น <code>score &gt;= 70</code> มีค่าคะแนนกับ 70 เป็น operand คำว่า truthy/falsy หมายถึงค่าที่ถูกมองว่าเป็นจริง/เท็จเมื่อใช้เป็นเงื่อนไข ไม่ได้หมายความว่าค่านั้นมีชนิด Boolean เสมอ</p>
             <p>
               เริ่มจากแยก <code>=</code> (กำหนดค่า),
               <code>==</code> (เทียบแบบอาจแปลงชนิด) และ
@@ -531,9 +531,14 @@ const passed = score &gt;= 50 ? &quot;ผ่าน&quot; : &quot;ทบทวน
                 x = 3 และ y = 2 เพราะ postfix ให้ค่าเดิมกับ y ก่อนเพิ่ม x
               </div>
             </div>
-          </section>
+          <p>อ่านตัวอย่างคะแนน 72 ตามทางเดิน: 72 ≥ 80 เป็นเท็จ จึงข้ามการให้ A; 72 ≥ 70 เป็นจริง จึงกำหนด B แล้วออกจากชุด if โดยไม่เข้า else หากสลับให้ตรวจ ≥ 50 ก่อน ≥ 80 ผู้ได้ 90 จะเข้าทาง ≥ 50 ก่อนด้วย ลำดับเงื่อนไขจึงมีผล</p><pre><code data-example="grade-path">const score = 72;
+let grade;
+if (score &gt;= 80) grade = &quot;A&quot;;
+else if (score &gt;= 70) grade = &quot;B&quot;;
+else grade = &quot;ทบทวนเพิ่ม&quot;;
+console.log(grade);</code></pre><details class="self-check"><summary>ลองแก้ score เป็น 70 และ 69 ผลต่างกันตรงไหน?</summary><p>70 ได้ B เพราะรวมขอบเขตด้วย ≥ ส่วน 69 เข้า else ได้ “ทบทวนเพิ่ม” การทดสอบค่าตรงขอบเขตช่วยพบข้อผิดพลาดจากการเขียน &gt; แทน ≥</p></details></section>
           <section class="lesson-section" id="loops">
-            <h2>05 · มองเห็น loop ทีละขั้น</h2>
+            <h2>05 · มองเห็น loop ทีละขั้น</h2><p>ถ้าจะบวก 1 ถึง 100 เราไม่ควรเขียนคำสั่งบวกหนึ่งร้อยบรรทัด แต่ต้องอธิบายกฎว่ารอบถัดไปต่างจากรอบนี้อย่างไร <strong>Body</strong> คือคำสั่งภายในรอบ <strong>Counter</strong> คือตัวนับ และ <strong>sentinel</strong> คือค่าพิเศษที่ตกลงให้หมายถึงจบ เช่นข้อความ "stop" ส่วน infinite loop คือการวนที่ไม่มีทางถึงเงื่อนไขหยุด</p>
             <p>
               Loop คือการกลับมาทำงานเดิมเมื่อเงื่อนไขยังผ่าน ตรวจให้ครบสามอย่าง:
               <strong
@@ -570,7 +575,8 @@ const passed = score &gt;= 50 ? &quot;ผ่าน&quot; : &quot;ทบทวน
               </table>
             </div>
             <div class="code-label">JAVASCRIPT</div>
-            <pre><code>let sum = 0;
+            <pre><code>const limit = 3;
+let sum = 0;
 for (let i = 1; i &lt;= limit; i++) {
   sum += i;
 }
@@ -656,9 +662,14 @@ for (let i = 1; i &lt;= limit; i++) {
             </div>
 
 <figure class="learning-visual"><strong class="lv-title">for loop: เส้นทางที่วนกลับและทางออก</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-box "><strong>เริ่มเพียงครั้งเดียว</strong><span><code>i = 1; sum = 0; limit = 3</code></span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box lv-accent"><strong>ตรวจเงื่อนไข <code>i &lt;= limit</code></strong></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small>แยกสองทาง</small></div><div class="lv-columns"><div class="lv-column"><p class="lv-branch-label">ผ่าน → ทำรอบนี้</p><div class="lv-box "><strong><code>sum += i</code></strong><span>รอบแรก: sum = 1</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong><code>i++</code></strong><span>รอบแรก: i = 2</span></div><div class="lv-return">↶ กลับไปตรวจเงื่อนไข</div></div><div class="lv-column"><p class="lv-branch-label">ไม่ผ่าน → ออกจาก loop</p><div class="lv-box "><strong>เมื่อ i = 4</strong><span>4 &lt;= 3 เป็น false</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box lv-good"><strong>อ่านผลลัพธ์</strong><span><code>sum = 6</code></span></div></div></div></div></div><figcaption><strong>อ่านภาพ:</strong> ตัวเริ่มทำครั้งเดียว แต่เงื่อนไขถูกตรวจซ้ำทุกครั้ง หลังบวกต้องเพิ่ม i ก่อนวนกลับ เมื่อ i = 4 จึงออก โดยไม่บวก 4 เข้าไปในผลรวม</figcaption></figure>
-</section>
+<p>อ่านผลโดยไม่ใช้กิจกรรม: n = 3 มีรอบบวกสามครั้ง (i, sum) เป็น (1,1), (2,3), (3,6) แล้วตรวจ i = 4 ไม่ผ่าน ไม่ได้บวก 4 เข้าไป ส่วน n = 5 ได้ผลสะสม 1, 3, 6, 10, 15 ลองกดเริ่มใหม่แล้วทำนาย sum ก่อนกด “ขั้นถัดไป” ทุกครั้ง</p><pre><code data-example="loop-total">const limit = 3;
+let sum = 0;
+for (let i = 1; i &lt;= limit; i++) {
+  sum += i;
+}
+console.log(sum);</code></pre><details class="self-check"><summary>ถ้าแก้เงื่อนไขเป็น i &lt; limit โดย limit = 3 จะได้เท่าไร?</summary><p>ได้ 3 เพราะบวกแค่ 1 กับ 2 นี่คือข้อผิดพลาดขาดปลายช่วงหนึ่งค่า ถ้าต้องรวม limit ต้องใช้ ≤ ส่วนตัวแปร i ที่ประกาศด้วย let ใน for ไม่ได้อ่านจากภายนอก loop ได้โดยอัตโนมัติ ค่าที่กิจกรรมแสดงเป็นบันทึกแต่ละขั้น</p></details></section>
           <section class="lesson-section" id="game">
-            <h2>06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</h2>
+            <h2>06 · เชื่อมทุกอย่างด้วย Tic-tac-toe</h2><p>ถ้าคลิกช่องเดิมสองครั้งแล้วระบบสลับผู้เล่นสองครั้ง เกมจะผิดแม้หน้าตาดูเหมือนเดิม เราจึงต้องให้ <strong>state</strong> หรือข้อมูลสถานะเป็นตัวตัดสินว่าเดินได้หรือไม่ ก่อนปรับ <strong>UI (User Interface)</strong> หรือส่วนที่ผู้ใช้เห็นและใช้งาน เกมนี้ต่อยอด array เงื่อนไข และ loop จากหัวข้อก่อนหน้า</p>
             <p>
               เกมในสไลด์เป็นตัวอย่างว่า UI และข้อมูลต้องไปด้วยกัน ใช้ array
               เก็บกระดาน ใช้ตัวแปรเก็บผู้เล่นปัจจุบัน และตรวจรูปแบบชนะ 8
@@ -698,7 +709,7 @@ for (let i = 1; i &lt;= limit; i++) {
               ก่อนสอบ ลองอธิบายได้ว่า: ทำไมต้องห้ามลงช่องเดิม? ทำไมต้องหยุดรับ
               click เมื่อชนะ? และ restart ต้องรีเซ็ตข้อมูลใดบ้าง?
             </div>
-          </section>
+          <p>ลองเส้นทางชนะโดยนับช่องซ้ายไปขวา บนลงล่างเป็น 1–9: X ลง 1, O ลง 4, X ลง 2, O ลง 5, X ลง 3 จบด้วย X ชนะ แถวแรกมี X ทั้งสามช่อง หลังจบลองกดช่อง 9 กระดานต้องไม่เปลี่ยน แล้วกดเริ่มเกมใหม่ ข้อมูลทั้ง 9 ช่องต้องว่าง ผู้เล่นกลับเป็น X และสถานะจบเกมกลับเป็นยังไม่จบ</p><details class="self-check"><summary>ถ้ากระดานเต็มในตาเดียวกับที่ผู้เล่นเรียงครบสามช่อง ต้องแสดงชนะหรือเสมอ?</summary><p>ชนะ จึงต้องตรวจรูปแบบชนะก่อนตรวจว่าทุกช่องเต็ม ถ้าตรวจเต็มก่อนจะประกาศเสมอผิด การจำลำดับคลิกไม่สำคัญเท่าการอธิบายเงื่อนไขและลำดับตรวจ</p></details></section>
           <section class="lesson-section" id="chapter-summary"><h2>สรุปบท</h2><p>เราเริ่มจากชื่อที่ผูกกับค่า ใช้ตัวดำเนินการคำนวณและเปรียบเทียบ แล้วใช้เงื่อนไขเลือกทางเดินและ loop ทำซ้ำ Object และ Array ช่วยเก็บข้อมูลที่สัมพันธ์กัน เกมท้ายบทจึงเป็นการเปลี่ยนข้อมูลตามการคลิกแล้วตรวจเงื่อนไขชนะ ไม่ใช่โค้ดลึกลับอีกชุดหนึ่ง เมื่ออ่านโค้ด ให้ถามว่าบรรทัดนี้อ่านค่าใด เปลี่ยนค่าใด และบรรทัดต่อไปคืออะไร บท 7 จะรวมคำสั่งเหล่านี้เป็นฟังก์ชันที่เรียกใช้ซ้ำได้</p></section>
 <section class="lesson-section" id="flashcards">
             <h2>Flashcards</h2>

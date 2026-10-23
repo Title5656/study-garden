@@ -79,6 +79,48 @@ try {
   await reset.focus(); await p.keyboard.press('Enter');
   assert.equal(await tracer.locator('[data-price]').inputValue(),'100');
   assert.equal(await tracer.locator('[data-quantity]').inputValue(),'2');
+  // Reset must restore actual lesson state, not only a status message.
+  const activities=await useLocalFiles(await browser.newPage({reducedMotion:'reduce'}),root);
+  activities.on('pageerror',e=>errors.push(e.message));
+  await activities.goto('https://study-garden.test/subjects/itds241/chapter-07.html#dom');
+  const originalItems=await activities.locator('#dom-list li').allTextContents();
+  // Run the exact complete HTML examples in a separate page, like a saved .html file.
+  const examplePage=await browser.newPage();
+  examplePage.on('pageerror',e=>errors.push(e.message));
+  for(const id of ['dom-fixture','event-fixture','sum-fixture']) {
+    const html=await activities.locator(`[data-browser-example="${id}"]`).textContent();
+    await examplePage.setContent(html);
+    if(id==='dom-fixture') {
+      assert.equal(await examplePage.locator('#topics li').count(),0);
+      assert.equal(await examplePage.locator('#result').textContent(),'ลูกที่เหลือ: 0');
+    } else if(id==='event-fixture') {
+      assert.equal(await examplePage.locator('#result').textContent(),'ยังไม่กด');
+      await examplePage.locator('#check').focus(); await examplePage.keyboard.press('Enter');
+      assert.equal(await examplePage.locator('#result').textContent(),'รับเหตุการณ์: click');
+    } else {
+      await examplePage.locator('#add').click();
+      assert.equal(await examplePage.locator('#result').textContent(),'15');
+      await examplePage.locator('#first').fill(''); await examplePage.locator('#add').click();
+      assert.equal(await examplePage.locator('#result').textContent(),'กรุณากรอกตัวเลขทั้งสองช่อง');
+      await examplePage.locator('#first').fill('0'); await examplePage.locator('#add').click();
+      assert.equal(await examplePage.locator('#result').textContent(),'3');
+    }
+  }
+  await examplePage.close();
+  await activities.locator('#dom-input').fill('<b>literal input</b>');
+  await activities.locator('#dom-add').click();
+  assert.equal(await activities.locator('#dom-list b').count(),0,'User text remains text');
+  assert.equal(await activities.locator('#dom-list li').count(),originalItems.length+1);
+  await activities.locator('#dom-reset').focus(); await activities.keyboard.press('Enter');
+  assert.deepEqual(await activities.locator('#dom-list li').allTextContents(),originalItems);
+  assert.equal(await activities.locator('#dom-input').inputValue(),'');
+  await activities.goto('https://study-garden.test/subjects/itds241/chapter-08.html#nullish');
+  await activities.locator('#nullish-value').selectOption('nil');
+  assert.equal(await activities.locator('#nullish-output').textContent(),'"สำรอง"');
+  await activities.locator('#nullish-reset').focus(); await activities.keyboard.press('Space');
+  assert.equal(await activities.locator('#nullish-value').inputValue(),'zero');
+  assert.equal(await activities.locator('#nullish-output').textContent(),'0');
+  await activities.close();
   assert.match(await tracer.locator('[data-trace-state]').textContent(),/ยังไม่/);
   assert.equal(await next.isDisabled(),false);
   await p.close();

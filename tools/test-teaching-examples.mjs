@@ -6,6 +6,12 @@ for(const [chapter,id,want] of [
  ['06','price-total',[200]],
  ['07','function-price',[80]],
  ['08','promise-order',['เริ่ม','ทำงานอื่นต่อ','ข้อมูลพร้อม']],
+ ['06','grade-path',['B']],
+ ['06','loop-total',[6]],
+ ['07','callback-square',[16]],
+ ['07','closure-count',[1,2,1]],
+ ['08','rest-spread',[5,'[8,10,12]']],
+ ['08','nullish-zero',[10,0]],
 ]) {
  const html=readFileSync(new URL(`../subjects/itds241/chapter-${chapter}.html`,import.meta.url),'utf8');
  const match=html.match(new RegExp(`<code data-example="${id}">([\\s\\S]*?)</code>`));
@@ -25,4 +31,4 @@ for(const chapter of Object.values(data.window.StudyContent.itds241)) {
   assert.ok(Number.isInteger(q.answer)&&q.answer>=0&&q.answer<4);
  }
 }
-console.log('PASS: three authored examples produce stated output; 30 quiz questions keep score/storage contract');
+console.log('PASS: nine authored examples produce stated output; 30 quiz questions keep score/storage contract');

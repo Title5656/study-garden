@@ -20,7 +20,7 @@
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
     ></script>
     <script defer src="../../assets/app.js?v=81f94261d63b"></script>
-    <script defer src="../../assets/labs.js?v=221da593676f"></script>
+    <script defer src="../../assets/labs.js?v=665973f17e74"></script>
   <link rel="stylesheet" href="../../assets/reader.css?v=5dcbbd9072f4">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
@@ -65,7 +65,7 @@
         <h1>Functions, Objects & DOM</h1>
         <p>จากฟังก์ชันและ closure สู่ object และหน้าเว็บที่โต้ตอบได้</p>
         <div class="tags">
-          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 23–33 นาที</span
+          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 30–40 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
           ><span class="tag" data-chapter-status="07">ยังไม่ได้อ่าน</span>
         </div>
@@ -94,7 +94,7 @@
 <dt>Scope / closure / lifetime</dt><dd>Scope คือบริเวณที่เข้าถึงชื่อได้ Closure คือฟังก์ชันพร้อมการอ้างถึงตัวแปรแวดล้อมที่ประกาศไว้ ส่วน lifetime คือช่วงที่ข้อมูลนั้นยังคงอยู่</dd>
 <dt>Object / class / method / this</dt><dd>Object คือกลุ่มข้อมูลและพฤติกรรม Class คือแบบกำหนดโครงสร้างสำหรับสร้าง object Method คือฟังก์ชันที่เป็นสมาชิก และ this คือค่าบริบทของการเรียก ซึ่งขึ้นกับรูปแบบฟังก์ชันและวิธีเรียก</dd>
 <dt>DOM / node / element / event</dt><dd>DOM คือแบบจำลองเอกสารเป็นต้นไม้ Node คือหน่วยในต้นไม้นั้น Element คือ node ของแท็ก HTML และ event คือเหตุการณ์ที่โปรแกรมรับรู้ เช่น การคลิก</dd>
-</dl></section>
+<dt>Hoisting / initialization / lexical</dt><dd>Hoisting คือการเตรียม binding ก่อนรันคำสั่ง; initialization คือทำให้ binding มีค่าเริ่มต้นที่อ่านได้ ส่วน lexical หมายถึงยึดตำแหน่งที่เขียนโค้ด เช่น arrow ใช้ this จากบริบทแวดล้อม</dd><dt>Prototype / interface</dt><dd>Prototype คือต้นแบบที่ใช้ค้น property เมื่อ object ไม่มีเอง Interface ในบทนี้หมายถึงชื่อและรูปแบบการเรียกที่ตกลงร่วมกัน ไม่ใช่คำสั่ง interface ของ JavaScript</dd><dt>Synchronous / asynchronous / thread</dt><dd>Synchronous ทำงานในลำดับการเรียกปัจจุบัน ส่วน asynchronous จัดงานให้รับผลภายหลัง Thread คือทางเดินการประมวลผลหนึ่งสาย งานหนักบนสายหลักจึงทำให้ callback ต้องรอ</dd><dt>Attribute / collection</dt><dd>Attribute คือข้อมูลกำกับแท็ก เช่น id และ class ส่วน collection คือชุดสมาชิกที่เลือกจาก DOM; static คือชุดที่ไม่เปลี่ยนสมาชิกตาม DOM ภายหลัง ส่วน live เปลี่ยนตาม DOM</dd></dl></section>
           <section class="lesson-section" id="functions">
             <h2>01 · ฟังก์ชันคือหน่วยของงาน</h2>
 <p>ถ้าร้านค้าต้องคิดราคาหลังลดให้ลูกค้าหลายคน เราจะคัดลอกคำสั่งลบส่วนลดทุกครั้งหรือเก็บวิธีคิดไว้ให้เรียกซ้ำ? <strong>Function (ฟังก์ชัน)</strong> คือชุดคำสั่งที่รวมเป็นงานหนึ่งหน่วยและเรียกใช้งานได้ ลองตามการส่งค่าจริงเข้าสู่ชื่อรับข้อมูลก่อนดูรูปแบบย่อ</p>
@@ -186,7 +186,7 @@ const add = (a, b) =&gt; {
             </div>
           </section>
           <section class="lesson-section" id="callbacks">
-            <h2>02 · ส่งฟังก์ชันให้ฟังก์ชัน</h2>
+            <h2>02 · ส่งฟังก์ชันให้ฟังก์ชัน</h2><p>ถ้าเรามีขั้นตอน “ทำงานกับตัวเลขทุกตัว” อยู่แล้ว จะเปลี่ยนจากคูณสองเป็นยกกำลังสองโดยไม่เขียน loop ใหม่ได้อย่างไร? ส่งวิธีคำนวณเข้าไปเป็นข้อมูล เหมือนส่งสูตรให้เครื่องคิดเลขใช้ทีละรายการ คำว่า callback บอกความสัมพันธ์ว่าใครจะเรียกฟังก์ชันนั้น ไม่ได้บอกว่าจะเรียกทันทีหรือรอภายหลัง</p>
             <p>
               ใน JavaScript ฟังก์ชันเป็น <strong>first-class value</strong>:
               เก็บในตัวแปร ใส่ใน array ส่งเป็น argument และคืนจากฟังก์ชันอื่นได้
@@ -241,9 +241,11 @@ setTimeout(() =&gt; console.log(&quot;พักสายตา&quot;), 1000);</c
                 แล้วนำค่าที่คืนไปส่งต่อ ซึ่งมักไม่ใช่ callback ที่ต้องการ
               </div>
             </div>
-          </section>
+          <p>ตาม <code>applyTo(4, square)</code>: value รับ 4 ส่วน operation รับตัวฟังก์ชัน square จากนั้น <code>operation(value)</code> จึงเรียก square ด้วย 4 ได้ 16 แล้ว return ต่อกลับผู้เรียก ถ้าเขียน <code>square(4)</code> ตรง argument จะส่งเลข 16 แทนตัวฟังก์ชัน การพยายามเรียก 16 เป็นฟังก์ชันจึงผิด</p><pre><code data-example="callback-square">function applyTo(value, operation) { return operation(value); }
+const square = n =&gt; n * n;
+console.log(applyTo(4, square));</code></pre><details class="self-check"><summary>ทุก callback ทำงานแบบ asynchronous หรือไม่?</summary><p>ไม่ใช่ map เรียก callback ระหว่างประมวลผลและคืนผลเมื่อทำครบ ส่วน setTimeout วางงานไว้ทำภายหลัง คำว่า callback บอกว่าฟังก์ชันถูกส่งไปให้เรียกต่อ ไม่ได้กำหนดเวลา</p></details></section>
           <section class="lesson-section" id="scope">
-            <h2>03 · Scope และ Closure</h2>
+            <h2>03 · Scope และ Closure</h2><p>ถ้ามีชื่อ <code>count</code> อยู่สองแห่ง คอมพิวเตอร์จะอ่านตัวไหน และทำไมปุ่มนับยังจำจำนวนได้หลังฟังก์ชันสร้างปุ่มทำงานจบ? ให้แยก “มองเห็นชื่อจากจุดนี้หรือไม่” ออกจาก “ข้อมูลยังถูกอ้างถึงอยู่หรือไม่” <strong>Environment</strong> ในคำอธิบายนี้คือบริบทที่ผูกชื่อตัวแปรกับค่า <strong>Module</strong> คือไฟล์หน่วยโค้ดที่ประกาศแบ่งปันชื่อด้วย export และรับด้วย import ส่วน classic script คือสคริปต์ทั่วไปที่ไม่ได้ประกาศ <code>type="module"</code></p>
             <p>
               <strong>Scope</strong> ตอบว่าอ่านตัวแปรจากจุดไหนได้ ส่วน
               <strong>lifetime</strong> ตอบว่าข้อมูลยังมีชีวิตอยู่นานเท่าไร
@@ -355,9 +357,17 @@ counterB(); // 1: อีก environment หนึ่ง</code></pre>
             </div>
 
 <figure class="learning-visual"><strong class="lv-title">Closure: ฟังก์ชันจบ แต่ยังมีทางเข้าถึงความจำ</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-box "><strong><code>makeCounter()</code></strong><span>เรียกครั้งที่ 1 สร้าง environment A</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-memory"><strong>Environment A</strong><div class="lv-box "><strong><code>count = 0</code></strong><span>ตัวแปรของการเรียกครั้งนี้</span></div></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box lv-accent"><strong><code>counter = () =&gt; ++count</code></strong><span>ฟังก์ชันที่คืนออกมายังอ้างถึง A</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong><code>counter() → 1 → 2</code></strong><span>แต่ละครั้งแก้ count ตัวเดิม</span></div></div><div class="lv-return">เรียก makeCounter() ใหม่ → environment B → เริ่มนับแยกจาก A</div></div><figcaption><strong>อ่านภาพ:</strong> ลูกศรเชื่อมฟังก์ชันที่คืนมากับ environment ที่มันถูกสร้างไว้ ไม่ได้คัดลอก count ใหม่ทุกครั้งที่เรียก counter ส่วนการเรียก makeCounter อีกครั้งจะสร้างความจำอีกชุดหนึ่ง</figcaption></figure>
-</section>
+<p>ลองกิจกรรมตัวนับ: กด A สองครั้งแล้ว B หนึ่งครั้ง ควรเห็น A = 2, B = 1 เพราะการเรียก makeCounter แต่ละครั้งสร้าง count คนละตัว กดรีเซ็ตเพื่อสร้างสองชุดใหม่ ไม่ใช่แค่เปลี่ยนข้อความบนหน้าจอ ถ้าไม่ได้เปิด JavaScript ให้ตามโค้ดนี้ ผลเดียวกันแสดงใน Console</p><pre><code data-example="closure-count">function makeCounter() {
+  let count = 0;
+  return () =&gt; ++count;
+}
+const a = makeCounter();
+const b = makeCounter();
+console.log(a());
+console.log(a());
+console.log(b());</code></pre><details class="self-check"><summary>ถ้า const c = a; แล้วเรียก c() ต่อจากตัวอย่าง จะได้ 1 หรือ 3?</summary><p>ได้ 3 เพราะ c อ้างฟังก์ชันเดียวกับ a ไม่ได้เรียก makeCounter เพื่อสร้าง environment ใหม่ นี่เชื่อมกับการอ้างอิง object ในบท 6</p></details></section>
           <section class="lesson-section" id="oop">
-            <h2>04 · Class, Object และการสืบทอด</h2>
+            <h2>04 · Class, Object และการสืบทอด</h2><p>ถ้าระบบมีผู้เรียนหลายคน แต่ละคนต้องมีชื่อของตัวเองและใช้วิธีแนะนำตัวแบบเดียวกัน เราควรแยกข้อมูลของแต่ละคนออกจากแบบแผนร่วม <strong>OOP (Object-oriented programming)</strong> คือการจัดโปรแกรมด้วย object ที่รวมข้อมูลกับพฤติกรรม <strong>Class</strong> คือแบบแผนการสร้าง object; <strong>instance</strong> คือ object ที่สร้างจากแบบแผนนั้น; <strong>constructor</strong> คือขั้นตอนตั้งข้อมูลเมื่อสร้าง และ <code>this</code> คือค่าตัวรับที่วิธีเรียกฟังก์ชันกำหนดให้ ใน method ที่เรียกผ่าน instance ปกติจะหมายถึง instance นั้น</p>
             <p>
               OOP รวมข้อมูล (<strong>properties</strong>) และงานที่ทำกับข้อมูล
               (<strong>methods</strong>) ให้อยู่ใน object เดียวกัน Class
@@ -433,9 +443,9 @@ console.log(learner.introduce()); // ฉันชื่อ Mint กำลัง�
               ที่ไม่มีจะเกิด TypeError การเพิ่ม property ภายหลังทำได้กับ object
               ปกติที่ยังขยายได้ แต่ควรออกแบบข้อมูลให้สม่ำเสมอเพื่ออ่านโค้ดง่าย
             </p>
-          </section>
+          <p>อ่านตัวอย่าง WebLearner ตามลำดับ: new สร้าง instance; constructor ของลูกเรียก super(name) ให้แม่ตั้งชื่อ; ลูกเพิ่ม topic; เมื่อเรียก introduce จะเลือก method ของลูกที่ override หรือกำหนดพฤติกรรมชื่อเดิมใหม่; super.introduce() อ่านวิธีของแม่มาประกอบข้อความ <strong>Prototype</strong> คือต้นแบบที่ใช้ค้น property เมื่อ object ไม่มีเอง ส่วน interface ในที่นี้หมายถึงชื่อและรูปแบบการเรียกที่ตกลงร่วมกัน ไม่ใช่ syntax interface ของ JavaScript</p><details class="self-check"><summary>สร้างผู้เรียนสองคนแล้วเปลี่ยนชื่อคนแรก ชื่อคนที่สองต้องเปลี่ยนตามหรือไม่?</summary><p>ไม่จำเป็น และในตัวอย่าง class นี้ไม่เปลี่ยน เพราะ this.name ถูกกำหนดบน instance แต่ละตัว ต่างจากกำหนดตัวแปรสองชื่อให้อ้าง instance เดียวกัน การสืบทอด method ไม่ได้แปลว่า instance ใช้ข้อมูลทุกช่องร่วมกัน</p></details></section>
           <section class="lesson-section" id="dom">
-            <h2>05 · DOM คือหน้าเว็บในรูปต้นไม้</h2>
+            <h2>05 · DOM คือหน้าเว็บในรูปต้นไม้</h2><p>ถ้าจะเพิ่มหัวข้อใหม่โดยไม่โหลดหน้าอีกครั้ง โปรแกรมต้องหาจุดที่จะใส่ข้อมูลให้พบก่อน <strong>DOM (Document Object Model)</strong> คือแบบจำลองเอกสารที่เบราว์เซอร์สร้างเป็นต้นไม้ <strong>Node</strong> คือจุดหนึ่งในต้นไม้; <strong>element</strong> คือ node ที่แทนแท็ก HTML; parent/child คือแม่/ลูก, sibling คือพี่น้อง และ descendant คือลูกหลาน ส่วน selector คือรูปแบบระบุ element เช่น <code>#topics</code> หมายถึง element ที่มี id เป็น topics</p>
             <p>
               เบราว์เซอร์แปลง HTML เป็นต้นไม้ของ node โดย
               <code>document</code> เป็นจุดเริ่มต้น Element อย่าง h1 หรือ p มี
@@ -491,12 +501,20 @@ console.log(learner.introduce()); // ฉันชื่อ Mint กำลัง�
               ส่วน querySelectorAll รองรับ forEach ได้
             </p>
             <div class="code-label">JAVASCRIPT</div>
-            <pre><code>const list = document.querySelector(&quot;#topics&quot;);
+            <p>ตัวอย่างครบชุด: บันทึกเป็นไฟล์ <code>.html</code> แล้วเปิดในเบราว์เซอร์ได้ ไม่ต้องสร้าง element เพิ่มเอง</p><pre><code data-browser-example="dom-fixture">&lt;!doctype html&gt;
+&lt;html lang=&quot;th&quot;&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;ทดลอง DOM&lt;/title&gt;
+&lt;ul id=&quot;topics&quot;&gt;&lt;/ul&gt;
+&lt;p id=&quot;result&quot;&gt;&lt;/p&gt;
+&lt;script&gt;
+const list = document.querySelector(&quot;#topics&quot;);
 const item = document.createElement(&quot;li&quot;);
-item.textContent = &quot;อ่าน DOM&quot;;      // ใส่เป็นข้อความ
-list.appendChild(item);             // แนบเข้าเอกสาร
-item.setAttribute(&quot;class&quot;, &quot;done&quot;); // กำหนด attribute
-list.removeChild(item);             // ลบ node ลูกนั้น</code></pre>
+item.textContent = &quot;อ่าน DOM&quot;;
+list.appendChild(item);
+item.setAttribute(&quot;class&quot;, &quot;done&quot;);
+// ตอนนี้มีลูกหนึ่งตัว ลองใส่ comment หน้าบรรทัดถัดไปเพื่อดูรายการ
+list.removeChild(item);
+document.querySelector(&quot;#result&quot;).textContent = &quot;ลูกที่เหลือ: &quot; + list.children.length;
+&lt;/script&gt;&lt;/html&gt;</code></pre>
             <div class="lab" id="dom-lab">
               <h3>DOM playground · เปลี่ยนต้นไม้ด้วยมือเรา</h3>
               <label for="dom-input">ข้อความสำหรับ node</label><br /><input
@@ -508,7 +526,7 @@ list.removeChild(item);             // ลบ node ลูกนั้น</code><
               <div class="actions" style="margin-top: 12px">
                 <button class="btn soft" id="dom-add">+ เพิ่ม li</button
                 ><button class="btn" id="dom-edit">แก้ตัวแรก</button
-                ><button class="btn" id="dom-remove">ลบตัวท้าย</button>
+                ><button class="btn" type="button" id="dom-reset">เริ่มใหม่</button><button class="btn" id="dom-remove">ลบตัวท้าย</button>
               </div>
               <div class="tree" style="margin-top: 18px">
                 <code>ul#topics</code>
@@ -531,21 +549,25 @@ list.removeChild(item);             // ลบ node ลูกนั้น</code><
             </p>
 
 <figure class="learning-visual"><strong class="lv-title">DOM: ความสัมพันธ์ parent / child / sibling</strong><div class="lv-diagram"><ul class="lv-tree"><li><div class="lv-box "><strong><code>document</code></strong></div><ul><li><div class="lv-box "><strong><code>html</code></strong></div><ul><li><div class="lv-box "><strong><code>body</code></strong></div><ul><li><div class="lv-box "><strong><code>h1</code></strong><span>element node</span></div><ul><li><div class="lv-box "><strong><code>"Study Garden"</code></strong><span>text node</span></div></li></ul></li><li><div class="lv-box "><strong><code>p</code></strong><span>เป็น sibling ของ h1</span></div></li></ul></li></ul></li></ul></li></ul></div><figcaption><strong>อ่านภาพ:</strong> เส้นแนวตั้งและกิ่งแสดงความเป็นลูก: h1 กับ p มี parent เป็น body เหมือนกัน จึงเป็น siblings ส่วนข้อความเป็น child ของ h1 การเลือก h1 กับการอ่านข้อความข้างในจึงเป็นคนละขั้น</figcaption></figure>
-</section>
+<p>ตัวอย่างครบชุดวาง <code>&lt;ul id="topics"&gt;&lt;/ul&gt;</code> ไว้ก่อน script เพื่อให้โค้ดเลือกพบ ถ้าเลือกไม่พบจะได้ null และเรียก appendChild ต่อไม่ได้ ใน playground นี้รายการจริงใช้ id dom-list ส่วน #topics ที่แสดงเป็นชื่อในภาพสอน ลองเพิ่ม “อ่าน DOM” จะได้ลูกเพิ่มหนึ่งตัว แก้ตัวแรกเปลี่ยนข้อความแต่จำนวนลูกไม่เปลี่ยน ลบตัวท้ายลดจำนวนลงหนึ่ง และเริ่มใหม่คืนรายการตั้งต้น</p><details class="self-check"><summary>ตั้ง item.textContent = "&lt;b&gt;สวัสดี&lt;/b&gt;" จะได้ตัวหนาหรือข้อความแท็ก?</summary><p>ได้ข้อความแท็กตามตัวอักษร เพราะ textContent ไม่แปลเป็น HTML นี่เหมาะกับข้อความที่ผู้ใช้กรอก ส่วน innerHTML จะตีความ markup จึงต้องคำนึงถึงความน่าเชื่อถือของข้อมูล</p></details></section>
           <section class="lesson-section" id="events">
-            <h2>06 · Event เชื่อมการกระทำกับโค้ด</h2>
+            <h2>06 · Event เชื่อมการกระทำกับโค้ด</h2><p>ปุ่มไม่ควรเรียกฟังก์ชันตรวจคะแนนทันทีที่เราเปิดหน้า แต่ควรรอให้ผู้ใช้กดก่อน เราจึงลงทะเบียน <strong>listener</strong> หรือฟังก์ชันผู้รับเหตุการณ์ไว้ คำว่า register ในบริบทนี้แปลว่าบอกเบราว์เซอร์ว่าเมื่อเกิดเหตุการณ์ชนิดนี้ให้เรียกฟังก์ชันใด โดยส่ง object ที่อธิบายเหตุการณ์ให้ด้วย</p>
             <p>
               Event คือสัญญาณที่เกิดขึ้น เช่น click, input, change, keydown หรือ
               submit เราลงทะเบียน listener ไว้ก่อน แล้วให้ browser เรียก
               callback เมื่อเหตุการณ์มาถึง
             </p>
             <div class="code-label">JAVASCRIPT</div>
-            <pre><code>const button = document.querySelector(&quot;#check&quot;);
+            <p>ตัวอย่างครบชุด: บันทึกเป็นไฟล์ <code>.html</code> แล้วเปิดในเบราว์เซอร์ได้ ไม่ต้องสร้าง element เพิ่มเอง</p><pre><code data-browser-example="event-fixture">&lt;!doctype html&gt;
+&lt;html lang=&quot;th&quot;&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;ทดลอง Event&lt;/title&gt;
+&lt;button id=&quot;check&quot;&gt;ตรวจ&lt;/button&gt;&lt;p id=&quot;result&quot;&gt;ยังไม่กด&lt;/p&gt;
+&lt;script&gt;
+const button = document.querySelector(&quot;#check&quot;);
 function handleClick(event) {
-  console.log(event.target); // element ต้นทางของเหตุการณ์
+  document.querySelector(&quot;#result&quot;).textContent = &quot;รับเหตุการณ์: &quot; + event.type;
 }
-button.addEventListener(&quot;click&quot;, handleClick);
-// ไม่เขียน handleClick() เพราะจะเรียกทันที</code></pre>
+button.addEventListener(&quot;click&quot;, handleClick); // ส่งฟังก์ชัน ไม่เรียกตอนลงทะเบียน
+&lt;/script&gt;&lt;/html&gt;</code></pre>
             <div class="table-wrap">
               <table>
                 <thead>
@@ -593,7 +615,13 @@ button.addEventListener(&quot;click&quot;, handleClick);
             </div>
             <h3>ช่อง input ให้ string แม้หน้าตาดูเป็นตัวเลข</h3>
             <div class="code-label">JAVASCRIPT</div>
-            <pre><code>function addInputs() {
+            <p>ตัวอย่างครบชุด: บันทึกเป็นไฟล์ <code>.html</code> แล้วเปิดในเบราว์เซอร์ได้ ไม่ต้องสร้าง element เพิ่มเอง</p><pre><code data-browser-example="sum-fixture">&lt;!doctype html&gt;
+&lt;html lang=&quot;th&quot;&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;บวกสองจำนวน&lt;/title&gt;
+&lt;label&gt;จำนวนแรก &lt;input id=&quot;first&quot; value=&quot;12&quot;&gt;&lt;/label&gt;
+&lt;label&gt;จำนวนที่สอง &lt;input id=&quot;second&quot; value=&quot;3&quot;&gt;&lt;/label&gt;
+&lt;button id=&quot;add&quot;&gt;บวก&lt;/button&gt;&lt;p id=&quot;result&quot;&gt;รอคำนวณ&lt;/p&gt;
+&lt;script&gt;
+function addInputs() {
   const first = document.querySelector(&quot;#first&quot;).value.trim();
   const second = document.querySelector(&quot;#second&quot;).value.trim();
   const a = Number(first);
@@ -602,13 +630,17 @@ button.addEventListener(&quot;click&quot;, handleClick);
     return &quot;กรุณากรอกตัวเลขทั้งสองช่อง&quot;;
   }
   return a + b;
-}</code></pre>
+}
+document.querySelector(&quot;#add&quot;).addEventListener(&quot;click&quot;, () =&gt; {
+  document.querySelector(&quot;#result&quot;).textContent = addInputs();
+});
+&lt;/script&gt;&lt;/html&gt;</code></pre>
             <div class="note">
               ภาพรวมทั้งบท: Event เรียก function → function อ่านหรือเปลี่ยน
               state → ใช้ DOM สะท้อนผลกลับไปยังหน้าเว็บ
               สิ่งที่เห็นกับข้อมูลที่เก็บควรสอดคล้องกันเสมอ
             </div>
-          </section>
+          <p>ตัวอย่างครบชุดใส่ปุ่มและช่องกรอกก่อน script แล้ว โดยปุ่มตรวจใช้ id เป็น check ส่วนตัวอย่าง addInputs ใช้ input ที่ id เป็น first กับ second ตามลำดับ เมื่อกรอก "12" และ "3" ค่า .value เป็นข้อความทั้งคู่ การบวกโดยไม่แปลงจะได้ "123" แต่ Number แปลงให้คำนวณได้ 15 โค้ดตรวจข้อความว่างก่อน เพราะ Number("") ได้ 0 ซึ่งอาจกลบข้อมูลที่ผู้ใช้ลืมกรอก</p><details class="self-check"><summary>ปุ่มมีข้อความอยู่ใน span ภายใน เมื่อกด span event.target กับ event.currentTarget ต่างกันอย่างไร?</summary><p>target คือ element ต้นทางที่ถูกกด เช่น span ส่วน currentTarget คือ element ที่ listener ปัจจุบันผูกอยู่ เช่น button จึงไม่ควรสมมติว่า target เป็นปุ่มเสมอ เมื่อใช้ปุ่ม HTML จริง การกด Enter/Space จะใช้พฤติกรรมปุ่มตามปกติได้ด้วย</p></details></section>
           <section class="lesson-section" id="chapter-summary"><h2>สรุปบท</h2><p>ฟังก์ชันแยกงานให้เรียกซ้ำได้ โดยรับ argument ผ่าน parameter และส่งผลกลับด้วย return เมื่อส่งฟังก์ชันเป็นค่า เราสร้าง callback ได้ Closure อธิบายว่าฟังก์ชันยังเข้าถึงตัวแปรจากบริเวณที่ประกาศได้อย่างไร ส่วน class จัดข้อมูลกับพฤติกรรมที่เกี่ยวข้องเข้าด้วยกัน เมื่อนำไปใช้กับ DOM และ event การคลิกหนึ่งครั้งจึงเรียกฟังก์ชันเพื่ออ่านหรือเปลี่ยนโครงสร้างหน้าเว็บได้ บทต่อไปจะต่อยอดเมื่อผลของงานยังไม่พร้อมทันที</p></section>
 <section class="lesson-section" id="flashcards">
             <h2>Flashcards</h2>

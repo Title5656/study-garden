@@ -177,10 +177,17 @@
 
   if ($("#dom-lab")) {
     const list = $("#dom-list");
+    const initialNodes = [...list.childNodes].map(node => node.cloneNode(true));
     let count = 1;
     function message(text) {
       $("#dom-message").textContent = text;
     }
+    $("#dom-reset").addEventListener("click", () => {
+      list.replaceChildren(...initialNodes.map(node => node.cloneNode(true)));
+      $("#dom-input").value = "";
+      count = 1;
+      message("เริ่มใหม่: คืนรายการตั้งต้น มี li หนึ่งตัว");
+    });
     $("#dom-add").addEventListener("click", () => {
       if (list.children.length >= 5) {
         message("ตัวอย่างนี้จำกัด 5 node เพื่อให้เห็นต้นไม้ได้ชัด");
@@ -259,6 +266,10 @@
       $("#nullish-output").textContent = show(value ?? "สำรอง");
     }
     $("#nullish-value").addEventListener("change", compare);
+    $("#nullish-reset").addEventListener("click", () => {
+      $("#nullish-value").value = "zero";
+      compare();
+    });
     compare();
   }
 })();

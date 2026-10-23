@@ -20,7 +20,7 @@
       src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"
     ></script>
     <script defer src="../../assets/app.js?v=81f94261d63b"></script>
-    <script defer src="../../assets/labs.js?v=221da593676f"></script>
+    <script defer src="../../assets/labs.js?v=665973f17e74"></script>
   <link rel="stylesheet" href="../../assets/reader.css?v=5dcbbd9072f4">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
@@ -65,7 +65,7 @@
         <h1>Modern JavaScript</h1>
         <p>เข้าใจ ECMAScript, Promise และฟีเจอร์ที่ช่วยให้เขียนโค้ดง่ายขึ้น</p>
         <div class="tags">
-          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 26–36 นาที</span
+          <span class="pill lilac">เวลาอ่านและทดลองประมาณ 32–42 นาที</span
           ><span class="pill">Quiz 10 ข้อ</span
           ><span class="tag" data-chapter-status="08">ยังไม่ได้อ่าน</span>
         </div>
@@ -96,7 +96,7 @@
 <dt>Nullish / default / shallow copy</dt><dd>Nullish หมายถึง null หรือ undefined Default คือค่าที่ใช้เมื่อไม่มีค่าตามเงื่อนไข ส่วน shallow copy คือสำเนาชั้นนอกที่อาจยังอ้าง object ชั้นในร่วมกัน</dd>
 </dl></section>
           <section class="lesson-section" id="standard">
-            <h2>01 · มาตรฐานภาษา ≠ การรองรับ</h2>
+            <h2>01 · มาตรฐานภาษา ≠ การรองรับ</h2><p>ถ้าโค้ดตัวอย่างใช้ได้ในเครื่องเพื่อน แต่เครื่องเราแจ้งว่าไม่มี method ต้องโทษโค้ดหรือมาตรฐาน? ต้องตรวจสองเรื่องแยกกัน คือภาษากำหนดความสามารถนี้หรือยัง กับโปรแกรมที่กำลังรันมีความสามารถนั้นหรือยัง <strong>Runtime</strong> คือสภาพแวดล้อมขณะรัน; polyfill คือโค้ดเสริมพฤติกรรม API ที่ขาด; transpilation คือการแปลงรูปแบบโค้ดก่อนรัน การเพิ่มฟังก์ชันไม่ช่วยให้ parser เก่าอ่าน syntax ใหม่ออกเอง</p>
             <p>
               <strong>ECMAScript (ES)</strong> คือข้อกำหนดว่าภาษาทำงานอย่างไร
               ส่วน JavaScript engine เป็นผู้ทำให้ข้อกำหนดนั้นทำงานจริง HTML DOM
@@ -150,9 +150,9 @@
               ส่วนฟีเจอร์ใหม่บางตัวเป็นตัวอย่างให้อ่าน ไม่ได้เรียก API
               รุ่นใหม่โดยไม่มีการตรวจ
             </p>
-          </section>
+          <details class="self-check"><summary>ถ้าเบราว์เซอร์เก่าอ่านเครื่องหมาย syntax ใหม่ไม่ออก การเขียน if ครอบบรรทัดนั้นเพียงอย่างเดียวพอไหม?</summary><p>ไม่พอ เพราะต้อง parse โค้ดก่อนเริ่มทำ if กรณี syntax ต้องแปลงโค้ดก่อนส่งหรือแยกไฟล์ให้เหมาะกับเครื่อง ส่วนการขาด method ที่ยังใช้ syntax เดิมอ่านได้จึงค่อยตรวจ typeof ก่อนเรียกได้</p></details></section>
           <section class="lesson-section" id="es2015">
-            <h2>02 · ES2015: เขียนให้น้อย แต่ชัดขึ้น</h2>
+            <h2>02 · ES2015: เขียนให้น้อย แต่ชัดขึ้น</h2><p>ถ้าข้อมูลผู้ใช้มีหลายช่อง แต่ต้องการแค่ชื่อกับรายการที่เหลือ เราจะเขียนให้เห็นเจตนานี้โดยตรงได้อย่างไร? <strong>Destructuring</strong> คือการแยกค่ามาผูกกับชื่อ; rest รวบรวมส่วนที่เหลือ; spread กระจายสมาชิกออกไป ส่วน <strong>iterable</strong> คือค่าที่ขอสมาชิกทีละตัวผ่านกติกาการวนได้ และ iterator คือ object ที่ทำหน้าที่ส่งสมาชิกเหล่านั้น คำว่า key–value คือคู่ของกุญแจค้นหากับข้อมูลที่ผูกไว้</p>
             <p>
               ES2015 ทำให้การจัดข้อมูลและฟังก์ชันคล่องขึ้น: let/const
               จำกัดขอบเขต, arrow ย่อ callback, class จัดแบบแผน object, template
@@ -288,7 +288,10 @@ Object.is(NaN, NaN);              // true ต่างจาก NaN === NaN</cod
                 spread คัดลอกเพียงชั้นนอก
               </div>
             </div>
-          </section>
+          <p>ตาม <code>const [first, ...others] = [5, 8, 10]</code>: first รับสมาชิกตำแหน่ง 0 คือ 5 ส่วน others รวบรวมที่เหลือเป็น [8, 10] ต่อมา <code>[...others, 12]</code> กระจาย 8 กับ 10 แล้วเติม 12 เป็น [8, 10, 12] เครื่องหมาย ... เหมือนกัน แต่ดูตำแหน่งว่ากำลังรับค่าหรือสร้างค่า</p><p>JSON คือรูปแบบข้อความสำหรับแลกข้อมูล ส่วน <code>JSON.stringify</code> แปลงค่าตัวอย่างเป็นข้อความรูปแบบ JSON เพื่อให้เห็นวงเล็บและสมาชิกชัดเจนใน Console ไม่ได้เปลี่ยน array ต้นฉบับ</p><pre><code data-example="rest-spread">const [first, ...others] = [5, 8, 10];
+const expanded = [...others, 12];
+console.log(first);
+console.log(JSON.stringify(expanded));</code></pre><details class="self-check"><summary>welcome(null) ใช้ชื่อ default เหมือน welcome() หรือไม่?</summary><p>ไม่เหมือน default parameter ใช้เมื่อไม่ได้ส่งค่าหรือส่ง undefined ส่วน null เป็นค่าที่ส่งมาอย่างชัดเจน จึงต้องกำหนดเงื่อนไขเพิ่มเองหากต้องการให้ null ใช้ค่า default ด้วย</p></details></section>
           <section class="lesson-section" id="async">
             <h2>03 · Promise และ async/await</h2>
 <p>ระหว่างรอข้อมูล ถ้าหน้าเว็บหยุดตอบสนองทั้งหมด ผู้ใช้จะกดอย่างอื่นไม่ได้ เราจึงต้องแยก “เริ่มงาน” ออกจาก “ใช้ผลเมื่อพร้อม” <strong>Asynchronous operation</strong> คืองานที่ผลพร้อมภายหลัง ส่วน <strong>Promise</strong> คือ object ที่แทนการสำเร็จหรือความล้มเหลวพร้อมผลของงานนั้น ตามเอกสาร ECMAScript หน้า PDF 10–12</p>
@@ -396,7 +399,7 @@ console.log(&quot;ข้อความนี้ไม่ต้องรอ read
 <figure class="learning-visual"><strong class="lv-title">Promise แยกผลสำเร็จกับข้อผิดพลาด</strong><div class="lv-diagram"><div class="lv-flow"><div class="lv-box lv-accent"><strong>pending</strong><span>งานยังไม่ให้ผลลัพธ์</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span> <small>settle ได้ครั้งเดียว</small></div><div class="lv-columns"><div class="lv-column"><p class="lv-branch-label">สำเร็จ</p><div class="lv-box lv-good"><strong>fulfilled</strong><span>มี value ให้ใช้งาน</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong><code>await</code> ได้ค่า</strong><span>ทำบรรทัดถัดไปใน async function</span></div></div><div class="lv-column"><p class="lv-branch-label">ล้มเหลว</p><div class="lv-box lv-bad"><strong>rejected</strong><span>มีเหตุผลของข้อผิดพลาด</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong><code>await</code> โยนข้อผิดพลาด</strong><span>จัดการด้วย try / catch</span></div></div></div></div></div><figcaption><strong>อ่านภาพ:</strong> เมื่อ Promise สิ้นสุด จะไปได้ทางเดียว: fulfilled หรือ rejected การ await หยุดเฉพาะการดำเนินต่อของ async function นั้นจนมีผล ระหว่างรอเบราว์เซอร์ยังทำงานอื่นได้</figcaption></figure>
 </section>
           <section class="lesson-section" id="timeline">
-            <h2>04 · แผนที่ฟีเจอร์ ES2016–ES2023</h2>
+            <h2>04 · แผนที่ฟีเจอร์ ES2016–ES2023</h2><p>เมื่อเห็น method ใหม่ ให้ถามก่อนว่าต้องการ “ค้นหา” “แปลง” หรือ “ทำสำเนา” เช่น จะเรียงคะแนนแล้วรักษาลำดับเดิมไว้หรือไม่? ตารางรุ่นด้านล่างช่วยค้นเครื่องมือ แต่การทำนายค่าก่อนและหลังเรียกต่างหากที่ยืนยันว่าใช้เป็น <strong>Own property</strong> คือ property ของ object นั้นเอง; inherited property มาจากต้นแบบ; enumerable คือมีสิทธิ์ปรากฏในการไล่รายการบางแบบ และ descriptor คือข้อมูลกำกับ property เช่นแก้ค่าได้หรือไม่</p>
             <p>
               ตารางนี้จับคู่รุ่นกับปัญหาที่แก้ ใช้เป็นจุดทวนก่อนทำโจทย์
               ไม่ใช่รายการฟีเจอร์ทั้งหมดของแต่ละมาตรฐาน
@@ -508,9 +511,9 @@ const sorted = original.toSorted((a, b) =&gt; a - b);
 // original: [30, 2, 10]   sorted: [2, 10, 30]
 const last = original.at(-1); // 10
 const latest = [3, 8, 12].findLast(n =&gt; n &lt; 10); // 8</code></pre>
-          </section>
+          <p>อ่านการเรียงตัวเลขทีละขั้น: original เป็น [30, 2, 10]; callback <code>(a, b) =&gt; a - b</code> บอกลำดับเชิงตัวเลข; toSorted สร้าง array อีกชุดเป็น [2, 10, 30]; original ยังเรียงเหมือนเดิม หากใช้ sort จะเปลี่ยน original ด้วย ส่วนการไม่ส่ง comparator จะเทียบตามรูปข้อความ จึงไม่ใช่ลำดับจำนวนที่ต้องการเสมอ</p><details class="self-check"><summary>ถ้า array มี object อยู่ข้างใน toSorted ทำให้แก้ object ในสำเนาได้โดยไม่กระทบต้นฉบับหรือไม่?</summary><p>ไม่รับประกัน เพราะเป็นสำเนาชั้นนอกและสมาชิกยังอ้าง object เดียวกัน หลัก shallow copy เดียวกับ spread ในหัวข้อก่อนหน้า</p></details></section>
           <section class="lesson-section" id="nullish">
-            <h2>05 · เลือกค่า default ให้ถูก</h2>
+            <h2>05 · เลือกค่า default ให้ถูก</h2><p>ถ้าลูกค้าใช้คูปองแล้วต้องจ่าย 0 บาท ศูนย์คือคำตอบที่ถูกต้องหรือข้อมูลหาย? ตัวเลือกค่า default ต้องรักษาความหมายของข้อมูล คำว่า <strong>fallback</strong> คือค่าสำรองที่เลือกเมื่อเงื่อนไขเข้าเกณฑ์ ส่วน <strong>short-circuit</strong> คือหยุดประเมินเมื่อรู้ผลแล้ว จึงอาจไม่เรียกโค้ดฝั่งขวาเลย</p>
             <p>
               ค่า 0 อาจหมายถึงคะแนนจริง ไม่ใช่ข้อมูลที่หายไป การใช้
               <code>||</code> จึงอาจแทนค่าที่ตั้งใจเก็บด้วย fallback
@@ -527,7 +530,7 @@ const latest = [3, 8, 12].findLast(n =&gt; n &lt; 10); // 8</code></pre>
                 <option value="nil">null</option>
                 <option value="undef">undefined</option>
                 <option value="text">"พร้อม"</option>
-              </select>
+              </select><button class="btn" type="button" id="nullish-reset">เริ่มใหม่</button>
               <div class="two-col" style="margin-top: 18px">
                 <div class="mini-card">
                   <code>value || "สำรอง"</code>
@@ -605,9 +608,11 @@ settings.language ??= &quot;th&quot;;           // เพิ่ม language</cod
             </div>
 
 <figure class="learning-visual"><strong class="lv-title">ค่าเดียวกัน ผ่านตัวกรองคนละชุด</strong><div class="lv-diagram"><div class="lv-columns"><div class="lv-column"><div class="lv-flow"><div class="lv-box lv-accent"><strong><code>value || "default"</code></strong></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong>เป็น falsy หรือไม่?</strong><span>false, 0, "", null, undefined, NaN</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong>ถ้าใช่ → "default"</strong><span>ถ้าไม่ใช่ → value</span></div></div></div><div class="lv-column"><div class="lv-flow"><div class="lv-box lv-accent"><strong><code>value ?? "default"</code></strong></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong>เป็น null หรือ undefined?</strong><span>ตรวจเพียงสองค่านี้</span></div><div class="lv-arrow"><span aria-hidden="true">↓</span></div><div class="lv-box "><strong>ถ้าใช่ → "default"</strong><span>ถ้าไม่ใช่ → value</span></div></div></div></div><div class="lv-box lv-warm"><strong>ลองป้อน 0</strong><span><code>0 || 10 → 10</code> · <code>0 ?? 10 → 0</code></span></div></div><figcaption><strong>อ่านภาพ:</strong> ทั้งสอง operator ประเมินด้านซ้ายก่อนแล้วจึงตัดสินใจว่าจะใช้ด้านขวาหรือไม่ หากศูนย์เป็นค่าที่ถูกต้อง เช่น จำนวนสินค้าที่เหลือ 0 การใช้ ?? จะเก็บความหมายนี้ไว้</figcaption></figure>
-</section>
+<p>ทดลองเลือก 0, ข้อความว่าง และ null ตามลำดับ ผลของ || เป็น “สำรอง” ทั้งสามครั้ง แต่ ?? ให้ 0, ข้อความว่าง, “สำรอง” ตามลำดับ สังเกตว่าความต่างอยู่ที่เกณฑ์ข้อมูลหาย ไม่ใช่การเลือกตัวดำเนินการที่ใหม่กว่า กดเริ่มใหม่เพื่อกลับไปกรณี 0</p><pre><code data-example="nullish-zero">const value = 0;
+console.log(value || 10);
+console.log(value ?? 10);</code></pre><details class="self-check"><summary>ถ้าชื่อ address ไม่มีอยู่ใน user แต่ตัวแปร user ถูกประกาศแล้ว user.address?.city ได้อะไร?</summary><p>ได้ undefined จึงใช้ ?? ต่อเพื่อเลือกข้อความสำรองได้ แต่ถ้าไม่เคยประกาศตัวแปร user การเข้าถึง user?.address ยังทำให้เกิด ReferenceError ได้ optional chaining ไม่ได้ประกาศตัวแปรให้</p></details></section>
           <section class="lesson-section" id="recent">
-            <h2>06 · ES2024–2026 และจุดที่ต้องแยกให้ออก</h2>
+            <h2>06 · ES2024–2026 และจุดที่ต้องแยกให้ออก</h2><p>คำศัพท์สำหรับอ่านตาราง: Unicode เป็นมาตรฐานแทนตัวอักษร ส่วน surrogate เป็นหน่วยรหัสที่ใช้เป็นคู่แทนอักขระบางตัว; lone surrogate คือหน่วยที่ขาดคู่ Shared memory คือหน่วยความจำที่หลายงานใช้ร่วมกัน; thread คือทางเดินการประมวลผล; Atomics เป็นชุดปฏิบัติการประสานการอ่านเขียนนั้น; RegExp คือรูปแบบค้นข้อความ และ capture คือส่วนที่เก็บข้อความที่จับคู่ได้ JSON เป็นรูปแบบข้อความสำหรับแลกข้อมูล; raw หมายถึงข้อความรูปแทนที่ส่งผ่านตามกติกา แทนการสร้างจาก Number ที่ปัดค่าไปแล้ว</p><p>ถ้าต้องรวมคะแนนที่มีค่ามากกับค่าน้อยปนกัน หรือส่งไบต์เป็นข้อความ ควรเลือก API จากปัญหาแทนการจำชื่ออย่างเดียว <strong>Byte</strong> คือข้อมูลขนาด 8 บิต; encoding คือกติกาแปลงรูปแทนข้อมูล ไม่ได้ซ่อนข้อมูลแบบ encryption; precision คือความละเอียดที่แทนตัวเลขได้; realm คือสภาพแวดล้อมที่มีชุด object พื้นฐานของตน เช่น iframe และ lazy คือคำนวณเมื่อขอผล ไม่เตรียมผลทั้งหมดทันที</p>
             <p>
               หัวข้อช่วงท้ายของสไลด์ควรอ่านทั้งแนวคิดและหมายเหตุประกอบ
               โดยเฉพาะเรื่องชื่อ API ปีมาตรฐาน และ syntax ทดลอง
@@ -791,7 +796,7 @@ if (typeof Math.sumPrecise === &quot;function&quot;) {
               แล้วใช้หมายเหตุแยก “เนื้อหาในสไลด์” จาก “ข้อกำหนดและการรองรับจริง”
               หากข้อสอบถามอิงปีหรือ syntax ที่คลาดเคลื่อน ควรสอบถามผู้สอนให้ชัด
             </div>
-          </section>
+          <details class="self-check"><summary>ต้องส่งไบต์รูปภาพเป็น Base64 จึงบอกได้ไหมว่าคนอื่นอ่านข้อมูลไม่ได้?</summary><p>ไม่ได้ Base64 เป็น encoding ที่ถอดกลับได้โดยไม่มีกุญแจ ไม่ใช่ encryption เลือกเครื่องมือตามหน้าที่ เช่นเดียวกับ RegExp.escape ที่ช่วยสร้างรูปแบบค้นข้อความ ไม่ได้ทำให้ข้อความปลอดภัยเมื่อนำไปใส่ HTML</p></details></section>
           <section class="lesson-section" id="chapter-summary"><h2>สรุปบท</h2><p>ฟีเจอร์ใหม่ช่วยเขียนเจตนาให้ชัดขึ้น แต่ต้องรู้ก่อนว่าต้องการผลแบบใด เช่น คัดลอกเพียงชั้นนอกหรือเก็บค่า 0 ไว้ Promise แยกช่วงรอออกจากผลสำเร็จและความล้มเหลว ส่วน async/await ช่วยเขียนการรับผลตามลำดับโดยไม่หยุดทั้งหน้าเว็บ ก่อนใช้ฟีเจอร์ในส่วนปีล่าสุด ให้แยกข้อมูลในสไลด์ สถานะมาตรฐาน และการรองรับของเครื่องมือเสมอ การจำปีอย่างเดียวไม่พอจะอธิบายพฤติกรรมของโค้ด</p></section>
 <section class="lesson-section" id="flashcards">
             <h2>Flashcards</h2>
