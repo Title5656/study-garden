@@ -147,8 +147,8 @@ body[data-reader-mode="paged"] .footer-curtain { display: none; }
   animation: footer-breathe 8s ease-in-out infinite alternate paused;
 }
 :root[data-theme="dark"] .motion-footer::before {
-  background: radial-gradient(ellipse at 35% 45%, #727cce32, transparent 52%),
-    radial-gradient(ellipse at 68% 60%, #a05c8430, transparent 52%);
+  background: radial-gradient(ellipse at 35% 45%, #ffffff0a, transparent 52%),
+    radial-gradient(ellipse at 68% 60%, #ffffff06, transparent 52%);
 }
 .motion-footer::after { opacity: .2; background-size: 60px 60px; }
 .footer-contact-title {

@@ -20,18 +20,18 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #141519;
-  --paper: #1c1d22;
-  --ink: #eeeef2;
-  --muted: #a2a4b0;
-  --line: #35363f;
-  --accent: #a9b9ed;
-  --purple: #292e40;
-  --sage: #252a33;
-  --green: #c0c9dc;
-  --peach: #332e29;
-  --soft: #25262e;
-  --code: #111217;
+  --bg: #0d0d0d;
+  --paper: #171717;
+  --ink: #ededed;
+  --muted: #a6a6a6;
+  --line: #333333;
+  --accent: #c7c7cc;
+  --purple: #232323;
+  --sage: #202020;
+  --green: #c8c8c8;
+  --peach: #252322;
+  --soft: #212121;
+  --code: #101010;
   --code-ink: #e7e9ef;
   --shadow: none;
   --bad: #ffb3b3;
