@@ -1,0 +1,149 @@
+[
+  {
+    "id": "before-start",
+    "title": "ก่อนเริ่มบทนี้",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-1",
+    "title": "1.1 ทบทวน HTTP server",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-2",
+    "title": "1.2 จาก if/else ไปสู่ routing",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-3",
+    "title": "2.1 Express ช่วยอะไร",
+    "practice": false
+  },
+  {
+    "id": "p2-template",
+    "title": "ลองทำ · Template กับข้อมูล",
+    "practice": true
+  },
+  {
+    "id": "p2-topic-5",
+    "title": "2.2 เตรียมโครงการด้วย npm",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-6",
+    "title": "2.3 Express server แรก",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-7",
+    "title": "2.4 npm start และ nodemon",
+    "practice": false
+  },
+  {
+    "id": "p2-setup",
+    "title": "ลองทำ · ตั้งโครงการทีละขั้น",
+    "practice": true
+  },
+  {
+    "id": "p2-topic-9",
+    "title": "3.1 Route = HTTP method + path",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-10",
+    "title": "3.2 ส่งไฟล์ HTML ด้วย sendFile",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-11",
+    "title": "3.3 404 และลำดับ middleware",
+    "practice": false
+  },
+  {
+    "id": "p2-middleware",
+    "title": "ลองทำ · ลำดับ middleware",
+    "practice": true
+  },
+  {
+    "id": "p2-topic-13",
+    "title": "4.1 Static files คืออะไร",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-14",
+    "title": "4.2 เปลี่ยน mount path",
+    "practice": false
+  },
+  {
+    "id": "p2-static",
+    "title": "ลองทำ · URL ไปหาไฟล์ใด",
+    "practice": true
+  },
+  {
+    "id": "p2-topic-16",
+    "title": "5.1 แยก Router เป็นหมวด",
+    "practice": false
+  },
+  {
+    "id": "p2-route",
+    "title": "ลองทำ · Method และ modular routes",
+    "practice": true
+  },
+  {
+    "id": "p2-topic-18",
+    "title": "6.1 วงจรการทำงานของฟอร์ม",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-19",
+    "title": "6.2 action, method และ name",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-20",
+    "title": "7.1 ฟอร์ม GET → req.query",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-21",
+    "title": "8.1 ฟอร์ม POST → req.body",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-22",
+    "title": "8.2 เลือก parser ให้ตรงข้อมูล",
+    "practice": false
+  },
+  {
+    "id": "p2-form",
+    "title": "ลองทำ · ส่งฟอร์ม GET/POST",
+    "practice": true
+  },
+  {
+    "id": "p2-topic-24",
+    "title": "สรุปท้ายบท · สิ่งที่ต้องจำ",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-25",
+    "title": "จุดที่มักสับสนก่อนสอบ",
+    "practice": false
+  },
+  {
+    "id": "p2-topic-26",
+    "title": "ลองอธิบายด้วยตัวเอง",
+    "practice": false
+  },
+  {
+    "id": "flashcards",
+    "title": "Flashcards"
+  },
+  {
+    "id": "quiz",
+    "title": "Quiz ท้ายบท · 10 ข้อ"
+  },
+  {
+    "id": "sources",
+    "title": "ที่มาและหมายเหตุ"
+  }
+]

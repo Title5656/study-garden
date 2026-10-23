@@ -138,8 +138,8 @@ try {
  const old=await useLocalFiles(await browser.newPage(),root); await old.goto('https://study-garden.test/subjects/itds241/chapter-08.html');
  assert.equal(await old.locator('.lesson-section[hidden]').count(),0,'older chapters stay continuously readable');
  await old.goto('https://study-garden.test/index.html');
- assert.equal(await old.getByText('2 มหาวิทยาลัย · 4 วิชา · 35 บทเรียน',{exact:true}).count(),1,'home total includes the new chapter');
- assert.match(await old.locator('.university-count').first().innerText(),/26 บทเรียน/);
+ assert.equal(await old.getByText('2 มหาวิทยาลัย · 4 วิชา · 36 บทเรียน',{exact:true}).count(),1,'home total includes the new chapter');
+ assert.match(await old.locator('.university-count').first().innerText(),/27 บทเรียน/);
  await old.locator('#subject-search').fill('Node.js');
  assert.equal(await old.locator('.subject-folder:visible').count(),1,'new topic is searchable from home');
  assert.deepEqual(errors,[]);

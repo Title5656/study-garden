@@ -684,3 +684,186 @@ window.StudyContent.itds241["09"] = {
     }
   ]
 };
+
+/* Node.js Part II registry */
+window.StudyContent.itds241["10"] = {
+  "cards": [
+    [
+      "Express",
+      "Web application framework บน Node.js"
+    ],
+    [
+      "npm init",
+      "สร้าง package.json ของโครงการ"
+    ],
+    [
+      "package-lock.json",
+      "บันทึก dependency tree เพื่อการติดตั้งซ้ำ"
+    ],
+    [
+      "nodemon",
+      "เครื่องมือพัฒนา: ตรวจไฟล์แล้ว restart server"
+    ],
+    [
+      "express()",
+      "สร้าง Express application"
+    ],
+    [
+      "express.Router()",
+      "สร้าง router สำหรับจัดกลุ่มเส้นทาง"
+    ],
+    [
+      "Route",
+      "HTTP method และ path ที่เลือก handler"
+    ],
+    [
+      "Middleware",
+      "ฟังก์ชันในลำดับ request ที่ใช้ req/res/next"
+    ],
+    [
+      "res.send / res.sendFile",
+      "ส่งข้อมูล / ส่งไฟล์ตาม path"
+    ],
+    [
+      "express.static",
+      "ให้บริการไฟล์จาก directory ที่ระบุ"
+    ],
+    [
+      "Mount prefix",
+      "ส่วนต้น URL ที่เพิ่มให้ router หรือ static middleware"
+    ],
+    [
+      "action / method",
+      "ปลายทางการส่งฟอร์ม / HTTP method"
+    ],
+    [
+      "name",
+      "ชื่อ key ของข้อมูล input ที่ส่ง"
+    ],
+    [
+      "req.query",
+      "ค่าจาก query string"
+    ],
+    [
+      "req.body",
+      "ข้อมูล body หลัง parser ที่เหมาะสม"
+    ],
+    [
+      "urlencoded / json",
+      "parser ของ form ปกติ / parser ของ JSON"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "Express ต่างจาก Node.js อย่างไร?",
+      "options": [
+        "เป็น framework ที่ทำงานบน Node.js",
+        "เป็น browser engine",
+        "แทนระบบปฏิบัติการ",
+        "เป็นฐานข้อมูล"
+      ],
+      "answer": 0,
+      "explanation": "Node.js คือ runtime ส่วน Express ช่วยจัดการ web application และ routing บน runtime นั้น"
+    },
+    {
+      "q": "คำสั่งใดสร้าง package.json แบบใช้ค่าเริ่มต้น?",
+      "options": [
+        "npm start",
+        "npm install nodemon",
+        "npm init -y",
+        "node app.cjs"
+      ],
+      "answer": 2,
+      "explanation": "npm init -y สร้างข้อมูลโครงการตามค่าเริ่มต้น ไม่ได้เริ่ม server หรือติดตั้ง Express"
+    },
+    {
+      "q": "สั่ง npm start แล้วทำงานจากที่ใด?",
+      "options": [
+        "ชื่อโฟลเดอร์ html",
+        "scripts.start ใน package.json",
+        "คำสั่งใน CSS",
+        "req.body"
+      ],
+      "answer": 1,
+      "explanation": "npm start เรียกคำสั่ง start ที่กำหนดใน scripts เช่น node app.cjs หรือ nodemon app.cjs"
+    },
+    {
+      "q": "มีเพียง router.get(\"/add\", handler) การส่ง POST /add จะตรงหรือไม่?",
+      "options": [
+        "ตรงทุก method",
+        "ตรงเมื่อมี query",
+        "ตรงถ้ามีพอร์ต 3000",
+        "ไม่ตรง เพราะ method ต่างกัน"
+      ],
+      "answer": 3,
+      "explanation": "Route ผูกทั้ง method และ path การกำหนด GET ไม่ได้สร้าง POST handler ให้เอง"
+    },
+    {
+      "q": "ต้องการส่งไฟล์ HTML ด้วย absolute path ใช้อะไร?",
+      "options": [
+        "res.sendFile(path.join(__dirname,\"html\",\"shabu.html\"))",
+        "req.query(\"shabu.html\")",
+        "express.json(\"shabu.html\")",
+        "npm start html"
+      ],
+      "answer": 0,
+      "explanation": "sendFile ใช้ส่งไฟล์ ส่วน path.join กับ __dirname ให้ absolute path ในตัวอย่าง CommonJS นี้"
+    },
+    {
+      "q": "วาง middleware ส่ง 404 ก่อน routes และไม่เรียก next() จะเกิดอะไรขึ้น?",
+      "options": [
+        "ส่งต่อทุก route",
+        "ทำให้ทุก route เป็น GET",
+        "คำขอจบก่อนถึง route ที่อยู่หลัง",
+        "ติดตั้ง router เพิ่ม"
+      ],
+      "answer": 2,
+      "explanation": "Middleware ประมวลผลตามลำดับ เมื่อส่ง response จบแล้วและไม่ส่งต่อ handler หลังจากนั้นจะไม่ทำงาน"
+    },
+    {
+      "q": "mount static ที่ /assets และมี public/mystyle.css ต้องขอ URL ใด?",
+      "options": [
+        "/public/mystyle.css",
+        "/assets/mystyle.css",
+        "/assets/public/mystyle.css",
+        "/mystyle.css เท่านั้น"
+      ],
+      "answer": 1,
+      "explanation": "URL ใช้ mount prefix ตามด้วย path ภายใน public โดยไม่รวมชื่อโฟลเดอร์ public อีกครั้ง"
+    },
+    {
+      "q": "mount product router ที่ /product และ route ภายในคือ /add จะใช้ path ใด?",
+      "options": [
+        "/add/product",
+        "/product/product/add",
+        "/add",
+        "/product/add"
+      ],
+      "answer": 3,
+      "explanation": "Mount prefix รวมกับ route ภายในทำให้ endpoint เป็น /product/add แยกจาก /user/add ของ router อื่น"
+    },
+    {
+      "q": "GET form มี input name=\"fname\" ควรอ่านค่าจากไหน?",
+      "options": [
+        "req.query.fname",
+        "req.body เสมอ",
+        "res.fname",
+        "input.id บน server"
+      ],
+      "answer": 0,
+      "explanation": "GET form ส่งคู่ name/value ใน query string จึงอ่านจาก req.query และต้องตรวจค่าก่อนใช้งาน"
+    },
+    {
+      "q": "ฟอร์ม HTML POST แบบปกติต้องใช้ parser ใดก่อน handler?",
+      "options": [
+        "express.static()",
+        "express.Router() อย่างเดียว",
+        "express.urlencoded()",
+        "express.json() อย่างเดียว"
+      ],
+      "answer": 2,
+      "explanation": "Form ปกติส่ง application/x-www-form-urlencoded จึงใช้ urlencoded ส่วน JSON parser รับ JSON ตาม Content-Type"
+    }
+  ]
+};
+/* End Node.js Part II registry */

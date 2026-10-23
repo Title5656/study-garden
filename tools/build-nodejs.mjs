@@ -127,6 +127,7 @@ html+=template.slice(template.indexOf('<div class="footer-reveal">'));
 write('subjects/itds241/chapter-09.html',html);
 // Add the chapter to the existing content registry, so all course dashboards see it.
 const registry=read('assets/content.js').replace(/\n\/\* Node\.js Part I registry \*\/[\s\S]*$/,'');
-write('assets/content.js',registry+'\n/* Node.js Part I registry */\nwindow.StudyContent.itds241["09"] = '+JSON.stringify({cards,quiz:finalQuiz},null,2)+';\n');
+const partII=read('assets/content.js').match(/\/\* Node\.js Part II registry \*\/[\s\S]*?\/\* End Node\.js Part II registry \*\//)?.[0] || '';
+write('assets/content.js',registry+'\n/* Node.js Part I registry */\nwindow.StudyContent.itds241["09"] = '+JSON.stringify({cards,quiz:finalQuiz},null,2)+';\n'+partII+'\n');
 write('docs/nodejs-part1-pages.json',JSON.stringify(pages.map(({id,title,chapter,category})=>({id,title,chapter,category})),null,2)+'\n');
 console.log(`Generated chapter 09: ${pages.length} pages, ${cards.length} flashcards, 10 final quiz questions.`);

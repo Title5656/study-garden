@@ -1,0 +1,16 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+assert.ok(fs.existsSync(__dirname+'/../assets/express-core.js'),'Part II must provide working simulations');
+const c=require('../assets/express-core.js');
+assert.equal(c.route('GET','/product/add').body,'Module for product - Add');
+assert.equal(c.route('POST','/product/add').status,404);
+assert.equal(c.route('GET','/SHABU/').status,200);
+assert.equal(c.route('GET','/shabu?q=1').status,200);
+assert.equal(c.route('GET','/user/add',true).status,404);
+assert.equal(c.staticFile('/assets/images/sample.png','/assets'),'public/images/sample.png');
+assert.equal(c.staticFile('/assets-other/images/sample.png','/assets'),null);
+assert.equal(c.staticFile('/public/images/sample.png','/'),null);
+assert.equal(c.form('GET','John & Jane','Doe',false).url,'/form-get?fname=John+%26+Jane&lname=Doe');
+assert.equal(c.form('POST','John','Doe',false).status,400);
+assert.deepEqual(c.form('POST','John','Doe',true).data,{fname:'John',lname:'Doe'});
+assert.equal(c.form('POST','','Doe',true).status,400);
+console.log('PASS: Express method/path, defaults, middleware order, static mount and GET/POST payload models.');
