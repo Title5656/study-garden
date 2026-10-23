@@ -168,7 +168,7 @@
   };
   const topics = sections.map((section, index) => ({
     section, index, id: section.id,
-    title: section.querySelector("h2").textContent.trim().replace(/^\d+\s*[·./]\s*/, ""),
+    title: section.querySelector("h2").textContent.trim().replace(/^\d+\s*[·./](?!\d)\s*/, ""),
     category: ["flashcards", "quiz", "sources"].includes(section.id) ? section.id
       : section.dataset.readerCategory === "practice" || activities[subject]?.[chapter]?.includes(section.id) ? "practice" : "learn",
   }));

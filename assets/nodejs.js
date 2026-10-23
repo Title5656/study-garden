@@ -5,6 +5,8 @@
  const $=(s,el=document)=>el.querySelector(s);
  const all=(s,el=document)=>[...el.querySelectorAll(s)];
  function el(tag,text,cls) {const n=document.createElement(tag); if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;}
+ // Render inline code as text nodes, never as executable HTML.
+ function inline(node,text) {node.replaceChildren();String(text).split(/(`[^`]+`)/g).forEach(part=>node.append(part.startsWith('`')&&part.endsWith('`')?el('code',part.slice(1,-1)):document.createTextNode(part)));return node;}
  function button(text,fn,parent) {const b=el('button',text,'btn');b.type='button';b.addEventListener('click',fn);parent?.append(b);return b;}
  function controls(parent) {const n=el('div',undefined,'node-controls');parent.append(n);return n;}
  function output(parent,attribute) {const n=el('output',undefined,'node-output');n.setAttribute('aria-live','polite');if(attribute)n.setAttribute(attribute,'');parent.append(n);return n;}
@@ -115,21 +117,42 @@
  all('[data-node-lab]').forEach(root=>{root.replaceChildren();widgets[root.dataset.nodeLab]?.(root);});
  // Reusable, one-question-at-a-time Quiz. Recall questions are explicitly self-assessed.
  all('[data-node-quiz]').forEach(root=>{
-  const questions=JSON.parse($('script',root).textContent),id=root.dataset.quizKey,isFinal=root.hasAttribute('data-final-quiz');let index=0,answers=[];
+  const questions=JSON.parse($('script',root).textContent),id=root.dataset.quizKey,isFinal=root.hasAttribute('data-final-quiz');let index=0,answers=[],drafts=[];
   const printable=$('.node-quiz-fallback',root).cloneNode(true);printable.className='node-print-quiz';root.after(printable);
   const key='study-garden:itds241:node-quiz:'+id;
-  function save(){try{localStorage.setItem(key,JSON.stringify({index,answers}));}catch{$('#storage-notice').hidden=false;}}
-  try{const data=JSON.parse(localStorage.getItem(key));if(data&&Number.isInteger(data.index)&&data.index>=0&&data.index<=questions.length&&Array.isArray(data.answers)){answers=data.answers.slice(0,questions.length);index=Math.min(data.index,answers.filter(a=>a&&typeof a.correct==='boolean').length);}}catch{/* storage fallback */}
+  function save(){try{localStorage.setItem(key,JSON.stringify({index,answers,drafts}));}catch{$('#storage-notice').hidden=false;}}
+  try{
+   const data=JSON.parse(localStorage.getItem(key));
+   if(data&&Number.isInteger(data.index)&&data.index>=0&&data.index<=questions.length&&Array.isArray(data.answers)){
+    for(const [i,q] of questions.entries()){
+     const a=data.answers[i];
+     if(!a||typeof a.correct!=='boolean')break;
+     if(q.options.length){if(!Number.isInteger(a.value)||a.value<0||a.value>=q.options.length)break;answers.push({value:a.value,correct:a.value===q.answer});}
+     else {if(a.value!==null)break;answers.push({value:null,correct:a.correct});}
+    }
+    index=Math.min(data.index,answers.length);
+    if(Array.isArray(data.drafts))drafts=questions.map((q,i)=>({text:typeof data.drafts[i]?.text==='string'?data.drafts[i].text:'',revealed:data.drafts[i]?.revealed===true}));
+   }
+  }catch{/* storage fallback */}
   function render(){
    root.replaceChildren();
-   if(index===questions.length){const score=answers.filter(a=>a?.correct).length;root.append(el('h3',`${score} / ${questions.length} คะแนน`),el('p',isFinal?'คะแนนล่าสุดและคะแนนสูงสุดแสดงในหน้ารายวิชา':'ข้อเขียนเป็นคะแนนประเมินตนเองหลังดูเฉลย แยกจาก Quiz ท้ายบท','node-muted'));button('เริ่มใหม่',()=>{index=0;answers=[];save();render();},root);return;}
+   if(index===questions.length){const score=answers.filter(a=>a?.correct).length;root.append(el('h3',`${score} / ${questions.length} คะแนน`),el('p',isFinal?'คะแนนล่าสุดและคะแนนสูงสุดแสดงในหน้ารายวิชา':'ข้อเขียนเป็นคะแนนประเมินตนเองหลังดูเฉลย แยกจาก Quiz ท้ายบท','node-muted'));button('เริ่มใหม่',()=>{index=0;answers=[];drafts=[];save();render();},root);return;}
    const q=questions[index],status=el('p',`ข้อ ${index+1} / ${questions.length} · ถูกแล้ว ${answers.slice(0,index).filter(a=>a?.correct).length}`,'node-muted'),fieldset=el('fieldset'),legend=el('legend',q.q),feedback=el('div',undefined,'node-feedback');feedback.setAttribute('role','status');fieldset.append(legend);root.append(status,fieldset,feedback);
+   inline(legend,q.q);
    const c=controls(root);const next=button('ข้อต่อไป →',()=>{index++;save();if(index===questions.length&&isFinal)storeFinal();render();root.scrollIntoView({block:'start',behavior:'instant'});root.tabIndex=-1;root.focus({preventScroll:true});},c);next.disabled=true;
-   function choose(correct,value){if(answers[index])return;answers[index]={correct,value};feedback.textContent=(correct?'✓ ถูกต้อง':'ลองทบทวนอีกครั้ง')+' — เฉลย: '+(q.options.length?q.options[q.answer]:q.answer)+(q.explanation?' · '+q.explanation:'');all('[data-quiz-option]',root).forEach((b,j)=>{b.disabled=true;b.classList.toggle('correct',j===q.answer);b.classList.toggle('wrong',j===value&&!correct);});next.disabled=false;save();}
-   if(q.options.length){const options=el('div',undefined,'node-options');q.options.forEach((option,j)=>{const b=button('ABCD'[j]+') '+option,()=>choose(j===q.answer,j),options);b.setAttribute('data-quiz-option','');});fieldset.append(options);}
-   else {const label=el('label','ลองตอบก่อนดูเฉลย'),text=el('textarea');text.rows=3;text.setAttribute('aria-label','คำตอบของคุณ');label.append(text);fieldset.append(label);const reveal=button('ดูเฉลย',()=>{feedback.textContent='เฉลย: '+q.answer+(q.explanation?' · '+q.explanation:'');reveal.disabled=true;const self=controls(fieldset);button('ตอบได้',()=>{choose(true,null);all('button',self).forEach(b=>b.disabled=true);},self);button('ต้องทบทวน',()=>{choose(false,null);all('button',self).forEach(b=>b.disabled=true);},self);},fieldset);}
-   // Resume the current answered question without counting it twice.
-   if(answers[index]){const saved=answers[index];delete answers[index];choose(saved.correct,saved.value);}
+   function showAnswer(correct,value){inline(feedback,(q.options.length?(correct?'✓ ถูกต้อง':'ลองทบทวนอีกครั้ง'):(correct?'✓ ประเมินตนเอง: ตอบได้':'ประเมินตนเอง: ต้องทบทวน'))+' — เฉลย: '+(q.options.length?q.options[q.answer]:q.answer)+(q.explanation?' · '+q.explanation:''));all('[data-quiz-option]',root).forEach((b,j)=>{b.disabled=true;b.classList.toggle('correct',j===q.answer);b.classList.toggle('wrong',j===value&&!correct);});next.disabled=false;}
+   function choose(correct,value){if(answers[index])return;answers[index]={correct,value};save();showAnswer(correct,value);all('button',fieldset).forEach(b=>b.disabled=true);const text=$('textarea',fieldset);if(text)text.readOnly=true;next.focus();}
+   if(q.options.length){const options=el('div',undefined,'node-options');q.options.forEach((option,j)=>{const b=button('',()=>choose(j===q.answer,j),options);inline(b,'ABCD'[j]+') '+option);b.setAttribute('data-quiz-option','');});fieldset.append(options);}
+   else {
+    const draft=drafts[index] ||= {text:'',revealed:false};
+    const label=el('label','ลองตอบก่อนดูเฉลย'),text=el('textarea');text.rows=3;text.setAttribute('aria-label','คำตอบของคุณ');text.value=draft.text;text.readOnly=Boolean(answers[index]);text.addEventListener('input',()=>{draft.text=text.value;save();});label.append(text);fieldset.append(label);
+    const reveal=button('ดูเฉลย',()=>{draft.revealed=true;save();render();$('fieldset .node-controls button',root)?.focus();},fieldset);
+    if(draft.revealed||answers[index]){
+     inline(feedback,'เฉลย: '+q.answer+(q.explanation?' · '+q.explanation:''));reveal.disabled=true;
+     const self=controls(fieldset);button('ตอบได้',()=>choose(true,null),self);button('ต้องทบทวน',()=>choose(false,null),self);all('button',self).forEach(b=>b.disabled=Boolean(answers[index]));
+    }
+   }
+   if(answers[index])showAnswer(answers[index].correct,answers[index].value);
   }
   function storeFinal(){window.StudyApp.recordQuizScore(answers.filter(a=>a?.correct).length);}
   render();
