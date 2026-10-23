@@ -188,6 +188,183 @@ strong {
   min-width: 44px;
   font-size: 0.85rem;
 }
+/* Sky Toggle: em-based artwork from the supplied 21st.dev reference.
+   The transparent button keeps a 44px touch target around the compact scene. */
+.theme-toggle.sky-toggle {
+  --toggle-size: 16px;
+  --sky-transition: .5s cubic-bezier(0, -.02, .4, 1.25);
+  --halo-offset: -.4375em;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  width: 5.625em;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 6.25em;
+  background: transparent;
+  font-size: var(--toggle-size);
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+.sky-toggle *, .sky-toggle *::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.sky-toggle__scene {
+  position: relative;
+  display: block;
+  width: 5.625em;
+  height: 2.5em;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 6.25em;
+  background: #3d7eae;
+  box-shadow: 0 -.062em .062em #0004, 0 .062em .125em #fffffff0;
+  transition: background-color var(--sky-transition);
+  pointer-events: none;
+}
+.sky-toggle__scene::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 .05em .187em #0008;
+}
+.sky-toggle__halo {
+  position: absolute;
+  display: flex;
+  width: 3.375em;
+  height: 3.375em;
+  top: var(--halo-offset);
+  left: var(--halo-offset);
+  border-radius: 50%;
+  background: #ffffff1a;
+  box-shadow: inset 0 0 0 3.375em #ffffff1a, inset 0 0 0 3.375em #ffffff1a,
+    0 0 0 .625em #ffffff1a, 0 0 0 1.25em #ffffff1a;
+  transition: transform .5s cubic-bezier(0, -.02, .35, 1.17);
+}
+.sky-toggle__sun {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 2.125em;
+  height: 2.125em;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #ecca2f;
+  box-shadow: inset .062em .062em .062em #feffef9c, inset 0 -.062em .062em #a1872a;
+  filter: drop-shadow(.062em .125em .125em #0004) drop-shadow(0 .062em .125em #0004);
+}
+.sky-toggle__moon {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #c4c9d1;
+  box-shadow: inset .062em .062em .062em #feffef9c, inset 0 -.062em .062em #969696;
+  transform: translateX(100%);
+  transition: transform var(--sky-transition);
+}
+.sky-toggle__crater {
+  position: absolute;
+  top: .75em;
+  left: .312em;
+  width: .75em;
+  height: .75em;
+  border-radius: 50%;
+  background: #959db1;
+  box-shadow: inset 0 .0312em .062em #0004;
+}
+.sky-toggle__crater:nth-child(2) {
+  top: .937em;
+  left: 1.375em;
+  width: .375em;
+  height: .375em;
+}
+.sky-toggle__crater:nth-child(3) {
+  top: .312em;
+  left: .812em;
+  width: .25em;
+  height: .25em;
+}
+.sky-toggle__clouds {
+  --cloud: #f3fdff;
+  --back-cloud: #aacadf;
+  position: absolute;
+  bottom: -.625em;
+  left: .312em;
+  width: 1.25em;
+  height: 1.25em;
+  border-radius: 50%;
+  background: var(--cloud);
+  box-shadow: .937em .312em var(--cloud), -.312em -.312em var(--back-cloud),
+    1.437em .375em var(--cloud), .5em -.125em var(--back-cloud),
+    2.187em 0 var(--cloud), 1.25em -.062em var(--back-cloud),
+    2.937em .312em var(--cloud), 2em -.312em var(--back-cloud),
+    3.625em -.062em var(--cloud), 2.625em 0 var(--back-cloud),
+    4.5em -.312em var(--cloud), 3.375em -.437em var(--back-cloud),
+    4.625em -1.75em 0 .437em var(--cloud), 4em -.625em var(--back-cloud),
+    4.125em -2.125em 0 .437em var(--back-cloud);
+  transition: transform var(--sky-transition);
+}
+.sky-toggle__stars {
+  position: absolute;
+  top: 50%;
+  left: .312em;
+  width: 2.75em;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(-4em);
+  transition: transform var(--sky-transition), opacity var(--sky-transition);
+}
+.sky-toggle__stars svg { display: block; width: 100%; height: auto; }
+.sky-toggle[aria-checked="true"] .sky-toggle__scene { background: #1d1f2c; }
+.sky-toggle[aria-checked="true"] .sky-toggle__halo { transform: translateX(3.125em); }
+.sky-toggle[aria-checked="true"] .sky-toggle__moon { transform: translateX(0); }
+.sky-toggle[aria-checked="true"] .sky-toggle__clouds { transform: translateY(3.437em); }
+.sky-toggle[aria-checked="true"] .sky-toggle__stars { opacity: 1; transform: translateY(-50%); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .sky-toggle:hover .sky-toggle__halo { transform: translateX(.187em); }
+  .sky-toggle[aria-checked="true"]:hover .sky-toggle__halo { transform: translateX(2.938em); }
+}
+@media (max-width: 600px) {
+  .theme-toggle.sky-toggle { --toggle-size: 12px; }
+  /* Leave room for the switch when a course has a long navigation label. */
+  .nav:has(.sky-toggle) .nav-links { min-width: 0; }
+  .nav:has(.sky-toggle) .nav-links a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .nav:has(.sky-toggle) .nav-links a:first-child:not(:last-child) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky-toggle * { transition: none; }
+}
+@media (forced-colors: active) {
+  .sky-toggle .sky-toggle__scene,
+  .sky-toggle[aria-checked="true"] .sky-toggle__scene {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    box-shadow: none;
+  }
+  .sky-toggle__halo { background: transparent; box-shadow: none; }
+  .sky-toggle__sun {
+    forced-color-adjust: none;
+    background: ButtonText;
+    box-shadow: none;
+    filter: none;
+  }
+  .sky-toggle__moon, .sky-toggle__clouds, .sky-toggle__stars { display: none; }
+}
 .hero {
   padding: 58px 0 40px;
   display: grid;

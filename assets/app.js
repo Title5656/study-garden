@@ -100,14 +100,36 @@
 
   // ธีมตามระบบในครั้งแรก และจำตัวเลือกหลังผู้ใช้กดสลับ
   const themeButton = $("[data-theme-toggle]");
+  if (themeButton) {
+    themeButton.classList.add("sky-toggle");
+    themeButton.type = "button";
+    themeButton.setAttribute("role", "switch");
+    themeButton.setAttribute("aria-label", "โหมดมืด");
+    // Decorative sky adapted from the supplied 21st.dev Sky Toggle component.
+    themeButton.innerHTML = `
+      <span class="sky-toggle__scene" aria-hidden="true">
+        <span class="sky-toggle__clouds"></span>
+        <span class="sky-toggle__stars">
+          <svg viewBox="0 0 144 55" fill="currentColor" focusable="false">
+            <path d="M137 0q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35ZM35 19q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35ZM4 32q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35ZM58 21q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35ZM85 21q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35ZM140 32q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35ZM103 46q0 4.35-4 4.35 4 .2 4 4.38 0-4.18 4-4.38-4 0-4-4.35Z" />
+          </svg>
+        </span>
+        <span class="sky-toggle__halo">
+          <span class="sky-toggle__sun">
+            <span class="sky-toggle__moon">
+              <span class="sky-toggle__crater"></span>
+              <span class="sky-toggle__crater"></span>
+              <span class="sky-toggle__crater"></span>
+            </span>
+          </span>
+        </span>
+      </span>`;
+  }
   function setTheme(theme) {
     document.documentElement.dataset.theme = theme;
     if (themeButton) {
-      themeButton.textContent = theme === "dark" ? "☀ สว่าง" : "☾ มืด";
-      themeButton.setAttribute(
-        "aria-label",
-        theme === "dark" ? "เปลี่ยนเป็นโหมดสว่าง" : "เปลี่ยนเป็นโหมดมืด",
-      );
+      themeButton.setAttribute("aria-checked", String(theme === "dark"));
+      themeButton.title = theme === "dark" ? "เปลี่ยนเป็นโหมดสว่าง" : "เปลี่ยนเป็นโหมดมืด";
     }
     charts.forEach((chart) => {
       const color = getComputedStyle(document.documentElement)
