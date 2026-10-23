@@ -6,6 +6,19 @@
   if(!activities||document.body.dataset.subject!=='itds294')return;
   const number=(n,d=2)=>n.toLocaleString('th-TH',{maximumFractionDigits:d});
   const make=(tag,text,className)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(className)el.className=className;return el};
+  function resetButton(lab,reset,label='เริ่มใหม่'){
+    const button=make('button',label,'btn tiny');button.type='button';button.dataset.activityReset='';
+    button.addEventListener('click',reset);lab.append(button);
+  }
+  function resetInputs(lab,render){
+    resetButton(lab,()=>{
+      $$('input',lab).forEach(input=>{
+        if(input.type==='checkbox'||input.type==='radio')input.checked=input.defaultChecked;
+        else input.value=input.defaultValue;
+      });
+      render();
+    });
+  }
 
   $$('.ec-stepper').forEach(lab=>{
     const steps=activities.steps[lab.dataset.stepper];
@@ -56,6 +69,7 @@
       if(key==='revenue'&&revenueExamples[row[0]])stage.append(make('div',revenueExamples[row[0]],'note'));
     }
     if(source.length)render(0);
+    if(source.length)resetButton(lab,()=>render(0));
   });
 
   // Invalid or empty inputs stay visible as a useful message, never NaN/Infinity.
@@ -87,6 +101,7 @@
       output.replaceChildren(grid,make('p',`${number(impressions)} × ${ctr}% = ${number(result.clicks)} คลิก; ${number(result.clicks)} × ${cvr}% = ${number(result.orders)} ออร์เดอร์; × ${number(aov)} บาท = ${number(result.revenue)} บาท`,'small'));
     }
     funnel.addEventListener('input',render);render();
+    resetInputs(funnel,render);
   }
 
   const location=$('#location-lab');
@@ -100,6 +115,7 @@
       $('#location-output').textContent=text;
     }
     location.addEventListener('input',render);render();
+    resetInputs(location,render);
   }
 
   const finance=$('#finance-lab');
@@ -135,6 +151,7 @@
       htmltable.append(body);const wrap=make('div',undefined,'table-wrap');wrap.tabIndex=0;wrap.setAttribute('role','region');wrap.setAttribute('aria-label','ข้อมูลประกอบกราฟจุดคุ้มทุน');wrap.append(htmltable);table.replaceChildren(wrap);
     }
     finance.addEventListener('input',render);render();
+    resetInputs(finance,render);
   }
 
   $$('.ec-worksheet').forEach(lab=>{
@@ -145,6 +162,7 @@
       try{localStorage.setItem(key,JSON.stringify(value));status.textContent='บันทึกร่างในเบราว์เซอร์นี้แล้ว'}catch{status.textContent='เก็บร่างได้เฉพาะหน้านี้ กรุณาดาวน์โหลดเพื่อเก็บสำเนา';const notice=$('#storage-notice');if(notice)notice.hidden=false}
     }
     lab.addEventListener('input',save);
+    resetButton(lab,()=>{fields.forEach(el=>el.value='');save()},'เริ่มใหม่: ล้างร่างใบงานนี้');
     $('[data-fill-example]',lab).addEventListener('click',()=>{fields.forEach(el=>{el.value=activities.worksheets[lab.dataset.worksheet][el.dataset.field]||''});save()});
     $('[data-download]',lab).addEventListener('click',()=>{
       const text='ITDS294 · ใบงานฝึกคิด\n\n'+fields.map(el=>el.closest('label').firstChild.textContent.trim()+'\n'+el.value).join('\n\n');
