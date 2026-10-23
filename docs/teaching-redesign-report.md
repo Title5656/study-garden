@@ -1,92 +1,62 @@
-# Teaching redesign — implementation batch, 22–23 October 2026
+# Mahidol teaching revision — completed 2026-10-23
 
-Branch: `codex/teaching-redesign`, based on `15f187e23ebcf6044c89e1dae8c194d59ad820c6`. This batch implements the shared reading experience and selected beginner teaching improvements in ITDS241 06–08. **The complete 34-chapter teaching redesign is not finished.** The supplied specification explicitly permits reviewable batches.
+## Current scope and outcome
 
-## Audit and source evidence
+**Editorial work completed across all 25 Mahidol chapters:** ITDS241 06–08, ITDS261 01–12, ITDS294 01–10. This supersedes the [partial report from 2026-10-22](teaching-redesign-report-2026-10-22.md).
 
-The repository contains four subjects and 34 lessons, static HTML/CSS/vanilla JS, existing activity engines, and detailed prior ITDS261 audits. The reader previously hid every section except the selected one. Chapter cards, nested notes and inherited heading tracking made the reading surface unnecessarily fragmented. NotoSansThai was already present locally but was not loaded by the reader.
+The user explicitly requested that **Thermodynamics remain in the project in its existing version and receive no content revision**. All nine Thermodynamics chapter files, course index, course assets and source map are unchanged against `abe9b00`; the home page retains its four courses and 34 chapters. Only changed asset fingerprints on the home/Mahidol pages refresh.
 
-[Structural audit and all 34 chapter statuses](teaching-redesign-audit.md) records individual teaching gaps and the next work. [Source coverage map](teaching-redesign-coverage.md) links each chapter to supplied files and destination anchors, with explicit verification limits. Existing ITDS261 coverage/audits are retained rather than represented as newly verified.
+## Per-chapter work and source coverage
 
-ITDS241 chapter 08 is backed by the 124-page ECMAScript document in the manifest; a separate Lecture08 PDF is not needed to establish that source. Selected original pages were rendered and inspected for this batch. The remaining pages were indexed/extracted but not fully visually checked. Thermodynamics originals remain absent; its nine chapters have numerical/browser regression evidence, not fresh source-page verification. No instructor PDF or rendered source image was added to the repository.
+- [ITDS241: all 3 chapters](itds241-teaching-completion.md): sequential reasoning, first-use terminology fixes, complete runnable DOM/event HTML, actual example output tests and reset controls.
+- [ITDS261: all 12 chapters](itds261-teaching-completion.md): linked prerequisites, chapter terminology, three-step worked scenario and misconception check in each chapter, connected summaries, all 120 quiz distractor explanations. Builds on the existing extensive source-driven lessons and coverage maps.
+- [ITDS294: all 10 chapters](itds294-teaching-completion.md): 54 topic-specific explanatory bridges, prerequisites/terminology, authored practice and connected summaries; all 100 quiz distractor explanations; 18 activity guides and static interpretations with resets.
+- [Consolidated coverage and scope](teaching-redesign-coverage.md): source documents, exact selected visual-review pages, original topic destinations, and explicit limits.
 
-## Changes by chapter
+Original topic anchors are retained in all 25 chapters. The original 250 correct-answer meanings are checked against the last delivered version. No arbitrary-code evaluation or new external services were added to the website. Static HTML/CSS/vanilla JavaScript architecture remains.
 
-| Chapter | Change and teaching purpose | Status / remaining work |
-|---|---|---|
-| ITDS241 06 | Add prerequisites/core glossary; begin variables with a price × quantity question, runnable source, explicit Console result and line-by-line reasoning; add controlled trace; explain types before the comparison table; move typeof-null/safe-integer discussion after fundamentals; connected summary and a new retrieval card | Selected teaching improvements complete. Full sequential terminology audit and every source example/figure still need checking; this is not a completed chapter under the full Definition of Done |
-| ITDS241 07 | Add prerequisites linking to chapter 06, core glossary and summary; trace arguments → parameters → return → Console through a complete price/discount example; explain return versus printing and reversed argument order; retain callback/closure/DOM/event lessons and labs | Selected teaching improvements complete. Remaining advanced scope/OOP/DOM sections require a full beginner/terminology pass |
-| ITDS241 08 | Verify actual source identity; add prerequisites/core glossary/summary; demonstrate Promise callback ordering with exact tested output and step reasoning; add misconception check and observation instructions to existing Promise lab | Selected teaching improvements complete. Full feature/year/status and source-page audit remains open; no claim that all contemporary API support was reverified |
-| ITDS261 01–12 | Apply shared continuous reading, article layout and Thai typography; retain original substantive lessons, diagrams, exercises, assessments and print views | Shared reader QA complete; chapter teaching redesign remains in progress, using prior detailed audits |
-| ITDS294 01–10 | Apply shared reader; inventory chapter-specific beginner gaps and opportunities to reuse business/payment/funnel activities | Shared reader QA complete; full source/teaching audit and rewrites pending |
-| Thermodynamics 01–09 | Apply shared reader while preserving calculators, equations, source caveats and print behavior | Shared reader and numerical regression complete; original-source verification blocked by absent PDF |
+Reading estimates were recalculated using Thai word segmentation at 180 words/minute plus explicit activity time: ITDS241 30–42 minutes depending on chapter/range; ITDS294 21–39 minutes. These estimates exclude quiz completion time. ITDS261 had no reading-time badges to replace.
 
-All 30 ITDS241 quiz questions retain their question text, option sets and correct-answer identity. Explanations now explain distractors as well as the correct answer. Author-time option reordering removes the former repeated answer-position patterns; no runtime shuffle or storage migration was added. One new card per chapter connects assessments to the new teaching examples.
+## Verification executed after changes
 
-## Shared behavior and activity purpose
-
-- All main sections remain visible. Sidebar links/category buttons still navigate to anchors; history Back/Forward and keyboard focus are preserved. Current-topic highlighting follows ordinary scrolling without adding history entries.
-- Remove prose card backgrounds/side borders; use spacing and thin section separators. Notes use a left rule; tables retain horizontal rules and local scrolling. Functional activity/figure boundaries remain.
-- Load the existing local Thai font only for the lesson, hero and table of contents. This avoids changing the global header's layout. Thai headings have normal letter spacing. Main reading text is 17px with 1.85 line height.
-- **Variable tracer:** see exactly when a name receives a value, when multiplication happens, and when Console output occurs. Change constrained numeric price/quantity, step forward/back, reset to 100 × 2. Changing an input restarts the trace; blank/invalid input cannot silently become zero. No arbitrary code is evaluated. Static worked explanation survives disabled JavaScript, and decimal floating-point limits are stated.
-- Reuse existing loop, counter, DOM, Promise, nullish, software, commerce and thermo activities. The new checks use native details/summary so they remain keyboard-usable without JavaScript. Other existing activities have not all received a fresh pedagogical audit.
-
-## Files
-
-- `assets/reader.js`, `assets/reader.css`: continuous reading, anchor navigation/scroll tracking, typography and article layout.
-- `assets/labs.js`: reusable controlled trace initialization for each `[data-variable-tracer]` instance.
-- `assets/content.js`: three cards, expanded explanations and static option reordering.
-- `subjects/itds241/chapter-06.html`, `chapter-07.html`, `chapter-08.html`: authored teaching additions, summaries and reading estimates.
-- Other chapter HTML, root/course index pages: asset fingerprint updates only, so GitHub Pages receives the current shared files.
-- `tools/test-teaching-redesign.mjs`, `tools/test-teaching-examples.mjs`, `tools/update-reading-time.mjs`: behavioral checks, execution of actual copied examples, reproducible reading estimates.
-- `docs/teaching-redesign-{audit,coverage,report}.md`, implementation plan and eight screenshots: audit trail and review evidence.
-
-## Before / after
-
-Same chapter and anchor: ITDS241 06, `#variables`; viewport height 1000px; reduced motion. Screenshots have been visually inspected for Thai text and layout. The preceding prose visible above the new section is expected because reading is now continuous.
-
-| View | Before | After |
-|---|---|---|
-| Desktop 1440 light | [Before](screenshots/teaching-redesign/before-1440-light.png) | [After](screenshots/teaching-redesign/after-1440-light.png) |
-| Desktop 1440 dark | [Before](screenshots/teaching-redesign/before-1440-dark.png) | [After](screenshots/teaching-redesign/after-1440-dark.png) |
-| Mobile 390 light | [Before](screenshots/teaching-redesign/before-390-light.png) | [After](screenshots/teaching-redesign/after-390-light.png) |
-| Mobile 390 dark | [Before](screenshots/teaching-redesign/before-390-dark.png) | [After](screenshots/teaching-redesign/after-390-dark.png) |
-
-## Verification
-
-Tests run with the bundled Playwright import through `STUDY_GARDEN_PLAYWRIGHT`; Chrome headless serves real local files. No deployed site or external CDN is needed for these checks.
-
-| Command | Result |
+| Check | Result |
 |---|---|
-| `node tools/check-curriculum.mjs` | PASS: four courses, 34 chapters, 340 questions, 92 figures; references valid |
-| `node tools/version-assets.mjs` / `check-assets.mjs` | PASS: current content hashes, including local Thai font |
-| `node tools/test-teaching-redesign.mjs` | PASS: continuous content, history/anchor/scroll navigation, typography, mobile/light/dark, no-JS/print; variable trace 200, 37.5, zero, invalid inputs and keyboard reset |
-| `node tools/test-teaching-examples.mjs` | PASS: exact authored examples output 200, 80, and เริ่ม → ทำงานอื่นต่อ → ข้อมูลพร้อม; quiz shape remains ten questions |
-| `node tools/test-learning.mjs` | PASS: 25 chapters, 500 desktop/mobile topic checks, search/figures/quiz/cards/progress/theme/no-JS |
-| `node tools/test-itds261-audit-ui.mjs` | PASS: 72 chapter DOM checks, search/status, three widths, both themes, source-derived diagrams |
-| `node tools/test-itds261-layout.mjs` | PASS: 798 topic checks, SVG bounds, no-JS and A4 |
-| `node tools/test-itds261-print.mjs` | PASS: print figures fit; all eight Zoo process views printable |
-| `node tools/test-itds261-requirements.mjs` | PASS: four scenarios, correct/wrong feedback, keyboard/mobile/no-JS |
-| `node tools/test-itds261-widgets.mjs` | PASS: existing widget suite including DFD/UML and numerical SVG cases |
-| `node tools/test-thermo.mjs` | PASS: nine chapters, 59 sections, 62 exercise guides, 90 quiz, 90 cards, nine calculators |
-| `node tools/test-thermo-install.mjs` | PASS: LF/CRLF integration and safe repeated installation |
-| `node tools/test-thermo-browser.mjs` | PASS: 244 topic checks, 18 labs, 12 quiz/card flows and independent saved progress |
-| `node tools/test-footer.mjs` | PASS: 54 checks |
-| `node tools/test-university-groups.mjs` | PASS: search, ten responsive/theme layouts and course navigation |
-| `python tools/fix_thai_latin_spacing.py subjects/itds241 --write` | No spacing corrections needed |
+| `test-mahidol-scope.mjs` | 25 chapter structures and all original anchors; 250 correct-option identities; 9 Thermodynamics chapters/course assets and navigation unchanged; numeric funnel/finance examples and zero-domain cases |
+| `check-curriculum.mjs` | 4 courses, 34 chapters, 340 questions, 92 figures, 1,841 local references |
+| `version-assets.mjs` + `check-assets.mjs` | 718 current asset references; no stale hash remains |
+| `test-teaching-examples.mjs` | 9 exact authored JavaScript examples produce stated outputs; 30 quiz contracts |
+| `test-teaching-redesign.mjs` | Continuous reading/history, Thai font, themes/no-JS/print; 3 exact complete HTML examples; keyboard DOM/nullish reset and blank/zero inputs |
+| `test-learning.mjs` | 25 chapters, 588 desktop/mobile topic checks, images, reader, flashcards, quiz/retry, progress persistence, no-JS |
+| `test-ecommerce-teaching.mjs` | All 10 revised quiz/retry flows; explorer/calculator/worksheet reset state and keyboard; five no-JS activity alternatives |
+| `test-itds261-layout.mjs` | 942 mobile/desktop light/dark topic checks, SVG bounds, no-JS and one-page A4 |
+| `test-itds261-audit-ui.mjs` | 72 chapter DOM checks, index filters, 375/768/1440 themes, source-derived diagrams |
+| `test-itds261-widgets.mjs` | Team channels 1/66, model choices, 36 DFD endpoint pairs, triangle invalid/decimal/large values, Git snapshots, use-case arrow, DFD stepper |
+| `test-itds261-requirements.mjs` | Four classification cases, wrong/correct feedback, keyboard, mobile, no-JS |
+| `test-itds261-print.mjs` | A4 figures and all eight Zoo process views printable |
+| `test-thermo.mjs` + `test-thermo-install.mjs` | Retained nine chapters/calculators, 90 questions/cards; installer LF/CRLF regression |
+| `test-thermo-browser.mjs` | 244 topic checks, 18 labs, 12 assessment flows, independent progress |
+| `test-university-groups.mjs` | Existing four-course search/navigation and 10 responsive/theme layouts |
+| `test-footer.mjs` | 54 passed, 0 failed |
+| `git diff --check` | No whitespace errors |
 
-The continuous-reader test first failed because eight sections were hidden. The trace test first failed because no trace existed. The scroll-tracking test first failed because active-topic state did not follow scrolling. All were implemented and rerun. An existing thermo browser assertion caught a 3px header overflow after broad font application; scoping the font to reading areas fixed the cause without weakening the assertion. Existing test assertions were not removed or relaxed. A new test's border check was corrected from top border to side border because the approved article design explicitly permits thin horizontal separators.
+A checkbox reset test exposed the difference between default value and checked state; reset now restores `defaultChecked` for checkboxes and `defaultValue` for numeric inputs. The test then passed. A transient Windows file-write failure during asset versioning was retried successfully and all hashes rechecked.
 
-Reading estimates use Thai `Intl.Segmenter` word segmentation at an assumed 180 words/minute plus activity allowances: chapter 06, 2594 words + 12 activity minutes → 27–37 minutes; chapter 07, 2263 + 10 → 23–33; chapter 08, 2833 + 10 → 26–36. These are planning estimates, not measured learner completion times.
+## Screenshots
 
-## Remaining work and review boundary
+24 matched screenshots compare `abe9b00` with the final editorial version at 390px and 1440px in light and dark modes. They show ITDS241 chapter07 callbacks, ITDS261 chapter02 process model and ITDS294 chapter02 business model, using the same section, viewport and shared reader. Source images remain local work notes; these screenshots contain the authored website.
 
-No chapter is declared fully finished under the supplied nine-point Definition of Done. Full zero-first-use-undefined-term checking, page/figure-level source coverage, remaining code examples and every activity's teaching contract still require further batches. ITDS294 needs direct source reading; ITDS261 should continue from its existing audits; Thermodynamics needs the missing originals for source verification. Scientific calculations were regression-tested, not redesigned.
+| Course | Mobile after | Desktop after |
+|---|---|---|
+| ITDS241 | [Light](screenshots/mahidol-completion/itds241-after-390-light.png) · [Dark](screenshots/mahidol-completion/itds241-after-390-dark.png) | [Light](screenshots/mahidol-completion/itds241-after-1440-light.png) · [Dark](screenshots/mahidol-completion/itds241-after-1440-dark.png) |
+| ITDS261 | [Light](screenshots/mahidol-completion/itds261-after-390-light.png) · [Dark](screenshots/mahidol-completion/itds261-after-390-dark.png) | [Light](screenshots/mahidol-completion/itds261-after-1440-light.png) · [Dark](screenshots/mahidol-completion/itds261-after-1440-dark.png) |
+| ITDS294 | [Light](screenshots/mahidol-completion/itds294-after-390-light.png) · [Dark](screenshots/mahidol-completion/itds294-after-390-dark.png) | [Light](screenshots/mahidol-completion/itds294-after-1440-light.png) · [Dark](screenshots/mahidol-completion/itds294-after-1440-dark.png) |
 
-Independent review identified a history regression: ordinary scrolling left the URL fragment at an earlier heading, and Back incorrectly scrolled to that old heading. New tests reproduced both the initial history-entry case and subsequent navigation before the fix. Back/Forward now restore reading coordinates explicitly stored per history entry; explicit fragment navigation remains separate. Regression checks cover a fresh page and ordinary scrolling → Quiz → Back → Forward on both widths and themes. They pass after the fix.
+Matching `before` files are in the same folder. Rendered after screenshots were visually inspected in all listed layouts: prose remains continuous, diagrams/table scrolling stay usable, and dark/light text is legible.
 
-The reviewer independently verified the authored examples and all 30 quiz answer identities. Follow-up review approved the delivered scope after checking real mouse-wheel scrolling on a fresh entry, Back/Forward, active TOC, reload restoration and subsequent native fragment navigation. Chrome was tested; Firefox/WebKit and full assistive-technology behavior remain unverified. Complete source coverage, first-use terminology and whole-course beginner readiness remain outside review certification.
+## Review and practical limits
 
-Final learning regression after the history fix passed all 500 topic checks. All original element anchors were compared against main and retained across 34 chapters. Remote main was fetched and matched the original base. Changes are committed as a reviewable batch on `codex/teaching-redesign`; the accompanying PR description is in [teaching-redesign-pr.md](teaching-redesign-pr.md). No merge or force push is performed.
+Independent review found two ITDS241 issues (incomplete DOM fixtures and definitions after use), both fixed and re-reviewed. Whole-revision review then read all ITDS261/294 additions and quiz explanations, independently verified all 220 changed correct-option identities and scope invariants, and reported no remaining P1/P2 finding.
 
-Git status on 23 October: branch pushed successfully to origin. Draft PR creation through the GitHub integration failed with HTTP 403, `Resource not accessible by integration`; **no PR was created**. The description is ready to paste at [Open the branch's PR form](https://github.com/Title5656/study-garden/pull/new/codex/teaching-redesign).
+Completion means the requested editorial pass is applied to all 25 chapters. It is not a guarantee of exam coverage, zero unexplained transitive jargon, or visual verification of every supplied PDF page. Exact selected source pages are recorded; ITDS261's missing supplied L5 remains a source limitation. Chromium/Chrome was tested; Firefox and WebKit were not. Thermodynamics is not a pending content task under the user's revised scope.
+
+Work stays on `codex/teaching-redesign`, without merging. The previous attempt to create a PR returned GitHub integration HTTP 403; no PR is claimed. [Prepared current PR description](teaching-redesign-pr.md).
