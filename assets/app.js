@@ -372,5 +372,15 @@
     });
   }
   // กิจกรรมเฉพาะบทเรียกใช้กราฟจากที่เดียวกัน เพื่อรองรับโหมดมืดและลดการเคลื่อนไหว
-  window.StudyApp = { makeChart };
+  window.StudyApp = {
+    makeChart,
+    // Activities share this page's storage fallback/cache with the read marker.
+    recordQuizScore(score) {
+      if (!chapter || !data || scoreValue(score) === null) return;
+      updateProgress(chapter, {
+        last: score,
+        best: Math.max(scoreValue(progressEntry(chapter).best) ?? 0, score),
+      });
+    },
+  };
 })();

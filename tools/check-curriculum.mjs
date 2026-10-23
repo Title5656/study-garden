@@ -13,7 +13,7 @@ for (const name of ['content', 'ecommerce-content', 'software-content', 'thermo-
 }
 const courses = context.window.StudyContent;
 assert.equal(Object.keys(courses.itds261).length, 12);
-assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 34);
+assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 35);
 let figures = 0;
 for (const [course, chapters] of Object.entries(courses)) {
   for (const [id, data] of Object.entries(chapters)) {
@@ -61,4 +61,4 @@ for (const file of walk(root).filter(path => path.endsWith('.html'))) {
   }
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) assert.match(tag[0], /\balt="[^"]*"/, `${file}: image needs alt`);
 }
-console.log(`PASS: 4 courses, 34 chapters, 340 questions, ${figures} learning figures, 20 source files, ${links} local references.`);
+console.log(`PASS: 4 courses, 35 chapters, 350 questions, ${figures} learning figures, 20 source files, ${links} local references.`);

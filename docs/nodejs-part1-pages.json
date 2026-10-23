@@ -1,0 +1,356 @@
+[
+  {
+    "id": "before-start",
+    "title": "ก่อนเริ่มบทนี้",
+    "chapter": 0,
+    "category": "learn"
+  },
+  {
+    "id": "topic-2",
+    "title": "1.1 หน้าเว็บประกอบด้วยอะไร (RECAP)",
+    "chapter": 1,
+    "category": "learn"
+  },
+  {
+    "id": "topic-3",
+    "title": "1.2 Client-side vs Server-side",
+    "chapter": 1,
+    "category": "learn"
+  },
+  {
+    "id": "topic-4",
+    "title": "1.3 วงจร Request / Response (6 ขั้น)",
+    "chapter": 1,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch1-reqres",
+    "title": "ลองทำ · 1.3 วงจร Request / Response (6 ขั้น)",
+    "chapter": 1,
+    "category": "practice"
+  },
+  {
+    "id": "topic-5",
+    "title": "1.4 Server, IP Address, Port",
+    "chapter": 1,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch1-url-build",
+    "title": "ลองทำ · 1.4 Server, IP Address, Port",
+    "chapter": 1,
+    "category": "practice"
+  },
+  {
+    "id": "topic-6",
+    "title": "สรุปบท 1",
+    "chapter": 1,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch1-quiz",
+    "title": "ทบทวนบท 1",
+    "chapter": 1,
+    "category": "learn"
+  },
+  {
+    "id": "topic-7",
+    "title": "2.1 นิยาม",
+    "chapter": 2,
+    "category": "learn"
+  },
+  {
+    "id": "topic-8",
+    "title": "2.2 Node.js ต่างจาก JS ในเบราว์เซอร์อย่างไร",
+    "chapter": 2,
+    "category": "learn"
+  },
+  {
+    "id": "topic-9",
+    "title": "2.3 สถาปัตยกรรม: Single-thread Event Loop (Non-blocking)",
+    "chapter": 2,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch2-eventloop",
+    "title": "ลองทำ · 2.3 สถาปัตยกรรม: Single-thread Event Loop (Non-blocking)",
+    "chapter": 2,
+    "category": "practice"
+  },
+  {
+    "id": "topic-10",
+    "title": "2.4 Node.js Facts",
+    "chapter": 2,
+    "category": "learn"
+  },
+  {
+    "id": "topic-11",
+    "title": "สรุปบท 2",
+    "chapter": 2,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch2-quiz",
+    "title": "ทบทวนบท 2",
+    "chapter": 2,
+    "category": "learn"
+  },
+  {
+    "id": "topic-12",
+    "title": "3.1 ติดตั้ง",
+    "chapter": 3,
+    "category": "learn"
+  },
+  {
+    "id": "topic-13",
+    "title": "3.2 Hello World",
+    "chapter": 3,
+    "category": "learn"
+  },
+  {
+    "id": "topic-14",
+    "title": "3.3 Global Objects",
+    "chapter": 3,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch3-hello",
+    "title": "ลองทำ · รันโปรแกรมแรก",
+    "chapter": 3,
+    "category": "practice"
+  },
+  {
+    "id": "topic-15",
+    "title": "สรุปบท 3",
+    "chapter": 3,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch3-quiz",
+    "title": "ทบทวนบท 3",
+    "chapter": 3,
+    "category": "learn"
+  },
+  {
+    "id": "topic-16",
+    "title": "4.1 หลักการ Modularity",
+    "chapter": 4,
+    "category": "learn"
+  },
+  {
+    "id": "topic-17",
+    "title": "4.2 `module.exports` — \"เปิดประตู\" ให้ไฟล์อื่นใช้",
+    "chapter": 4,
+    "category": "learn"
+  },
+  {
+    "id": "topic-18",
+    "title": "4.3 `require` — นำเข้า module",
+    "chapter": 4,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch4-modules",
+    "title": "ลองทำ · ทดลองส่งออกและนำเข้า module",
+    "chapter": 4,
+    "category": "practice"
+  },
+  {
+    "id": "topic-19",
+    "title": "สรุปบท 4",
+    "chapter": 4,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch4-quiz",
+    "title": "ทบทวนบท 4",
+    "chapter": 4,
+    "category": "learn"
+  },
+  {
+    "id": "topic-20",
+    "title": "บทที่ 5 — Built-in Modules: Path และ URL",
+    "chapter": 5,
+    "category": "learn"
+  },
+  {
+    "id": "topic-21",
+    "title": "5.1 Path Module",
+    "chapter": 5,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch5-path",
+    "title": "ลองทำ · 5.1 Path Module",
+    "chapter": 5,
+    "category": "practice"
+  },
+  {
+    "id": "topic-22",
+    "title": "5.2 URL Module · 1/2",
+    "chapter": 5,
+    "category": "learn"
+  },
+  {
+    "id": "topic-23",
+    "title": "5.2 URL Module · 2/2",
+    "chapter": 5,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch5-url",
+    "title": "ลองทำ · 5.2 URL Module",
+    "chapter": 5,
+    "category": "practice"
+  },
+  {
+    "id": "topic-24",
+    "title": "สรุปบท 5",
+    "chapter": 5,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch5-quiz",
+    "title": "ทบทวนบท 5",
+    "chapter": 5,
+    "category": "learn"
+  },
+  {
+    "id": "topic-25",
+    "title": "6.1 หน้าที่",
+    "chapter": 6,
+    "category": "learn"
+  },
+  {
+    "id": "topic-26",
+    "title": "6.2 อ่านไฟล์แบบ Async (Callback)",
+    "chapter": 6,
+    "category": "learn"
+  },
+  {
+    "id": "topic-27",
+    "title": "6.3 อ่านหลายไฟล์พร้อมกัน → **ลำดับผลลัพธ์ไม่แน่นอน!**",
+    "chapter": 6,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch6-asyncorder",
+    "title": "ลองทำ · 6.3 อ่านหลายไฟล์พร้อมกัน → **ลำดับผลลัพธ์ไม่แน่นอน!**",
+    "chapter": 6,
+    "category": "practice"
+  },
+  {
+    "id": "topic-28",
+    "title": "6.4 วิธี \"รับประกันลำดับ\"",
+    "chapter": 6,
+    "category": "learn"
+  },
+  {
+    "id": "topic-29",
+    "title": "สรุปบท 6",
+    "chapter": 6,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch6-quiz",
+    "title": "ทบทวนบท 6",
+    "chapter": 6,
+    "category": "learn"
+  },
+  {
+    "id": "topic-30",
+    "title": "7.1 HTTP Module",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "topic-31",
+    "title": "7.2 Web server ทำอะไร",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "topic-32",
+    "title": "7.3 โค้ดเซิร์ฟเวอร์แรก (`myFirstNodeServer.js`)",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch7-serverbuilder",
+    "title": "ลองทำ · เรียงโค้ดเว็บเซิร์ฟเวอร์",
+    "chapter": 7,
+    "category": "practice"
+  },
+  {
+    "id": "topic-33",
+    "title": "7.4 `req` และ `res`",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "topic-34",
+    "title": "7.5 Routing ด้วย `req.url` · 1/2",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "topic-35",
+    "title": "7.5 Routing ด้วย `req.url` · 2/2",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch7-routetester",
+    "title": "ลองทำ · 7.5 Routing ด้วย `req.url`",
+    "chapter": 7,
+    "category": "practice"
+  },
+  {
+    "id": "topic-36",
+    "title": "7.5 Routing ด้วย `req.url` · จุดต้องจำ",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "topic-37",
+    "title": "สรุปบท 7",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "p1-ch7-quiz",
+    "title": "ทบทวนบท 7",
+    "chapter": 7,
+    "category": "learn"
+  },
+  {
+    "id": "topic-38",
+    "title": "สรุปท้าย Part 1 (Cheat Sheet)",
+    "chapter": 0,
+    "category": "learn"
+  },
+  {
+    "id": "p1-final",
+    "title": "ลองตอบด้วยตัวเอง · ท้าย Part I",
+    "chapter": 0,
+    "category": "learn"
+  },
+  {
+    "id": "flashcards",
+    "title": "Flashcards",
+    "chapter": 0,
+    "category": "learn"
+  },
+  {
+    "id": "quiz",
+    "title": "Quiz ท้ายบท · 10 ข้อ",
+    "chapter": 0,
+    "category": "learn"
+  },
+  {
+    "id": "sources",
+    "title": "ที่มาและหมายเหตุ",
+    "chapter": 0,
+    "category": "learn"
+  }
+]

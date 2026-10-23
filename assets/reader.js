@@ -88,7 +88,7 @@
     }
     function updateReveal() {
       scheduled = false;
-      const enabled = !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
+      const enabled = document.body.dataset.readerMode !== "paged" && !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
       reveal.classList.toggle("reveal-enabled", enabled);
       if (!enabled) {
         if (footer.inert) footer.inert = false;
@@ -148,6 +148,7 @@
   if (!sections.length) return;
   const chapter = document.body.dataset.chapter;
   const subject = document.body.dataset.subject;
+  const paged = document.body.dataset.readerMode === "paged";
   const categories = [
     { id: "learn", label: "เนื้อหา", icon: "01" },
     { id: "practice", label: "กิจกรรม", icon: "02" },
@@ -260,9 +261,14 @@
   let current;
   function show(topic, focus = false) {
     current = topic;
+    if (paged) {
+      if (chapterEnd) chapterEnd.hidden = topic.index !== topics.length - 1;
+      const markRead = article.querySelector('[data-mark-read]');
+      if (markRead) markRead.hidden = topic.index !== topics.length - 1;
+    }
     topics.forEach(item => {
-      // Navigation selects a location; it must not conceal the rest of the lesson.
-      item.section.hidden = false;
+      // Existing lessons remain continuous; short-page lessons opt in explicitly.
+      item.section.hidden = paged && item !== topic;
       if (item === topic) item.link.setAttribute("aria-current", "location");
       else item.link.removeAttribute("aria-current");
     });
@@ -275,7 +281,7 @@
     previous.href = "#" + (topics[topic.index - 1]?.id || topic.id);
     const atLearningEnd = topic === learningTopics.at(-1);
     const atEnd = topic === topics.at(-1);
-    if ((atLearningEnd || atEnd) && nextChapter) {
+    if (((!paged && atLearningEnd) || atEnd) && nextChapter) {
       next.href = nextChapter.getAttribute("href");
       next.textContent = nextChapter.textContent;
       next.dataset.completeChapter = "";
@@ -357,6 +363,7 @@
   // A single animation frame coalesces scroll events; no polling or animation.
   let readingFrame = 0;
   window.addEventListener('scroll', () => {
+    if (paged) { rememberReadingPosition(); return; }
     if (readingFrame) return;
     readingFrame = requestAnimationFrame(() => {
       readingFrame = 0;

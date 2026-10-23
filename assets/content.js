@@ -510,3 +510,177 @@ window.StudyContent = {
     },
   },
 };
+
+/* Node.js Part I registry */
+window.StudyContent.itds241["09"] = {
+  "cards": [
+    [
+      "Node.js",
+      "JavaScript runtime นอก browser สร้างบน V8"
+    ],
+    [
+      "Non-blocking I/O",
+      "เริ่มงาน I/O แล้วให้ event loop รับงานอื่นต่อ ระหว่างรอผล"
+    ],
+    [
+      "CPU-bound",
+      "งานคำนวณ JS นานบน main thread ยังบล็อก event loop"
+    ],
+    [
+      "CommonJS",
+      "ระบบ module ที่ใช้ require และ module.exports ในบทนี้"
+    ],
+    [
+      "module.exports",
+      "ค่าที่ไฟล์อื่นได้รับเมื่อ require module นี้"
+    ],
+    [
+      "./ ใน require",
+      "relative path ของ module ที่เขียนเอง; built-in เช่น http ไม่ต้องมี ./"
+    ],
+    [
+      "__dirname / __filename",
+      "โฟลเดอร์ของ module / path เต็มรวมชื่อไฟล์ ใน CommonJS"
+    ],
+    [
+      "path.parse",
+      "แยก root, dir, base, name, ext"
+    ],
+    [
+      "host / hostname",
+      "host รวม port ที่ไม่ใช่ค่า default; hostname ไม่มี port"
+    ],
+    [
+      "readFile / readFileSync",
+      "async callback / sync ที่บล็อกเธรด"
+    ],
+    [
+      "req / res",
+      "ข้อมูล request ที่เข้ามา / object สำหรับตอบ response"
+    ],
+    [
+      "res.end()",
+      "ส่งข้อมูลส่วนสุดท้ายและจบ response"
+    ],
+    [
+      "200 / 404",
+      "สำเร็จ / ไม่พบ resource"
+    ],
+    [
+      "listen(8081)",
+      "ให้ server ฟัง port 8081; ไม่ระบุ host ไม่ได้แปลว่ารับแค่ localhost"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "สร้าง server ควรทำอะไรก่อน listen(8081)?",
+      "options": [
+        "เรียก res.end() นอก callback",
+        "import http แล้วเรียก createServer",
+        "อ่าน window.document",
+        "ส่ง status 404 ทุกครั้ง"
+      ],
+      "answer": 1,
+      "explanation": "ต้องมี server object จาก http.createServer ก่อนเรียก listen ส่วน res.end อยู่ใน callback เมื่อมี request เข้ามา"
+    },
+    {
+      "q": "module.exports.sayHi = sayHello ทำให้ require ได้ค่าแบบใด?",
+      "options": [
+        "string เสมอ",
+        "ชื่อ sayHello เพียงอย่างเดียว",
+        "object ที่มี property sayHi เป็นฟังก์ชัน",
+        "HTML document"
+      ],
+      "answer": 2,
+      "explanation": "ชื่อที่ส่งออกคือ sayHi เรียกผ่าน object.sayHi() แม้ฟังก์ชันต้นทางชื่อ sayHello"
+    },
+    {
+      "q": "fs.readFile ต่างจาก fs.readFileSync อย่างไร?",
+      "options": [
+        "readFile ใช้ callback แบบ async; readFileSync บล็อกและคืนผลโดยตรง",
+        "ทั้งคู่บล็อกเหมือนกัน",
+        "readFileSync ใช้ได้เฉพาะใน browser",
+        "readFile ไม่รับ error"
+      ],
+      "answer": 0,
+      "explanation": "readFile เริ่มงาน I/O แล้วให้ event loop ทำงานต่อ ผลมาใน callback ส่วน readFileSync รออ่านจบก่อนทำบรรทัดต่อไป"
+    },
+    {
+      "q": "อ่านไฟล์ต่อกัน 1 → 2 → 3 โดยไม่บล็อก ใช้วิธีใด?",
+      "options": [
+        "readFileSync สามครั้ง",
+        "เรียก readFile สามครั้งพร้อมกันแล้วหวังลำดับ",
+        "เพิ่มเวลารอเท่ากัน",
+        "await fs.promises.readFile ทีละไฟล์"
+      ],
+      "answer": 3,
+      "explanation": "await ทีละงานใน async function รอผลแบบไม่บล็อก event loop; nested callback ก็ทำได้ แต่โค้ดซ้อนมากขึ้น"
+    },
+    {
+      "q": "https://example.com:8080/p/a?country=TH มี protocol, port, pathname อะไร?",
+      "options": [
+        "http:, 80, /country",
+        "https:, 8080, /p/a",
+        "https:, 443, ?country=TH",
+        "example.com, 8080, /p/a"
+      ],
+      "answer": 1,
+      "explanation": "protocol คือ https: ส่วน port ที่ระบุคือ 8080 และ pathname ไม่รวม query string"
+    },
+    {
+      "q": "สิ่งใดไม่มีใน Node.js แบบเดียวกับ browser?",
+      "options": [
+        "console.log",
+        "module http",
+        "document และ window",
+        "process"
+      ],
+      "answer": 2,
+      "explanation": "Node ไม่มี DOM ของ browser จึงไม่มี document/window ในสภาพแวดล้อม Node ปกติ"
+    },
+    {
+      "q": "request ขอภาพที่มีเป็นไฟล์อยู่แล้วในโมเดล static ข้ามขั้นใด?",
+      "options": [
+        "อ่านฐานข้อมูลและรวมข้อมูลกับ HTML template",
+        "ส่ง request",
+        "รับ response",
+        "ส่ง response"
+      ],
+      "answer": 0,
+      "explanation": "static server ส่ง resource ที่เตรียมไว้ได้โดยไม่ต้องเรียก web app/DB เพื่อสร้าง HTML ใหม่"
+    },
+    {
+      "q": "path.parse(\"/a/b/c.txt\") มี name และ base อย่างไร?",
+      "options": [
+        "name=c.txt, base=c",
+        "name=/a/b, base=c.txt",
+        "name=c, base=/a/b/c.txt",
+        "name=c, base=c.txt"
+      ],
+      "answer": 3,
+      "explanation": "name ไม่รวมนามสกุล ส่วน base คือชื่อไฟล์พร้อมนามสกุล; dir คือ /a/b"
+    },
+    {
+      "q": "เทียบ req.url === \"/bbq\" แล้วรับ /BBQ จะได้อะไรในตัวอย่าง?",
+      "options": [
+        "200 และหน้า BBQ",
+        "404 เพราะตัวพิมพ์ต่างกัน",
+        "301 โดยอัตโนมัติ",
+        "เปลี่ยนเป็น /bbq เสมอ"
+      ],
+      "answer": 1,
+      "explanation": "การเทียบ string ด้วย === ตรงตามตัวอักษร จึงไม่ normalize ตัวพิมพ์หรือ slash ให้เอง"
+    },
+    {
+      "q": "งานใดทำให้ event loop ติดค้างได้ แม้แอปใช้ async I/O?",
+      "options": [
+        "รอ callback อ่านไฟล์",
+        "รอ response จากฐานข้อมูล",
+        "วนคำนวณ JavaScript หนักบน main thread",
+        "รับ request ใหม่ขณะที่รอ I/O"
+      ],
+      "answer": 2,
+      "explanation": "การคำนวณ JS บน main thread ยังบล็อก event loop ต้องแบ่งงานหรือย้ายงานคำนวณไป worker ตามความเหมาะสม"
+    }
+  ]
+};
