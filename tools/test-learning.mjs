@@ -91,6 +91,7 @@ try {
   assert.equal(await page.locator('.explanation:visible').count(),10);
   await page.locator('#quiz-retry').click();
   assert.equal(await page.locator('.quiz-option input:checked').count(),0);
+  await page.locator('.reader-topic[href="#sources"]').click();
   await page.locator('[data-mark-read]').click();
   await page.reload();
   assert.equal(await page.locator('[data-mark-read]').getAttribute('aria-pressed'),'true');

@@ -1,6 +1,10 @@
 /* Progressive enhancement: keep every lesson available without JavaScript and in print. */
 (function () {
   "use strict";
+  // Read one complete topic at a time across every course.
+  if (document.querySelector(".lesson-content > .lesson-section") && document.querySelector(".toc")) {
+    document.body.dataset.readerMode = "paged";
+  }
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const footer = document.querySelector(".motion-footer");
   const reveal = document.querySelector(".footer-reveal");
@@ -267,7 +271,7 @@
       if (markRead) markRead.hidden = topic.index !== topics.length - 1;
     }
     topics.forEach(item => {
-      // Existing lessons remain continuous; short-page lessons opt in explicitly.
+      // Keep the whole topic scrollable; Next opens the following topic.
       item.section.hidden = paged && item !== topic;
       if (item === topic) item.link.setAttribute("aria-current", "location");
       else item.link.removeAttribute("aria-current");

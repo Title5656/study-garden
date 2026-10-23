@@ -21,14 +21,14 @@ try {
    await page.locator('#variables').scrollIntoViewIfNeeded();
    await page.screenshot({path:resolve(out,`${stage}-${width}-${theme}.png`)});
   } else {
-   assert.equal(await page.locator('.lesson-section[hidden]').count(),0,'Main lessons must remain continuously readable');
+   assert.equal(await page.locator('.lesson-section:visible').count(),1,'Show one complete topic at a time');
    assert.equal(await page.locator('#variables').evaluate(e=>getComputedStyle(e).borderLeftWidth),'0px');
    assert.equal(await page.locator('.chapter-hero h1').evaluate(e=>getComputedStyle(e).letterSpacing),'normal');
    assert.ok(await page.evaluate(()=>document.fonts.check('17px "Study Thai"')));
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),'document overflow');
    // Exercise the initial history entry, before any earlier navigation warms it up.
-   await page.locator('#operators').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
-   await page.waitForFunction(()=>document.querySelector('.reader-topic[aria-current]')?.getAttribute('href')==='#operators');
+   await page.locator('#variables').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
+   await page.waitForFunction(()=>document.querySelector('.reader-topic[aria-current]')?.getAttribute('href')==='#variables');
    const initialReadingY=await page.evaluate(()=>scrollY);
    await page.locator('.reader-topic[href="#quiz"]').evaluate(a=>a.click());
    await page.goBack();
@@ -40,7 +40,7 @@ try {
    await page.goBack();
    assert.equal(new URL(page.url()).hash,'#variables');
    assert.ok(await page.locator('#variables h2').evaluate(e=>e.getBoundingClientRect().top<innerHeight));
-   await page.locator('#operators').evaluate(e=>e.scrollIntoView({block:'start',behavior:'instant'}));
+   await page.locator('.reader-topic[href="#operators"]').evaluate(a=>a.click());
    await page.waitForFunction(()=>document.querySelector('.reader-topic[aria-current]')?.getAttribute('href')==='#operators');
    const readingY=await page.evaluate(()=>scrollY);
    // Sidebar works without scrolling away from the reading position on desktop.
@@ -133,5 +133,5 @@ try {
   }
  }
  assert.deepEqual(errors,[]);
- console.log(capture?`PASS: ${stage} screenshots captured`:'PASS: continuous reading, navigation/history, Thai font, print/no-JS and responsive themes');
+ console.log(capture?`PASS: ${stage} screenshots captured`:'PASS: topic reading, navigation/history, Thai font, print/no-JS and responsive themes');
 } finally {await browser.close();}

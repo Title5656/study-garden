@@ -95,6 +95,7 @@ try {
         quizzes++;
       }
       if (width === 1440) {
+        await topic('sources');
         await page.locator('[data-mark-read]').click();
         await page.reload();
         assert.equal(await page.locator('[data-mark-read]').getAttribute('aria-pressed'), 'true');
