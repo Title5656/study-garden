@@ -73,7 +73,7 @@ try {
   await page.locator('.reader-category[data-reader-category="practice"]').click();
   assert.ok(await page.locator('.lesson-section[data-reader-category="practice"]:visible').count()>0);
   await page.locator('.reader-topic[href="#supplied-guidelines"]').click();
-  await page.locator('img[src*="zoo-guideline-1"]').scrollIntoViewIfNeeded();
+  await page.locator('[data-lecture-replacement="zoo-1"]').scrollIntoViewIfNeeded();
   if (out) await page.screenshot({path:resolve(out,'zoo-guidelines.png')});
   await page.locator('.reader-topic[href="#flashcards"]').click();
   const before=await page.locator('#flash-text').innerText();
