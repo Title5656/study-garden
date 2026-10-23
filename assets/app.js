@@ -52,6 +52,45 @@
   function scoreValue(value) {
     return Number.isInteger(value) && value >= 0 && value <= 10 ? value : null;
   }
+  // Shared course indicator: count only real chapters explicitly marked as read.
+  // Always use the full course, even on Midterm/Final lesson pages.
+  function refreshCourseProgressRing(ring) {
+    const course = ring.dataset.courseProgress;
+    const ids = Object.keys(window.StudyContent?.[course] || {});
+    const completed = ids.filter(id => progressEntry(id, course).read === true).length;
+    const ratio = ids.length ? completed / ids.length : 0;
+    const percent = Math.round(ratio * 100);
+    ring.setAttribute("aria-valuenow", String(percent));
+    ring.setAttribute("aria-valuetext", `อ่านแล้ว ${completed} จาก ${ids.length} บท (${percent}%)`);
+    ring.querySelector(".course-progress-label").textContent = `${percent}%`;
+    ring.querySelector(".course-progress-value").setAttribute("stroke-dashoffset", String(100 - ratio * 100));
+  }
+  function createCourseProgressRing(course = subject) {
+    const ring = document.createElement("span");
+    ring.className = "course-progress";
+    ring.dataset.courseProgress = course;
+    ring.setAttribute("role", "progressbar");
+    ring.setAttribute("aria-label", `ความคืบหน้าวิชา ${course.toUpperCase()}`);
+    ring.setAttribute("aria-valuemin", "0");
+    ring.setAttribute("aria-valuemax", "100");
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 42 42");
+    svg.setAttribute("aria-hidden", "true");
+    for (const className of ["course-progress-track", "course-progress-value"]) {
+      const circle = document.createElementNS(svg.namespaceURI, "circle");
+      circle.setAttribute("class", className);
+      circle.setAttribute("cx", "21");
+      circle.setAttribute("cy", "21");
+      circle.setAttribute("r", "18.5");
+      circle.setAttribute("pathLength", "100");
+      svg.append(circle);
+    }
+    const label = document.createElement("span");
+    label.className = "course-progress-label";
+    ring.append(svg, label);
+    refreshCourseProgressRing(ring);
+    return ring;
+  }
   function updateProgress(id, patch) {
     const all = getProgress();
     all[id] = { ...progressEntry(id), ...patch };
@@ -161,6 +200,7 @@
   if ($("#progress-chart") && !progressChart)
     $("#progress-chart").parentElement.hidden = true;
   function refreshProgress() {
+    $$("[data-course-progress]").forEach(refreshCourseProgressRing);
     const ids = chapterIds;
     const courses = document.body.hasAttribute("data-all-courses")
       ? Object.keys(window.StudyContent || {}) : [subject];
@@ -219,6 +259,14 @@
     updateProgress(chapter, { read: progressEntry(chapter).read !== true }),
   );
   refreshProgress();
+  // Keep restored pages and other open lessons in sync with the existing store.
+  window.addEventListener("pageshow", refreshProgress);
+  window.addEventListener("storage", (event) => {
+    if (event.key !== null && !event.key.startsWith("study-garden:")) return;
+    if (event.key === null) Object.keys(memory).forEach(key => delete memory[key]);
+    else delete memory[event.key.slice("study-garden:".length)];
+    refreshProgress();
+  });
 
   // Explicitly finishing a chapter is idempotent, unlike the manual toggle.
   document.addEventListener("click", (event) => {
@@ -376,6 +424,7 @@
   // กิจกรรมเฉพาะบทเรียกใช้กราฟจากที่เดียวกัน เพื่อรองรับโหมดมืดและลดการเคลื่อนไหว
   window.StudyApp = {
     makeChart,
+    createCourseProgressRing,
     // Activities share this page's storage fallback/cache with the read marker.
     recordQuizScore(score) {
       if (!chapter || !data || scoreValue(score) === null) return;

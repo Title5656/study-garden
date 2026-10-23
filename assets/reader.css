@@ -6,7 +6,15 @@
 .reader-sidebar { border: 1px solid var(--line); border-radius: 18px; padding: 16px 12px; background: linear-gradient(145deg, var(--paper), color-mix(in srgb, var(--paper) 40%, var(--bg))); box-shadow: 0 8px 32px #15152504; top: 92px; max-height: calc(100dvh - 112px); overflow-y: auto; scrollbar-width: thin; }
 .reader-sidebar .reader-back { font-size: .72rem; padding: 4px 8px 16px; }
 .reader-course { display: flex; gap: 12px; align-items: center; margin: 0 4px 22px; padding: 13px 11px; background: var(--soft); border: 1px solid var(--line); border-radius: 12px; }
-.reader-course-icon { width: 34px; height: 36px; display: grid; place-items: center; color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); background: var(--paper); border-radius: 8px; font-size: 24px; }
+.course-progress { position: relative; display: inline-grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px; color: var(--accent); }
+.course-progress svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); fill: none; stroke-width: 3; }
+.course-progress-track { stroke: color-mix(in srgb, var(--accent) 16%, var(--paper)); }
+.course-progress-value { stroke: currentColor; stroke-linecap: round; stroke-dasharray: 100; transition: stroke-dashoffset .35s ease, opacity .35s ease; }
+.course-progress[aria-valuenow="0"] .course-progress-value { opacity: 0; }
+.course-progress-label { font-size: .65rem; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+  .course-progress-value { transition: none; }
+}
 .reader-course strong { font-size: .82rem; letter-spacing: .03em; display: block; }
 .reader-course div > span { display: block; font-size: .68rem; color: var(--muted); }
 .reader-group { margin: 18px 0 0; }

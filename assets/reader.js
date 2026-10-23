@@ -185,7 +185,7 @@
   back.href = "index.html";
   sidebar.append(back);
   const courseCard = element("div", "reader-course");
-  courseCard.append(element("span", "reader-course-icon", "▦"));
+  courseCard.append(window.StudyApp.createCourseProgressRing(subject));
   const courseName = element("div");
   courseName.append(element("strong", "", subject.toUpperCase()), element("span", "", `กำลังอ่านบทที่ ${Number(chapter)}`));
   courseCard.append(courseName);
