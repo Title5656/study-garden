@@ -106,13 +106,20 @@ body { font-family: "Segoe UI", "Noto Sans Thai", sans-serif; }
 .subject-grid .folder-caption h3 { margin: 0; font-size: .85rem; }
 .subject-grid .folder-caption > span { white-space: nowrap; }
 .subject-grid .folder-topics { font-size: .72rem; }
-.subject-folder:focus-visible .folder-front { transform: rotateX(-18deg); }
+a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg); }
 @media (hover: hover) {
-  .subject-folder:hover .folder-front { transform: rotateX(-18deg); }
-  .subject-folder:hover .sheet-one { transform: translate(-19%, -15%) rotate(-12deg); }
-  .subject-folder:hover .sheet-two { transform: translate(19%, -15%) rotate(12deg); }
-  .subject-folder:hover .sheet-three { transform: translate(0, -9%); }
+  a.subject-folder[href]:hover .folder-front { transform: rotateX(-18deg); }
+  a.subject-folder[href]:hover .sheet-one { transform: translate(-19%, -15%) rotate(-12deg); }
+  a.subject-folder[href]:hover .sheet-two { transform: translate(19%, -15%) rotate(12deg); }
+  a.subject-folder[href]:hover .sheet-three { transform: translate(0, -9%); }
 }
+/* Keep the status readable while muting the unopened folder and its title. */
+.subject-grid .folder-card:is([data-course-status="coming-soon"], [data-course-status="in-progress"]) :is(.subject-folder, .folder-category, .folder-caption h3) { opacity: .6; }
+.subject-grid .folder-card:is([data-course-status="coming-soon"], [data-course-status="in-progress"]) .subject-folder { filter: grayscale(.45); cursor: default; }
+.subject-grid .folder-card:is([data-course-status="coming-soon"], [data-course-status="in-progress"]) .folder-caption { flex-wrap: wrap; }
+.subject-grid .folder-caption > .course-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border: 1px solid var(--line); border-radius: 99px; color: var(--ink); background: var(--soft); font-size: .68rem; font-weight: 600; line-height: 1.5; }
+.course-status::before { content: ""; width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: var(--muted); }
+[data-course-status="in-progress"] .course-status::before { background: var(--accent); }
 .glass-folder { position: relative; }
 .glass-folder summary { display: block; cursor: pointer; list-style: none; border-radius: 15px; -webkit-tap-highlight-color: transparent; }
 .glass-folder summary::-webkit-details-marker { display: none; }

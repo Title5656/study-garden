@@ -298,6 +298,46 @@
     }
   });
 
+  // Unpublished courses stay visible/searchable without promising a destination.
+  const courseStatuses = {
+    "coming-soon": { label: "Coming Soon", description: "เร็ว ๆ นี้ · ยังไม่เปิดให้เรียน" },
+    "in-progress": { label: "In Progress", description: "กำลังจัดทำเนื้อหา · ยังไม่เปิดให้เรียน" },
+  };
+  $$(".subject-grid .folder-card").forEach((card) => {
+    const folder = $(".subject-folder", card);
+    if (!folder) return;
+    const href = folder.getAttribute("href")?.trim();
+    const status = Object.hasOwn(courseStatuses, card.dataset.courseStatus)
+      ? card.dataset.courseStatus
+      : !href || href === "#" ? "coming-soon" : null;
+    if (!status) return;
+    const { label, description } = courseStatuses[status];
+    card.dataset.courseStatus = status;
+    card.setAttribute("aria-disabled", "true");
+    const code = $(".folder-code", card)?.textContent.trim() || "";
+    const name = $(".folder-label strong", card)?.textContent.trim() || $("h3", card)?.textContent.trim() || "";
+    card.setAttribute("aria-label", `${code} ${name} · ${label}`.trim());
+    // Plain spans remove mouse, keyboard, and open-in-new-tab navigation together.
+    $$("a", card).forEach((link) => {
+      const text = document.createElement("span");
+      text.className = link.className;
+      text.append(...link.childNodes);
+      link.replaceWith(text);
+    });
+    $$(".folder-key, .folder-caption h3 [aria-hidden]", card).forEach((arrow) => arrow.remove());
+    $$(".folder-meta", card).forEach((meta) => { meta.textContent = description; });
+    const caption = $(".folder-caption", card);
+    if (caption) {
+      const badge = document.createElement("span");
+      badge.className = "course-status";
+      badge.lang = "en";
+      badge.textContent = label;
+      const progress = $(":scope > span", caption);
+      if (progress) progress.replaceWith(badge);
+      else caption.append(badge);
+    }
+  });
+
   const search = $("#subject-search");
   search?.addEventListener("input", () => {
     const term = search.value.trim().toLocaleLowerCase("th");
