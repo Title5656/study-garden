@@ -46,8 +46,36 @@ if(!index.includes('<link rel="stylesheet" href="../../assets/exam-folders.css')
 index=index.replace('<body data-subject="itds241">','<body data-subject="itds241" data-exam-library>');
 const grid=/<div class="folder-grid(?: subject-grid)?">[\s\S]*?(?=<p id="search-empty")/;
 if(!grid.test(index)) throw new Error('ITDS241 folder grid not found; refusing to replace unrelated content');
-index=index.replace(grid,`<div class="folder-grid subject-grid">${groups.map(folder).join('\n')}</div>\n`);
+const template=index;
+function examFolder(group) {
+ return folder(group)
+  .replace(/<details[^>]*>\s*<summary[^>]*>/,`<a class="subject-folder" href="${group.id}.html" aria-label="เปิดโฟลเดอร์ ${group.label}">`)
+  .replace('</summary>','</a>')
+  .replace(/<nav class="folder-files"[\s\S]*?<\/nav>\s*<\/details>/,'')
+  .replace(`<strong>${group.label}</strong>`,`<a href="${group.id}.html">${group.label} <span>↗</span></a>`);
+}
+function chapterFolder(c,group) {
+ let result=folder({...group,id:c.id,label:escape(c.title),thai:`บทที่ ${Number(c.id)}`,chapters:[c]});
+ result=result.replace('data-exam-folder=','data-chapter-folder=')
+  .replace(/<span class="folder-code">[^<]*<\/span>/,`<span class="folder-code">ITDS241 / ${c.id}</span>`)
+  .replace(/<span class="folder-meta">[^<]*<\/span>/,`<span class="folder-meta">${c.data.cards.length} cards · ${c.data.quiz.length} คำถาม</span>`)
+  .replace(/<nav class="folder-files"[\s\S]*?<\/nav>/,`<nav class="folder-files" aria-label="เนื้อหาบท ${Number(c.id)}"><a href="chapter-${c.id}.html"><span>สรุปบทเรียน</span><span>↗</span></a><a href="chapter-${c.id}.html#flashcards"><span>Flashcards <small>${c.data.cards.length} ใบ</small></span><span>↗</span></a><a href="chapter-${c.id}.html#quiz"><span>Quiz <small>${c.data.quiz.length} ข้อ</small></span><span>↗</span></a></nav>`)
+  .replace(/<div class="folder-caption">[\s\S]*?<\/div>/,`<div class="folder-caption"><a href="chapter-${c.id}.html">บทที่ ${Number(c.id)} <span>↗</span></a><span data-chapter-status="${c.id}">ยังไม่ได้อ่าน</span></div>`);
+ return result;
+}
+for(const group of groups) {
+ let page=template.replace(grid,`<div class="folder-grid">${group.chapters.map(c=>chapterFolder(c,group)).join('\n')}</div>\n`)
+  .replace('<body data-subject="itds241" data-exam-library>',`<body data-subject="itds241" data-exam-library data-exam-chapters="${group.chapters.map(c=>c.id).join(',')}">`)
+  .replace(/<title>[^<]*<\/title>/,`<title>${group.label} · ITDS241 · Study Garden</title>`)
+  .replace('<span>ITDS241</span>','<a href="index.html">ITDS241</a><span>/</span><span>'+group.label+'</span>')
+  .replace('<h1>Web Technologies</h1>',`<h1>${group.label}</h1>`)
+  .replace(/<span class="active-tab">[\s\S]*?<\/span><\/span>/,`<span class="active-tab">บทเรียน ${group.label} <span>${group.chapters.length}</span></span>`)
+  .replace(/(<strong data-read-count>0<\/strong> \/ )\d+/,`$1${group.chapters.length}`)
+  .replace(/<span class="library-count">[^<]*<\/span>/,`<span class="library-count">${group.chapters.length} บทเรียน</span>`);
+ writeFileSync(new URL(`subjects/itds241/${group.id}.html`,root),page.replace(/[\t ]+$/gm,''));
+}
+index=index.replace(grid,`<div class="folder-grid subject-grid">${groups.map(examFolder).join('\n')}</div>\n`);
 index=index.replace(/<span class="library-count">[^<]*<\/span>/,`<span class="library-count">2 โฟลเดอร์ · ${chapters.length} บทเรียน</span>`);
 index=index.replace('บทเรียนทั้งหมด <span>4</span>','Midterm &amp; Final <span>2</span>');
-writeFileSync(new URL('subjects/itds241/index.html',root),index);
+writeFileSync(new URL('subjects/itds241/index.html',root),index.replace(/[\t ]+$/gm,''));
 console.log(`Organized ITDS241: Midterm ${groups[0].chapters.length}, Final ${groups[1].chapters.length}.`);

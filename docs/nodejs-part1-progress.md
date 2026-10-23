@@ -16,6 +16,8 @@
 
 ## Follow-up — exam folders
 
+- Additional user correction: exam folders now navigate to dedicated Midterm/Final pages containing chapter folders. Chapter folders expose summary/Flashcards/Quiz links. Six responsive/theme layouts, keyboard, no-JS navigation, and per-exam progress counts are covered by test-exam-navigation.mjs (also used by the original test-itds241-exams.mjs entry point).
+
 - User requested two top-level course folders: Midterm holds all previous chapters (06–08); Final holds Node.js Part I (09) and future parts.
 - Implemented with the existing folder artwork and native details navigation; chapter URLs and progress keys remain intact. Future registered chapters outside 06–08 are included in Final by the authoring tool.
 - Verified six viewport/theme combinations (320/390/1440, light/dark), keyboard opening, search, chapter links, stored read/score status, and no-JavaScript navigation. Original Node.js browser suite and university search regressions pass.

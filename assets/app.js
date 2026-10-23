@@ -9,7 +9,8 @@
   // แต่ละวิชามี namespace ของเนื้อหาและคะแนน จึงใช้เลขบทซ้ำกันได้
   const subject = document.body.dataset.subject || "itds241";
   const subjectContent = window.StudyContent?.[subject] || {};
-  const chapterIds = Object.keys(subjectContent).sort();
+  const examChapterIds = document.body.dataset.examChapters?.split(',');
+  const chapterIds = Object.keys(subjectContent).filter(id => !examChapterIds || examChapterIds.includes(id)).sort();
   const data = subjectContent[chapter];
   const charts = [];
   const memory = {};
@@ -164,7 +165,8 @@
     const courses = document.body.hasAttribute("data-all-courses")
       ? Object.keys(window.StudyContent || {}) : [subject];
     const allChapters = courses.flatMap(course =>
-      Object.keys(window.StudyContent?.[course] || {}).sort().map(id => ({course, id})));
+      Object.keys(window.StudyContent?.[course] || {}).sort().map(id => ({course, id})))
+      .filter(({course, id}) => course !== subject || !examChapterIds || examChapterIds.includes(id));
     const readCount = allChapters.filter(
       ({course, id}) => progressEntry(id, course).read === true,
     ).length;

@@ -1,5 +1,5 @@
 /* Course folders reuse the site's existing folder artwork and typography. */
-body[data-exam-library] .subject-grid { padding-inline:12px; }
+body[data-exam-library] .folder-grid { padding-inline:12px; }
 body[data-exam-library] .folder-files small { display:block; margin-left:0; margin-top:3px; }
 body[data-exam-library] .folder-files a { align-items:flex-start; }
 body[data-exam-library] .folder-files a > span:first-child { min-width:0; overflow-wrap:anywhere; }
