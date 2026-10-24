@@ -10,6 +10,9 @@
   const reveal = document.querySelector(".footer-reveal");
   if (footer && reveal) {
     const printMedia = matchMedia("print");
+    const progressTargets = [...reveal.querySelectorAll(
+      ".motion-footer, .footer-curtain, .footer-reveal-link, .footer-contact-title, .footer-actions, .footer-wordmark"
+    )];
     const footerLinks = [...footer.querySelectorAll("a, button")];
     const curtain = reveal.querySelector(".footer-curtain");
     const stage = reveal.querySelector(".footer-stage");
@@ -18,6 +21,7 @@
     const motionToggle = footer.querySelector(".footer-motion-toggle");
     let artworkPaused = false;
     let scheduled = false;
+    let covered = false;
     function artworkCanPlay() {
       if (!artwork || reducedMotion.matches || printMedia.matches || document.hidden || artworkPaused) return false;
       const bounds = artwork.getBoundingClientRect();
@@ -90,11 +94,12 @@
         updateArtwork();
       });
     }
-    function updateReveal() {
+    function updateReveal(fromScroll = false) {
       scheduled = false;
       const enabled = document.body.dataset.readerMode !== "paged" && !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
       reveal.classList.toggle("reveal-enabled", enabled);
       if (!enabled) {
+        covered = false;
         if (footer.inert) footer.inert = false;
         footerLinks.forEach(link => { if (link.inert) link.inert = false; });
         updateArtwork();
@@ -103,9 +108,15 @@
       const bounds = reveal.getBoundingClientRect();
       const distance = bounds.height - innerHeight;
       const progress = Math.min(1, Math.max(0, -bounds.top / Math.max(1, distance)));
+      // Ordinary page scrolling cannot change a fully covered footer. Still read
+      // the wrapper each frame so crossing into the reveal updates immediately.
+      // Layout, media and preference changes always take the complete path.
+      if (fromScroll === true && covered && progress === 0) return;
+      covered = progress === 0;
       const value = progress.toFixed(4);
       if (reveal.style.getPropertyValue("--reveal-progress") !== value) {
         reveal.style.setProperty("--reveal-progress", value);
+        progressTargets.forEach(element => element.style.setProperty("--reveal-progress", value));
       }
       // Enable each link as soon as the curtain uncovers it.
       const visibleTop = Math.max(0, curtain.getBoundingClientRect().bottom);
@@ -121,13 +132,19 @@
         if (link.inert !== linkStates[index]) link.inert = linkStates[index];
       });
     }
-    function scheduleReveal() {
+    let scrollOnly = true;
+    function scheduleReveal(fromScroll = false) {
+      scrollOnly = scrollOnly && fromScroll === true;
       if (!scheduled) {
         scheduled = true;
-        requestAnimationFrame(updateReveal);
+        requestAnimationFrame(() => {
+          const onlyScroll = scrollOnly;
+          scrollOnly = true;
+          updateReveal(onlyScroll);
+        });
       }
     }
-    window.addEventListener("scroll", scheduleReveal, { passive: true });
+    window.addEventListener("scroll", () => scheduleReveal(true), { passive: true });
     window.addEventListener("resize", scheduleReveal);
     reducedMotion.addEventListener("change", updateReveal);
     printMedia.addEventListener("change", updateReveal);
