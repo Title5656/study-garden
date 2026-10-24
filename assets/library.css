@@ -246,10 +246,11 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 .folder-front-rim { stroke: #ffffffb8; }
 .folder-category { position: absolute; top: 4px; left: 0; display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: .66rem; font-weight: 500; }
 .folder-category::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--folder-accent); }
-.palette-ember { --folder-accent: #e97051; --folder-art: url('folder-ember.png?v=97710a7919bf'); }
+:root { --folder-color-ember: #e97051; --folder-color-indigo: #9990d8; --folder-color-glacier: #719dbb; }
+.palette-ember { --folder-accent: var(--folder-color-ember); --folder-art: url('folder-ember.png?v=97710a7919bf'); }
 .palette-aurora { --folder-accent: #c47382; --folder-art: url('folder-aurora.png?v=129e9c1177b0'); }
-.palette-glacier { --folder-accent: #719dbb; --folder-art: url('folder-glacier.png?v=17e6db5accbf'); }
-.palette-indigo { --folder-accent: #9990d8; --folder-art: url('folder-indigo.png?v=db0092c3c7bd'); }
+.palette-glacier { --folder-accent: var(--folder-color-glacier); --folder-art: url('folder-glacier.png?v=17e6db5accbf'); }
+.palette-indigo { --folder-accent: var(--folder-color-indigo); --folder-art: url('folder-indigo.png?v=db0092c3c7bd'); }
 .palette-dusk { --folder-accent: #bf81a9; --folder-art: url('folder-dusk.png?v=8547a0ec9253'); }
 .palette-verdant { --folder-accent: #7aa789; --folder-art: url('folder-verdant.png?v=aaa62364535d'); }
 .palette-honey { --folder-accent: #cfab62; --folder-art: url('folder-honey.png?v=6b9f89a388e9'); }
@@ -276,3 +277,56 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
   .folder-label { padding-right: 14px; }
   .folder-key { width: 22px; height: 22px; right: 10px; bottom: 14px; }
 }
+
+/* Transient navigation feedback; idle artwork and hover rules stay above. */
+.folder-card { transition: transform .25s ease, filter .25s ease, opacity .25s ease; }
+.folder-navigating .folder-card { cursor: progress; }
+.folder-navigating .folder-card a, .folder-navigating .folder-card summary { cursor: progress; }
+.folder-navigating .folder-card:not(.is-navigating) { opacity: .38; filter: saturate(.75); }
+.folder-card.is-navigating { transform: scale(.98); filter: brightness(.94); }
+.folder-card.is-navigating :is(.folder-front, .folder-sheet) { transition: none !important; }
+.folder-key-arrow { transition: opacity .2s ease; }
+.folder-key::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1.5px solid #ffffff30;
+  border-top-color: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+.folder-card.is-navigating .folder-key { background: transparent; border-color: transparent; transition: background .25s ease, border-color .25s ease; }
+.is-navigating .folder-key-arrow { opacity: 0; }
+.is-navigating .folder-key::after { opacity: 1; transition-delay: .12s; animation: folder-navigation-spin .7s linear infinite; }
+.is-navigating .folder-meta { animation: folder-navigation-pulse 1.4s ease-in-out infinite; }
+.folder-navigation-progress {
+  position: fixed;
+  z-index: 1000;
+  inset: 0 0 auto;
+  height: 2px;
+  pointer-events: none;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--folder-color-ember), var(--folder-color-indigo), var(--folder-color-glacier));
+  box-shadow: 0 0 7px color-mix(in srgb, var(--folder-color-indigo) 45%, transparent);
+  animation: folder-navigation-progress 12s linear forwards;
+}
+@keyframes folder-navigation-spin { to { transform: rotate(360deg); } }
+@keyframes folder-navigation-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
+@keyframes folder-navigation-progress {
+  0% { transform: scaleX(0); }
+  3% { transform: scaleX(.4); }
+  18% { transform: scaleX(.65); }
+  50% { transform: scaleX(.83); }
+  100% { transform: scaleX(.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .folder-card, .folder-key-arrow, .folder-key::after, .folder-card.is-navigating .folder-key { transition: none; }
+  /* Override style.css's global reduced-motion reset for this slow status ring. */
+  .is-navigating .folder-key::after { animation: folder-navigation-spin 1.8s linear infinite, folder-navigation-ring-reveal .12s step-end both !important; }
+  .is-navigating .folder-meta { animation: none; }
+  .folder-navigation-progress { animation: none; transform: scaleX(.4); }
+}
+@keyframes folder-navigation-ring-reveal { from { opacity: 0; } to { opacity: 1; } }
+@media print { .folder-navigation-progress, .folder-navigation-status { display: none; } }

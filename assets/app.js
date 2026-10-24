@@ -338,6 +338,98 @@
     }
   });
 
+  // Shared native-link feedback for subject, exam, and chapter folders.
+  function initFolderNavigation() {
+    const cards = $$(".folder-card");
+    if (!cards.length) return;
+    let activeCard = null;
+    let restore = [];
+    const progress = document.createElement("div");
+    progress.className = "folder-navigation-progress";
+    progress.hidden = true;
+    progress.setAttribute("aria-hidden", "true");
+    const status = document.createElement("span");
+    status.className = "sr-only folder-navigation-status";
+    status.setAttribute("role", "status");
+    document.body.append(progress, status);
+
+    $$(".folder-key").forEach((key) => {
+      const arrow = document.createElement("span");
+      arrow.className = "folder-key-arrow";
+      arrow.append(...key.childNodes);
+      key.append(arrow);
+    });
+
+    function resetNavigation() {
+      document.body.classList.remove("folder-navigating");
+      activeCard?.classList.remove("is-navigating");
+      restore.forEach(reset => reset());
+      restore = [];
+      activeCard = null;
+      progress.hidden = true;
+      status.textContent = "";
+    }
+    function rememberAttribute(element, name) {
+      const value = element.getAttribute(name);
+      restore.push(() => {
+        if (value === null) element.removeAttribute(name);
+        else element.setAttribute(name, value);
+      });
+    }
+    function blockRepeatedActivation(event) {
+      if (!activeCard || !event.target.closest(".folder-card")) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+    document.addEventListener("click", blockRepeatedActivation, true);
+    document.addEventListener("auxclick", blockRepeatedActivation, true);
+    document.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 ||
+          event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const link = event.target.closest("a[href]");
+      const card = link?.closest(".folder-card");
+      if (!card || card.getAttribute("aria-disabled") === "true" || link.hasAttribute("download")) return;
+      const target = (link.getAttribute("target") ?? $("base[target]")?.getAttribute("target") ?? "_self").toLowerCase();
+      if (target && target !== "_self") return;
+      const href = link.getAttribute("href").trim();
+      if (!href || href.startsWith("#")) return;
+      const destination = new URL(link.href);
+      if (destination.origin !== location.origin || !["http:", "https:"].includes(destination.protocol)) return;
+      if (destination.pathname === location.pathname && destination.search === location.search &&
+          (destination.hash || href.includes("#"))) return;
+
+      // Freeze the current hover/open pose, including an in-flight transition.
+      const poses = $$(".folder-front, .folder-sheet", card).map(element =>
+        [element, getComputedStyle(element).transform]);
+      poses.forEach(([element, transform]) => {
+        rememberAttribute(element, "style");
+        element.style.transform = transform;
+      });
+      $$(".folder-meta", card).forEach(meta => {
+        const original = [...meta.childNodes];
+        restore.push(() => meta.replaceChildren(...original));
+        meta.textContent = "กำลังเปิดบทเรียน…";
+      });
+      cards.forEach(item => {
+        rememberAttribute(item, "aria-disabled");
+        item.setAttribute("aria-disabled", "true");
+      });
+      rememberAttribute(card, "aria-busy");
+      card.setAttribute("aria-busy", "true");
+      activeCard = card;
+      card.classList.add("is-navigating");
+      document.body.classList.add("folder-navigating");
+      progress.hidden = false;
+      status.textContent = "กำลังเปิดบทเรียน…";
+      // Keep the browser's default navigation: no timer, fetch, or redirect.
+    });
+    window.addEventListener("pagehide", resetNavigation);
+    window.addEventListener("pageshow", resetNavigation);
+    // A canceled/failed navigation should also release the original page.
+    window.navigation?.addEventListener("navigateerror", resetNavigation);
+  }
+  initFolderNavigation();
+
   const search = $("#subject-search");
   search?.addEventListener("input", () => {
     const term = search.value.trim().toLocaleLowerCase("th");
