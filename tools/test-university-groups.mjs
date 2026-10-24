@@ -52,6 +52,7 @@ try {
   // Follow a filtered course to confirm existing navigation still works.
   await search.fill('611201');
   await page.locator('.subject-folder:visible').click();
+  await page.waitForURL('**/subjects/thermo-chemical/index.html');
   assert.equal(await page.locator('.thermo-course-card').count(), 9);
   assert.deepEqual(errors, []);
   console.log('PASS: 10 responsive/theme layouts, local emblems, and Thermodynamics navigation.');

@@ -344,6 +344,8 @@
     if (!cards.length) return;
     let activeCard = null;
     let restore = [];
+    let navigationFrame = null;
+    let pendingHref = null;
     const progress = document.createElement("div");
     progress.className = "folder-navigation-progress";
     progress.hidden = true;
@@ -361,6 +363,9 @@
     });
 
     function resetNavigation() {
+      cancelAnimationFrame(navigationFrame);
+      navigationFrame = null;
+      pendingHref = null;
       document.body.classList.remove("folder-navigating");
       activeCard?.classList.remove("is-navigating");
       restore.forEach(reset => reset());
@@ -368,6 +373,13 @@
       activeCard = null;
       progress.hidden = true;
       status.textContent = "";
+    }
+    function navigateToFolder() {
+      if (!activeCard || !pendingHref) return;
+      const href = pendingHref;
+      pendingHref = null;
+      navigationFrame = null;
+      location.assign(href);
     }
     function rememberAttribute(element, name) {
       const value = element.getAttribute(name);
@@ -398,6 +410,7 @@
       if (destination.pathname === location.pathname && destination.search === location.search &&
           (destination.hash || href.includes("#"))) return;
 
+      event.preventDefault();
       // Freeze the current hover/open pose, including an in-flight transition.
       const poses = $$(".folder-front, .folder-sheet", card).map(element =>
         [element, getComputedStyle(element).transform]);
@@ -421,12 +434,29 @@
       document.body.classList.add("folder-navigating");
       progress.hidden = false;
       status.textContent = "กำลังเปิดบทเรียน…";
-      // Keep the browser's default navigation: no timer, fetch, or redirect.
+      pendingHref = destination.href;
+      // A cached document can replace this page before its next paint. Allow
+      // one rendered frame of acknowledgement, without a fixed loading delay.
+      if (document.hidden) navigateToFolder();
+      else navigationFrame = requestAnimationFrame(() => {
+        navigationFrame = requestAnimationFrame(navigateToFolder);
+      });
     });
     window.addEventListener("pagehide", resetNavigation);
-    window.addEventListener("pageshow", resetNavigation);
+    window.addEventListener("pageshow", (event) => {
+      // Initial pageshow can follow an early click while images are loading.
+      // Only a restored document needs to clear a previous navigation.
+      if (event.persisted) resetNavigation();
+    });
     // A canceled/failed navigation should also release the original page.
     window.navigation?.addEventListener("navigateerror", resetNavigation);
+    document.addEventListener("visibilitychange", () => {
+      // Background tabs may pause animation frames; navigation must still finish.
+      if (document.hidden) {
+        cancelAnimationFrame(navigationFrame);
+        navigateToFolder();
+      }
+    });
   }
   initFolderNavigation();
 

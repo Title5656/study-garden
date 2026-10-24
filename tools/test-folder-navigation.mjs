@@ -43,22 +43,34 @@ async function restored(page, original) {
   assert.equal(await page.locator('.folder-card[aria-busy], .folder-card[aria-disabled]').count(), 0);
   assert.equal(await page.locator('.folder-front[style], .folder-sheet[style]').count(), 0);
 }
+async function holdNavigationFrames(page) {
+  // Visual-only fixtures keep the outgoing document inspectable. CSS animations
+  // still run; real render callbacks and navigation are exercised below.
+  await page.evaluate(() => {
+    window.__folderTestAnimationFrame = window.requestAnimationFrame;
+    window.requestAnimationFrame = () => -1;
+  });
+}
+async function restoreAnimationFrames(page) {
+  await page.evaluate(() => {
+    window.requestAnimationFrame = window.__folderTestAnimationFrame;
+    delete window.__folderTestAnimationFrame;
+  });
+}
 try {
   const page = await fresh();
   const destination = '/subjects/itds241/index.html';
   const original = await page.locator('.folder-meta').first().textContent();
-  // Keep the outgoing document inspectable after the production handler runs.
-  // Actual native navigation and BFCache are tested separately below.
+  await holdNavigationFrames(page);
   await page.evaluate(() => window.addEventListener('click', event => {
     window.__spinnerAtClick = getComputedStyle(document.querySelector('.folder-key'), '::after').opacity;
-    event.preventDefault();
   }, { once: true }));
   await page.locator('.subject-folder').first().hover();
   await page.locator('.folder-key').first().click({ noWaitAfter: true });
-  await page.waitForFunction(() => document.body.classList.contains('folder-navigating'), null, { timeout: 1500 });
+  await page.waitForFunction(() => document.body.classList.contains('folder-navigating'), null, { timeout: 1500, polling: 20 });
   assert.equal(await page.locator('.folder-card.is-navigating').count(), 1);
   assert.equal(await page.locator('.folder-meta').first().textContent(), 'กำลังเปิดบทเรียน…');
-  assert.equal(await page.evaluate(() => window.__spinnerAtClick), '0', 'Spinner stays hidden during its initial delay');
+  assert.equal(await page.evaluate(() => window.__spinnerAtClick), '1', 'Spinner is visible on the activation itself');
   await page.waitForTimeout(450);
   const visual = await page.locator('.folder-card').first().evaluate(el => {
     const key = el.querySelector('.folder-key'), front = el.querySelector('.folder-front');
@@ -82,6 +94,7 @@ try {
   assert.ok(progress[0] >= .4 && progress[0] < .5);
   assert.equal(progress[1], .9); assert.equal(progress[2], .9, 'Progress never completes itself');
   if (output) await page.screenshot({ path: resolve(output, 'loading-desktop.png'), fullPage: true });
+  await restoreAnimationFrames(page);
   await page.goto(base + destination);
   await page.goBack({ waitUntil: 'commit' });
   await restored(page, original);
@@ -115,33 +128,35 @@ try {
   console.log('PASS: modified/middle clicks, targets, external URLs, hashes, downloads, actual new-tab navigation');
 
   for (const [selector, activation] of [['.folder-object', 'click'], ['.folder-caption a', 'click'], ['.subject-folder', 'keyboard'], ['.folder-caption a', 'keyboard']]) {
-    await page.evaluate(() => window.addEventListener('click', event => event.preventDefault(), { once: true }));
+    await holdNavigationFrames(page);
     if (activation === 'click') {
       await page.locator(selector).first().click();
     } else {
       await page.locator(selector).first().focus();
       await page.keyboard.press('Enter');
     }
-    await page.waitForFunction(() => document.body.classList.contains('folder-navigating'));
+    await page.waitForFunction(() => document.body.classList.contains('folder-navigating'), null, { polling: 20 });
     assert.equal(await page.locator('.folder-card').first().getAttribute('aria-busy'), 'true');
+    await restoreAnimationFrames(page);
     await page.goto(base + destination); await page.goBack({ waitUntil: 'commit' }); await restored(page, original);
   }
   await page.goto(base + '/subjects/itds241/final.html');
   await page.locator('.glass-folder summary').first().click();
   assert.equal(await page.locator('body.folder-navigating').count(), 0, 'Expanding a folder is local interaction');
   const lesson = '/subjects/itds241/chapter-09.html';
-  await page.evaluate(() => window.addEventListener('click', event => event.preventDefault(), { once: true }));
+  await holdNavigationFrames(page);
   await page.locator('.folder-files a').first().click({ noWaitAfter: true });
-  await page.waitForFunction(() => document.body.classList.contains('folder-navigating'));
+  await page.waitForFunction(() => document.body.classList.contains('folder-navigating'), null, { polling: 20 });
   assert.equal(await page.locator('.folder-card').first().getAttribute('aria-busy'), 'true');
   assert.equal(await page.locator('.folder-meta').first().textContent(), 'กำลังเปิดบทเรียน…');
+  await restoreAnimationFrames(page);
   await page.goto(base + lesson); await page.close();
   console.log('PASS: keyboard folder/caption navigation, local details expansion, lesson links share the owner feedback');
 
   const mobile = await fresh({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
-  await mobile.evaluate(() => window.addEventListener('click', event => event.preventDefault(), { once: true }));
+  await holdNavigationFrames(mobile);
   const tap = mobile.locator('.subject-folder').first().tap({ noWaitAfter: true });
-  await mobile.waitForFunction(() => document.body.classList.contains('folder-navigating'));
+  await mobile.waitForFunction(() => document.body.classList.contains('folder-navigating'), null, { polling: 20 });
   const reduced = await mobile.locator('.folder-key').first().evaluate(el => ({
     spinner: getComputedStyle(el, '::after').animationDuration.split(',')[0],
     progress: getComputedStyle(document.querySelector('.folder-navigation-progress')).animationName,
@@ -150,7 +165,7 @@ try {
   assert.equal(reduced.spinner, '1.8s'); assert.equal(reduced.progress, 'none'); assert.equal(reduced.pulse, 'none');
   assert.ok(await mobile.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   if (output) await mobile.screenshot({ path: resolve(output, 'loading-mobile-reduced-motion.png'), fullPage: true });
-  await tap; await mobile.goto(base + destination); await mobile.goBack({ waitUntil: 'commit' });
+  await tap; await restoreAnimationFrames(mobile); await mobile.goto(base + destination); await mobile.goBack({ waitUntil: 'commit' });
   await restored(mobile, original); await mobile.close();
   console.log('PASS: native touch, responsive layout, reduced motion, restoration');
 
@@ -167,8 +182,8 @@ try {
   });
   await fast.locator('.subject-folder').first().click(); await fast.waitForURL(base + destination);
   const flash = await fast.evaluate(() => JSON.parse(sessionStorage.getItem('navigation-flash')));
-  assert.ok(flash.duration < 120, `Fast fixture navigates before spinner delay (${flash.duration}ms)`);
-  assert.ok(flash.samples.every(opacity => opacity === 0), 'No spinner paints before its delay');
+  assert.ok(flash.duration < 250, `Fast fixture proceeds after its rendered acknowledgement (${flash.duration}ms)`);
+  assert.ok(flash.samples.some(opacity => opacity === 1), 'Fast native navigation renders the spinner before leaving');
   await fast.goBack({ waitUntil: 'commit' });
   await restored(fast, original);
   assert.equal(await fast.evaluate(() => window.__fromBFCache), true, 'Native click also returns through BFCache');
@@ -195,7 +210,7 @@ try {
   await cdp.detach();
   await fast.close();
   assert.deepEqual(errors, []);
-  console.log(`PASS: native fast navigation (${Math.round(flash.duration)}ms), no spinner flash, BFCache, DevTools Slow 3G emulation; no browser errors`);
+  console.log(`PASS: native fast navigation (${Math.round(flash.duration)}ms), rendered spinner acknowledgement, BFCache, DevTools Slow 3G emulation; no browser errors`);
 } finally {
   await browser.close();
   server.closeAllConnections();

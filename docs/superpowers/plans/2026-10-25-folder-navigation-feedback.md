@@ -1,5 +1,7 @@
 # Folder navigation feedback implementation plan
 
+> **Follow-up:** The user's cached-navigation bug report supersedes the original delayed-spinner/fast-navigation behavior below. Current behavior acknowledges every activation immediately and allows one rendered frame before navigation. See `../../debugging/2026-10-25-cached-folder-navigation.md` for the reproduction and verification record.
+
 > **For agentic workers:** Use executing-plans to implement this plan in the current session. Steps use checkbox syntax for tracking.
 
 **Goal:** Immediately acknowledge folder navigation while preserving native links, existing artwork, and browser history.
