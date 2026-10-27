@@ -66,3 +66,19 @@ body[data-subject="itds211"] .quiz-question legend,
 body[data-subject="itds211"] .quiz-option span {min-width:0;overflow-wrap:anywhere}
 
 body[data-subject="itds211"] .lesson-content {overflow-wrap:anywhere}
+.itds211-bit-widget {margin:1rem 0 1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.itds211-bit-buttons {display:flex;flex-wrap:wrap;gap:.3rem;margin:1rem 0}
+.itds211-bit-buttons button {min-width:36px;font-family:ui-monospace,Consolas,monospace}
+.itds211-bit-buttons button[aria-pressed="true"] {background:var(--accent);color:var(--paper)}
+.itds211-speed-bar {height:22px;border-radius:6px;overflow:hidden;background:var(--paper);border:1px solid var(--line)}
+.itds211-speed-bar span {display:block;height:100%;background:var(--accent)}
+.itds211-stage {display:block;border-radius:4px;padding:.15rem}
+.stage-IF {background:var(--purple)}
+.stage-ID {background:var(--paper)}
+.stage-EX {background:var(--sage)}
+.stage-MEM,.itds211-stage.wait {background:var(--peach)}
+.stage-WB {background:var(--purple)}
+.itds211-controls input[type="range"] {padding:0;width:100%;min-height:36px}
+.itds211-controls label:has(input[type="checkbox"]) {display:flex;flex-direction:row;align-items:center;gap:.5rem;flex:0 0 auto}
+.itds211-controls input[type="checkbox"] {width:auto;min-height:auto}
+[data-widget="cpu-scheduling"] .itds211-gantt-block {min-width:0;box-sizing:border-box;padding:.75rem 0}

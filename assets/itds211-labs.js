@@ -54,9 +54,12 @@
     });
   }
   function performance(host) {
-    setup(host, 'ทดลองเวลา CPU: จำนวนคำสั่ง × CPI ÷ ความถี่', field('instructions', 'Instruction count (จำนวนคำสั่ง)', 1e9, 'min="1"') + field('cpi', 'CPI (รอบต่อคำสั่ง)', 2, 'min="0.01" step="any"') + field('ghz', 'Clock rate (GHz)', 2, 'min="0.01" step="any"'), v => {
+    host.dataset.widget = 'cpu-time';
+    setup(host, 'เวลา CPU · เทียบเครื่อง A กับ B', '<p>เร่งความถี่ให้สูงขึ้น แต่โปรแกรมเร็วขึ้นเสมอหรือไม่? ใช้โปรแกรมเดียวกันและ IC เท่ากัน แล้วเปลี่ยน CPI และ GHz ทีละค่า</p>' + field('instructions', 'IC · จำนวนคำสั่ง (500 ล้าน = 500000000)', 500e6, 'min="1" step="1"') + field('cpi', 'เครื่อง A · CPI', 2, 'min="0.01" step="any"') + field('ghz', 'เครื่อง A · GHz', 2, 'min="0.01" step="any"') + field('cpiB', 'เครื่อง B · CPI', 2.6, 'min="0.01" step="any"') + field('ghzB', 'เครื่อง B · GHz', 3, 'min="0.01" step="any"'), v => {
       const n = Number(v('instructions')), cpi = Number(v('cpi')), ghz = Number(v('ghz')), r = C.cpuTime({ instructions: n, cpi, ghz });
-      return `<div class="itds211-metrics">${metric(f(r.seconds), 'CPU time · วินาที')}${metric(f(r.cycles), 'Clock cycles · รอบ')}</div><ol><li>แปลง GHz เป็น Hz: ${f(ghz)} × 10⁹ = ${f(r.hertz)} รอบ/วินาที</li><li>รอบที่ต้องใช้ = ${f(n)} × ${f(cpi)} = ${f(r.cycles)} รอบ</li><li>เวลา = ${f(r.cycles)} ÷ ${f(r.hertz)} = ${f(r.seconds)} วินาที</li></ol><p>ตรึงสองค่าแล้วเปลี่ยนอีกค่าหนึ่ง: เพิ่ม Clock rate เป็นสองเท่า หรือลด Instruction count ลงครึ่งหนึ่ง ให้ผลต่อเวลาต่างกันหรือไม่ภายใต้สมมติฐานนี้?</p>`;
+      const b = C.cpuTime({instructions:n,cpi:Number(v('cpiB')),ghz:Number(v('ghzB'))});
+      const comparison = r.seconds === b.seconds ? 'ทั้งสองเครื่องใช้เวลาเท่ากัน' : `เครื่อง ${r.seconds < b.seconds ? 'A' : 'B'} เร็วกว่า ${f(Math.max(r.seconds,b.seconds)/Math.min(r.seconds,b.seconds))} เท่า`;
+      return `<div class="itds211-metrics">${metric(f(r.seconds), 'เครื่อง A · วินาที')}${metric(f(b.seconds), 'เครื่อง B · วินาที')}</div><p><strong>${comparison}</strong> · เปรียบเทียบจากเวลา ไม่ใช่ GHz เพียงอย่างเดียว</p><ol><li>แปลง GHz เป็น Hz: ${f(ghz)} × 10⁹ = ${f(r.hertz)} รอบ/วินาที; รอบเวลา A = ${f(1/ghz)} ns</li><li>รอบที่ A ต้องใช้ = ${f(n)} × ${f(cpi)} = ${f(r.cycles)} รอบ</li><li>เวลา A = ${f(r.cycles)} ÷ ${f(r.hertz)} = ${f(r.seconds)} วินาที</li><li>เวลา B = ${f(n)} × ${f(Number(v('cpiB')))} ÷ (${f(Number(v('ghzB')))} × 10⁹) = ${f(b.seconds)} วินาที</li></ol>`;
     });
   }
   function machine(host) {
@@ -74,10 +77,31 @@
     stepper(host, 'เดินคำสั่งแบบ MARIE ทีละขั้น', '<p>ตัวอย่างเสริม: บวก 7 กับ 5 ด้วย LOAD → ADD → STORE หน้าต่างนี้ย่อรายละเอียดสัญญาณควบคุมเพื่อเน้นค่าที่เปลี่ยน</p>', steps, x => `<div class="itds211-step-state"><strong>${x[0]}</strong>${x[1]}</div>${table(['PC · คำสั่งถัดไป', 'IR · คำสั่งปัจจุบัน', 'AC · ค่าสะสม', 'M[102]'], [[x[2], x[3], x[4], x[5]]])}<p>สังเกตว่า PC เปลี่ยนหลัง Fetch แต่ผลบวกยังไม่เปลี่ยนจนถึง Execute</p>`);
   }
   function numbers(host) {
-    setup(host, 'จำนวนเต็มมีเครื่องหมาย และ IEEE 754 แบบ 32 บิต', field('integer', 'จำนวนเต็มสำหรับ 2’s complement', -5, 'step="1"') + select('bits', 'ความกว้าง', [[8, '8 บิต'], [16, '16 บิต'], [32, '32 บิต']]) + field('real', 'จำนวนจริงสำหรับ float32', 10.25, 'step="any"'), v => {
-      const r = C.representInteger(Number(v('integer')), Number(v('bits'))), p = C.float32(Number(v('real')));
-      return `<h4>2’s complement · ${r.value}</h4><p>ช่วงที่แทนได้: ${r.min} ถึง ${r.max}</p><div class="itds211-bits"><span>${r.bits}</span></div><ol>${r.steps.map(s => `<li>${escape(s)}</li>`).join('')}</ol>${r.carrySteps.length ? table(['ตำแหน่งจากขวา', 'บิตเดิม', 'ทดเข้า', 'รวม', 'บิตผล', 'ทดออก'], r.carrySteps.map(x => [x.position, x.bit, x.carryIn, x.sum, x.result, x.carryOut])) : ''}<h4>IEEE 754 · Sign | Exponent | Fraction</h4><div class="itds211-bits"><span>${p.sign}</span><span>${p.exponent}</span><span>${p.fraction}</span></div><ol><li>Sign=${p.sign}; Exponent field=${p.exponentValue}</li><li>ชนิด=${p.classification}; ${p.classification === 'normal' ? `เลขชี้กำลังจริง = ${p.exponentValue} − 127 = ${p.unbiasedExponent}` : p.classification === 'subnormal' ? 'เลขชี้กำลังสำหรับสูตร subnormal = −126' : 'ช่อง Exponent เป็นรหัสกรณีพิเศษ จึงไม่ใช้สูตรเลขชี้กำลังของจำนวนปกติ'}</li><li>${p.classification === 'normal' ? 'ใช้ 1.fraction × 2^exponent' : p.classification === 'subnormal' ? 'ใช้ 0.fraction × 2^(−126) จึงไม่มี leading 1' : p.classification === 'zero' ? 'ทุกช่องขนาดเป็นศูนย์; เครื่องหมายแยก +0 และ −0' : 'ค่าที่ป้อนเกินช่วงของ float32 จึงเกิด overflow'}</li><li>ค่าหลังปัดเป็น float32: ${p.classification === 'overflow' ? 'เกินช่วงที่แทนได้' : Object.is(p.rounded, -0) ? '−0' : escape(p.rounded)}</li></ol>`;
+    host.dataset.widget = 'bits';
+    setup(host, 'บิตจำนวนเต็ม และ IEEE 754 แบบ 32 บิต', field('real', 'จำนวนจริงสำหรับ float32', 10.25, 'step="any"'), v => {
+      const p = C.float32(Number(v('real')));
+      return `<h4>IEEE 754 · Sign | Exponent | Fraction</h4><div class="itds211-bits"><span>${p.sign}</span><span>${p.exponent}</span><span>${p.fraction}</span></div><ol><li>Sign=${p.sign}; Exponent field=${p.exponentValue}</li><li>ชนิด=${p.classification}; ${p.classification === 'normal' ? `เลขชี้กำลังจริง = ${p.exponentValue} − 127 = ${p.unbiasedExponent}` : p.classification === 'subnormal' ? 'เลขชี้กำลังสำหรับสูตร subnormal = −126' : 'ช่อง Exponent เป็นรหัสกรณีพิเศษ จึงไม่ใช้สูตรเลขชี้กำลังของจำนวนปกติ'}</li><li>${p.classification === 'normal' ? 'ใช้ 1.fraction × 2^exponent' : p.classification === 'subnormal' ? 'ใช้ 0.fraction × 2^(−126) จึงไม่มี leading 1' : p.classification === 'zero' ? 'ทุกช่องขนาดเป็นศูนย์; เครื่องหมายแยก +0 และ −0' : 'ค่าที่ป้อนเกินช่วงของ float32 จึงเกิด overflow'}</li><li>ค่าหลังปัดเป็น float32: ${p.classification === 'overflow' ? 'เกินช่วงที่แทนได้' : Object.is(p.rounded, -0) ? '−0' : escape(p.rounded)}</li></ol>`;
     });
+    const bitWidget = document.createElement('div');
+    bitWidget.className = 'itds211-bit-widget';
+    bitWidget.innerHTML = `<h4>กดบิต · ข้อมูลชุดเดียว ตีความได้สองแบบ</h4><p>บิตชุดเดียวกัน ทำไมเป็นได้ทั้ง 200 และ −56?</p><div class="itds211-bit-buttons">${Array.from({length:8},(_,i)=>`<button type="button" class="btn" data-bit="${i}" aria-label="สลับบิตน้ำหนัก ${128>>i}"></button>`).join('')}</div><label>ฐานสิบ (−128 ถึง 255)<input name="unsigned" type="number" min="-128" max="255" step="1" value="200"></label><div class="itds211-controls"><button type="button" class="btn" data-not>กลับบิตทั้งหมด (NOT)</button><button type="button" class="btn" data-negate>ติดลบ (NOT + 1)</button></div><div data-bit-result aria-live="polite"></div>`;
+    host.querySelector('h3').after(bitWidget);
+    let unsigned = 200, overflow = false;
+    function drawBits() {
+      const bits = unsigned.toString(2).padStart(8,'0'), signed = unsigned >= 128 ? unsigned - 256 : unsigned;
+      bitWidget.querySelectorAll('[data-bit]').forEach((button,i)=>{button.textContent=bits[i];button.setAttribute('aria-pressed',String(bits[i]==='1'));});
+      bitWidget.querySelector('[name=unsigned]').value=unsigned;
+      bitWidget.querySelector('[data-bit-result]').innerHTML=`<p>ฐานสอง <code>${bits}</code> · ฐานสิบหก <code>0x${unsigned.toString(16).toUpperCase().padStart(2,'0')}</code><br>ไม่มีเครื่องหมาย = <b>${unsigned}</b> · two’s complement = <b>${String(signed).replace('-','−')}</b><br>น้ำหนักแบบมีเครื่องหมาย: ${[...bits].flatMap((b,i)=>b==='1'?[i===0?'−128':String(128>>i)]:[]).join(' + ')||'0'} = ${signed}</p>${overflow?'<p>Signed overflow: −128 ไม่มีค่าบวกคู่กันใน 8 บิต; NOT + 1 จึงได้ 10000000 (−128) เหมือนเดิม</p>':''}`;
+    }
+    bitWidget.querySelectorAll('[data-bit]').forEach(button=>button.onclick=()=>{unsigned^=128>>Number(button.dataset.bit);overflow=false;drawBits();});
+    bitWidget.querySelector('[name=unsigned]').addEventListener('input',event=>{
+      event.stopPropagation(); const n=Number(event.target.value);
+      if(!event.target.value.trim()||!Number.isInteger(n)||n < -128||n>255){bitWidget.querySelector('[data-bit-result]').textContent='กรอกจำนวนเต็ม −128 ถึง 255';return;}
+      unsigned=(n+256)%256;overflow=false;drawBits();
+    });
+    bitWidget.querySelector('[data-not]').onclick=()=>{unsigned^=255;overflow=false;drawBits();};
+    bitWidget.querySelector('[data-negate]').onclick=()=>{overflow=unsigned===128;unsigned=(-unsigned+256)%256;drawBits();};
+    drawBits();
   }
   function cache(host) {
     setup(host, 'แคช 4 บรรทัด · เปรียบเทียบ Direct / Set / Fully associative', '<label>Byte addresses (คั่นด้วย comma)<input name="addresses" type="text" value="0,4,0,16,0"></label>' + select('ways', 'จำนวนทาง · ใช้ LRU เมื่อเต็ม', [[1, '1-way · Direct'], [2, '2-way set associative'], [4, '4-way · Fully associative']]) + field('virtual', 'Virtual address · page size 4096 B', 4099, 'min="0" step="1"') + select('present', 'หน้า 1 อยู่ในหน่วยความจำหรือไม่', [['yes', 'อยู่ใน Frame 5'], ['no', 'ยังอยู่บนดิสก์']]), v => {
@@ -123,33 +147,31 @@
     });
   }
   function pipeline(host) {
-    const instructions = [
-      { text: 'add x1,x2,x3', dest: 'x1', src: ['x2', 'x3'], type: 'alu' },
-      { text: 'sub x4,x1,x5', dest: 'x4', src: ['x1', 'x5'], type: 'alu' },
-      { text: 'ld x6,0(x4)', dest: 'x6', src: ['x4'], type: 'load' },
-      { text: 'add x7,x6,x8', dest: 'x7', src: ['x6', 'x8'], type: 'alu' }
-    ];
-    let forwarding = true, cycle = 1;
-    host.innerHTML = `<h3>Pipeline 5 ขั้น · ดูการรอข้อมูลทีละรอบ</h3><p>IF ดึงคำสั่ง · ID แปล/อ่านรีจิสเตอร์ · EX คำนวณ · MEM อ่านเขียนข้อมูล · WB เขียนผลกลับ แบบจำลองนี้มีหน่วยความจำคำสั่งและข้อมูลแยกกัน ไม่มี branch และอ่านรีจิสเตอร์ได้ในรอบเดียวกับที่เขียนกลับ</p><label><input name="forwarding" type="checkbox" checked> เปิด Forwarding (ส่งค่าล่วงหน้า)</label><div class="itds211-controls"><button class="btn" data-prev type="button">← รอบก่อน</button><button class="btn primary" data-next type="button">รอบถัดไป →</button><button class="btn" data-reset type="button">เริ่มใหม่</button></div><div class="itds211-output" aria-live="polite"></div>`;
-    function update() {
-      const r = C.pipelineTrace(instructions, { forwarding }); cycle = Math.min(cycle, r.cycles);
-      const columns = Array.from({ length: r.cycles }, (_, i) => i + 1);
-      const rows = r.rows.map(row => `<tr><th scope="row"><code>${escape(row.text)}</code></th>${columns.map(col => {
-        const cell = row.cells.find(x => x.cycle === col);
-        return `<td class="${cell?.stalled ? 'wait ' : ''}${col === cycle ? 'active' : ''}">${cell && col <= cycle ? cell.stage + (cell.stalled ? '*' : '') : '·'}</td>`;
-      }).join('')}</tr>`).join('');
-      host.querySelector('.itds211-output').innerHTML = `<div class="itds211-metrics">${metric(`${cycle} / ${r.cycles}`, 'Clock cycle')}${metric(r.stalls, 'รอบหยุดรอทั้งหมด')}</div><div class="table-wrap" tabindex="0" role="region" aria-label="ตาราง pipeline"><table class="itds211-pipeline"><thead><tr><th>คำสั่ง</th>${columns.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p>* IF/ID ถูกพักในรอบนั้น; ต่อให้เปิด Forwarding ค่า Load ยังพร้อมช้ากว่าค่า ALU จึงเหลือ Load-use stall หนึ่งรอบ</p>`;
-      host.querySelector('[data-prev]').disabled = cycle === 1; host.querySelector('[data-next]').disabled = cycle === r.cycles;
-    }
-    host.querySelector('[name=forwarding]').onchange = event => { forwarding = event.target.checked; cycle = 1; update(); };
-    host.querySelector('[data-prev]').onclick = () => { cycle--; update(); }; host.querySelector('[data-next]').onclick = () => { cycle++; update(); }; host.querySelector('[data-reset]').onclick = () => { cycle = 1; update(); }; update();
+    host.dataset.widget = 'pipeline';
+    setup(host, 'Pipeline 5 ขั้น · ป้อนคำสั่งและทดลอง hazard', `<p>คำสั่งที่ใช้ผลของคำสั่งก่อนหน้า ต้องรอกี่รอบ? IF ดึงคำสั่ง · ID อ่านรีจิสเตอร์ · EX คำนวณ · MEM เข้าหน่วยความจำ · WB เขียนผล รองรับ lw/ld, sw/sd และ add/sub/and/or/xor/sll/srl/slt รูปแบบ op rd,rs,rt (x0–x31) สูงสุด 16 คำสั่ง</p><label>คำสั่ง RISC-V<textarea name="code" rows="5">lw x1,0(x2)
+add x3,x1,x4
+sub x5,x3,x6
+or x7,x8,x9</textarea></label><label><input name="forwarding" type="checkbox" checked> เปิด Forwarding</label>`, v => {
+      const lines=v('code').split(/\n/).map(x=>x.trim()).filter(Boolean);
+      const reg='x(?:[0-9]|[12][0-9]|3[01])';
+      const memory=new RegExp(`^(lw|ld|sw|sd)\\s+(${reg})\\s*,\\s*(-?\\d+)\\s*\\(\\s*(${reg})\\s*\\)$`,'i');
+      const alu=new RegExp(`^(add|sub|and|or|xor|sll|srl|slt)\\s+(${reg})\\s*,\\s*(${reg})\\s*,\\s*(${reg})$`,'i');
+      const instructions=lines.map((text,i)=>{
+        const m=text.match(memory),a=text.match(alu);
+        if(m){const store=/^s/i.test(m[1]);return {text,dest:store?null:m[2].toLowerCase(),src:store?[m[2].toLowerCase(),m[4].toLowerCase()]:[m[4].toLowerCase()],type:store?'store':'load'};}
+        if(a)return {text,dest:a[2].toLowerCase(),src:[a[3].toLowerCase(),a[4].toLowerCase()],type:'alu'};
+        throw new Error(`บรรทัด ${i+1}: ใช้คำสั่งและรูปแบบที่รองรับ เช่น add x3,x1,x4 หรือ lw x1,0(x2)`);
+      });
+      const r=C.pipelineTrace(instructions,{forwarding:host.querySelector('[name=forwarding]').checked});
+      const columns=Array.from({length:r.cycles},(_,i)=>i+1);
+      return `<p><strong>${instructions.length} คำสั่งใช้ ${r.cycles} รอบ</strong> · ไม่มี stall จะใช้ ${instructions.length+4} รอบ · stall รวม ${r.stalls} รอบ · CPI ≈ ${f(r.cycles/instructions.length)}</p>${table(['คำสั่ง',...columns],r.rows.map(row=>[escape(row.text),...columns.map(col=>{const cell=row.cells.find(x=>x.cycle===col);return cell?`<span class="itds211-stage stage-${cell.stage} ${cell.stalled?'wait':''}">${cell.stage}${cell.stalled?'*':''}</span>`:'·';})]),'itds211-pipeline')}<p>* IF/ID ถูกพักในรอบนั้น แบบจำลองมีหน่วยความจำคำสั่งและข้อมูลแยกกัน ไม่มี branch; WB เขียนครึ่งแรกและ ID อ่านครึ่งหลังของรอบเดียวกันได้ เปิด Forwarding แล้ว ALU ส่งผลต่อได้ทัน แต่ load-use ยังรอ 1 รอบ การส่งค่า store ใช้ทางข้อมูลจาก EX ในแบบจำลองนี้</p>`;
+    });
   }
   function parallel(host) {
-    setup(host, 'แบ่งงานขนาน: ส่วนที่แบ่งไม่ได้ยังจำกัดความเร็ว', field('workers', 'จำนวนหน่วยประมวลผล', 4, 'min="1" max="64" step="1"') + field('serial', 'งานที่ต้องทำตามลำดับ (%)', 20, 'min="0" max="100" step="1"'), v => {
-      const workers = Number(v('workers')), serial = Number(v('serial'));
-      if (!Number.isInteger(workers) || workers < 1 || workers > 64 || !Number.isFinite(serial) || serial < 0 || serial > 100) throw new Error('ใช้หน่วยประมวลผล 1–64 ตัว และส่วนตามลำดับ 0–100%');
-      const fraction = serial / 100, time = fraction + (1 - fraction) / workers, speedup = 1 / time;
-      return `<div class="itds211-metrics">${metric(f(time * 100) + '%', 'เวลาเทียบกับใช้ 1 ตัว')}${metric(f(speedup) + '×', 'Speedup ในแบบจำลองอุดมคติ')}</div><ol><li>สมมติเวลาเดิม=1 หน่วย ส่วนที่แบ่งไม่ได้=${fraction}</li><li>ส่วนขนานต่อเครื่อง=(1−${fraction})/${workers}=${f((1 - fraction) / workers)}</li><li>เวลาใหม่=${fraction}+${f((1 - fraction) / workers)}=${f(time)}</li><li>Speedup=1/${f(time)}=${f(speedup)}</li></ol><p>[อธิบายเสริม] ใช้แบบจำลอง Amdahl แบบอุดมคติ ไม่รวมค่าใช้จ่ายแบ่งงาน ส่งข้อความ หรือแย่งหน่วยความจำ จึงไม่ใช่การทำนายความเร็ว GPU/CPU จริง</p>`;
+    host.dataset.widget = 'amdahl';
+    setup(host, 'กฎของ Amdahl · ส่วนที่ขนานไม่ได้กำหนดเพดานอย่างไร?', '<label>สัดส่วนที่ขนานได้ p <input name="parallel" type="range" min="0" max="0.99" step="0.01" value="0.9"></label><label>จำนวนแกน n <input name="workers" type="range" min="1" max="64" step="1" value="8"></label>', v => {
+      const p=Number(v('parallel')),n=Number(v('workers')),time=1-p+p/n,speedup=1/time,ceiling=1/(1-p),scale=Math.max(n,ceiling);
+      return `<div class="itds211-metrics">${metric('p = '+p.toFixed(2),'สัดส่วนที่ขนานได้')}${metric(n,'จำนวนแกน')}${metric(f(speedup)+'×','Speedup')}${metric(f(ceiling)+'×','เพดานเมื่อแกนไม่จำกัด')}</div><p>เวลาใหม่ = (1−${p}) + ${p}/${n} = ${f(time)} เท่าของเวลาเดิม<br>Speedup = 1 / ${f(time)} = ${f(speedup)} เท่า · ${f(speedup/ceiling*100)}% ของเพดาน</p>${[['ทำได้จริง',speedup],['เพดาน 1/(1−p)',ceiling],['อุดมคติ n เท่า',n]].map(([label,value])=>`<p>${label}: ${f(value)}×</p><div class="itds211-speed-bar"><span style="width:${value/scale*100}%"></span></div>`).join('')}<p>ลองเพิ่มแกนจาก 8 เป็น 64 โดยตรึง p=0.90 แล้วสังเกตว่าเข้าใกล้เพดาน 10 เท่า แต่ไม่ถึง 64 เท่า [อธิบายเสริม] แบบจำลองไม่รวมค่าใช้จ่ายแบ่งงาน ส่งข้อความ และแย่งหน่วยความจำ</p>`;
     });
   }
   function os(host) {
@@ -173,26 +195,21 @@
     host.querySelector('[data-reset]').onclick = () => { state = 'ready'; history = ['เริ่มที่ Ready']; update(); }; update();
   }
   function scheduling(host) {
-    let step = Infinity;
-    host.innerHTML = `<h3>CPU Scheduling · กำหนดงานแล้วตรวจเส้นเวลาทีละการตัดสินใจ</h3><p>รูปแบบ: ชื่อ, Arrival, CPU burst, Priority หน่วยเวลาเป็นจำนวนเต็ม; Priority เลขน้อยสำคัญกว่า แบบจำลองใช้ CPU burst เดียวต่อ process และไม่มีค่าใช้จ่ายสลับงาน</p><label>งานแต่ละงานอยู่คนละบรรทัด<textarea name="jobs">A,0,5,2\nB,1,2,1\nC,2,1,3</textarea></label><div class="itds211-controls">${select('algorithm', 'อัลกอริทึม', [['FCFS', 'FCFS · มาก่อนได้ก่อน'], ['SJF', 'SJF · สั้นก่อน ไม่แย่ง'], ['STCF', 'STCF · เหลือสั้นสุด แย่งได้'], ['PRIORITY', 'Priority · ไม่แย่ง'], ['RR', 'Round Robin']])}${field('quantum', 'Quantum ของ RR', 2, 'min="1" step="1"')}<button class="btn" data-start type="button">เริ่มดูทีละขั้น</button><button class="btn primary" data-next type="button">ขั้นถัดไป →</button><button class="btn" data-all type="button">ดูครบทุกขั้น</button></div><div class="itds211-output" aria-live="polite"></div>`;
-    function update() {
-      const output = host.querySelector('.itds211-output');
-      try {
-        const lines = host.querySelector('[name=jobs]').value.trim().split(/\n/).filter(x => x.trim());
-        const jobs = lines.map(line => {
-          const cells = line.split(',').map(x => x.trim());
-          if (cells.length < 3 || cells.length > 4 || cells.some(x => x === '')) throw new Error('แต่ละบรรทัดใช้ ชื่อ,Arrival,Burst,Priority เช่น A,0,5,2');
-          return { id: cells[0], arrival: Number(cells[1]), burst: Number(cells[2]), priority: cells[3] === undefined ? 0 : Number(cells[3]) };
-        });
-        const algorithm = host.querySelector('[name=algorithm]').value, quantum = Number(host.querySelector('[name=quantum]').value), r = C.schedule(jobs, algorithm, quantum);
-        step = Math.min(step, r.steps.length); const shown = r.steps.slice(0, step), until = shown.at(-1)?.end ?? 0;
-        const gantt = r.segments.filter(x => x.start < until).map(x => ({ ...x, end: Math.min(x.end, until) }));
-        output.innerHTML = `<p>ดูแล้ว ${shown.length} / ${r.steps.length} การตัดสินใจ</p><div class="table-wrap" tabindex="0" role="region" aria-label="Gantt chart"><div class="itds211-gantt">${gantt.map(x => `<div class="itds211-gantt-block" style="flex-basis:${Math.max(55, (x.end - x.start) * 24)}px" data-end="${x.end}"><b>${escape(x.id)}</b><small>${x.start}</small></div>`).join('')}</div></div>${table(['ช่วง', 'CPU', 'เหลือ', 'เหตุผล'], shown.map(x => [`${x.start}–${x.end}`, escape(x.id), x.remaining ?? '—', escape(x.reason)]))}${shown.length === r.steps.length ? `<h4>ตรวจตัวเลขรายงาน</h4>${table(['งาน', 'Arrival', 'Burst', 'เริ่มครั้งแรก', 'เสร็จ', 'Turnaround', 'Waiting', 'Response'], r.metrics.map(x => [escape(x.id), x.arrival, x.burst, x.first, x.completion, `${x.completion}−${x.arrival}=${x.turnaround}`, `${x.turnaround}−${x.burst}=${x.waiting}`, `${x.first}−${x.arrival}=${x.response}`]))}<div class="itds211-metrics">${metric(f(r.averages.waiting), 'Average waiting')}${metric(f(r.averages.response), 'Average response')}${metric(f(r.averages.turnaround), 'Average turnaround')}</div><p>Waiting=Turnaround−Burst ใช้ได้ตรงนี้เพราะตัวอย่างไม่มี I/O burst; งานมาถึงตรงขอบ Quantum ของ RR เข้าคิวก่อนนำงานเดิมไปต่อท้าย</p>` : '<p>คำนวณค่ารวมหลังเดินเส้นเวลาครบ เพื่อไม่เฉลยก่อนดูการตัดสินใจทั้งหมด</p>'}`;
-        host.querySelector('[data-next]').disabled = step >= r.steps.length;
-      } catch (error) { output.innerHTML = `<p class="itds211-error" role="alert">${escape(error.message)}</p>`; }
-    }
-    host.querySelectorAll('input,select,textarea').forEach(node => { node.addEventListener('input', () => { step = Infinity; update(); }); });
-    host.querySelector('[data-start]').onclick = () => { step = 1; update(); }; host.querySelector('[data-next]').onclick = () => { step++; update(); }; host.querySelector('[data-all]').onclick = () => { step = Infinity; update(); }; update();
+    host.dataset.widget = 'cpu-scheduling';
+    setup(host, 'CPU Scheduling · เปรียบเทียบทั้ง 4 แบบ', `<p>อัลกอริทึมไหนให้เวลารอเฉลี่ยน้อยที่สุดสำหรับชุดงานนี้? ใส่ชื่อ เวลามาถึง และเวลาใช้ CPU คั่นด้วยช่องว่างหรือ comma หน่วยเวลาเป็นจำนวนเต็ม ใช้ CPU burst เดียวและไม่มีค่าใช้จ่ายสลับงาน</p><label>งานแต่ละงานอยู่คนละบรรทัด<textarea name="jobs" rows="5">P1 0 8
+P2 1 4
+P3 2 9
+P4 3 5</textarea></label>${field('quantum','Quantum ของ Round Robin',4,'min="1" max="1000" step="1"')}`, v => {
+      const lines=v('jobs').trim().split(/\n/).filter(x=>x.trim());
+      const jobs=lines.map((line,i)=>{
+        const cells=line.trim().split(/[,\s]+/);
+        if(cells.length!==3)throw new Error(`บรรทัด ${i+1}: ใช้ ชื่อ Arrival Burst เช่น P1 0 8`);
+        return {id:cells[0],arrival:Number(cells[1]),burst:Number(cells[2])};
+      });
+      const results=[['FCFS','FCFS'],['SJF','SJF · ไม่แย่งคิว'],['STCF','SRTF (STCF) · แย่งคิว'],['RR','Round Robin · q='+v('quantum')]].map(([algorithm,label])=>({algorithm,label,result:C.schedule(jobs,algorithm,Number(v('quantum')))}));
+      const best=Math.min(...results.map(x=>x.result.averages.waiting));
+      return `<p>Waiting = Completion − Arrival − Burst · Turnaround = Completion − Arrival · ชุดงานเดียวกันทุกแบบ เริ่มคำนวณใหม่เมื่อเปลี่ยนข้อมูล</p>${results.map(({algorithm,label,result:r})=>`<div data-schedule-result="${algorithm}"><h4>${escape(label)}${r.averages.waiting===best?' · ✓ รอเฉลี่ยน้อยที่สุดในชุดนี้':''}</h4><div class="table-wrap" tabindex="0" role="region" aria-label="Gantt chart ${algorithm}"><div class="itds211-gantt">${r.segments.map(x=>`<div class="itds211-gantt-block" style="flex:0 0 ${(x.end-x.start)*32}px" data-end="${x.end}"><b>${escape(x.id==='idle'?'ว่าง':x.id)}</b><small>${x.start}</small></div>`).join('')}</div></div>${table(['งาน','เสร็จ','Waiting','Turnaround','Response'],r.metrics.map(x=>[escape(x.id),x.completion,x.waiting,x.turnaround,x.response]))}<p>รอเฉลี่ย <strong>${f(r.averages.waiting)}</strong> · Turnaround เฉลี่ย <strong>${f(r.averages.turnaround)}</strong></p></div>`).join('')}<p>SJF เลือก Burst สั้นที่สุดในงานที่มาถึงแล้วและทำจนเสร็จ; SRTF เลือกเวลาที่เหลือสั้นที่สุดใหม่ทุกหน่วยเวลา; RR ให้งานใหม่ที่มาถึงตรงขอบ Quantum เข้าคิวก่อนนำงานเดิมต่อท้าย เมื่อเสมอกันใช้เวลามาถึงแล้วตามลำดับที่กรอก ผลดีที่สุดนี้ใช้กับชุดงานนี้และเกณฑ์เวลารอเฉลี่ยเท่านั้น</p>`;
+    });
   }
   const labs = { overview, performance, machine, numbers, cache, io, storage, pipeline, parallel, os, process, scheduling };
   document.querySelectorAll('[data-itds211-lab]').forEach(host => { try { labs[host.dataset.itds211Lab]?.(host); } catch (error) { host.textContent = `ห้องทดลอง: ${error.message}`; } });

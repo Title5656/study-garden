@@ -85,7 +85,7 @@
         17
       ],
       "question": "กติกาแต่ละแบบใช้ข้อมูลอะไรมาเลือกคนถัดไป?",
-      "html": "<p>หน้า16เป็นหน้าคั่นและหน้า17แจกแจงFIFO,SJF,STCF,Priority,RoundRobin,MLFQ. FIFOดูคิวมาถึง,SJFดูความยาวCPUburstที่คาด,STCFดูเวลาที่เหลือพร้อมยึดCPUคืน,Priorityดูระดับความสำคัญ,RRแบ่งผลัด,MLFQปรับระดับจากพฤติกรรม. [อธิบายเสริม] การมีชื่อpolicyยังไม่พอทำโจทย์ ต้องรู้arrival,burst,การแทรกได้หรือไม่,quantum,กติกาเสมอกันและต้นทุนswitchที่โจทย์กำหนด.</p>"
+      "html": "<p>หน้า16เป็นหน้าคั่นและหน้า17แจกแจงFIFO,SJF,STCF,Priority,RoundRobin,MLFQ. FIFOดูคิวมาถึง,SJFดูความยาวCPUburstที่คาด,STCFดูเวลาที่เหลือพร้อมยึดCPUคืน,Priorityดูระดับความสำคัญ,RRแบ่งผลัด,MLFQปรับระดับจากพฤติกรรม. [อธิบายเสริม] การมีชื่อpolicyยังไม่พอทำโจทย์ ต้องรู้arrival,burst,การแทรกได้หรือไม่,quantum,กติกาเสมอกันและต้นทุนswitchที่โจทย์กำหนด.</p><p>[อธิบายเสริม] <strong>ทดลองชุดงานเดียวกันด้วย Scheduling ทั้ง 4 แบบ</strong>: ป้อน P1 0 8, P2 1 4, P3 2 9, P4 3 5 คนละบรรทัด และตั้ง Quantum=4 เปรียบเทียบ FCFS, SJF, SRTF และ Round Robin จาก Gantt chart และค่า Waiting/Turnaround <a href=\"#interactive\">ไปทดลองในวิดเจ็ตประจำบท →</a></p><p>[อธิบายเสริม] แนวตรวจผล: FCFS มี Waiting เฉลี่ย 8.75 หน่วยเวลา ส่วน SRTF (เรียก STCF ในบทนี้) ได้ 6.5 หน่วยเวลา ลองเปลี่ยน Quantum เพื่อดูผลต่อ RR; เครื่องหมายรอเฉลี่ยน้อยที่สุดเป็นผลของชุดข้อมูลปัจจุบัน ไม่ใช่คำตอบว่าอัลกอริทึมนั้นดีที่สุดทุกสถานการณ์</p>"
     },
     {
       "id": "fifo-equal",
@@ -1676,5 +1676,6 @@
     "หน้า46priority0memory-managementthreadระบุอย่างกว้าง;Microsoftเจาะจงzero-pagethreadที่ล้างหน้าว่าง ไม่ใช่ทุกmemory-managementthread https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities",
     "หน้า48Foregroundwindow3xpriorityboostไม่ระบุรุ่น/settingและอาจสับสนกับquantumboost จึงไม่ยืนยันสูตรpriorityคูณ3;สอนdynamicboost/decayที่มีหลักฐานและแจ้งความกำกวม https://learn.microsoft.com/th-th/windows/win32/procthread/priority-boosts"
   ],
-  "lab": "scheduling"
+  "lab": "scheduling",
+  "interactiveGuide": "<p>[อธิบายเสริม] <strong>ทดลองชุดงานเดียวกันด้วย Scheduling ทั้ง 4 แบบ</strong>: ป้อน P1 0 8, P2 1 4, P3 2 9, P4 3 5 คนละบรรทัด และตั้ง Quantum=4 เปรียบเทียบ FCFS, SJF, SRTF และ Round Robin จาก Gantt chart และค่า Waiting/Turnaround</p><p>หลังทดลอง ให้อธิบายสิ่งที่เปลี่ยนและเหตุผลก่อนอ่านผลเฉลยในวิดเจ็ต</p>"
 }

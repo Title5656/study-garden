@@ -47,7 +47,7 @@ try{
  console.log(`PASS: Mahidol folder, course filtering/navigation, ${files.length} separate paged lessons and labs at 390px.`);
  await page.goto('https://study-garden.test/subjects/itds211/chapter-02.html#interactive');
  await page.locator('[name=ghz]').fill('4');
- assert.match(await page.locator('.itds211-output').innerText(),/0.5/);
+ assert.match(await page.locator('.itds211-metric strong').first().innerText(),/0.25/);
  await page.locator('[name=ghz]').fill('0');
  assert.equal(await page.locator('.itds211-error').count(),1,'invalid frequency is explained');
  await page.locator('[name=ghz]').fill('2');
@@ -69,9 +69,9 @@ try{
  assert.match(await page.locator('.itds211-output').innerText(),/เทียบเท่า 1 ลูก/);
  await page.goto('https://study-garden.test/subjects/itds211/chapter-12.html#interactive');
  await page.locator('[name=quantum]').fill('');
- assert.equal(await page.locator('.itds211-error').count(),0,'FCFS does not need an RR quantum');
- await page.locator('[name=algorithm]').selectOption('RR');
- assert.equal(await page.locator('.itds211-error').count(),1,'RR still requires a positive integer quantum');
+ assert.equal(await page.locator('.itds211-error').count(),1,'the four-algorithm comparison includes RR and requires its quantum');
+ await page.locator('[name=quantum]').fill('4');
+ assert.equal(await page.locator('[data-schedule-result]').count(),4,'all four results return after correcting the quantum');
  await page.goto('https://study-garden.test/subjects/itds211/chapter-01.html#flashcards');
  const before=await page.locator('#flash-text').innerText();await page.locator('#flashcard').click();
  assert.notEqual(await page.locator('#flash-text').innerText(),before);
