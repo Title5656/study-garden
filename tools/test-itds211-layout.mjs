@@ -10,7 +10,8 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 let checked=0;
 const errors=[];
 try{
- const page=await useLocalFiles(await browser.newPage({viewport:{width:320,height:900},reducedMotion:'reduce'}),root);
+ for(const theme of ['light','dark']){
+ const page=await useLocalFiles(await browser.newPage({viewport:{width:320,height:900},reducedMotion:'reduce',colorScheme:theme}),root);
  page.on('pageerror',e=>errors.push(e.message));
  for(const file of files){
   await page.goto('https://study-garden.test/subjects/itds211/'+file);
@@ -28,8 +29,10 @@ try{
    return result;
   });
   for(const r of results){assert.equal(r.visible,true,`${file}#${r.id}: direct topic links`);assert.ok(r.overflow<=1,`${file}#${r.id}: 320px page overflow ${r.overflow}`);checked++}
-  console.log(`PASS: ${file}, ${results.length} topics, 320px tables/code/citations/graphics.`);
+  console.log(`PASS: ${theme} ${file}, ${results.length} topics, 320px tables/code/citations/graphics.`);
+ }
+ await page.close();
  }
  assert.deepEqual(errors,[],'all topic navigation stays free of runtime errors');
- console.log(`PASS: ${checked} ITDS211 topics at 320px.`);
+ console.log(`PASS: ${checked} ITDS211 topic/theme cases at 320px.`);
 }finally{await browser.close()}

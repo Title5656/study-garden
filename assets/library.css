@@ -145,14 +145,14 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 .folder-key { position: absolute; bottom: 20px; right: 15px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: #353641; background: #ffffff67; border: 1px solid #ffffff8c; font: 16px system-ui; transition: transform .3s; }
 @media (hover: hover) {
   .glass-folder summary:hover .folder-front { transform: rotateX(-18deg); }
-  .glass-folder summary:hover .sheet-one { transform: translate(-19%, -15%) rotate(-12deg); }
-  .glass-folder summary:hover .sheet-two { transform: translate(19%, -15%) rotate(12deg); }
+  .glass-folder summary:hover .sheet-one { transform: translate(calc(-1 * var(--folder-spread, 19%)), -15%) rotate(calc(-1 * var(--folder-tilt, 12deg))); }
+  .glass-folder summary:hover .sheet-two { transform: translate(var(--folder-spread, 19%), -15%) rotate(var(--folder-tilt, 12deg)); }
   .glass-folder summary:hover .sheet-three { transform: translate(0, -9%); }
 }
 .glass-folder summary:focus-visible .folder-front { transform: rotateX(-18deg); }
 .glass-folder[open] .folder-front { transform: rotateX(-28deg); }
-.glass-folder[open] .sheet-one { transform: translate(-20%, -24%) rotate(-14deg); }
-.glass-folder[open] .sheet-two { transform: translate(20%, -24%) rotate(14deg); }
+.glass-folder[open] .sheet-one { transform: translate(calc(-1 * var(--folder-spread, 20%)), -24%) rotate(calc(-1 * var(--folder-tilt, 14deg))); }
+.glass-folder[open] .sheet-two { transform: translate(var(--folder-spread, 20%), -24%) rotate(var(--folder-tilt, 14deg)); }
 .glass-folder[open] .sheet-three { transform: translate(0, -20%); }
 .glass-folder[open] .folder-key { transform: rotate(90deg); }
 .folder-files { margin-top: 20px; padding: 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); box-shadow: 0 5px 15px #10102008; }
@@ -182,6 +182,10 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 :root[data-theme="dark"] .folder-sheet { background: linear-gradient(145deg, #536176, #202c42); border-color: #9faec17a; color: #e9edf6; }
 :root[data-theme="dark"] .folder-sheet > span { border-color: #656979; }
 :root[data-theme="dark"] .folder-sheet i { background: #676b7b; }
+/* Keep fanned sheets within the gutters on phones, tablets and smaller desktops. */
+@media (max-width: 1280px) {
+  .glass-folder { --folder-spread: 8%; --folder-tilt: 8deg; }
+}
 @media (min-width: 1200px) { .wrap { max-width: 1200px; padding-left: 48px; padding-right: 48px; } }
 @media (max-width: 900px) {
   .folder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 26px; }
