@@ -14,12 +14,13 @@ const lessons = pages(join(root,'subjects')).filter(file => {
   return html.includes('reader.js') && html.includes('lesson-content') && /class="[^"]*\btoc\b/.test(html);
 });
 const seeds = {
+  itds211: {'01':{read:true},'02':{read:true},'03':{best:10}},
   itds241: {'06':{read:true},'09':{read:true},'07':{best:10},'stale':{read:true}},
   itds261: {'01':{read:true},'02':{read:true},'03':{read:true}},
   itds294: {'01':{read:true},'02':{read:true},'03':{read:true}},
   'thermo-chemical': {'01':{read:true},'02':{read:true},'03':{read:true}},
 };
-const expected = {itds241:40,itds261:25,itds294:30,'thermo-chemical':33};
+const expected = {itds211:17,itds241:40,itds261:25,itds294:30,'thermo-chemical':33};
 const browser = await chromium.launch({channel:'chrome',headless:true});
 const errors=[];
 try {

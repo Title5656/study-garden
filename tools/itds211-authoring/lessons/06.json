@@ -1,0 +1,1672 @@
+{
+  "id": "06",
+  "code": "CA05",
+  "title": "ระบบรับเข้าและส่งออก: จากพอร์ตอุปกรณ์ถึงแคชและเครือข่าย",
+  "englishTitle": "I/O Systems",
+  "sourceFile": "itds-211_comp_arch_Chapter05.pdf",
+  "sourcePages": 52,
+  "overview": [
+    "I/Oทำให้คอมพิวเตอร์แลกข้อมูลกับคน อุปกรณ์ และเครื่องอื่นผ่านโมดูลที่ควบคุมจังหวะและพักข้อมูล",
+    "Programmed I/Oให้CPUตรวจและย้ายข้อมูลเอง ส่วนinterruptลดการรอแต่ยังให้CPUย้ายข้อมูล",
+    "DMAย้ายบล็อกระหว่างอุปกรณ์กับหน่วยความจำโดยCPUตั้งงานและรับผลเมื่อเสร็จ",
+    "อัตราเครือข่ายสูงทำให้การวิ่งผ่านDRAMหลายรอบเป็นคอขวด จึงมีDCAและDDIOช่วยใช้แคช",
+    "มาตรฐานเชื่อมต่อและI/O channelแบ่งภาระให้หน่วยควบคุมเฉพาะทางตามชนิดงาน"
+  ],
+  "prerequisitesHtml": "<p>[อธิบายเสริม] I/OหรือInput/Output (รับเข้า/ส่งออก) หมายถึงข้อมูลไหลเข้าและออกคอมพิวเตอร์. CPU (หน่วยประมวลผลกลาง) ทำคำสั่ง; main memory (หน่วยความจำหลัก) เก็บข้อมูลระหว่างทำงาน; bus (บัส) เป็นทางสื่อสารร่วม. Register (รีจิสเตอร์) เป็นที่เก็บข้อมูลเล็กๆในวงจร ไม่ใช่ไฟล์บนดิสก์. Bit (บิต) มี0/1 และbyte (ไบต์) มี8บิต จึงห้ามสลับMbpsกับMB/s.</p><p>[อธิบายเสริม] Interrupt (เหตุขัดจังหวะ) เป็นคำขอให้CPUพักงานเดิมแล้วไปรับเหตุ; cache (แคช) เป็นที่เก็บสำเนาข้อมูลเร็วใกล้CPU; cache miss (พลาดแคช) ต้องหาในระดับถัดไป. เปรียบCPUเป็นผู้ทำงานและอุปกรณ์เป็นผู้ส่งของ: การรอเช็กของทุกครั้งต่างจากให้ผู้ส่งแจ้งเมื่อพร้อม และต่างจากให้ผู้ช่วยขนของทั้งก้อน.</p>",
+  "sections": [
+    {
+      "id": "io-context",
+      "title": "I/O Systems (ตำแหน่งของบท)",
+      "pages": [
+        1,
+        2
+      ],
+      "question": "เหตุใดCPUกับmemoryเพียงสองส่วนยังไม่พอให้เครื่องใช้งานได้?",
+      "html": "<p>ปกกำหนดบทV:I/O Systems และCourse Outlineวางหลังmemory hierarchy/cache และก่อนstorage systems. บทนี้ศึกษาทางเชื่อมระหว่างเครื่องกับภายนอก ว่าใครออกคำสั่ง ใครย้ายข้อมูล ใครรอ และใครตรวจพบความผิด ไม่ได้จำกัดเฉพาะคีย์บอร์ดหรือจอภาพ.</p>"
+    },
+    {
+      "id": "io-module-device",
+      "title": "I/O module and device (ตัวกลางกับอุปกรณ์)",
+      "pages": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "question": "ทำไมไม่ต่ออุปกรณ์ทุกชนิดเข้าวงจรCPUโดยตรง?",
+      "html": "<p>I/O module (โมดูลรับส่งข้อมูล) เชื่อมsystem bus (บัสระบบ) กับperipheral/external device (อุปกรณ์ภายนอก). ภาพgeneric modelมีaddress lines (เส้นระบุเป้าหมาย), data lines (เส้นข้อมูล) และcontrol lines (เส้นคำสั่ง/จังหวะ) เข้าโมดูล แล้วหลายlinksออกสู่อุปกรณ์. อุปกรณ์มีความเร็ว รูปข้อมูลและวิธีควบคุมต่างจากCPUจึงต้องมีตัวกลาง. External devicesแบ่งhuman readable (สื่อสารกับคน),machine readable (สื่อสารกับอุปกรณ์/เครื่องจักร),communication (สื่อสารระยะไกลกับterminalหรือคอมพิวเตอร์อื่น). [อธิบายเสริม] คีย์บอร์ด/จอเป็นตัวอย่างกลุ่มคน เซนเซอร์กลุ่มเครื่องจักร และการ์ดเครือข่ายกลุ่มสื่อสาร.</p><p>ภาพexternal deviceหน้า5แยกcontrol logic (วงจรควบคุม) รับcontrolจากโมดูล ส่งstatus (สถานะ) กลับ และสั่งbuffer (ที่พักข้อมูล). Transducer (ตัวแปลงสัญญาณ) แปลงข้อมูลเฉพาะอุปกรณ์/สภาพแวดล้อมเป็นบิตหรือกลับกัน;data bitsวิ่งสองทิศผ่านbufferกับโมดูล. จึงมีทั้งเส้นควบคุม เส้นสถานะ และเส้นเนื้อข้อมูล ไม่ใช่ทุกลูกศรส่งข้อมูลผู้ใช้.</p><table><thead><tr><th>หน้าที่โมดูล</th><th>สิ่งที่ทำ</th></tr></thead><tbody><tr><td>Control and timing</td><td>ประสานลำดับและจังหวะรับส่งระหว่างภายในกับภายนอก</td></tr><tr><td>Processor communication</td><td>ถอดคำสั่ง รับ/ส่งdata รายงานstatus และรู้ว่าaddressใดเรียกตน</td></tr><tr><td>Device communication</td><td>ส่งcommand/dataและรับstatusจากอุปกรณ์</td></tr><tr><td>Data buffering</td><td>พักข้อมูลเพื่อปรับความเร็วอุปกรณ์กับmemory</td></tr><tr><td>Error detection</td><td>ตรวจและรายงานข้อผิดพลาดการรับส่ง</td></tr></tbody></table><p>ภาพหน้า7แสดงฝั่งsystem busต่อdata registers (รีจิสเตอร์พักเนื้อข้อมูล) และstatus/control registers (รีจิสเตอร์อ่านสถานะ/ตั้งคำสั่ง) ส่วนaddress/controlเข้าI/O logic (วงจรตัดสินและประสานงาน). I/O logicเชื่อมexternal device interface logicหลายชุด แต่ละชุดมีdataสองทิศ,statusจากdevice,controlไปdevice. [อธิบายเสริม] เหมือนจุดรับส่งสินค้าที่มีช่องวางของ ใบสถานะ และผู้จัดคิว ไม่จำเป็นต้องทำอัตราส่งของทั้งสองฝั่งให้เท่ากันทุกขณะ.</p>"
+    },
+    {
+      "id": "io-techniques",
+      "title": "Three I/O techniques (ใครรอ ใครย้าย)",
+      "pages": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "question": "เมื่ออุปกรณ์ช้ากว่าCPUจะเสียเวลารอและย้ายข้อมูลมากเพียงใด?",
+      "html": "<p>Programmed I/O (CPUควบคุมด้วยโปรแกรมและตรวจสถานะเอง) แลกข้อมูลผ่านCPUกับโมดูล;CPUออกคำสั่งแล้ววนรอ. Interrupt-driven I/O (รับส่งโดยให้อุปกรณ์แจ้งเหตุเมื่อพร้อม) ให้CPUทำคำสั่งอื่นระหว่างรอ แต่อ่าน/เขียนข้อมูลผ่านCPUอยู่. DMAหรือdirect memory access (ย้ายข้อมูลตรงระหว่างโมดูลกับmain memory) ให้หน่วยควบคุมย้ายบล็อกโดยไม่ให้CPUย้ายทุกword;CPUยังตั้งงานและรับผลได้ ไม่ได้หายจากระบบ.</p><table><thead><tr><th>เส้นทางข้อมูลในตารางหน้า9</th><th>ไม่มีinterrupt</th><th>ใช้interrupt</th></tr></thead><tbody><tr><td>I/O↔memoryผ่านprocessor</td><td>Programmed I/O</td><td>Interrupt-driven I/O</td></tr><tr><td>I/O↔memoryโดยตรง</td><td>ไม่ระบุในตาราง</td><td>DMA (ใช้แจ้งcompletion)</td></tr></tbody></table><p>I/O command (คำสั่งที่ส่งให้โมดูล) มี4ชนิด: Control (สั่งเปิด/ตั้งงานอุปกรณ์), Test (ตรวจสถานะ), Read (ให้อุปกรณ์ส่งข้อมูลเข้าบัฟเฟอร์โมดูล), Write (เอาข้อมูลจากdata busไปส่งอุปกรณ์). อ่าน/เขียนในที่นี้ต้องระบุผู้มอง ไม่สับสนกับชื่อread/writeของDMAที่อ้างฝั่งmemoryในชิปบางชนิด.</p><p>ผังหน้า11ฝั่งprogrammed: issue read→read status→check;not readyวนกลับ, errorไปจัดการผิด,readyจึงread word I/O→CPUแล้วwrite word CPU→memory;ถ้ายังไม่ครบblockย้อนเริ่ม. ฝั่งinterrupt: issue readแล้วdo something else;เมื่อinterruptค่อยอ่าน/checkstatusและย้ายwordผ่านCPU→memoryเหมือนเดิม จากนั้นทำซ้ำจนครบ. ฝั่งDMA: issue read-block CPU→DMAแล้วทำงานอื่น;DMAย้ายblock;เมื่อinterrupt CPUอ่านDMAstatusแล้วไปnext instruction. เส้นประในภาพสื่อการทำงานอื่น/เหตุแจ้ง ไม่ใช่dataทุกword.</p>"
+    },
+    {
+      "id": "io-addressing",
+      "title": "Memory-mapped and isolated I/O (เรียกอุปกรณ์ด้วยที่อยู่)",
+      "pages": [
+        12,
+        13,
+        14
+      ],
+      "question": "คำสั่งloadจะรู้ได้อย่างไรว่าที่อยู่นั้นเป็นRAMหรือรีจิสเตอร์อุปกรณ์?",
+      "html": "<p>I/O instruction (คำสั่งCPUที่ใช้เริ่ม/ทำI/O) ต่างจากI/O command (สัญญาณงานที่โมดูลได้รับ) แต่สัมพันธ์กัน. แต่ละอุปกรณ์มีidentifier/address (รหัสหรือที่อยู่เฉพาะ) โมดูลถอดaddress linesเพื่อตรวจว่าคำขอส่งถึงตนหรือไม่. Memory-mapped I/OหรือMMIO (วางรีจิสเตอร์อุปกรณ์ในพื้นที่ที่อยู่ร่วมกับmemory) ใช้คำสั่งอ่านเขียนmemoryและเส้นread/writeร่วม;มีชุดคำสั่งจัดการmemoryให้ใช้มาก. Isolated/port-mapped I/O (แยกพื้นที่ที่อยู่อุปกรณ์) มีmemory/I/O selectและคำสั่งI/Oเฉพาะ จึงใช้ชุดคำสั่งจำกัดกว่า. พื้นที่ร่วมไม่ได้แปลว่าข้อมูลอุปกรณ์อยู่ในRAMธรรมดา.</p><p>ภาพMMIOมีkeyboard data registerที่516ขนาด8บิต;status/control registerที่517ขนาด8บิต โดยbit7=1ready/0busy และbit0เขียน1เพื่อstart read. ACหรือaccumulator (รีจิสเตอร์รับค่าสะสมในตัวอย่าง) ใช้รับส่งข้อมูล. คำสั่งจริงในภาพเป็นภาษาเครื่องสมมติเพื่อแสดงกลไก ไม่ใช่assemblyRISC-V.</p><table><thead><tr><th>Addressที่ภาพระบุ</th><th>Instruction / operand</th><th>ความหมาย</th></tr></thead><tbody><tr><td>200</td><td>Load AC \"1\"</td><td>นำค่า1เข้าAC</td></tr><tr><td>–</td><td>Store AC 517</td><td>ตั้งbit0เริ่มkeyboardread</td></tr><tr><td>202</td><td>Load AC 517</td><td>อ่านstatus</td></tr><tr><td>–</td><td>Branch if Sign=0 202</td><td>ถ้าbit7ยัง0วนอ่านstatus</td></tr><tr><td>–</td><td>Load AC 516</td><td>เมื่อreadyอ่านdatabyte</td></tr></tbody></table><table><thead><tr><th>Addressที่ภาพระบุ</th><th>Isolated I/O instruction</th><th>ความหมาย</th></tr></thead><tbody><tr><td>200</td><td>Load I/O 5</td><td>เริ่มkeyboardreadของdevice5</td></tr><tr><td>201</td><td>Test I/O 5</td><td>ตรวจcompletion</td></tr><tr><td>–</td><td>Branch Not Ready 201</td><td>ยังไม่พร้อมวนกลับ</td></tr><tr><td>–</td><td>In 5</td><td>รับdatabyteจากdevice5</td></tr></tbody></table><p>เลข516/517กับdevice5เป็นคนละระบบaddress ไม่ใช่การเอา5ไปแทน517ในคำสั่งloadเดิม. MMIOและisolatedต่างกันที่วิธีaddressและชุดคำสั่ง ส่วนpolling/interrupt/DMAต่างกันที่การควบคุมและผู้ย้ายข้อมูล จึงเป็นคนละมิติของการออกแบบ.</p>"
+    },
+    {
+      "id": "interrupt-processing",
+      "title": "Interrupt-driven I/O (แจ้งพร้อมแล้วกลับมางานเดิม)",
+      "pages": [
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "question": "CPUจะพักงานชั่วครู่แล้วกลับมาโดยค่าตัวแปรไม่เสียได้อย่างไร?",
+      "html": "<p>Programmed I/Oเสียเวลารอreadyนาน;interrupt-drivenให้ออกcommandแล้วทำuseful workจนโมดูลพร้อมแลกข้อมูลและขอบริการ. ISRหรือinterrupt service routine (ชุดคำสั่งรับเหตุขัดจังหวะ) ทำdata transferเสร็จแล้วคืนงานเดิม. [อธิบายเสริม] เหมือนฝากให้แจ้งเมื่อของมาถึง แต่เมื่อแจ้งแล้วผู้ทำงานยังต้องย้ายของเอง ต่างจากDMAที่มีผู้ช่วยย้าย.</p><p>ผังหน้า16แยกhardwareและsoftware: controllerออกinterrupt→CPUทำคำสั่งปัจจุบันให้เสร็จ→acknowledge (ตอบรับเหตุ)→push PC/PSWลงcontrol stack→โหลดPCใหม่เข้าISR;softwaresaveสถานะที่เหลือ→process interrupt→restoreสถานะ→คืนPSW/PCเก่า. PCหรือprogram counter (เลขตำแหน่งคำสั่งถัดไป),PSWหรือprogram status word (บิตสถานะ/การควบคุม),stack (ที่เก็บแบบใส่ท้ายเอาออกก่อน) ต้องถูกเก็บก่อนISRทับค่าเดิม. แบ่งว่าอะไรทำโดยhardware/softwareตามโมเดลภาพนี้ ไม่ใช่ทุกISAทำเหมือนกัน.</p><p>ภาพหน้า17สมมติเกิดเหตุหลังคำสั่งที่N จึงPCเดิมเป็นN+1;ISRเริ่มYและมีreturnที่Y+L. ก่อนเข้ารับเหตุstack pointer (รีจิสเตอร์ชี้ยอดstack)=T;การsaveMหน่วยทำให้ชี้T−Mและเก็บN+1กับgeneral registers (รีจิสเตอร์ทั่วไป). PCเปลี่ยนไปY. ตอนถึงY+Lให้ดึงค่าที่saveไว้คืน PCกลับN+1และSPกลับT. ตัวเลขN,Y,Tเป็นตำแหน่ง ไม่ใช่ข้อมูลไหลเป็นผลคำนวณ;ลูกศรในภาพซ้ายคือการบันทึก/เปลี่ยนค่า ส่วนขวาคือการคืนค่า.</p><p>เมื่อมีหลายโมดูล ต้องตอบว่าใครขอinterruptและหากมาพร้อมกันใครมาก่อน. วิธีdevice identification (ระบุผู้ขอ)มี4แบบ:</p><table><thead><tr><th>วิธี</th><th>การระบุ/ข้อแลกเปลี่ยน</th></tr></thead><tbody><tr><td>Multiple interrupt lines</td><td>แยกสายจากprocessorไปmodules ตรงไปตรงมาแต่สายจำกัด จึงอาจยังมีหลายmoduleแชร์หนึ่งสาย</td></tr><tr><td>Software polling</td><td>ISRทั่วไปอ่านสถานะmodulesทีละตัวเพื่อหาผู้ขอ ใช้เวลา</td></tr><tr><td>Daisy chain / hardware poll, vectored</td><td>สายinterrupt acknowledgeผ่านmodulesเรียงกัน ผู้รับสิทธิ์ใส่vector(รหัส/ตำแหน่งอ้างอิงISR)เพื่อเลือกdevice-service routineโดยตรง</td></tr><tr><td>Bus arbitration, vectored</td><td>moduleต้องได้สิทธิ์busก่อนขอinterrupt;CPUตอบacknowledgeแล้วmoduleวางvectorบนdata lines</td></tr></tbody></table><p>[อธิบายเสริม] ลำดับpollหรือจุดต่อในdaisychainใช้กำหนดpriority (ความสำคัญให้บริการ)ได้ ส่วนarbitration (ตัดสินสิทธิ์ใช้บัส)ต้องมีกติกาว่าใครชนะเมื่อขอพร้อมกัน. Vectorช่วยหาISR ไม่ใช่payloadข้อมูลทั้งหมดของอุปกรณ์.</p>"
+    },
+    {
+      "id": "interrupt-controller",
+      "title": "82C59A interrupt controller (รวมและจัดเหตุ)",
+      "pages": [
+        20
+      ],
+      "question": "จะรับคำขอหลายสิบอุปกรณ์โดยCPUไม่ต้องมีหลายสิบขาได้อย่างไร?",
+      "html": "<p>ภาพใช้82C59Aเป็นinterrupt controller (วงจรรวมคำขอและจัดบริการเหตุ) แบบmaster/slave (ตัวหลัก/ตัวย่อย). Slaveแต่ละตัวมีIR0…IR7รับได้8device requests แล้วส่งINTออกหนึ่งเส้นเข้าหนึ่งIRของmaster. MasterมีIR0…IR7และส่งINTเข้าINTRของ80386processor. ตัวอย่างslaveแรกdevice00…07,ถัดไป08…15,ตัวท้าย56…63:8slaves×8inputs=64อุปกรณ์ที่ถูกจัดกลุ่มโดยmasterเดียว.</p><p>ลูกศรจากdeviceไปslaveแล้วmasterแล้วCPUแสดงเส้นทางคำขอ ส่วนการรู้ว่าเป็นเหตุใดต้องทำกระบวนการacknowledge/vectorตามระบบ ไม่ใช่CPUอ่านเพียงสายINTRแล้วทราบdeviceทันที. [อธิบายเสริม] เปรียบหัวหน้ากลุ่ม8คนรายงานหัวหน้าหลักช่วยลดจำนวนสายที่ไปCPU แต่ต้องระบุสมาชิกกลุ่มขณะให้บริการ.</p>"
+    },
+    {
+      "id": "ppi-8255",
+      "title": "8255A PPI and control word (พอร์ตที่ตั้งทิศทางได้)",
+      "pages": [
+        21,
+        22,
+        23
+      ],
+      "question": "จะใช้ชิปเดียวรับคีย์บอร์ดและส่งจอโดยกำหนดขาเองได้อย่างไร?",
+      "html": "<p>Programmable peripheral interfaceหรือPPI (วงจรต่ออุปกรณ์ที่ตั้งค่าด้วยโปรแกรม)8255A/82C55AมีPortA8บิต,PortB8บิต,PortC8บิตแยกupper4/lower4. ภาพบล็อก:bidirectional data bus buffer (ตัวพักบัสข้อมูลสองทิศ)ต่อD7…D0และinternal8-bitbus;read/write control logicรับRD,WR,A1,A0,Reset,CSเพื่อเลือกport/control;GroupA controlคุมAกับCupper ส่วนGroupBคุมBกับClower. ภาพpin layout40ขาระบุPA/PB/PC,dataD0…D7,controlและ+5V/GND แสดงการต่อขาจริงของหน้าที่ในบล็อก ไม่ใช่40data bits.</p><p>Control word (คำ8บิตตั้งพฤติกรรม)หน้า22มีสองแบบ. Mode set (ตั้งโหมด):D7=1;ทิศทาง1=input(รับ),0=output(ส่ง). GroupAใช้D6D5เลือก00Mode0,01Mode1,1XMode2;D4ทิศPortA,D3ทิศCupper. GroupBใช้D2เลือก0Mode0/1Mode1,D1ทิศPortB,D0ทิศClower. [อธิบายเสริม] Mode0เป็นI/Oพื้นฐาน,Mode1มีhandshake(สัญญาณประสานพร้อม/รับแล้ว),Mode2ใช้PortAสองทิศพร้อมhandshake;รายละเอียดหน้าที่ขาCจึงขึ้นกับmodeด้วย.</p><table><thead><tr><th>บิตในMode-set word</th><th>หน้าที่ตามภาพ</th></tr></thead><tbody><tr><td>D7</td><td>1=mode set active</td></tr><tr><td>D6,D5</td><td>GroupA mode:00/01/1X→0/1/2</td></tr><tr><td>D4</td><td>PortA direction</td></tr><tr><td>D3</td><td>PortC upper direction</td></tr><tr><td>D2</td><td>GroupB mode:0/1→Mode0/1</td></tr><tr><td>D1</td><td>PortB direction</td></tr><tr><td>D0</td><td>PortC lower direction</td></tr></tbody></table><p>Bit set/resetหรือBSR (เปิด/ปิดบิตCตัวเดียว):D7=0;D6…D4don’t care (ค่าใดก็ได้ในคำสั่งนี้),D3D2D1เลือกbitC0…7โดย000→0,001→1,010→2,011→3,100→4,101→5,110→6,111→7;D0=1set/0reset. ไม่ใช่เปลี่ยนทุกportทุกครั้งที่ต้องเปิดCหนึ่งเส้น.</p><p>ภาพkeyboard/displayหน้า23:PortA inputรับA0…A5จากR0…R5และA6=Shift,A7=Control;keyboardส่งData readyเข้าขาC4,โมดูลส่งAcknowledgeจากC5กลับ;C3เป็นinterrupt request. PortB outputส่งB0…B5ไปS0…S5,B6=Backspace,B7=Clear. ฝั่งdisplayมีC1ส่งData ready,C2รับAcknowledge,C6ส่งBlanking,C7ส่งClear line และC0เป็นinterrupt request. Handshakeแยกว่าข้อมูลพร้อมกับรับแล้ว ขณะCควบคุมงานบางบิตจึงไม่ได้เป็นpayload8บิตอิสระเหมือนA/Bทั้งหมด.</p>"
+    },
+    {
+      "id": "dma-operation",
+      "title": "Direct memory access (ขนบล็อกโดยไม่ผ่านรีจิสเตอร์CPU)",
+      "pages": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "question": "ถ้าอุปกรณ์ส่งข้อมูลจำนวนมาก แม้ไม่วนรอแล้วCPUยังเหนื่อยกับอะไร?",
+      "html": "<p>Programmedและinterrupt-driven I/Oยังถูกจำกัดด้วยความเร็วCPUในการตรวจ/บริการdevice และต้องรันหลายคำสั่งต่อการย้ายหนึ่งหน่วย. DMA (ย้ายตรงถึงmemory) ให้CPUเริ่มต้นด้วยทิศทาง อุปกรณ์ ที่อยู่memoryและจำนวนข้อมูล แล้วcontrollerย้ายเองจนจบ. ไม่ต้องให้CPUอ่านwordเข้าregisterแล้วstoreทุกword แต่ยังแย่งbus/memory bandwidthได้.</p><p>ภาพDMAหน้า25มีdata count (ตัวนับจำนวนที่เหลือ),data register (ที่พักข้อมูลตามโมเดลทั่วไป),address register (ที่อยู่memoryปัจจุบัน),control logic (ควบคุมลำดับ) ต่อdata/addresslines. Request to DMAเป็นคำขอ,acknowledge from DMAยืนยันรับงาน,interruptแจ้งCPU,read/writeสั่งทิศทาง. หลังย้ายแต่ละหน่วยมีการปรับaddressและcountตามงานที่ตั้งไว้. [อธิบายเสริม] เหมือนให้ผู้ช่วยรู้จุดเริ่มกับจำนวนกล่อง แล้วรายงานเมื่อขนเสร็จ แต่ยังต้องใช้ประตูขนส่งร่วมกัน.</p><p>ภาพbreakpointsหน้า26แยกinstruction cycle (รอบทำคำสั่งหนึ่งคำสั่ง) เป็นfetch instruction,decode,fetch operand,execute,store result,process interrupt. ลูกศรDMA breakpointsอยู่ก่อนfetch instruction,ก่อนfetch operandและก่อนstore result เพื่อยืมbusระหว่างช่วงที่เหมาะสม;interrupt breakpointอยู่หลังstore resultก่อนprocess interrupt เพราะโมเดลนี้รับเหตุเมื่อคำสั่งเสร็จ. จึงไม่ใช่DMAต้องหยุด/เปลี่ยนprogram counterเข้าISRทุกหน่วย;หยุดให้สิทธิ์busกับการสลับโค้ดเป็นคนละเหตุ.</p><table><thead><tr><th>Configurationในภาพหน้า27</th><th>ทางไหล/ผล</th></tr></thead><tbody><tr><td>Single-bus detached DMA</td><td>CPU,DMA,I/Oและmemoryอยู่systembusเดียว;DMAแยกจากI/O การผ่านI/O→DMA→memoryอาจใช้busซ้ำ</td></tr><tr><td>Single-bus integrated DMA-I/O</td><td>DMAรวมกับI/Oหรือเชื่อมI/Oหลายตัวภายใน;systembusใช้หลักๆช่วงย้ายไปmemory</td></tr><tr><td>I/O bus</td><td>DMAเป็นสะพานsystembus↔I/Obus;devicesย้ายฝั่งI/Oได้โดยไม่ใช้systembusทุกช่วง ลดภาระbusฝั่งCPU</td></tr></tbody></table>"
+    },
+    {
+      "id": "dma-8237",
+      "title": "8237 bus control and fly-by (ให้สิทธิ์บัสแล้วข้อมูลผ่านตรง)",
+      "pages": [
+        28,
+        29
+      ],
+      "question": "DMAcontrollerจำเป็นต้องรับข้อมูลเข้าไปเก็บเองทุกไบต์หรือไม่?",
+      "html": "<p>ภาพ8237 DMA Usage of System Busเชื่อมCPU,8237,DMA disk controllerและmain memory. DREQหรือDMA request (อุปกรณ์ขอย้าย) จากdiskcontrollerถึง8237;HRQหรือHOLD request (DMAขอถือbus) จาก8237ถึงCPU;HLDAหรือHOLD acknowledge (CPUยอมให้ถือbus) กลับ8237;DACKหรือDMA acknowledge (ยืนยันสิทธิ์ให้device) จาก8237กลับdiskcontroller. สวิตช์ในภาพแสดงช่วงที่CPUปล่อยdata/address/controlbusให้DMAควบคุม ไม่ใช่เชื่อมผู้ขับbusสองตัวตีกันพร้อมกัน.</p><p>ControlbusมีIOR (อ่านจากI/O),IOW (เขียนI/O),MEMR (อ่านmemory),MEMW (เขียนmemory). ขารับเข้าmemoryจากdeviceใช้IORร่วมMEMW;ขาออกใช้MEMRร่วมIOW. Fly-by DMA (ย้ายข้อมูลบินผ่านระหว่างปลายทาง)หมายถึงข้อมูลI/O↔memoryไม่ผ่านและไม่พักใน8237 ตัวชิปสร้างaddress/controlเท่านั้น. ต้องแยกจากdata registerในโมเดลgenericหน้า25 ซึ่งไม่บังคับimplementationทุกแบบ.</p><p>8237มี4channels (ชุดสถานะงานDMAแยกกัน)หมายเลข0,1,2,3 ตั้งโปรแกรมอิสระแต่มีเพียงหนึ่งchannelactiveณขณะหนึ่งตามตัวอย่าง. ข้อความ“not between two memory locations”ในหน้า29หมายถึงทางfly-byโดยตรง;8237ยังทำmemory-to-memoryได้โดยผ่านtemporary register (รีจิสเตอร์พักชั่วคราว)ดังกล่องกลางของสไลด์ จึงไม่ขัดกับcommand registerที่เปิดmemory-to-memory. [อธิบายเสริม] อ่านข้อมูลต้นทางเข้าtemporaryแล้วเขียนปลายทางเป็นสองช่วง จึงต่างจากสั่งdeviceกับmemoryให้ส่งต่อกันในช่วงเดียว.</p>"
+    },
+    {
+      "id": "dma-registers",
+      "title": "Intel 8237A register table (อ่านตารางบิตควบคุม)",
+      "pages": [
+        30
+      ],
+      "question": "บิตในรีจิสเตอร์คนละตัวที่หมายเลขเดียวกันจำเป็นต้องทำงานเหมือนกันหรือไม่?",
+      "html": "<p>Table7.2หน้า30มีคอลัมน์Command (ตั้งcontroller),Status (อ่านเหตุ/คำขอ),Mode (ตั้งchannel),Single Mask (ปิด/เปิดchannelหนึ่งตัว),All Mask (ปิด/เปิดหลายchannel). E/Dคือenable/disable (อนุญาต/ไม่อนุญาต),TCคือterminal count (ย้ายถึงจำนวนสุดท้าย),mask (บิตกั้นคำขอ) ใช้ไม่ให้รับบริการchannelนั้น. แต่ละคอลัมน์เป็นคนละregister;D4ของCommandไม่ใช่D4ของStatus.</p><table><thead><tr><th>บิต</th><th>Commandตามสไลด์</th><th>Status</th><th>Modeตามสไลด์</th><th>Single Mask</th><th>All Mask</th></tr></thead><tbody><tr><td>D0</td><td>Memory-to-memory E/D</td><td>Channel0 reached TC</td><td>D1:D0เลือกchannel</td><td>D1:D0เลือกchannel mask</td><td>mask channel0</td></tr><tr><td>D1</td><td>Channel0 address hold E/D</td><td>Channel1 reached TC</td><td>ร่วมD0</td><td>ร่วมD0</td><td>mask channel1</td></tr><tr><td>D2</td><td>Controller E/D</td><td>Channel2 reached TC</td><td>D3:D2เลือกverify/write/read</td><td>clear/set maskที่เลือก</td><td>mask channel2</td></tr><tr><td>D3</td><td>Normal/compressed timing</td><td>Channel3 reached TC</td><td>ร่วมD2</td><td>ไม่ใช้</td><td>mask channel3</td></tr><tr><td>D4</td><td>Fixed/rotating priority</td><td>Channel0 request</td><td>Auto-initialization E/D</td><td>ไม่ใช้</td><td>ไม่ใช้</td></tr><tr><td>D5</td><td>Late/extended write selection</td><td>Channel1 request (แก้จากChannel0)</td><td>Address increment/decrement</td><td>ไม่ใช้</td><td>ไม่ใช้</td></tr><tr><td>D6</td><td>DREQ active high/low</td><td>Channel2 request (แก้จากChannel0)</td><td>D7:D6เลือกdemand/single/block/cascade</td><td>ไม่ใช้</td><td>ไม่ใช้</td></tr><tr><td>D7</td><td>DACK active high/low</td><td>Channel3 request (แก้จากChannel0)</td><td>ร่วมD6</td><td>ไม่ใช้</td><td>ไม่ใช้</td></tr></tbody></table><p>Commandอาจเลือกfixed priority (ลำดับความสำคัญคงที่)หรือrotating priority (หมุนสิทธิ์),timingปกติ/ย่อ,และระดับactive high/low (ถือว่า1หรือ0เป็นสัญญาณทำงาน)ของDREQ/DACK. Modeเลือกverify (ตรวจการเดินงานโดยไม่ย้ายข้อมูลตามชนิดงาน),write/read,auto-initialization (โหลดค่าตั้งต้นกลับอัตโนมัติ),เพิ่ม/ลดaddressและรูปแบบย้าย. Demand (ย้ายขณะยังมีคำขอ),single (ย้ายหนึ่งหน่วยแล้วคืนbus),block (ย้ายจนจบบล็อก),cascade (ต่อขยายcontroller). [อธิบายเสริม] Read/writeของDMAอ้างฝั่งmemory:writeคือI/O→memory,readคือmemory→I/O จึงไม่ควรตีความตามว่าการ์ด“อ่าน”หรือ“เขียน”เพียงฝ่ายเดียว.</p><p>ต้นฉบับStatus D4,D5,D6,D7พิมพ์Channel0 requestซ้ำทั้งหมด ขณะที่ต้องเป็นrequestของchannels0,1,2,3ตามลำดับ ตารางด้านบนแสดงการแก้โดยเปิดเผย. [อธิบายเสริม] ตรวจข้ามกับ <a href=\"https://www.renesas.com/ja/document/dst/82c37a-datasheet\">datasheet82C37Aตระกูลที่เข้ากันได้</a> ซึ่งระบุStatus bits4–7แยกตามchannelและอธิบายtemporary registerสำหรับmemory-to-memory. อย่าตีความD5/D6/D7เป็นคำขอchannel0ทั้งหมดตามตัวพิมพ์ผิด.</p>"
+    },
+    {
+      "id": "dca-chip",
+      "title": "DCA and Xeon architecture (คอขวดย้ายจากCPUสู่memory)",
+      "pages": [
+        31,
+        32
+      ],
+      "question": "เมื่อการ์ดเครือข่ายเร็วขึ้นมาก ทำไมDMAแบบเดิมยังไม่พอ?",
+      "html": "<p>Direct cache accessหรือDCA (ทำให้ข้อมูลI/Oเข้าใกล้แคชโดยตรง/ล่วงหน้า)ตอบปัญหาDMAต้องวิ่งผ่านmain memoryหลายครั้งและCPUยังmisscacheเมื่อเริ่มอ่านpacket. สไลด์ยกเครือข่าย10/100Gbps EthernetและWi-Fi3.2/6.76Gbpsเป็นบริบทความต้องการขณะเขียนเอกสาร ไม่ใช่เพดานเทคโนโลยีปัจจุบัน. เพิ่มlink speedอย่างเดียวไม่เพิ่มDRAM bandwidthหรือทำให้dataอยู่cacheเอง.</p><p>ภาพXeonE5-2600/4600เป็นชิป8coresเลข0…7 แต่ละcoreมีL1ระบุ64KBและL2ระบุ256KB;ตรงกลางมีL3 slices (ส่วนย่อยแคชระดับสาม)8ก้อน×2.5MB=20MBรวมตามภาพ. วงแหวนลูกศรสองทิศเชื่อมcores/L3กับMemory Controller Hub (ตัวควบคุมmemory)ด้านล่างไปDDR3,PCIeด้านบนไปI/OและQPIหรือQuickPath Interconnect (ทางเชื่อมกับprocessor chipอื่น). เส้นประchip boundary (ขอบชิป)บอกส่วนที่อยู่บนชิปเดียวกัน. รูปทำให้เห็นว่าทางI/Oสามารถเข้าถึงโครงสร้างcacheร่วมใกล้coreแทนลงDRAMทุกครั้ง;ไม่ใช่L3อยู่ในNIC.</p>"
+    },
+    {
+      "id": "network-packet-paths",
+      "title": "Packet traffic (ตามแพ็กเก็ตเข้าและออก)",
+      "pages": [
+        33,
+        34,
+        35
+      ],
+      "question": "ก่อนข้อมูลเครือข่ายถึงโปรแกรม มีใครคัดลอกและอ่านheaderบ้าง?",
+      "html": "<p>Packet / protocol data unitหรือPDU (ก้อนข้อมูลตามกติกาสื่อสาร)มีheader (ข้อมูลกำกับ)และpayload (เนื้อหาที่บรรทุก). ตัวอย่างวางEthernet (กติกาลิงก์)ข้างนอกIPหรือInternet Protocol (กติกาส่งข้ามเครือข่าย) และTCPหรือTransmission Control Protocol (กติกาส่งข้อมูลระหว่างปลายทาง)ภายใน. Ethernet payloadมีIPheader,TCPheaderและapplicationdata;IPอยู่เหนือEthernetและTCPอยู่เหนือIP ไม่ใช่headerสามชื่อที่แทนกันได้.</p><p>NICหรือnetwork interface controller (ตัวควบคุม/การ์ดเครือข่าย)ประกอบEthernetpacketขาออก;ขาเข้าถอดส่วนEthernetแล้วส่งTCP/IPpacketให้host CPUตามโมเดลสไลด์. Application buffer (พื้นที่พักของแอป)กับsystem buffer (พื้นที่พักของระบบ)เป็นคนละช่วงmemory. ในDMAขาออก แอปวางข้อมูลในbufferของตน→coreคัดไปsystembufferและสร้างTCP/IPheadersในmemory→NICอ่านผ่านDMAส่งออก. ขาเข้ามีการย้ายsystem→applicationbufferเช่นกัน ทำให้memoryและcacheเข้ามาเกี่ยวทั้งสองทิศ.</p><table><thead><tr><th>Incoming (รับเข้า)ตามสไลด์</th><th>Outgoing (ส่งออก)ตามสไลด์</th></tr></thead><tbody><tr><td>Packet arrives</td><td>Packet transfer requested</td></tr><tr><td>DMAลงbuffer</td><td>Packet created</td></tr><tr><td>NIC interrupts host</td><td>Output operation invoked</td></tr><tr><td>Retrieve descriptors and headers</td><td>DMA transfer</td></tr><tr><td>Cache miss occurs</td><td>NIC signals completion</td></tr><tr><td>Header is processed</td><td>Driver frees buffer</td></tr><tr><td>Payload transferredเข้าapplication</td><td>จบการใช้bufferของงานนี้</td></tr></tbody></table><p>Descriptor (รายการบอกที่อยู่/ขนาด/สถานะของก้อนข้อมูล)ต้องถูกอ่านก่อนรู้ว่าจะจัดการpacketใด. Driver (ซอฟต์แวร์ควบคุมอุปกรณ์)ดูแลคำสั่งและcompletion. จุดcache missหลังDMAลงmemoryคือcoreต้องนำdescriptor/headerขึ้นcacheเพื่อประมวลผล การย้ายบล็อกโดยDMAจึงไม่ได้รับประกันว่าcoreเริ่มใช้ข้อมูลได้เร็ว. [อธิบายเสริม] ที่บอกคัดbufferเป็นโมเดลในสไลด์ บางระบบมีวิธีลดcopy แต่ไม่ควรนำไปลบขั้นที่โจทย์นี้กำหนด.</p>"
+    },
+    {
+      "id": "dca-ddio",
+      "title": "DCA prefetch and DDIO (ให้แคชเป็นปลายทางI/O)",
+      "pages": [
+        36,
+        37
+      ],
+      "question": "จะลดทั้งการพลาดแคชและการวิ่งไปDRAMซ้ำๆได้อย่างไร?",
+      "html": "<p>กลยุทธ์DCAแรกในprototypeXeonช่วง2006–2010ใช้กับincoming traffic:ข้อมูลเข้าsystemmemoryก่อน จากนั้นDCA functionในmemorycontrollerส่งprefetch hint (คำแนะให้อ่านเตรียม)ให้coreดึงpacketจากsystembufferขึ้นcacheก่อนถูกขอจริง. จึงซ่อนเวลาบางส่วนแต่ยังไม่ตัดsystembufferออก. สไลด์ชี้ว่าcoreมักอ่านpacket/descriptorจากsystembufferเพียงครั้งเดียวเพื่อส่งpayloadไปapplicationbuffer จึงได้ประโยชน์มากกว่าถ้าข้ามการพักDRAMนั้นได้.</p><p>Cache injection (ใส่ข้อมูลI/Oเข้าcache) ในตัวอย่างIntelเรียกDDIOหรือData Direct I/O (รับส่งข้อมูลโดยใช้แคชเป็นทางหลัก). ภาพหน้า37มี4กรณี ต้องอ่านทั้งขาเข้าและขาออก: (a)normalDMAto memoryรับที่I/Ocontroller(1),เกี่ยวข้องกับการตรวจ/ทำให้cacheเก่าใช้ไม่ได้(2),เขียนmainmemory(3),แล้วcoreอ่านขึ้นcache(4); (b)DDIOto cacheรับที่controller(1),ย้ายเข้าlast-levelcacheหรือLLC(แคชชั้นสุดท้าย)(2),coreใช้จากcache(3). เส้นหนาสีเทาคือทางเชื่อมที่มีอยู่ ส่วนเส้นเขียวแสดงทางงานในกรณีนั้น ไม่ใช่ว่าDDRmemoryถูกถอดออกจากเครื่อง.</p><p>(c)normalDMAto I/O:coreเตรียมpacketโดยเข้าถึงข้อมูลจากmemory/cache(1);NICรับข้อมูลจากcacheเมื่อcoherenceตรวจพบข้อมูลล่าสุด(2) แต่โมเดลเก่ามีmemorytrafficเพิ่มเติมและทำให้ข้อมูลออกจากcache(3). (d)DDIOto I/O:coreใช้/สร้างpacketในcache(1);NICอ่านข้อมูลจากcacheส่งออก(2)โดยเก็บสำเนาไว้ใช้ซ้ำได้. รูปลูกศรต้องอ่านร่วมกับการควบคุมcoherence ไม่ใช่ตีความว่าCPUเป็นผู้คัดทุกbyteผ่านตัวเองแทนDMA.</p><p>[อธิบายเสริม] ตรวจความหมายของภาพกับ <a href=\"https://www.intel.com/content/dam/www/public/us/en/documents/technology-briefs/data-direct-i-o-technology-brief.pdf\">Intel DDIO Primer</a>:แบบเดิมขาเข้าinvalidateแล้วอ่านจากmemory;DDIOใช้write-update/allocateในLLC ขาออกNICอ่านcacheได้โดยไม่บังคับevict. ถ้าข้อมูลไม่อยู่cacheก็ยังต้องไปmemory จึงเป็นการลดtrafficเมื่อใช้cacheได้ ไม่ใช่ข้อรับรองว่าไม่มีDRAM accessทุกกรณี. DMAกับDDIOจึงไม่ใช่วิธีแทนกันเด็ดขาด;DDIOเปลี่ยนทางที่ธุรกรรมDMAของอุปกรณ์พบข้อมูล.</p>"
+    },
+    {
+      "id": "io-evolution-channels",
+      "title": "I/O evolution and channels (ยกงานให้หน่วยเฉพาะ)",
+      "pages": [
+        38,
+        39
+      ],
+      "question": "ถ้ายังมีอุปกรณ์อีกมาก CPUจะสั่งทุกรายการย่อยเองตลอดไปหรือไม่?",
+      "html": "<p>พัฒนาการ6ขั้นในหน้า38:1CPUควบคุมperipheralตรง;2เพิ่มcontroller/moduleใช้programmedI/O;3เพิ่มinterruptให้CPUไม่ต้องวนรอ;4ให้moduleเข้าถึงmemoryโดยDMAโดยCPUเกี่ยวตอนเริ่ม/จบ;5moduleเป็นprocessorที่มีspecialized instruction set (ชุดคำสั่งเฉพาะI/O);6มีlocal memory (หน่วยความจำของตัวเอง)จนเป็นคอมพิวเตอร์ย่อยดูแลdevicesจำนวนมากและลดงานCPU. แต่ละขั้นเพิ่มความรับผิดชอบของโมดูล ไม่ใช่แค่อัตราส่งสายเร็วขึ้น.</p><p>I/O channel (หน่วยประมวลผลงานI/OแทนCPU)ในภาพหน้า39มีdata/addresschannelต่อmain memoryและcontrol pathต่อCPU แล้วเชื่อมI/Ocontrollersกับdevices. Selector channel (ช่องเลือกบริการ)วาดบัสร่วมต่อหลายcontroller;Multiplexor channel (ช่องสลับบริการหลายทาง)แตกหลายสาขาไปcontrollersพร้อมdevicesหลายตัว. [อธิบายเสริม] Selectorมักเลือกdeviceความเร็วสูงหนึ่งตัวใช้ทางช่วงย้ายblock ส่วนmultiplexorสลับช่วงข้อมูลจากหลายdeviceเพื่อใช้ทางร่วมคุ้มขึ้น จึงเหมาะกับหลายงานที่ไม่ต้องครองทางต่อเนื่อง. Controllerยังดูแลdeviceเฉพาะ ขณะที่channelจัดลำดับงานระดับสูงกว่า.</p>"
+    },
+    {
+      "id": "interface-assignment",
+      "title": "Interface assignment (งานกลุ่มในต้นฉบับ)",
+      "pages": [
+        40
+      ],
+      "question": "จะเปรียบเทียบเทคโนโลยีเชื่อมต่อโดยไม่ดูความเร็วเพียงเลขเดียวได้อย่างไร?",
+      "html": "<p>สไลด์มอบหมายกลุ่มละ6–7คน จัด9กลุ่มจับฉลาก9เรื่อง ทำรายงานสรุปใส่ชื่อและรหัสสมาชิกครบ และนำเสนอ10–15นาทีในคาบสัปดาห์ถัดไปที่ระบุ8,10กันยายน2569. นี่คือข้อกำหนดในเอกสารต้นทาง ไม่ใช่การประกาศกำหนดส่งใหม่ของหน้าเรียน. ทั้ง9เทคโนโลยีมีบทอธิบายต่อไป รวมPCI/PCIeกับSATAที่แชร์หน้าเดียวกัน.</p><p>[อธิบายเสริม] ในรายงานให้ถามว่าเชื่อมอะไร ใช้busร่วม/point-to-point/เครือข่ายสวิตช์ ใครควบคุม อัตราเป็นsignalingหรือusable data และหมายถึงgenerationใด. ตัวเลขในสไลด์อิงรุ่นที่กล่าวถึงขณะเขียน โดยคำว่าcurrent/mostrecentไม่ได้ยืนยันรุ่นล่าสุดในวันนี้.</p>"
+    },
+    {
+      "id": "usb",
+      "title": "1. USB (บัสอนุกรมสำหรับอุปกรณ์รอบข้าง)",
+      "pages": [
+        41
+      ],
+      "question": "จะต่ออุปกรณ์หลายชนิดในระบบที่มีผู้ควบคุมเดียวได้อย่างไร?",
+      "html": "<p>Universal Serial BusหรือUSB (บัสอนุกรมสากล)ใช้กับperipheralsทั้งช้าและเร็ว มีroot host controller (ตัวควบคุมต้นทางที่host)จัดการอุปกรณ์เป็นhierarchical tree topology (โครงต้นไม้หลายชั้น). Serial (อนุกรม)คือส่งบิตตามกันบนลิงก์ ต่างจากparallel (ขนาน)ที่ส่งหลายบิตพร้อมกันหลายเส้น. USB3เพิ่มSuperSpeed busคู่กับUSB2busในระบบ ไม่ได้เปลี่ยนให้เป็นparallelbitbus.</p><table><thead><tr><th>ชื่อรุ่นตามสไลด์</th><th>Signaling / usable rateที่เอกสารระบุ</th></tr></thead><tbody><tr><td>USB1.0</td><td>Low Speed1.5Mbps;Full Speed12Mbps</td></tr><tr><td>USB2.0</td><td>480Mbps</td></tr><tr><td>USB3.0=USB3.1Gen1=USB3.2Gen1</td><td>SuperSpeed5Gbps;ใช้ข้อมูลได้ถึง4Gbpsตามสมมติฐานสไลด์</td></tr><tr><td>USB3.1Gen2=USB3.2Gen2</td><td>SuperSpeed+10Gbps;theoretical usable9.7Gbps</td></tr><tr><td>USB3.2Gen2×2</td><td>20Gbps</td></tr></tbody></table><p>Signaling rate (อัตราสัญญาณบนสาย)รวมงานencoding/protocol ขณะที่usable data rate (อัตราส่งเนื้อข้อมูลที่ใช้ได้)หักส่วนเกินแล้ว. 5Gbpsไม่แปลว่าย้ายไฟล์625MB/sได้จริงทุกครั้ง. [อธิบายเสริม] รุ่นUSBกับรูปหัวต่อเป็นข้อมูลคนละอย่าง;ชื่อเท่ากันในตารางหมายถึงโหมดความเร็วที่สไลด์จับคู่ ไม่ใช่รับรองความสามารถทุกสายและทุกพอร์ตที่หน้าตาเหมือนกัน.</p>"
+    },
+    {
+      "id": "firewire",
+      "title": "2. FireWire / IEEE1394 (อนุกรมต่ออุปกรณ์แบบลูกโซ่)",
+      "pages": [
+        42
+      ],
+      "question": "จะต่ออุปกรณ์อัตราสูงโดยไม่ใช้channelใหญ่ราคาแพงแบบmainframeได้อย่างไร?",
+      "html": "<p>FireWire (ชื่อเทคโนโลยีบัสอนุกรมIEEE1394)พัฒนาเป็นทางเลือกSCSIบนPC,workstationและserverขนาดเล็ก เพื่อให้I/Oเร็วโดยไม่ใช้I/Ochannelsขนาดใหญ่แพงของmainframe/supercomputer. สไลด์ใส่บริบท1999–2000 ไม่ได้บอกว่าปีนี้เป็นเทคโนโลยีใหม่.</p><p>Daisy-chain configuration (ต่ออุปกรณ์เป็นสายต่อกัน)ในสไลด์รองรับถึง63devicesจากportเดียว และเชื่อม1022busesผ่านbridges (วงจรเชื่อมbus). Hot plugging (เสียบ/ถอดขณะเครื่องเปิด)กับautomatic configuration (ระบบกำหนดการเชื่อมต่อ/ที่อยู่เอง)ช่วยให้ไม่ต้องปิดหรือจัดระบบใหม่ด้วยมือทุกครั้ง และสไลด์ระบุไม่ต้องใช้terminationsแบบSCSIในบริบทเปรียบเทียบนี้. [อธิบายเสริม] Daisychainที่นี่เป็นรูปต่ออุปกรณ์ ไม่ใช่ชื่อเดียวกันแล้วต้องทำหน้าที่เหมือนสายinterruptacknowledgeหน้า19ทุกประการ.</p>"
+    },
+    {
+      "id": "scsi",
+      "title": "3. SCSI (กติกาเชื่อมอุปกรณ์เก็บข้อมูล)",
+      "pages": [
+        43
+      ],
+      "question": "จะให้อุปกรณ์เก็บข้อมูลหลายตัวใช้ทางสื่อสารที่มีคำสั่งระดับสูงได้อย่างไร?",
+      "html": "<p>Small Computer System InterfaceหรือSCSI (อินเทอร์เฟซระบบคอมพิวเตอร์ขนาดเล็ก)ในหน้านี้กล่าวถึงparallel shared bus (บัสขนานร่วมกัน)ของรุ่นเก่า ใช้ต่อperipheralsและmass storage (หน่วยเก็บข้อมูลจำนวนมาก) ระบบองค์กร. เอกสารกล่าวว่าUSB/FireWireแทนบทบาทในระบบเล็กบางส่วน และรุ่นเร็วใช้ในenterprise;ควรอ่านตามบริบทประวัติของสไลด์ ไม่เหมารวมว่าSCSIทุกแบบต้องเป็นparallelbusทางกายภาพ.</p><p>ข้อความต้นฉบับระบุ16/32devicesตามรุ่น,16บิตรุ่นแรก/32บิตรุ่นหลัง,และความเร็ว5Mbpsถึง160Mbps. มีปัญหาทั้งการเหมารวมรุ่นและหน่วย: SCSIแบบnarrowมีbus8บิต ส่วนwideที่พบทั่วไป16บิต ดังนั้นไม่ควรจำว่าSCSIรุ่นแรก16บิตทั้งหมด;ตัวเลข32ต้องดูspecรุ่นเฉพาะ. อัตรา5และ160ในตัวอย่างSCSI-1/Ultra160ควรอ่านเป็น<strong>MB/s (เมกะไบต์ต่อวินาที)</strong> ไม่ใช่Mbps ต่างกัน8เท่า.</p><p>[อธิบายเสริม] ตรวจหน่วยกับ <a href=\"https://www.ibm.com/support/pages/node/806636\">IBM Ultra160 (160MBps)</a> และ <a href=\"https://www.seagate.com/sg/en/support/kb/scsi-revision-levels-196483en/\">Seagate SCSI revision levels</a> ที่แยกnarrow8bit/wide16bit. การระบุอุปกรณ์บนsharedbusต้องมีรหัสแยกและกติกาว่าใครเริ่มส่งได้ ไม่ใช่ส่งทุกตัวพร้อมกันเพราะมีหลายสายข้อมูล.</p>"
+    },
+    {
+      "id": "thunderbolt",
+      "title": "4. Thunderbolt (รวมข้อมูลภาพและไฟเลี้ยง)",
+      "pages": [
+        44
+      ],
+      "question": "จะส่งหลายชนิดสัญญาณไปอุปกรณ์ภายนอกผ่านการเชื่อมต่อเดียวได้อย่างไร?",
+      "html": "<p>Thunderbolt (เทคโนโลยีเชื่อมต่อความเร็วสูงที่Intelพัฒนาร่วมกับApple)รวมdata,video,audio,power (ข้อมูล ภาพ เสียง และไฟเลี้ยง)สำหรับhard drives,RAID arrays (ชุดดิสก์ทำงานร่วมกัน),video-capture boxes (กล่องรับภาพ)และnetwork interfaces. ตัวเลขในหน้านี้คือthroughput10Gbpsต่อทิศทางและจ่ายไฟได้10Wตามรุ่นยุคต้นที่สไลด์อธิบาย. “most recent and fastest”เป็นถ้อยคำตามยุคนั้น ไม่ใช่อันดับปัจจุบัน.</p><p>[อธิบายเสริม] Per directionหมายถึงแต่ละทิศส่งได้ตามค่าระบุ ส่วนWหรือwattเป็นกำลังไฟ ไม่ใช่อัตราส่งdata. การรองรับภาพกับข้อมูลบนทางเดียวต้องมีการจัดทรัพยากรลิงก์ร่วม จึงควรแยกคำถามเรื่องbandwidthจากคำถามเรื่องไฟเลี้ยง.</p>"
+    },
+    {
+      "id": "infiniband",
+      "title": "5. InfiniBand (ผืนเครือข่ายสวิตช์สำหรับระบบใหญ่)",
+      "pages": [
+        45
+      ],
+      "question": "serverและstorageจำนวนมากจะเชื่อมกันโดยไม่แย่งบัสเส้นเดียวอย่างไร?",
+      "html": "<p>InfiniBand (สถาปัตยกรรมเชื่อมต่อข้อมูลความเร็วสูงสำหรับระบบสมรรถนะสูง)มุ่งhigh-end server market (ตลาดserverระดับสูง),รุ่นแรกออกต้น2001และสไลด์ยกIBM zEnterprise. กำหนดdata flowระหว่างprocessorsกับintelligent I/O devices (อุปกรณ์I/Oที่มีวงจรจัดการงานเอง). ใช้ในstorage area networkingหรือSAN (เครือข่ายเฉพาะเชื่อมหน่วยเก็บข้อมูล)และระบบเก็บข้อมูลใหญ่.</p><p>Central fabric (ผืนโครงข่ายกลาง)ประกอบswitchesกับlinksเชื่อมserver,remote storageและอุปกรณ์เครือข่าย;สไลด์ระบุswitch-based architectureขยายถึง64000nodes/devices. ไม่ใช่ลากบัสกายภาพเส้นเดียวผ่าน64000กล่อง. [อธิบายเสริม] เปรียบเป็นเครือข่ายทางแยกที่เลือกเส้นทางหลายทางได้ ต่างจากถนนร่วมเพียงเส้นเดียว แต่ผลเร็วจริงยังขึ้นกับรูปเครือข่ายและความหนาแน่นของงาน.</p>"
+    },
+    {
+      "id": "pci-express",
+      "title": "6. PCI / PCI Express (เชื่อมอุปกรณ์ขยายภายใน)",
+      "pages": [
+        46
+      ],
+      "question": "การ์ดขยายหลายชนิดและหลายความเร็วจะสื่อสารกับระบบได้อย่างไร?",
+      "html": "<p>PCIหรือPeripheral Component Interconnect (ทางเชื่อมอุปกรณ์ต่อพ่วงภายใน)เป็นหัวข้อที่6 ขณะที่ป้ายในหน้า46เขียนPCI Express. สไลด์ให้แกนว่าเป็นhigh-speed bus systemที่เชื่อมperipheralsหลายชนิด/หลายความเร็ว. ต้องแยกชื่อสองแบบให้ถูกก่อนเทียบbandwidth.</p><p>[อธิบายเสริม] PCIแบบเดิมเป็นparallel sharedbus;PCI ExpressหรือPCIeเป็นserial point-to-point links (ลิงก์อนุกรมระหว่างปลายสองฝั่ง)ผ่านโครงสร้างสวิตช์. Lane (ช่องสัญญาณหนึ่งชุด)รวมได้เป็นx1,x4,x8,x16ตามการออกแบบ. ภาพXeonหน้า32และIBMหน้า51ใช้PCIeเป็นเส้นเชื่อมI/O;ชื่อPCIeไม่ได้บอกว่าเป็นการpoll,interruptหรือDMA เพราะสามอย่างนั้นเป็นวิธีจัดงานบนระบบที่ใช้ลิงก์นี้ได้. ไม่มีตารางgeneration/ความเร็วPCIeในสไลด์หน้านี้จึงไม่เพิ่มตัวเลขรุ่นล่าสุดแทนต้นฉบับ.</p>"
+    },
+    {
+      "id": "sata",
+      "title": "7. SATA (ลิงก์อนุกรมสำหรับดิสก์)",
+      "pages": [
+        46
+      ],
+      "question": "จะเชื่อมอุปกรณ์เก็บข้อมูลด้วยทางเฉพาะที่เรียบง่ายได้อย่างไร?",
+      "html": "<p>Serial Advanced Technology AttachmentหรือSATA (อินเทอร์เฟซอนุกรมสำหรับหน่วยเก็บข้อมูล)ใช้ในdesktopและงานindustrial/embeddedตามสไลด์. เอกสารระบุdata rateถึง6Gbps แต่บรรทัด“maximum per device300Mbps”ขัดกันและไม่ควรนำไปจำเป็นค่าสูงสุดของSATA6Gbps.</p><p>[อธิบายเสริม] ตรวจ <a href=\"https://sata-io.org/sites/default/files/documents/SATA-Revision-3.0-FAQ-FINAL.pdf\">SATA-IO Revision3.0 FAQ</a> ระบุSATA6Gb/sอัตรา600MB/s. ดังนั้นบทนี้คงให้เห็นว่าต้นฉบับพิมพ์300Mbps แต่ไม่รับรองค่านั้น. Signaling6Gb/sหลัง8b/10bencoding (ส่ง10บิตเพื่อข้อมูล8บิต)เหลือ6×8/10=4.8Gb/sแล้วหาร8=0.6GB/s=600MB/sก่อนงานprotocolอื่น;300MB/sเป็นระดับอัตราที่ต่างกัน ไม่ใช่300Mbps.</p>"
+    },
+    {
+      "id": "ethernet",
+      "title": "8. Ethernet (เครือข่ายใช้สาย)",
+      "pages": [
+        47
+      ],
+      "question": "จะเชื่อมคอมพิวเตอร์และstorageหลายตัวในองค์กรผ่านเครือข่ายอย่างไร?",
+      "html": "<p>Ethernet (ตระกูลมาตรฐานเครือข่ายใช้สาย)เชื่อมPC,workstation,serverและmass storageในองค์กรเล็กใหญ่. สไลด์เล่าว่าเริ่มจากระบบทดลองbus-based3Mbpsแล้วเปลี่ยนเป็นswitch-based (แต่ละdeviceต่อตรงเข้าสวิตช์กลาง) และเพิ่มอัตราประมาณหนึ่งลำดับขนาดหลายครั้ง. แยกbusร่วมที่ทุกคนแชร์ทางกับswitchที่ส่งต่อframeระหว่างportที่เกี่ยวข้อง.</p><p>อัตราถึง100Gbpsและระยะตั้งแต่ไม่กี่เมตรถึงหลายสิบกิโลเมตรเป็นช่วงรุ่น/สื่อที่สไลด์กล่าวถึง ไม่ใช่ทุกสายและทุกEthernetportทำได้เท่ากัน. คำว่าcurrently available100Gbpsเป็นบริบทของเอกสาร ไม่ใช่ข้ออ้างว่าเป็นรุ่นเร็วสุดปัจจุบัน. [อธิบายเสริม] Ethernetคือวิธีลิงก์/ส่งframe ส่วนIP/TCPเป็นกติกาชั้นบนตามpacketที่เรียน จึงเปลี่ยนอัตราEthernetโดยยังรับส่งTCP/IPได้.</p>"
+    },
+    {
+      "id": "wifi",
+      "title": "9. Wi-Fi (เครือข่ายไร้สาย)",
+      "pages": [
+        48
+      ],
+      "question": "จะเชื่อมอุปกรณ์เคลื่อนที่โดยไม่ลากสายเครือข่ายได้อย่างไร?",
+      "html": "<p>Wi-Fi (การเชื่อมเครือข่ายไร้สายตามตระกูลIEEE802.11)เชื่อมcomputer,tablet,smartphone,กล้อง,TVและthermostat (อุปกรณ์ควบคุมอุณหภูมิ). ในองค์กรช่วยเข้าถึงงานได้คล่องตัวและpublic hotspots (จุดบริการเครือข่ายสาธารณะ)ช่วยให้เชื่อมต่อได้ตามสถานที่ต่างๆ. เสาอากาศ เทคนิคส่งไร้สาย และprotocolพัฒนาแล้วIEEE802.11ออกมาตรฐานรุ่นใหม่ที่เร็วขึ้น.</p><p>สไลด์ใช้คำว่า“current version802.11ac(2014),maximum3.2Gbps” จึงคงเป็นตัวเลขตามข้อความในเอกสารพร้อมระบุว่าไม่ใช่คำกล่าวถึงรุ่นปัจจุบันหรือความเร็วที่ผู้ใช้ทุกคนได้รับ. [อธิบายเสริม] อัตราที่เครื่องเดียวได้ยังขึ้นกับจำนวนspatial streams (ชุดสัญญาณที่ส่งพร้อมกัน),ความกว้างchannel (ย่านความถี่ที่ใช้),สัญญาณรบกวนและการแชร์สื่อ จึงไม่ควรเอาเลขpeakไปแทนความเร็วInternetโดยไม่วัดเส้นทางจริง.</p>"
+    },
+    {
+      "id": "ibm-channel-subsystem",
+      "title": "IBM EC12 channel subsystem (หลายระบบเสมือนใช้หลายช่อง)",
+      "pages": [
+        49
+      ],
+      "question": "เครื่องmainframeแบ่งI/Oให้หลายpartitionอย่างไรโดยไม่ให้CPUสั่งทุกdevice?",
+      "html": "<p>ภาพchannel subsystem (ส่วนจัดการช่องI/O)มี4subsystems;แต่ละตัวรับpartition (ส่วนเครื่องที่แบ่งใช้งาน)ผ่านsubchannels (ข้อมูลควบคุมงานI/Oที่partitionใช้)แล้วต่อchannelsไปdevices. ตัวเลขบนภาพคือ≤15partitionsต่อsubsystem,≤60partitionsต่อsystem,≤256channelsต่อsubsystem. เส้นแตกหลายทางแสดงmany-to-many connectivity (หลายส่วนมีทางเชื่อมหลายส่วน)ระหว่างpartitionกับsubsystem/channel ไม่ใช่สายdataที่ทุกเส้นส่งพร้อมกันเสมอ.</p><p>วงเล็บล่างภาพพิมพ์“≤1024 partitions per system”แต่ขัดกับ≤60ด้านบน และอยู่ใต้กลุ่มchannels;4×256=1024จึงต้องอ่านว่า<strong>≤1024 channels per system</strong> ไม่ใช่1024partitions. บทนี้เปิดเผยการแก้จากตำแหน่งและเลขในภาพ. [อธิบายเสริม] Partitionเป็นผู้ใช้เส้นทางI/O,channelเป็นทางบริการ,subchannelเป็นสถานะควบคุมงาน ทั้งสามจึงนับคนละหน่วย.</p>"
+    },
+    {
+      "id": "ibm-io-frames",
+      "title": "IBM zEC12 I/O frames (ดูส่วนกายภาพของระบบใหญ่)",
+      "pages": [
+        50
+      ],
+      "question": "ภาพตรรกะchannelในบทเรียนอยู่ตรงไหนของตู้เครื่องจริง?",
+      "html": "<p>ภาพfront viewของIBM zEC12มีลูกศรชี้internal batteries optional (แบตเตอรี่ภายในที่เลือกติดตั้ง),power supplies (ชุดจ่ายไฟ),support elements (ส่วนควบคุมสนับสนุน),I/O cage carried forward (โครงชุดI/Oที่คงใช้งานต่อ),PCIe I/O drawer (ลิ้นชักใส่การ์ดI/O). อีกฝั่งชี้FSPหรือFlexible Service Processor controller cards (การ์ดตัวประมวลผลบริการ),processor booksพร้อมmemory/HCA/PCIe-fanout cards,InfiniBandและPCIe I/O interconnects (ชุดทางเชื่อม),N+1 water cooling units (ชุดระบายความร้อนด้วยน้ำมีส่วนเพิ่มสำรองตามป้าย).</p><p>ภาพนี้ใช้สอนว่าระบบI/Oจริงมีทั้งการ์ด ทางเชื่อม ไฟเลี้ยง การระบายความร้อนและวงจรบริการ ไม่ได้มีเพียงprocessorกับสายbusบนกระดาษ. ลูกศรสีแดงเป็นเส้นชี้ส่วนประกอบ ไม่ใช่ลูกศรdataflow;อย่านำลำดับตำแหน่งบนภาพไปอ่านเป็นลำดับย้ายpacket. [อธิบายเสริม] N+1หมายถึงมีหน่วยเพิ่มเติมจากจำนวนที่ต้องใช้ตามการออกแบบเพื่อรองรับการเสียหนึ่งหน่วย ไม่ได้บอกจำนวนตู้ทั้งหมด.</p>"
+    },
+    {
+      "id": "ibm-io-system",
+      "title": "IBM EC12 I/O system structure (ติดตามจากbookถึงcontroller)",
+      "pages": [
+        51,
+        52
+      ],
+      "question": "ข้อมูลจากprocessorbookไปอุปกรณ์ต่างชนิดผ่านทางใดบ้าง?",
+      "html": "<p>ภาพหน้า51วางBook1…4ด้านบน แต่ละbookมีmemory,PU (processing unit/หน่วยประมวลผล),ส่วนกลางป้ายSC1,SC0;สไลด์ไม่ได้ขยายอักษรSCจึงคงป้ายโดยไม่เดารายละเอียด. Book1/2ต่อPCIe(8X)ลงPCIe switchesหลายตัวในPCIe I/O Drawer แล้วต่อFibre Channel controller (ตัวควบคุมเครือข่ายstorage)และ10-Gbps Ethernet controller. เส้นไขว้แสดงการมีทางเชื่อมจากหลายbookไปหลายswitch ไม่ใช่ว่าข้อมูลต้องข้ามbookตามลำดับ1→2→3→4.</p><p>Book3/4ต่อHCA2(8X)ซึ่งในบริบทนี้เป็นhost channel adapter (ตัวต่อhostกับchannel) ลงInfiniBand multiplexorsในI/O Cage &amp; I/O Drawer แล้วแตกเป็นESCON channels (ช่องI/OแบบESCONในภาพ)และportsของ1-Gbps Ethernet controller. จุดหมายทั้งสองกลุ่มแสดงว่าระบบเดียวรองรับI/Oหลายรุ่นผ่านทางPCIeและInfiniBand. [อธิบายเสริม] ป้าย8Xบอกความกว้างทางตามรูป ควรอ่านคู่กับชนิดลิงก์ ไม่ใช่ใช้แปลงเป็น8Gbpsทันที. หน้า52เป็นQ&amp;A ไม่มีรายละเอียดทางเทคนิคเพิ่ม.</p>"
+    }
+  ],
+  "workedExamples": [
+    {
+      "title": "[อธิบายเสริม] เดินMMIOจากที่อยู่จริงในภาพ",
+      "pages": [
+        14
+      ],
+      "html": "<ol><li>ใช้register data516,status/control517และreadybit7/startbit0ตามสไลด์;สมมติตัวอย่างstatusอ่านได้0x00ก่อนพร้อมและ0x80เมื่อพร้อม</li><li>Load AC1แล้วStore AC517:1=00000001₂ จึงตั้งstartbit0 โดยไม่ได้สั่งให้พร้อมด้วยbit7</li><li>Load AC517ได้00000000:bit7=0/sign0จึงBranchกลับ202เพื่ออ่านstatusใหม่</li><li>รอบที่พร้อมอ่าน10000000₂=128₁₀=0x80:bit7=1 จึงไม่branchวนแล้วLoad AC516เพื่อรับdatabyte</li><li>เลข516เป็นaddressของdata;128เป็นตัวอย่างค่าของstatus ต้องไม่สลับaddressกับdata</li></ol>"
+    },
+    {
+      "title": "[อธิบายเสริม] สร้าง8255mode-set word",
+      "pages": [
+        21,
+        22
+      ],
+      "html": "<ol><li>ต้องการMode0ทั้งสองกลุ่ม,PortAinput,PortBoutput,PortCupperinput,PortCloweroutput เลือกD7=1เพื่อmode-set</li><li>GroupAmode0ให้D6D5=00;Ainputให้D4=1;Cupperinputให้D3=1</li><li>GroupBmode0ให้D2=0;Boutputให้D1=0;Cloweroutputให้D0=0</li><li>เรียงD7…D0=1 0 0 1 1 0 0 0=10011000₂</li><li>แปลงเป็นฐานสิบ128+16+8=152;แบ่งnibbles1001|1000=9|8จึง0x98 ค่านี้ตั้งport directions ไม่ใช่ข้อมูลคีย์ที่กด</li></ol>"
+    },
+    {
+      "title": "[อธิบายเสริม] สั่งsetเฉพาะPC5ด้วยBSR",
+      "pages": [
+        22
+      ],
+      "html": "<ol><li>BSRต้องD7=0;เลือกD6D5D4=000เพราะdon’tcare</li><li>เลือกPortCbit5:5₁₀=101₂ ใส่D3D2D1=101</li><li>ต้องการsetให้D0=1 จึงD7…D0=00001011₂</li><li>0000|1011=0|B จึง0x0B หรือ8+2+1=11₁₀</li><li>ถ้าต้องresetPC5แทน เปลี่ยนD0เป็น0ได้00001010₂=0x0A;ไม่เปลี่ยนbitselect101</li></ol>"
+    },
+    {
+      "title": "[อธิบายเสริม] อย่าเอาGbpsเป็นGB/s",
+      "pages": [
+        41,
+        43,
+        46
+      ],
+      "html": "<ol><li>USBโหมด5Gbps:5×10⁹บิต/วินาที÷8=0.625×10⁹ไบต์/วินาที=625MB/sก่อนส่วนเกิน</li><li>usable4Gbpsตามสไลด์:4÷8=0.5GB/s=500MB/s;สัดส่วน4/5=0.8=80% ไม่ใช่เหลือ80MB/s</li><li>SCSIUltra160ต้อง160MB/s;ถ้าผิดเป็น160Mbpsจะได้160/8=20MB/sจึงต่าง8เท่า</li><li>SATA6Gb/sหลัง8b/10b:6×8/10=4.8Gb/s;4.8÷8=0.6GB/s=600MB/sก่อนprotocolอื่น. ข้อความ300Mbpsในสไลด์ไม่ได้ให้ผลนี้และถูกแจ้งเป็นsourceissue</li></ol>"
+    },
+    {
+      "title": "[อธิบายเสริม] ตรวจหน่วยในภาพIBMด้วยการคูณ",
+      "pages": [
+        49
+      ],
+      "html": "<ol><li>4channel subsystemsและแต่ละตัว≤15partitions:4×15=60partitionsตามวงเล็บบนภาพ</li><li>แต่ละsubsystem≤256channels:4×256=1024channels</li><li>จึงไม่สามารถอ่านวงเล็บล่าง1024partitionsร่วมกับวงเล็บบน60partitionsได้อย่างสอดคล้อง;แก้ชื่อหน่วยล่างเป็นchannels</li><li>ตัวเลขเป็นขีดความสามารถตามภาพ ไม่ใช่สัญญาว่าทุกpartitionถือทุกchannelหรือทุกช่องส่งเต็มอัตราพร้อมกัน</li></ol>"
+    },
+    {
+      "title": "[อธิบายเสริม] ย้าย3wordด้วยpollingเทียบDMA",
+      "pages": [
+        8,
+        11,
+        24,
+        25
+      ],
+      "html": "<ol><li>กำหนดข้อมูล3wordและทุกwordต้องอยู่memory;ตัวเลข3เป็นโจทย์เสริมเพื่อดูบทบาท ไม่ใช่benchmark</li><li>Programmed:CPUออกread/checkstatusสำหรับword1→อ่านเข้าregister→storememory แล้วทำword2และword3เหมือนกัน ระหว่างnotreadyต้องpollซ้ำ</li><li>Interrupt-driven:CPUออกreadแล้วทำงานอื่น แต่ISRยังอ่านwordเข้าCPUและstorememoryครบทั้ง3word มีงานขัดจังหวะ/เก็บคืนสถานะตามวิธีแจ้ง</li><li>DMA:CPUตั้งstartaddress/count3/direction;controllerย้ายแต่ละwordปรับaddress/countจน3→2→1→0ตามโมเดลcounterทั่วไปแล้วแจ้งcompletion</li><li>ไม่มีจำนวนcyclesกำหนดจึงสรุปเวลารวมเป็นตัวเลขไม่ได้;สรุปได้ว่าDMAลดการให้CPUย้ายทีละword แต่ยังใช้bus/memory</li></ol>"
+    }
+  ],
+  "figures": [
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: สามเส้นทางรับblock",
+      "pages": [
+        8,
+        9,
+        11
+      ],
+      "description": "ภาพสร้างใหม่เทียบผู้ย้ายdataและผู้รอ โดยไม่แทนคำอธิบายflowchartต้นฉบับ",
+      "parts": [
+        "CPU:ออกคำสั่ง/ย้ายwordในสองแบบแรก",
+        "I/Omodule:พักdata/status",
+        "DMA:ย้ายblock",
+        "memory:ปลายทาง"
+      ],
+      "flow": [
+        "Programmedวนstatusแล้วCPUย้าย",
+        "Interruptให้CPUทำอื่นก่อนISRย้าย",
+        "DMAย้ายblockแล้วแจ้งCPU"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: MMIOเทียบisolated",
+      "pages": [
+        12,
+        13,
+        14
+      ],
+      "description": "รูปแยกช่องaddressกับชนิดคำสั่ง ใช้register516/517และdevice5ตามภาพ",
+      "parts": [
+        "516:dataregister",
+        "517:status/control",
+        "5:isolateddeviceidentifier"
+      ],
+      "flow": [
+        "MMIOstore517เริ่มงาน",
+        "MMIOload517รอreadyแล้วload516",
+        "Isolatedใช้LoadI/O/TestI/O/In5"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: เก็บและคืนสถานะinterrupt",
+      "pages": [
+        16,
+        17
+      ],
+      "description": "ภาพแสดงPCN+1และSPTถูกบันทึกก่อนเปลี่ยนไปISRที่Y",
+      "parts": [
+        "PC:ตำแหน่งงานถัดไป",
+        "stack:ที่พักสถานะ",
+        "ISR:YถึงY+L"
+      ],
+      "flow": [
+        "คำสั่งNเสร็จ",
+        "savePC/PSW/registersและเข้าY",
+        "returnคืนPCN+1และSPT"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: 8255keyboard/displayhandshake",
+      "pages": [
+        21,
+        22,
+        23
+      ],
+      "description": "พอร์ตAรับkeydata พอร์ตBส่งdisplaydata และCประสาน/ขอinterrupt",
+      "parts": [
+        "A:รับR0–R5/Shift/Control",
+        "B:ส่งS0–S5/Backspace/Clear",
+        "C:พร้อม/รับแล้วและควบคุมจอ"
+      ],
+      "flow": [
+        "keyboardreadyให้CPUรับผ่านA",
+        "อ่านข้อมูลและacknowledge",
+        "ส่งผ่านBพร้อมhandshakeจอ"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: 8237ขอใช้บัส",
+      "pages": [
+        25,
+        28,
+        29
+      ],
+      "description": "DMAสร้างaddress/controlและข้อมูลfly-byระหว่างdeviceกับmemory",
+      "parts": [
+        "DREQ/DACK:deviceกับDMA",
+        "HRQ/HLDA:DMAกับCPU",
+        "IOR/IOW/MEMR/MEMW:คำสั่งบัส"
+      ],
+      "flow": [
+        "deviceDREQ",
+        "DMAHRQและรอHLDA",
+        "DACKแล้วส่งdataตรง",
+        "คืนbus/แจ้งcompletion"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: DMAกับDDIOทั้งสองทิศ",
+      "pages": [
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "description": "สร้างใหม่สี่กรณีตามภาพหน้า37แยกdataกับcoherencetraffic",
+      "parts": [
+        "NIC:รับ/ส่งpacket",
+        "LLC:cacheร่วม",
+        "DRAM:memoryระดับล่าง",
+        "core:ประมวลผลheaders"
+      ],
+      "flow": [
+        "รับแบบเดิมwriteDRAMแล้วcorefetch",
+        "รับDDIOเข้าLLCแล้วcoreใช้",
+        "ส่งแบบเดิมมีtrafficmemory/evictionเพิ่ม",
+        "ส่งDDIOอ่านcacheให้NIC"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: Selectorกับmultiplexorchannel",
+      "pages": [
+        38,
+        39
+      ],
+      "description": "channelเป็นหน่วยจัดI/Oprogramและต่อcontrollersหลายตัว",
+      "parts": [
+        "CPUcontrolpath:เริ่ม/รับผล",
+        "channelmemorypath:address/data",
+        "controllers:ดูแลdevicesเฉพาะ"
+      ],
+      "flow": [
+        "CPUมอบงาน",
+        "channelเลือก/สลับงานcontrollers",
+        "dataย้ายกับmemory"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "[อธิบายเสริม] ภาพสร้างใหม่: IBM4subsystems",
+      "pages": [
+        49,
+        50,
+        51
+      ],
+      "description": "รูปตรรกะโยงpartition/subchannelลงchannelและเทียบที่อยู่ในตู้จริง",
+      "parts": [
+        "partitions:ผู้ใช้ระบบแบ่งส่วน",
+        "4subsystems:จัดการช่อง",
+        "256channelsต่อsubsystem:ทางI/O",
+        "drawers/cages:ส่วนกายภาพ"
+      ],
+      "flow": [
+        "partitionส่งงานผ่านsubchannel",
+        "subsystemเลือกchannel",
+        "bookผ่านPCIeหรือHCA/InfiniBandไปcontrollers"
+      ],
+      "kind": "flow"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "I/O module",
+      "thai": "โมดูลรับส่งข้อมูล",
+      "meaning": "ตัวกลางประสานbusระบบกับอุปกรณ์",
+      "note": "ไม่ใช่CPUและไม่จำเป็นต้องเป็นdeviceเอง",
+      "pages": [
+        3,
+        6,
+        7
+      ]
+    },
+    {
+      "term": "Peripheral",
+      "thai": "อุปกรณ์รอบข้าง",
+      "meaning": "อุปกรณ์ที่แลกข้อมูลกับคอมพิวเตอร์",
+      "note": "กลุ่มคน/เครื่องจักร/สื่อสาร",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "term": "Transducer",
+      "thai": "ตัวแปลงสัญญาณ",
+      "meaning": "เปลี่ยนสัญญาณเฉพาะอุปกรณ์กับบิตข้อมูล",
+      "note": "แยกจากbufferและcontrollogic",
+      "pages": [
+        5
+      ]
+    },
+    {
+      "term": "Buffer",
+      "thai": "ที่พักข้อมูล",
+      "meaning": "เก็บชั่วคราวเพื่อชดเชยจังหวะ/อัตราส่งต่างกัน",
+      "note": "อาจมีในmoduleหรือmemory",
+      "pages": [
+        6,
+        7,
+        34
+      ]
+    },
+    {
+      "term": "Status register",
+      "thai": "รีจิสเตอร์สถานะ",
+      "meaning": "บอกเช่นready,busyหรือerror",
+      "note": "อ่านสถานะต่างจากอ่านpayload",
+      "pages": [
+        7,
+        14
+      ]
+    },
+    {
+      "term": "Polling",
+      "thai": "วนตรวจสถานะ",
+      "meaning": "CPUอ่านstatusซ้ำจนพร้อม",
+      "note": "เสียเวลาเมื่อdeviceช้า",
+      "pages": [
+        11
+      ]
+    },
+    {
+      "term": "Interrupt-driven I/O",
+      "thai": "I/Oแจ้งเหตุเมื่อพร้อม",
+      "meaning": "CPUออกงานแล้วกลับมาบริการเมื่อdeviceขอ",
+      "note": "CPUยังย้ายข้อมูลในโมเดลนี้",
+      "pages": [
+        8,
+        15
+      ]
+    },
+    {
+      "term": "DMA",
+      "thai": "ย้ายตรงถึงหน่วยความจำ",
+      "meaning": "controllerย้ายblockโดยไม่ให้CPUย้ายทุกword",
+      "note": "CPUยังตั้งงานและรับcompletion",
+      "pages": [
+        8,
+        24,
+        25
+      ]
+    },
+    {
+      "term": "MMIO",
+      "thai": "I/Oอยู่ในพื้นที่ที่อยู่memory",
+      "meaning": "รีจิสเตอร์deviceถูกเข้าถึงด้วยคำสั่งmemory",
+      "note": "ไม่ใช่ว่าdeviceกลายเป็นRAMธรรมดา",
+      "pages": [
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "term": "Isolated I/O",
+      "thai": "แยกพื้นที่ที่อยู่อุปกรณ์",
+      "meaning": "ใช้คำสั่งและการเลือกI/Oแยกจากmemory",
+      "note": "device5เป็นคนละชื่อกับaddress516",
+      "pages": [
+        13,
+        14
+      ]
+    },
+    {
+      "term": "ISR",
+      "thai": "ชุดคำสั่งรับเหตุ",
+      "meaning": "โค้ดบริการinterruptแล้วคืนงานเดิม",
+      "note": "ต้องเก็บคืนสถานะที่ใช้",
+      "pages": [
+        16,
+        17
+      ]
+    },
+    {
+      "term": "PC",
+      "thai": "ตัวชี้คำสั่งถัดไป",
+      "meaning": "เก็บตำแหน่งที่จะรันต่อ",
+      "note": "หลังNเป็นN+1ในภาพ",
+      "pages": [
+        16,
+        17
+      ]
+    },
+    {
+      "term": "PSW",
+      "thai": "คำสถานะโปรแกรม",
+      "meaning": "รวมบิตสถานะและควบคุมที่ต้องรักษา",
+      "note": "savedก่อนเข้าISRตามโมเดล",
+      "pages": [
+        16
+      ]
+    },
+    {
+      "term": "Interrupt vector",
+      "thai": "รหัสชี้ผู้รับเหตุ",
+      "meaning": "ช่วยเลือกdevice-service routineที่ถูกต้อง",
+      "note": "ไม่ใช่ข้อมูลpacketทั้งหมด",
+      "pages": [
+        19
+      ]
+    },
+    {
+      "term": "Daisy chain",
+      "thai": "การต่อเรียงเป็นลูกโซ่",
+      "meaning": "acknowledgeผ่านmodulesเรียงกันในวิธีhardwarepoll",
+      "note": "FireWireใช้คำนี้เป็นรูปเชื่อมอุปกรณ์อีกบริบท",
+      "pages": [
+        19,
+        42
+      ]
+    },
+    {
+      "term": "Bus arbitration",
+      "thai": "ตัดสินผู้ถือบัส",
+      "meaning": "เลือกmoduleที่ได้ควบคุมbus",
+      "note": "ใช้สิทธิ์ก่อนส่งvectorในแบบหน้า19",
+      "pages": [
+        19
+      ]
+    },
+    {
+      "term": "PPI",
+      "thai": "วงจรต่ออุปกรณ์ตั้งโปรแกรมได้",
+      "meaning": "8255มีportsที่ตั้งทิศ/โหมดด้วยcontrolword",
+      "note": "A/B8บิตและCแบ่ง4+4",
+      "pages": [
+        21,
+        22
+      ]
+    },
+    {
+      "term": "Handshake",
+      "thai": "สัญญาณประสานรับส่ง",
+      "meaning": "บอกdatareadyและacknowledgeเพื่อไม่รับส่งผิดจังหวะ",
+      "note": "แยกจากเนื้อdataในportA/B",
+      "pages": [
+        23
+      ]
+    },
+    {
+      "term": "DREQ / DACK",
+      "thai": "ขอ/รับรองDMA",
+      "meaning": "สัญญาณระหว่างdeviceกับDMAcontroller",
+      "note": "ต่างจากHRQ/HLDAที่คุยCPU",
+      "pages": [
+        28
+      ]
+    },
+    {
+      "term": "HRQ / HLDA",
+      "thai": "ขอถือ/ยืนยันให้ถือบัส",
+      "meaning": "DMAขอให้CPUปล่อยbusแล้วCPUตอบรับ",
+      "note": "ไม่ใช่vectorเลือกISR",
+      "pages": [
+        28
+      ]
+    },
+    {
+      "term": "Fly-by DMA",
+      "thai": "ข้อมูลผ่านตรง",
+      "meaning": "DMAคุมaddress/controlแต่ข้อมูลไม่พักในชิปDMA",
+      "note": "memory-to-memoryใช้temporaryregisterต่างหาก",
+      "pages": [
+        29
+      ]
+    },
+    {
+      "term": "Terminal count",
+      "thai": "จำนวนย้ายถึงปลาย",
+      "meaning": "สถานะว่าถึงจำนวนสุดท้ายของchannel",
+      "note": "TCต่างจากrequestที่ยังค้าง",
+      "pages": [
+        30
+      ]
+    },
+    {
+      "term": "Mask bit",
+      "thai": "บิตกั้นคำขอ",
+      "meaning": "เปิด/ปิดให้channelรับบริการ",
+      "note": "ไม่ได้แก้payloadข้อมูล",
+      "pages": [
+        30
+      ]
+    },
+    {
+      "term": "DCA",
+      "thai": "การนำI/Oเข้าใกล้cache",
+      "meaning": "กลยุทธ์prefetchhintหรือcacheinjectionตามรุ่น",
+      "note": "แบบhintยังเริ่มจากsystemmemory",
+      "pages": [
+        31,
+        36
+      ]
+    },
+    {
+      "term": "DDIO",
+      "thai": "รับส่งI/Oโดยใช้cache",
+      "meaning": "ให้I/Odeviceเข้าถึงLLCเพื่อลดDRAMtraffic",
+      "note": "ยังเป็นธุรกรรมDMA ไม่ตัดmemoryออกทุกกรณี",
+      "pages": [
+        36,
+        37
+      ]
+    },
+    {
+      "term": "NIC",
+      "thai": "ตัวควบคุมเครือข่าย",
+      "meaning": "รับส่งpacketกับlinkภายนอก",
+      "note": "อาจDMAข้อมูลและแจ้งcompletion",
+      "pages": [
+        33,
+        35
+      ]
+    },
+    {
+      "term": "Packet / PDU",
+      "thai": "ก้อนข้อมูลตามprotocol",
+      "meaning": "ข้อมูลถูกแบ่งเป็นหน่วยพร้อมheader/payload",
+      "note": "EthernetบรรทุกIP/TCPในตัวอย่าง",
+      "pages": [
+        33
+      ]
+    },
+    {
+      "term": "Descriptor",
+      "thai": "รายการอธิบายbuffer",
+      "meaning": "ข้อมูลบอกตำแหน่ง/ขนาด/สถานะpacket",
+      "note": "coreต้องอ่านก่อนจัดการก้อนข้อมูล",
+      "pages": [
+        35,
+        36
+      ]
+    },
+    {
+      "term": "LLC",
+      "thai": "แคชชั้นสุดท้าย",
+      "meaning": "cacheร่วมระดับล่างสุดก่อนmainmemoryในภาพ",
+      "note": "DDIOใช้เป็นทางหลักเมื่อเหมาะสม",
+      "pages": [
+        32,
+        37
+      ]
+    },
+    {
+      "term": "I/O channel",
+      "thai": "หน่วยจัดงานI/O",
+      "meaning": "processorเฉพาะรับภาระควบคุมI/O",
+      "note": "มากกว่าการมีDMAอย่างเดียว",
+      "pages": [
+        38,
+        39
+      ]
+    },
+    {
+      "term": "Signaling rate",
+      "thai": "อัตราสัญญาณ",
+      "meaning": "ความเร็วบิตบนลิงก์ก่อนหักส่วนเกิน",
+      "note": "ต่างจากusabledataและfilethroughput",
+      "pages": [
+        41
+      ]
+    },
+    {
+      "term": "Hot plugging",
+      "thai": "เสียบถอดขณะเปิด",
+      "meaning": "เปลี่ยนperipheralโดยไม่ปิดทั้งระบบ",
+      "note": "อยู่ในคุณสมบัติFireWireตามสไลด์",
+      "pages": [
+        42
+      ]
+    },
+    {
+      "term": "Fabric",
+      "thai": "โครงข่ายสวิตช์หลายลิงก์",
+      "meaning": "เชื่อมserverและstorageผ่านทางเลือกหลายทาง",
+      "note": "ไม่ใช่busเส้นเดียว",
+      "pages": [
+        45
+      ]
+    },
+    {
+      "term": "Partition / subchannel",
+      "thai": "ส่วนเครื่อง/สถานะงานช่องย่อย",
+      "meaning": "partitionใช้subchannelเพื่อติดต่อchannel subsystem",
+      "note": "ต้องแยกจากจำนวนchannels",
+      "pages": [
+        49
+      ]
+    },
+    {
+      "term": "PCIe I/O drawer",
+      "thai": "ลิ้นชักการ์ดI/O",
+      "meaning": "ส่วนกายภาพบรรจุswitches/controllers",
+      "note": "ชื่อในภาพIBMไม่ได้เป็นinstruction",
+      "pages": [
+        50,
+        51
+      ]
+    }
+  ],
+  "confusions": [
+    {
+      "title": "Interrupt-driven I/O vs DMA",
+      "pages": [
+        8,
+        9,
+        11,
+        24
+      ],
+      "html": "<p>Interruptเปลี่ยนวิธีรอ แต่ในแบบinterrupt-drivenCPUยังreadwordจากI/Oแล้วwriteไปmemory. DMAเปลี่ยนผู้ย้ายให้controllerทำblockและอาจใช้interruptแจ้งจบ. จึงไม่ควรสรุปว่าใช้interruptแล้วคือDMA หรือDMAไม่ใช้interrupt.</p>"
+    },
+    {
+      "title": "MMIO vs programmed I/O",
+      "pages": [
+        11,
+        12,
+        13,
+        14
+      ],
+      "html": "<p>MMIOบอกว่ารีจิสเตอร์deviceอยู่ในaddressspaceใดและใช้คำสั่งชนิดใด;programmed/pollingบอกCPUเฝ้าสถานะและย้ายอย่างไร. โปรแกรมอาจใช้MMIOตั้งDMAหรือจัดinterruptได้โดยไม่ต้องpollทุกbyte.</p>"
+    },
+    {
+      "title": "Data vs status vs control",
+      "pages": [
+        5,
+        7,
+        10,
+        14,
+        23
+      ],
+      "html": "<p>Dataคือเนื้อข้อมูล,Statusคือสภาพอุปกรณ์เช่นready,Controlคือคำสั่งตั้งงาน. ภาพregister517มีทั้งstatus/controlโดยแยกบิต ขณะที่516เป็นdata. การเขียนstartbitไม่ได้กำหนดreadybitโดยCPUเอง.</p>"
+    },
+    {
+      "title": "DCA hint vs DDIO injection",
+      "pages": [
+        31,
+        36,
+        37
+      ],
+      "html": "<p>DCAแบบprefetchhintให้packetลงsystemmemoryก่อนแล้วเตือนcoreอ่านล่วงหน้า ส่วนDDIOมุ่งให้cacheเป็นปลายทาง/ต้นทางI/Oเพื่อลดการผ่านDRAM. ชื่อDCAกว้างกว่าวิธีhintprototypeหนึ่งรุ่น จึงไม่เหมารวมว่าDCAทุกแบบขาเข้าอย่างเดียวหรือDDIOใช้ได้แค่prefetch.</p>"
+    },
+    {
+      "title": "Mbps vs MB/s; generation vs current maximum",
+      "pages": [
+        41,
+        43,
+        44,
+        46,
+        47,
+        48
+      ],
+      "html": "<p>bคือbit,Bคือbyteและ1B=8b. ต้องบอกว่าตัวเลขเป็นsignaling/usableและรุ่นใด. 10GbpsของThunderboltและ100GbpsของEthernetเป็นตัวอย่างในเอกสาร ไม่ใช่อันดับล่าสุด;SCSIและSATAมีunittypoที่บทเรียนเปิดเผยแล้ว.</p>"
+    }
+  ],
+  "recap": [
+    "I/Omoduleประสานcontrol/timing สื่อสารทั้งสองฝั่ง พักdataและตรวจerror",
+    "ProgrammedpollsและCPUย้าย;interruptลดรอแต่CPUยังย้าย;DMAให้controllerย้ายblock",
+    "MMIO/isolatedเป็นวิธีaddressคนละมิติกับpoll/interrupt/DMA",
+    "Interruptต้องเก็บPC/PSWและสถานะที่ใช้ก่อนเข้าISR แล้วคืนไปคำสั่งเดิมถัดไป",
+    "หลายอุปกรณ์ต้องมีวิธีระบุผู้ขอและpriority;PICcascadeช่วยรวมหลายสาย",
+    "8255controlwordกำหนดทิศทาง/โหมด ส่วนBSRแก้บิตCตัวเดียว",
+    "8237ขอbusด้วยHRQ/HLDAและรับdeviceด้วยDREQ/DACK;fly-bydataไม่พักในชิป",
+    "DMAลดงานCPUแต่ยังมีmemory/cachetraffic;DCAhintและDDIOช่วยลดการรอหรือจำนวนเที่ยวDRAM",
+    "USB,FireWire,SCSI,Thunderbolt,InfiniBand,PCI/PCIe,SATA,Ethernet,Wi-Fiตอบโจทย์การเชื่อมต่างกัน",
+    "IBMchannel subsystemและI/Odrawersแสดงการแบ่งงานและทางเชื่อมหลายระดับในระบบใหญ่"
+  ],
+  "review": [
+    {
+      "question": "[อธิบายเสริม] อธิบายความแตกต่างสามวิธีI/Oโดยแยกผู้รอกับผู้ย้ายข้อมูล",
+      "pages": [
+        8,
+        9,
+        11,
+        24
+      ],
+      "answerHtml": "<p>ProgrammedCPUออกคำสั่งและpollจนพร้อมแล้วreadwordเข้าCPU/storememoryทุกword. Interrupt-drivenออกงานแล้วทำอื่น อุปกรณ์แจ้งพร้อมให้ISRกลับมาย้ายwordผ่านCPU จึงลดbusywaitแต่ไม่เอางานย้ายออกจากCPU. DMAให้CPUตั้งblock/address/countแล้วcontrollerย้ายdevice↔memoryเองและอาจinterruptเมื่อเสร็จ ลดงานCPUต่อwordแต่ยังใช้bus/memoryร่วม.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ในMMIOภาพเดิมเหตุใดอ่าน517ก่อน516 และbranchตรวจSign?",
+      "pages": [
+        14
+      ],
+      "answerHtml": "<p>517เป็นstatus/control:bit0ใช้startread,bit7บอกready. เริ่มLoadAC1แล้วStore517 จากนั้นLoad517วนที่202จนbit7เป็น1. ในค่า8บิตbit7เป็นsignbitจึงBranchifSign0หมายถึงยังbusy. พร้อมแล้วจึงLoad516รับdataไม่ใช่อ่าน517เป็นตัวอักษร. ต้องแยกตำแหน่งregisterออกจากค่าในregister.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ถ้าinterruptเกิดหลังคำสั่งN จะกลับตรงไหนและต้องรักษาอะไร?",
+      "pages": [
+        16,
+        17
+      ],
+      "answerHtml": "<p>PCเดิมชี้N+1 ต้องบันทึกPCกับPSWก่อนเปลี่ยนไปISR และsavegeneralregistersที่handlerใช้ตามกติกา. ภาพเริ่มSPT ลดเป็นT−Mระหว่างเก็บสถานะแล้วเข้าISRที่Y. เมื่อถึงreturnY+Lให้คืนregisters,PSW,PCจากstackและSPกลับT จึงกลับN+1 ไม่กลับNจนทำผลเดิมซ้ำและไม่ไปY+LของISRต่อเป็นงานผู้ใช้.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] เปรียบ4วิธีระบุอุปกรณ์ที่ขอinterrupt",
+      "pages": [
+        18,
+        19,
+        20
+      ],
+      "answerHtml": "<p>Multiplelinesใช้สายแยกแต่มีขาจำกัดและอาจแชร์;softwarepollอ่านstatusหลายmoduleใช้เวลา;daisychainhardwareให้ackผ่านmoduleแล้วตัวได้รับสิทธิ์วางvectorเลือกISR;busarbitrationให้ผู้ได้busขอinterruptและตอบvectorบนdataเมื่อCPUack. PIC82C59Aแบบcascadeจัดกลุ่ม8slave×8inputsได้64requestsไปmasterเส้นเดียวสู่CPU แต่ยังต้องมีกติกาpriorityและระบุvector.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] Mode-setกับBSRของ8255ต่างกันอย่างไร?",
+      "pages": [
+        21,
+        22,
+        23
+      ],
+      "answerHtml": "<p>D7=1ตีความทั้งwordเป็นmode/directionsของA/B/C:GroupAใช้D6D5,D4,D3;GroupBใช้D2,D1,D0. D7=0เป็นBSRให้D3D2D1เลือกbitC0–7และD0set/reset โดยD6…D4ไม่สน. ภาพkeyboard/displayใช้Aรับ,Bส่ง,Cประสานready/ack/control จึงต้องตั้งตามหน้าที่และmode ไม่สมมติว่าบิตCทุกเส้นเป็นpayloadได้พร้อมhandshake.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ตามเส้นDREQ→HRQ→HLDA→DACKแล้วอธิบายfly-by",
+      "pages": [
+        25,
+        28,
+        29,
+        30
+      ],
+      "answerHtml": "<p>Deviceส่งDREQถึง8237;8237ส่งHRQขอCPUปล่อยbus;CPUตอบHLDAเมื่อยอมให้;8237ส่งDACKยืนยันdeviceแล้วสร้างaddress/control เช่นIOR+MEMWสำหรับinput. ข้อมูลผ่านbusตรงdevice→memoryไม่พัก8237ในfly-by. ชิปยังเก็บaddress/countและทำmemory-to-memoryแบบtemporaryregisterได้ จึงไม่เอาคำอธิบายfly-byไปห้ามทุกโหมดของชิป.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ทำไมpacketรับเข้าโดยDMAอาจทำcorecachemiss และDDIOช่วยอย่างไร?",
+      "pages": [
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "answerHtml": "<p>DMAแบบเดิมรับpacket/descriptorลงsystembufferในDRAMและอาจinvalidateสำเนาเก่า. เมื่อcoreอ่านheaderต้องfetchจากmemoryขึ้นcacheอีกครั้งก่อนย้ายpayloadไปแอป. DCAhintเตือนให้prefetchหลังข้อมูลเข้าmemoryจึงซ่อนรอได้บางส่วน;DDIOwrite-update/allocateLLCโดยตรงทำให้coreอ่านจากcacheและลดDRAMtrips. ขาออกNICอ่านจากcacheได้ด้วยแต่cachemissยังต้องmemory จึงไม่รับรองไม่มีDRAMaccessทุกกรณี.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ถ้าเห็นSATA6Gbps,300Mbpsในหน้าเดียวกันและIBM1024partitionsควรทำอย่างไร?",
+      "pages": [
+        43,
+        46,
+        49
+      ],
+      "answerHtml": "<p>ตรวจหน่วยและบริบทก่อนจำ. 6Gb/sไม่เท่ากับ300Mb/s;SATA-IOระบุ600MB/sสำหรับ6Gb/sภายหลังencodingจึงเปิดเผยว่าบรรทัด300Mbpsต้นฉบับไม่สอดคล้อง. SCSIUltra160ใช้160MB/sไม่ใช่160Mbps. IBMภาพให้4subsystems×256channels=1024channels ขณะที่partitionsมี4×15=60 ดังนั้นป้ายล่าง1024partitionsต้องแก้หน่วยเป็นchannelsโดยแจ้งsourceissue ไม่ลบความขัดแย้งเงียบๆ.</p>"
+    }
+  ],
+  "cards": [
+    [
+      "I/O module (โมดูลรับส่งข้อมูล)",
+      "ตัวกลางประสานbusระบบกับอุปกรณ์; ไม่ใช่CPUและไม่จำเป็นต้องเป็นdeviceเอง"
+    ],
+    [
+      "Peripheral (อุปกรณ์รอบข้าง)",
+      "อุปกรณ์ที่แลกข้อมูลกับคอมพิวเตอร์; กลุ่มคน/เครื่องจักร/สื่อสาร"
+    ],
+    [
+      "Transducer (ตัวแปลงสัญญาณ)",
+      "เปลี่ยนสัญญาณเฉพาะอุปกรณ์กับบิตข้อมูล; แยกจากbufferและcontrollogic"
+    ],
+    [
+      "Buffer (ที่พักข้อมูล)",
+      "เก็บชั่วคราวเพื่อชดเชยจังหวะ/อัตราส่งต่างกัน; อาจมีในmoduleหรือmemory"
+    ],
+    [
+      "Status register (รีจิสเตอร์สถานะ)",
+      "บอกเช่นready,busyหรือerror; อ่านสถานะต่างจากอ่านpayload"
+    ],
+    [
+      "Polling (วนตรวจสถานะ)",
+      "CPUอ่านstatusซ้ำจนพร้อม; เสียเวลาเมื่อdeviceช้า"
+    ],
+    [
+      "Interrupt-driven I/O (I/Oแจ้งเหตุเมื่อพร้อม)",
+      "CPUออกงานแล้วกลับมาบริการเมื่อdeviceขอ; CPUยังย้ายข้อมูลในโมเดลนี้"
+    ],
+    [
+      "DMA (ย้ายตรงถึงหน่วยความจำ)",
+      "controllerย้ายblockโดยไม่ให้CPUย้ายทุกword; CPUยังตั้งงานและรับcompletion"
+    ],
+    [
+      "MMIO (I/Oอยู่ในพื้นที่ที่อยู่memory)",
+      "รีจิสเตอร์deviceถูกเข้าถึงด้วยคำสั่งmemory; ไม่ใช่ว่าdeviceกลายเป็นRAMธรรมดา"
+    ],
+    [
+      "Isolated I/O (แยกพื้นที่ที่อยู่อุปกรณ์)",
+      "ใช้คำสั่งและการเลือกI/Oแยกจากmemory; device5เป็นคนละชื่อกับaddress516"
+    ],
+    [
+      "ISR (ชุดคำสั่งรับเหตุ)",
+      "โค้ดบริการinterruptแล้วคืนงานเดิม; ต้องเก็บคืนสถานะที่ใช้"
+    ],
+    [
+      "PC (ตัวชี้คำสั่งถัดไป)",
+      "เก็บตำแหน่งที่จะรันต่อ; หลังNเป็นN+1ในภาพ"
+    ],
+    [
+      "PSW (คำสถานะโปรแกรม)",
+      "รวมบิตสถานะและควบคุมที่ต้องรักษา; savedก่อนเข้าISRตามโมเดล"
+    ],
+    [
+      "Interrupt vector (รหัสชี้ผู้รับเหตุ)",
+      "ช่วยเลือกdevice-service routineที่ถูกต้อง; ไม่ใช่ข้อมูลpacketทั้งหมด"
+    ],
+    [
+      "Daisy chain (การต่อเรียงเป็นลูกโซ่)",
+      "acknowledgeผ่านmodulesเรียงกันในวิธีhardwarepoll; FireWireใช้คำนี้เป็นรูปเชื่อมอุปกรณ์อีกบริบท"
+    ],
+    [
+      "Bus arbitration (ตัดสินผู้ถือบัส)",
+      "เลือกmoduleที่ได้ควบคุมbus; ใช้สิทธิ์ก่อนส่งvectorในแบบหน้า19"
+    ],
+    [
+      "PPI (วงจรต่ออุปกรณ์ตั้งโปรแกรมได้)",
+      "8255มีportsที่ตั้งทิศ/โหมดด้วยcontrolword; A/B8บิตและCแบ่ง4+4"
+    ],
+    [
+      "Handshake (สัญญาณประสานรับส่ง)",
+      "บอกdatareadyและacknowledgeเพื่อไม่รับส่งผิดจังหวะ; แยกจากเนื้อdataในportA/B"
+    ],
+    [
+      "DREQ / DACK (ขอ/รับรองDMA)",
+      "สัญญาณระหว่างdeviceกับDMAcontroller; ต่างจากHRQ/HLDAที่คุยCPU"
+    ],
+    [
+      "HRQ / HLDA (ขอถือ/ยืนยันให้ถือบัส)",
+      "DMAขอให้CPUปล่อยbusแล้วCPUตอบรับ; ไม่ใช่vectorเลือกISR"
+    ],
+    [
+      "Fly-by DMA (ข้อมูลผ่านตรง)",
+      "DMAคุมaddress/controlแต่ข้อมูลไม่พักในชิปDMA; memory-to-memoryใช้temporaryregisterต่างหาก"
+    ],
+    [
+      "Terminal count (จำนวนย้ายถึงปลาย)",
+      "สถานะว่าถึงจำนวนสุดท้ายของchannel; TCต่างจากrequestที่ยังค้าง"
+    ],
+    [
+      "Mask bit (บิตกั้นคำขอ)",
+      "เปิด/ปิดให้channelรับบริการ; ไม่ได้แก้payloadข้อมูล"
+    ],
+    [
+      "DCA (การนำI/Oเข้าใกล้cache)",
+      "กลยุทธ์prefetchhintหรือcacheinjectionตามรุ่น; แบบhintยังเริ่มจากsystemmemory"
+    ],
+    [
+      "DDIO (รับส่งI/Oโดยใช้cache)",
+      "ให้I/Odeviceเข้าถึงLLCเพื่อลดDRAMtraffic; ยังเป็นธุรกรรมDMA ไม่ตัดmemoryออกทุกกรณี"
+    ],
+    [
+      "NIC (ตัวควบคุมเครือข่าย)",
+      "รับส่งpacketกับlinkภายนอก; อาจDMAข้อมูลและแจ้งcompletion"
+    ],
+    [
+      "Packet / PDU (ก้อนข้อมูลตามprotocol)",
+      "ข้อมูลถูกแบ่งเป็นหน่วยพร้อมheader/payload; EthernetบรรทุกIP/TCPในตัวอย่าง"
+    ],
+    [
+      "Descriptor (รายการอธิบายbuffer)",
+      "ข้อมูลบอกตำแหน่ง/ขนาด/สถานะpacket; coreต้องอ่านก่อนจัดการก้อนข้อมูล"
+    ],
+    [
+      "LLC (แคชชั้นสุดท้าย)",
+      "cacheร่วมระดับล่างสุดก่อนmainmemoryในภาพ; DDIOใช้เป็นทางหลักเมื่อเหมาะสม"
+    ],
+    [
+      "I/O channel (หน่วยจัดงานI/O)",
+      "processorเฉพาะรับภาระควบคุมI/O; มากกว่าการมีDMAอย่างเดียว"
+    ],
+    [
+      "Signaling rate (อัตราสัญญาณ)",
+      "ความเร็วบิตบนลิงก์ก่อนหักส่วนเกิน; ต่างจากusabledataและfilethroughput"
+    ],
+    [
+      "Hot plugging (เสียบถอดขณะเปิด)",
+      "เปลี่ยนperipheralโดยไม่ปิดทั้งระบบ; อยู่ในคุณสมบัติFireWireตามสไลด์"
+    ],
+    [
+      "Fabric (โครงข่ายสวิตช์หลายลิงก์)",
+      "เชื่อมserverและstorageผ่านทางเลือกหลายทาง; ไม่ใช่busเส้นเดียว"
+    ],
+    [
+      "Partition / subchannel (ส่วนเครื่อง/สถานะงานช่องย่อย)",
+      "partitionใช้subchannelเพื่อติดต่อchannel subsystem; ต้องแยกจากจำนวนchannels"
+    ],
+    [
+      "PCIe I/O drawer (ลิ้นชักการ์ดI/O)",
+      "ส่วนกายภาพบรรจุswitches/controllers; ชื่อในภาพIBMไม่ได้เป็นinstruction"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "[อธิบายเสริม] วิธีใดให้CPUอ่านstatusวนและย้ายทุกwordเอง?",
+      "options": [
+        "Programmed I/O",
+        "DMA",
+        "DDIO",
+        "I/Ochannelprocessor"
+      ],
+      "answer": 0,
+      "explanation": "ProgrammedI/Oคือpollและย้ายผ่านCPU. DMAใช้controllerย้ายblock;DDIOใช้cacheกับธุรกรรมI/O;channelมีprocessorเฉพาะรับงาน ไม่ใช่คำตอบสำหรับCPUทำทั้งหมด."
+    },
+    {
+      "q": "[อธิบายเสริม] Interrupt-driven I/Oลดงานส่วนใดโดยตรงเมื่อเทียบpolling?",
+      "options": [
+        "จำนวนบิตของpacket",
+        "การที่CPUต้องวนรอdeviceพร้อม",
+        "ความจำเป็นต้องมีI/Omodule",
+        "การย้ายdataผ่านCPUทั้งหมดในโมเดลนี้"
+      ],
+      "answer": 1,
+      "explanation": "ลดbusywaitingโดยให้CPUทำอื่นจนinterrupt. ไม่ได้ลดจำนวนบิต,ไม่ลบmodule และในโมเดลinterrupt-drivenCPUยังย้ายdataเมื่อบริการ."
+    },
+    {
+      "q": "[อธิบายเสริม] MMIOหมายถึงอะไร?",
+      "options": [
+        "ใช้interruptเท่านั้น",
+        "รีจิสเตอร์deviceอยู่addressspaceร่วมmemory",
+        "ทุกdeviceมีRAMเท่ากัน",
+        "ห้ามใช้load/store"
+      ],
+      "answer": 1,
+      "explanation": "MMIOใช้ที่อยู่ร่วมและคำสั่งmemoryเข้าถึงdevice. ไม่ได้กำหนดว่าใช้interruptเท่านั้น,ไม่บอกขนาดRAM และใช้load/storeได้ตรงข้ามกับตัวเลือกห้าม."
+    },
+    {
+      "q": "[อธิบายเสริม] ในภาพkeyboardregister516กับ517ต่างกันอย่างไร?",
+      "options": [
+        "516status,517data",
+        "ทั้งคู่เป็นPC",
+        "516data,517status/control",
+        "516DMAcount,517cachetag"
+      ],
+      "answer": 2,
+      "explanation": "ภาพระบุ516dataและ517status/control(bit7ready/bit0start). สลับลำดับผิด;ไม่ใช่PC,DMAcountหรือcachetag."
+    },
+    {
+      "q": "[อธิบายเสริม] เมื่อinterruptหลังคำสั่งNเสร็จควรเก็บPCค่าใดในภาพ?",
+      "options": [
+        "N+1",
+        "N−1",
+        "Y+Lเสมอ",
+        "0เสมอ"
+      ],
+      "answer": 0,
+      "explanation": "PCชี้คำสั่งถัดไปN+1เพื่อกลับไปต่อ. N−1ทำงานย้อนหลัง;Y+Lเป็นที่returnในISR;0ไม่ใช่ตำแหน่งกลับตามภาพ."
+    },
+    {
+      "q": "[อธิบายเสริม] 8255wordที่D7=0เลือกทำอะไร?",
+      "options": [
+        "ตั้งmodeทุกportแบบmode-set",
+        "Bit set/resetของPortC",
+        "ส่งpacketTCP",
+        "ยึดsystembusแทนCPUทันที"
+      ],
+      "answer": 1,
+      "explanation": "D7=0เป็นBSRใช้D3D2D1เลือกบิตCและD0set/reset. Mode-setใช้D7=1;packetTCPกับbusDMAคนละวงจร."
+    },
+    {
+      "q": "[อธิบายเสริม] คู่HRQ/HLDAคุยระหว่างส่วนใด?",
+      "options": [
+        "คีย์บอร์ดกับจอ",
+        "DMAcontrollerกับCPU",
+        "IPกับTCP",
+        "SRAMกับเซลล์capacitor"
+      ],
+      "answer": 1,
+      "explanation": "DMAใช้HRQขอCPUให้ถือbusและHLDAตอบยอม. DeviceกับDMAใช้DREQ/DACK;อีกสามคู่ไม่ใช่ความหมายสัญญาณนี้."
+    },
+    {
+      "q": "[อธิบายเสริม] Fly-byDMAที่กล่าวถึง8237ย้ายข้อมูลอย่างไร?",
+      "options": [
+        "ผ่านregisterCPUทุกไบต์",
+        "พักdataทุกไบต์ใน8237เสมอ",
+        "dataผ่านตรงdevice↔memoryโดยDMAคุมaddress/control",
+        "ไม่ใช้memory"
+      ],
+      "answer": 2,
+      "explanation": "Fly-byไม่พักdataในDMAchipแต่สร้างสัญญาณให้ปลายทางส่งตรง. ไม่ผ่านCPUทุกไบต์,ไม่จำเป็นต้องพักใน8237 และmemoryเป็นหนึ่งปลายทางหลัก."
+    },
+    {
+      "q": "[อธิบายเสริม] DCAแบบprefetchhintต่างจากDDIOcacheinjectionอย่างไร?",
+      "options": [
+        "hintยังเริ่มdataในsystemmemoryก่อนอ่านล่วงหน้า",
+        "hintถอดCPUออกจากระบบ",
+        "DDIOห้ามใช้DMA",
+        "DDIOทำได้เพียงWi-Fi"
+      ],
+      "answer": 0,
+      "explanation": "แบบhintข้อมูลลงmemoryแล้วส่งคำแนะprefetch ส่วนDDIOมุ่งcacheเป็นทางI/O. ทั้งสองยังมีCPU;DDIOรองรับธุรกรรมDMAและไม่จำกัดWi-Fi."
+    },
+    {
+      "q": "[อธิบายเสริม] IBMมี4subsystemsแต่ละตัว256channels ป้ายรวมควรเป็นอะไร?",
+      "options": [
+        "60channels",
+        "1024partitions",
+        "1024channels",
+        "256partitionsต่อsubsystem"
+      ],
+      "answer": 2,
+      "explanation": "4×256=1024channels.60เป็นจำนวนpartitionsตาม4×15;1024partitionsเป็นป้ายผิดต้นฉบับ;256เป็นchannelsต่อsubsystemไม่ใช่partitions."
+    }
+  ],
+  "coverage": [
+    {
+      "page": 1,
+      "sectionIds": [
+        "io-context"
+      ],
+      "status": "context",
+      "note": "ปกI/O Systemsและขอบเขตบท"
+    },
+    {
+      "page": 2,
+      "sectionIds": [
+        "io-context"
+      ],
+      "status": "context",
+      "note": "CourseOutlineเชื่อมmemoryกับI/O/storage"
+    },
+    {
+      "page": 3,
+      "sectionIds": [
+        "io-module-device"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพgenericmodule,address/data/controlและlinks"
+    },
+    {
+      "page": 4,
+      "sectionIds": [
+        "io-module-device"
+      ],
+      "status": "explained",
+      "note": "Externaldevicesครบhuman/machine/communication"
+    },
+    {
+      "page": 5,
+      "sectionIds": [
+        "io-module-device"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพcontrollogic/buffer/transducerและลูกศรstatus/control/data"
+    },
+    {
+      "page": 6,
+      "sectionIds": [
+        "io-module-device"
+      ],
+      "status": "explained",
+      "note": "หน้าที่moduleทั้ง5หมวดครบ"
+    },
+    {
+      "page": 7,
+      "sectionIds": [
+        "io-module-device"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพregisters,I/Ologicและexternalinterfacesหลายตัว"
+    },
+    {
+      "page": 8,
+      "sectionIds": [
+        "io-techniques"
+      ],
+      "status": "explained",
+      "note": "นิยามprogrammed/interrupt/DMAและบทบาทCPU"
+    },
+    {
+      "page": 9,
+      "sectionIds": [
+        "io-techniques"
+      ],
+      "status": "explained",
+      "note": "ตรวจตารางnointerrupt/interruptกับผ่านCPU/ตรงmemory"
+    },
+    {
+      "page": 10,
+      "sectionIds": [
+        "io-techniques"
+      ],
+      "status": "explained",
+      "note": "Control/Test/Read/Writecommandsพร้อมทิศทาง"
+    },
+    {
+      "page": 11,
+      "sectionIds": [
+        "io-techniques"
+      ],
+      "status": "explained",
+      "note": "ตรวจflowchartsสามวิธีครบbranchready/error/doneและงานอื่น"
+    },
+    {
+      "page": 12,
+      "sectionIds": [
+        "io-addressing"
+      ],
+      "status": "explained",
+      "note": "UniqueaddressและMMIOsingleaddressspace"
+    },
+    {
+      "page": 13,
+      "sectionIds": [
+        "io-addressing"
+      ],
+      "status": "explained",
+      "note": "ตารางMMIO/isolatedข้อแตกต่างaddress/commands/select"
+    },
+    {
+      "page": 14,
+      "sectionIds": [
+        "io-addressing"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพregister516/517bit7/bit0และคำสั่งสองแบบทุกบรรทัด"
+    },
+    {
+      "page": 15,
+      "sectionIds": [
+        "interrupt-processing"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพinterrupt-drivenออกงาน/ทำอื่น/แจ้ง/ย้าย/กลับ"
+    },
+    {
+      "page": 16,
+      "sectionIds": [
+        "interrupt-processing"
+      ],
+      "status": "explained",
+      "note": "ตรวจhardware/softwareinterruptstepsและsavePC/PSW"
+    },
+    {
+      "page": 17,
+      "sectionIds": [
+        "interrupt-processing"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพN+1,Y,Y+L,T,T−Mและsave/restorearrows"
+    },
+    {
+      "page": 18,
+      "sectionIds": [
+        "interrupt-processing"
+      ],
+      "status": "explained",
+      "note": "สองdesignissuesผู้ขอและpriority"
+    },
+    {
+      "page": 19,
+      "sectionIds": [
+        "interrupt-processing"
+      ],
+      "status": "explained",
+      "note": "Identificationครบ4วิธีและvectoredinterrupt"
+    },
+    {
+      "page": 20,
+      "sectionIds": [
+        "interrupt-controller"
+      ],
+      "status": "explained",
+      "note": "ตรวจ82C59Aslave/masterIR0–7ถึง80386และ64devices"
+    },
+    {
+      "page": 21,
+      "sectionIds": [
+        "ppi-8255"
+      ],
+      "status": "explained",
+      "note": "ตรวจ8255block/pinlayout40ขาและportsA/B/C"
+    },
+    {
+      "page": 22,
+      "sectionIds": [
+        "ppi-8255"
+      ],
+      "status": "explained",
+      "note": "ตรวจmodecontrolทุกbitและBSRportCmapping000–111"
+    },
+    {
+      "page": 23,
+      "sectionIds": [
+        "ppi-8255"
+      ],
+      "status": "explained",
+      "note": "ตรวจkeyboard/displaydataพร้อมCready/ack/blank/clear/interrupt"
+    },
+    {
+      "page": 24,
+      "sectionIds": [
+        "dma-operation"
+      ],
+      "status": "explained",
+      "note": "ข้อจำกัดCPUtest/serviceและinstructionsต่อtransfer"
+    },
+    {
+      "page": 25,
+      "sectionIds": [
+        "dma-operation"
+      ],
+      "status": "explained",
+      "note": "ตรวจgenericDMAcount/data/address/controlและsignals"
+    },
+    {
+      "page": 26,
+      "sectionIds": [
+        "dma-operation"
+      ],
+      "status": "explained",
+      "note": "ตรวจDMA/interruptbreakpointsตามinstructioncycle"
+    },
+    {
+      "page": 27,
+      "sectionIds": [
+        "dma-operation"
+      ],
+      "status": "explained",
+      "note": "ตรวจDMAconfigsdetached/integrated/IObusครบ3"
+    },
+    {
+      "page": 28,
+      "sectionIds": [
+        "dma-8237"
+      ],
+      "status": "explained",
+      "note": "ตรวจ8237busHRQ/HLDA/DREQ/DACKและIOR/IOW/MEMR/MEMW"
+    },
+    {
+      "page": 29,
+      "sectionIds": [
+        "dma-8237"
+      ],
+      "status": "explained",
+      "note": "ตรวจfly-bydataไม่พักDMAและmemory-to-memoryผ่านregister"
+    },
+    {
+      "page": 30,
+      "sectionIds": [
+        "dma-registers"
+      ],
+      "status": "explained",
+      "note": "ตรวจTable7.2ครบทุกbit/registerและแจ้งแก้StatusD5–7"
+    },
+    {
+      "page": 31,
+      "sectionIds": [
+        "dca-chip"
+      ],
+      "status": "explained",
+      "note": "DCAตอบmemorytrafficจากnetworkratesตามยุคสไลด์"
+    },
+    {
+      "page": 32,
+      "sectionIds": [
+        "dca-chip"
+      ],
+      "status": "explained",
+      "note": "ตรวจXeon8coresL1/L2,8L3slices,ring,QPI/PCIe/DDR3"
+    },
+    {
+      "page": 33,
+      "sectionIds": [
+        "network-packet-paths"
+      ],
+      "status": "explained",
+      "note": "Ethernet/IP/TCPheader/payloadและNICทั้งสองทิศ"
+    },
+    {
+      "page": 34,
+      "sectionIds": [
+        "network-packet-paths"
+      ],
+      "status": "explained",
+      "note": "DMAapplication/systembuffersและการcopyheaders"
+    },
+    {
+      "page": 35,
+      "sectionIds": [
+        "network-packet-paths"
+      ],
+      "status": "explained",
+      "note": "Packetstepsincoming7ขั้น/outgoing6ขั้นครบ"
+    },
+    {
+      "page": 36,
+      "sectionIds": [
+        "dca-ddio"
+      ],
+      "status": "explained",
+      "note": "DCAprefetchprototypeกับcacheinjection/DDIO"
+    },
+    {
+      "page": 37,
+      "sectionIds": [
+        "dca-ddio"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพDMA/DDIO4กรณีและcoherencetraffic"
+    },
+    {
+      "page": 38,
+      "sectionIds": [
+        "io-evolution-channels"
+      ],
+      "status": "explained",
+      "note": "Evolutionครบ6ขั้นถึงI/Oprocessorมีlocalmemory"
+    },
+    {
+      "page": 39,
+      "sectionIds": [
+        "io-evolution-channels"
+      ],
+      "status": "explained",
+      "note": "ตรวจselector/multiplexorchannels,pathCPU/memory/controllers"
+    },
+    {
+      "page": 40,
+      "sectionIds": [
+        "interface-assignment"
+      ],
+      "status": "context",
+      "note": "Assignment9กลุ่ม6–7คนรายงานและนำเสนอพร้อมวันตามเอกสาร"
+    },
+    {
+      "page": 41,
+      "sectionIds": [
+        "usb"
+      ],
+      "status": "explained",
+      "note": "USBgenerations/ratesทุกแถวและhosttree"
+    },
+    {
+      "page": 42,
+      "sectionIds": [
+        "firewire"
+      ],
+      "status": "explained",
+      "note": "FireWireIEEE1394,daisychain63devices/1022busesและhotplug"
+    },
+    {
+      "page": 43,
+      "sectionIds": [
+        "scsi"
+      ],
+      "status": "explained",
+      "note": "SCSIsharedparallelbusพร้อมเปิดเผยwidth/unitissues"
+    },
+    {
+      "page": 44,
+      "sectionIds": [
+        "thunderbolt"
+      ],
+      "status": "explained",
+      "note": "Thunderbolt10Gbpsต่อทิศ/10Wตามรุ่นสไลด์"
+    },
+    {
+      "page": 45,
+      "sectionIds": [
+        "infiniband"
+      ],
+      "status": "explained",
+      "note": "InfiniBandfabric64000และSAN"
+    },
+    {
+      "page": 46,
+      "sectionIds": [
+        "pci-express",
+        "sata"
+      ],
+      "status": "explained",
+      "note": "สอนทั้งPCI/PCIeและSATAพร้อมแก้ความขัดแย้งหน่วย"
+    },
+    {
+      "page": 47,
+      "sectionIds": [
+        "ethernet"
+      ],
+      "status": "explained",
+      "note": "Ethernetbus3Mbpsสู่switch100Gbpsตามยุคเอกสาร"
+    },
+    {
+      "page": 48,
+      "sectionIds": [
+        "wifi"
+      ],
+      "status": "explained",
+      "note": "Wi-Fi802.11ac(2014)/3.2Gbpsเป็นข้อความในเอกสารไม่ใช่current"
+    },
+    {
+      "page": 49,
+      "sectionIds": [
+        "ibm-channel-subsystem"
+      ],
+      "status": "explained",
+      "note": "ตรวจIBM4subsystems/15partitions/256channelsและแก้1024channels"
+    },
+    {
+      "page": 50,
+      "sectionIds": [
+        "ibm-io-frames"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพตู้frontviewและlabelsไฟ/แบต/บริการ/books/interconnect/cooling"
+    },
+    {
+      "page": 51,
+      "sectionIds": [
+        "ibm-io-system"
+      ],
+      "status": "explained",
+      "note": "ตรวจIBM4booksผ่านPCIeหรือHCA/InfiniBandสู่controllers"
+    },
+    {
+      "page": 52,
+      "sectionIds": [
+        "ibm-io-system"
+      ],
+      "status": "context",
+      "note": "Q&Aไม่มีหัวข้อเทคนิคใหม่"
+    }
+  ],
+  "sourceIssues": [
+    "หน้า14คำสั่งเป็นinstructionmodelเพื่ออธิบายไม่ใช่RISC-Vassembly;ช่องที่อยู่บางบรรทัดว่างในต้นฉบับจึงไม่สร้างเลขaddressใหม่อ้างว่าอยู่ในภาพ",
+    "หน้า17รูประบุPC/SPก่อนลูกศรsave/restore ต้องอ่านการเปลี่ยนตามลูกศร ไม่ตีความPCY+Lว่าเป็นจุดที่โปรแกรมผู้ใช้ต้องกลับ",
+    "หน้า29คำว่าไม่ระหว่างmemoryสองตำแหน่งกล่าวถึงfly-byโดยตรง;กล่องกลางระบุmemory-to-memoryviaregister จึงต้องสอนทั้งเงื่อนไขไม่ตัดข้อความหนึ่งทิ้ง",
+    "หน้า30StatusD5–D7พิมพ์Channel0requestซ้ำ;แก้เป็นChannel1/2/3โดยเปิดเผยและตรวจdatasheet82C37Aตระกูลเข้ากันได้ของRenesas https://www.renesas.com/ja/document/dst/82c37a-datasheet",
+    "หน้า36ใช้ชื่อDirectDataI/Oแต่IntelเรียกDataDirectI/O;DCAprototypehintขาเข้าไม่ใช่ข้อจำกัดของDDIOทุกชนิด ตรวจIntelPrimer https://www.intel.com/content/dam/www/public/us/en/documents/technology-briefs/data-direct-i-o-technology-brief.pdf",
+    "หน้า37ภาพย่อแยกdataflowกับcoherence/speculativetrafficไม่ชัด จึงอธิบายร่วมIntelPrimer ไม่ตีความลูกศรทุกเส้นเป็นcopyโดยCPU",
+    "หน้า41ชื่อUSBถูกจับคู่ตามโหมดในสไลด์แต่ไม่ได้กำหนดรูปหัวต่อ/ความสามารถทุกสาย;ตัวเลขusableไม่ใช่filethroughputรับประกัน",
+    "หน้า43ใช้Mbpsกับ5และ160ของSCSIซึ่งควรเป็นMB/s;ตัวเลขbuswidth16/32และจำนวน16/32devicesเหมารวมรุ่นเกินไป จึงสอนnarrow8bit/wide16bitพร้อมคงให้เห็นsourceclaim ตรวจIBMUltra160และSeagateSCSIrevisionlevels",
+    "หน้า44คำว่าmostrecent/fastestและหน้า47/48คำว่าcurrentเป็นคำตามยุคสไลด์ ไม่ใช่ข้อมูลล่าสุด;Thunderbolt10Gbps,Eth100Gbps,Wi-Fi802.11ac2014เป็นบริบทที่สอน",
+    "หน้า46หัวข้อ6เขียนPCIแต่ป้ายPCIExpressจึงแยกPCI/PCIe;SATA6Gbpsขัดกับmaximum300Mbps ตรวจSATA-IO6Gb/sระบุ600MB/s https://sata-io.org/sites/default/files/documents/SATA-Revision-3.0-FAQ-FINAL.pdf",
+    "หน้า49วงเล็บล่างพิมพ์≤1024partitionspersystemแต่ด้านบนมี≤60partitionsและ4subsystems×256channels จึงแก้เป็น≤1024channelsโดยเปิดเผย",
+    "หน้า51ไม่ขยายSC1/SC0หรืออัตราของ8X จึงคงlabelและไม่เดาความหมายละเอียดที่เอกสารไม่ได้ให้"
+  ],
+  "lab": "io"
+}

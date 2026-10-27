@@ -1,0 +1,68 @@
+/* Architecture lab: additions scoped to ITDS211, using the existing palette. */
+body[data-subject="itds211"] { --course-accent: #527da0; }
+.itds211-illustration img {display:block;width:100%;height:auto;border-radius:12px}
+.itds211-illustration figcaption {margin-top:1rem}
+.itds211-intro {max-width:76ch;line-height:1.9}
+.itds211-cite {display:block;margin:.65rem 0 1.15rem;color:var(--muted);font-size:.76rem;line-height:1.65;overflow-wrap:anywhere}
+.itds211-cite a {text-underline-offset:3px}
+.itds211-problem {border-inline-start:3px solid var(--course-accent);padding:.7rem 1rem;background:var(--purple);border-radius:0 10px 10px 0;margin:1.15rem 0}
+.itds211-figure {margin:1.8rem 0;padding:1.3rem;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+.itds211-figure figcaption {color:var(--ink);line-height:1.8;margin-top:1rem}
+.itds211-parts {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.7rem;margin:.8rem 0}
+.itds211-part {border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:1rem;line-height:1.7;overflow-wrap:anywhere}
+.itds211-part b {display:block;color:var(--accent);font-size:.75rem;margin-bottom:.4rem}
+.itds211-flow {display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem}
+.itds211-flow span {padding:.45rem .7rem;border-radius:8px;background:var(--purple);font-size:.85rem;max-width:100%;overflow-wrap:anywhere}
+.itds211-flow i {color:var(--muted);font-style:normal}
+.itds211-lab {padding:1.4rem;border:1px solid var(--line);border-radius:18px;background:var(--bg);margin:1.5rem 0}
+.itds211-lab h3 {margin-top:0}
+.itds211-controls {display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin:1.1rem 0}
+.itds211-controls label {display:flex;flex-direction:column;gap:.4rem;flex:1 1 145px;font-size:.86rem;min-width:0}
+.itds211-lab input:not([type=checkbox]):not([type=range]),.itds211-lab select,.itds211-lab textarea {width:100%;min-width:0;background:var(--paper);color:var(--ink);font:inherit;border:1px solid var(--line);border-radius:9px;padding:.65rem .75rem}
+.itds211-lab input[type=range] {width:100%;accent-color:var(--accent)}
+.itds211-lab textarea {min-height:105px;font-family:ui-monospace,Consolas,monospace;line-height:1.65;resize:vertical}
+.itds211-lab button {margin:.15rem .2rem .15rem 0}
+.itds211-output {min-height:4rem;line-height:1.85}
+.itds211-output ol {padding-inline-start:1.6rem}
+.itds211-output li {margin:.5rem 0}
+.itds211-error {color:var(--ink);border:1px solid #b64646;border-radius:8px;padding:.75rem;background:var(--peach)}
+.itds211-metrics {display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:.65rem;margin:1rem 0}
+.itds211-metric {background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:.85rem}
+.itds211-metric strong {display:block;font-size:1.35rem;font-variant-numeric:tabular-nums;color:var(--accent)}
+.itds211-metric small {color:var(--muted)}
+.itds211-bits {font-family:ui-monospace,Consolas,monospace;display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0;word-break:break-all}
+.itds211-bits span {background:var(--paper);border:1px solid var(--line);padding:.65rem;border-radius:8px;font-size:1rem}
+.itds211-gantt {display:flex;min-width:max-content;margin:.6rem 0 1.5rem;padding-bottom:1.3rem}
+.itds211-gantt-block {background:var(--purple);border:1px solid var(--line);min-width:55px;padding:.75rem .4rem;text-align:center;position:relative}
+.itds211-gantt-block:nth-child(3n+2) {background:var(--sage)}
+.itds211-gantt-block:nth-child(3n) {background:var(--peach)}
+.itds211-gantt-block small {position:absolute;bottom:-1.3rem;left:-.15rem;font-size:.72rem;color:var(--muted)}
+.itds211-gantt-block:last-child::after {content:attr(data-end);position:absolute;bottom:-1.3rem;right:0;font-size:.72rem;color:var(--muted)}
+.itds211-pipeline td {font-family:ui-monospace,Consolas,monospace;text-align:center;min-width:42px;padding:.45rem}
+.itds211-pipeline td.wait {background:var(--peach)}
+.itds211-pipeline td.active {background:var(--accent);color:var(--paper)}
+.itds211-step-state {padding:1rem;border:1px solid var(--line);border-radius:12px;background:var(--paper);margin:1rem 0}
+.itds211-step-state strong {display:block;color:var(--accent)}
+.itds211-glossary th:first-child {min-width:145px}
+.itds211-review {padding:1rem 0;border-bottom:1px solid var(--line)}
+.itds211-review:last-child {border-bottom:0}
+.itds211-coverage summary {cursor:pointer;font-weight:600;padding:.7rem 0}
+.itds211-course-note {margin:2rem 0;padding:1.2rem;border:1px solid var(--line);border-radius:14px;line-height:1.85}
+.itds211-source-dialog {width:min(1050px,95vw);height:92vh;max-height:92vh;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:1rem}
+.itds211-source-dialog::backdrop {background:rgba(0,0,0,.6)}
+.itds211-source-toolbar {display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.itds211-source-dialog iframe {width:100%;height:calc(100% - 190px);min-height:200px;border:1px solid var(--line);border-radius:10px;margin-top:.75rem;background:#eee}
+.itds211-source-dialog input[type=file] {max-width:100%;margin:.7rem 0}
+.itds211-source-label {font-size:.82rem;overflow-wrap:anywhere;color:var(--muted)}
+body[data-subject="itds211"] .lesson-content table {font-variant-numeric:tabular-nums}
+body[data-subject="itds211"] .lesson-content pre {max-width:100%;overflow:auto;tab-size:2;line-height:1.7}
+body[data-subject="itds211"] .lesson-content code {overflow-wrap:anywhere}
+body[data-subject="itds211"] .lesson-content pre code {overflow-wrap:normal}
+body[data-subject="itds211"] .lesson-content details {margin:1rem 0}
+@media(max-width:600px){.itds211-lab,.itds211-figure{padding:1rem}.itds211-controls{gap:.7rem}.itds211-controls label{flex-basis:120px}.itds211-flow{flex-direction:column;align-items:stretch}.itds211-flow i{align-self:center;transform:rotate(90deg)}.itds211-source-dialog{padding:.7rem}.itds211-source-dialog iframe{height:calc(100% - 230px)}}
+@media print{.itds211-lab,.itds211-source-dialog{display:none!important}.itds211-figure{break-inside:avoid}.itds211-cite a{text-decoration:none}}
+
+body[data-subject="itds211"] .quiz-question legend,
+body[data-subject="itds211"] .quiz-option span {min-width:0;overflow-wrap:anywhere}
+
+body[data-subject="itds211"] .lesson-content {overflow-wrap:anywhere}

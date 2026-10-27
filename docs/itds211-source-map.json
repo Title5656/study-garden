@@ -1,0 +1,5463 @@
+[
+  {
+    "id": "01",
+    "code": "CA00",
+    "file": "itds-210_comp_arch_Chapter00.pdf",
+    "pages": 9,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "course-identity-and-logistics"
+        ],
+        "status": "context",
+        "note": "ตรวจภาพหน้าปก ชื่อวิชา รหัส และผู้สอน; ไม่มีเนื้อหาเทคนิคซ่อนในภาพ"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "course-identity-and-logistics"
+        ],
+        "status": "context",
+        "note": "เก็บแหล่งเอกสาร office hour และคะแนน 30/15/5 ครบ พร้อมข้อจำกัดการตีความเต็ม 50"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "architecture-topic-map",
+          "os-topic-map"
+        ],
+        "status": "context",
+        "note": "เก็บขอบเขตทั้ง architecture และ OS รวม segmentation paging virtual memory protection sharing และ access control; นิยามพื้นฐานเพิ่มติดป้ายเสริม"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "architecture-topic-map"
+        ],
+        "status": "context",
+        "note": "รักษาสิบหัวข้อของครึ่งภาคแรกตามลำดับ ไม่อ้างว่าปฐมนิเทศสอนกลไกของทุกหัวข้อแล้ว"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "books-and-course-boundary"
+        ],
+        "status": "context",
+        "note": "เก็บหนังสือสามรายการ ปีและฉบับตามต้นฉบับ พร้อมระบุว่ายังไม่ใช่บรรณานุกรมที่ตรวจภายนอก"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "books-and-course-boundary"
+        ],
+        "status": "explained",
+        "note": "อธิบาย performance คำถามเชิงสถาปัตยกรรม quantitative approach และขอบเขตที่ไม่ลง hardware design/semiconductor details"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "objectives-to-clos"
+        ],
+        "status": "explained",
+        "note": "เก็บวัตถุประสงค์ครบสิบข้อพร้อมความหมายศัพท์ต้นทาง"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "objectives-to-clos"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพตาราง CLO 1←1,2; CLO 2←3,4,5; CLO 3←6,7,8; CLO 4←9,10 และอธิบายลูกศรสี่ช่วงครบ"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "semester-roadmap"
+        ],
+        "status": "context",
+        "note": "ตรวจภาพตารางที่ extraction อ่านหัวข้อไม่ครบ เก็บแปดแถว ชั่วโมง วันที่ ห้อง และเวลาของทั้งสอง section"
+      }
+    ],
+    "issues": [
+      "ชื่อไฟล์มี itds-210 แต่หน้าปกระบุ ITDS_211; ใช้ sourceFile ตามชื่อไฟล์จริงและอธิบายรหัสวิชาตามเนื้อหา ไม่แก้ชื่อไฟล์เงียบ ๆ",
+      "หน้า 2 เขียน Grading (50) โดยมี 30+15+5; สไลด์ปฐมนิเทศชุดนี้อย่างเดียวไม่ให้สูตรรวมผลคะแนนทั้งวิชา จึงไม่ตีความ 50 เป็นคะแนนเต็มสุดท้าย",
+      "หน้า 5 รายการหนังสือและปี/edition ถูกเก็บตามสไลด์ รวมการสะกด Organisation/Organization และ publisher ที่อาจไม่สม่ำเสมอ ไม่ใช้เป็นการยืนยันบรรณานุกรมปัจจุบัน",
+      "หน้า 9 มีหัวเรื่อง Course Learning Outcomes แต่ตัวเนื้อหาเป็นตารางแผนเรียน; ใช้หัวข้ออธิบายว่าเป็น roadmap และรักษาข้อมูลในตารางจากการดูภาพ"
+    ]
+  },
+  {
+    "id": "02",
+    "code": "CA01",
+    "file": "itds-211_comp_arch_Chapter01.pdf",
+    "pages": 43,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "lecture-route"
+        ],
+        "status": "context",
+        "note": "ตรวจหน้าปกและชื่อบทตรงต้นฉบับ"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "lecture-route"
+        ],
+        "status": "context",
+        "note": "เก็บหัวข้อที่เน้นสองข้อแรกและลำดับหัวข้อที่ต่อยอด"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "architecture-and-organization"
+        ],
+        "status": "explained",
+        "note": "นิยาม WHAT/HOW พร้อมตัวอย่าง instruction set addressing data types cache pipeline bus clock"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "architecture-and-organization"
+        ],
+        "status": "explained",
+        "note": "เก็บรายการตัดสินใจ ISA ทุกกลุ่ม และภาพรวม requirements/performance/cost/power/availability"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "computer-classes-and-cloud"
+        ],
+        "status": "explained",
+        "note": "อธิบาย supercomputer กับ embedded และข้อจำกัดต่างกัน"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "computer-classes-and-cloud"
+        ],
+        "status": "explained",
+        "note": "อธิบาย cloud computing networking storage พร้อมชี้ขอบเขตคำบรรยาย database"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "cloud-service-models"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ-only body; สอน SaaS PaaS IaaS และ API"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "cloud-service-models"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็ม เก็บ10ชั้นและผู้ดูแลทั้ง4คอลัมน์ อธิบายลูกศร trade-off และแก้ความกำกวม OS ใน IaaS ด้วย NIST"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "whole-program-performance"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ body; เชื่อม algorithm language compiler architecture processor memory I/O OS ต่อเวลา"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "eight-great-ideas"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ body; อธิบายแนวคิด8ข้อและความหมายสัญลักษณ์ครบ"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "software-layers-and-code"
+        ],
+        "status": "explained",
+        "note": "ตรวจวงซ้อน3ชั้น แยก compiler OS กับ hardware และหน้าที่ OS ทั้ง I/O memory/storage scheduling/sharing"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "software-layers-and-code"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็ม เส้นแปล C→assembly→binary สอน swap และ7คำสั่ง RISC-V พร้อม flag int/8-byte mismatch"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "components-and-cpu"
+        ],
+        "status": "explained",
+        "note": "เก็บ8ส่วนประกอบพร้อมหน้าที่และอธิบายภาพ processor/control/datapath/memory/input/output"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "components-and-cpu"
+        ],
+        "status": "explained",
+        "note": "สอน CU ALU register CPU interconnection เชื่อมบทบาท"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "machine-cycle-registers"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพลูกศร fetch decode execute store ครบพร้อมข้อจำกัดภาพย่อ"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "machine-cycle-registers"
+        ],
+        "status": "explained",
+        "note": "อธิบาย PC IR status และภาพ accumulator/control/RAM ROM storage/data-control buses"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "cache-hierarchy"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ L1/L2/package/memory และ2coresส่วนตัวL1/ใช้L2ร่วม"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "cache-hierarchy"
+        ],
+        "status": "explained",
+        "note": "สอนเหตุผลหลายชั้น ขนาด/ความเร็ว การคาดว่าจะใช้ข้อมูล และระยะ L1 L2 L3"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "cores-and-threads"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ core/memory/bus/offchip และ scheduler/thread/ALU/L3; ชี้ virtual ไม่ใช่ SMT ไร้ฮาร์ดแวร์"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "cores-and-threads"
+        ],
+        "status": "explained",
+        "note": "รักษาอุปมาเชฟ/แขนจากต้นฉบับพร้อมขอบเขตและนิยาม thread vs core"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "board-chip-core"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพสามระดับ motherboard→chip→core พร้อมองค์ประกอบใน core และ L1/L2/L3"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "board-chip-core"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็ม เก็บ Xeon2×4core DDR3-1333หกchannel48GB chipset SATA USB VGA BIOS Ethernet PCIe clock power"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "board-chip-core"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็ม AppleA5 die; อธิบาย ArmCore data paths GPIO USB I/O DDR video DAC/audio ไม่เหมาแต่ละบล็อกเป็น core"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "manufacturing-and-yield"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพกระบวนการ20–40steps ทดสอบ wafer ตัดdie บรรจุ ทดสอบpart ส่งลูกค้าและนิยามyield"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "manufacturing-and-yield"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ wafer เก็บ300mm 280chips 32nm 20.7×10.5mm; ไม่แต่ง yield ให้ต้นฉบับ"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "historical-performance-trend"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็ม กราฟlogปี1978–2018และอัตรา25/52/23/12/3.5%ต่อปีครบ ชี้เป็นข้อมูลประวัติศาสตร์"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "risc-and-cisc"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ PC program memory IR decoder CW/data path เทียบ microprogram path; flag mPM footnote"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "embedded-and-arm"
+        ],
+        "status": "explained",
+        "note": "ระบบฝังตัว couplingสิ่งแวดล้อม real-timeและหลายกิจกรรมพร้อมกัน"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "embedded-and-arm"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ ARM/RISC/microprocessor/microcontroller dieเล็ก lowpower ประวัติชื่อ โดยไม่อ้างตลาดล่าสุด"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "embedded-and-arm"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพบันได Cortex-A/A50 R M และ M0/M0+/M3/M4 ไม่ตีความเป็นลำดับความแรง"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "cortex-m3-block-diagram"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็มทุกกลุ่มperipheral/clock/energy/memory และภาพขยาย2ภาพ; แก้32-bitcore vs16/32encodingด้วยArm"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "parallelism-and-flynn"
+        ],
+        "status": "explained",
+        "note": "application DLP/task-level เทียบ ILP vector/GPU thread-level request-level และTLPบริบท"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "parallelism-and-flynn"
+        ],
+        "status": "explained",
+        "note": "ตาราง SISD SIMD MISD MIMD ตัวอย่าง vector multimedia GPU และ tightly/loosely-coupled; จำกัดคำกล่าว MISD"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "system-patterns"
+        ],
+        "status": "explained",
+        "note": "สอน monolithic client-server distributed microservices พร้อมระดับ software architecture"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "relative-performance"
+        ],
+        "status": "context",
+        "note": "หน้าแบ่งเรื่อง Performance ไม่มีสมการเพิ่ม"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "relative-performance"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพสูตร 1/time อัตราส่วน และตัวอย่าง10s/15s=1.5 พร้อมขั้นคำนวณ"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "elapsed-and-cpu-time"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ body แยก elapsed/CPU user/system I/O idle otherjob OSoverhead"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "clock-and-cpu-equation"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ waveform transfer/computation/update-state และแปลง250ps=0.25ns,4GHz=4000MHz"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "clock-and-cpu-equation"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพสมการ cycles×period=cycles/rate และtrade-offลดcycles/เพิ่มrate"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "cpu-design-example"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพโจทย์ A2GHz10s B1.2cyclesเป้าหมาย6s ได้4GHz พร้อมแทนกลับ"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "instruction-count-cpi"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพสมการ IC CPI period/rate ปัจจัย program ISA compiler hardware instructionmix พร้อมโจทย์เสริมถ่วงเฉลี่ย"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "instruction-count-cpi"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ A250psCPI2.0 B500psCPI1.2 ได้Aเร็ว1.2 พร้อมข้อสมมติICเดียวกัน"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "lecture-self-check"
+        ],
+        "status": "context",
+        "note": "ตรวจภาพ Q&A ไม่มีเนื้อหาใหม่; เพิ่มคำถามทบทวนติดป้ายเสริม"
+      }
+    ],
+    "issues": [
+      "หน้า 8 ภาพ IaaS ให้ CSP ดูแลชั้น OS ซึ่งไม่ตรงนิยามทั่วไปเรื่อง guest OS ที่ลูกค้าควบคุม; เก็บตารางตามภาพและเพิ่มข้อแก้พร้อมแหล่ง NIST https://csrc.nist.gov/glossary/term/Infrastructure_as_a_Service",
+      "หน้า 6 อธิบาย cloud storage แคบเป็น database storage/apps; เพิ่มคำอธิบายว่าไม่ควรตีความว่าคลาวด์เก็บได้เฉพาะฐานข้อมูล",
+      "หน้า 12 C ระบุ int แต่ RISC-V assembly ใช้ shift3,ld/sdและstride8; หาก int4ไบต์เป็นการจับคู่ไม่สอดคล้อง ต้องระบุสมมติข้อมูล8ไบต์หรือแก้ขนาดคำสั่ง ไม่สอนว่า int8ไบต์เสมอ",
+      "หน้า 19–20 เรียก multi-thread ว่า virtual และอุปมาแขนเชฟซึ่งย่อมาก; เสริมว่า SMT มีฮาร์ดแวร์บริบทและแชร์ execution resources ไม่ใช่ coreใหม่เต็มตัวหรือซอฟต์แวร์ล้วน",
+      "หน้า 27 เชิงอรรถ mPM = Microprocessor Mode น่าจะใช้คำผิดเมื่อดูเส้นทาง microprogram counter→memory→CW; อธิบายบทบาทเป็น microprogram memory อย่างเปิดเผย",
+      "หน้า 31 คำว่า Cortex-M3:16,32-bit applications อาจทำให้เข้าใจว่า core16/32บิต; ตรวจ Arm แล้วแยก core32บิตจากThumb/Thumb-2 encoding16/32บิต และไม่เหมาว่าperipherals/64kBในภาพเป็นทุกชิป",
+      "หน้า 26 เป็นกราฟสิ้นสุด2018และหน้า29–30เป็นตัวอย่างARMในเอกสารเก่า ไม่แสดงเป็นสเปก/ส่วนแบ่งตลาดปัจจุบัน; หน้า33คำว่าMISDไม่มีเชิงพาณิชย์รักษาเป็นข้อความตามบริบทสไลด์ ไม่ขยายเป็นสัจพจน์ทุกนิยาม",
+      "หน้า 42 เขียน same ISA แต่การตัด I สมมติ ICเท่ากันด้วย; เพิ่มข้อสมมตินี้ชัดเจนเพราะISAเดียวกันไม่รับประกันจำนวนคำสั่งเท่ากันทุกcompiler/workload"
+    ]
+  },
+  {
+    "id": "03",
+    "code": "CA02",
+    "file": "itds-211_comp_arch_Chapter02.pdf",
+    "pages": 46,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "lecture-purpose"
+        ],
+        "status": "context",
+        "note": "ตรวจปกชื่อบทIIและขอบเขตfunctions/structure"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "lecture-purpose"
+        ],
+        "status": "context",
+        "note": "อธิบายoutlineและตำแหน่งบทในวิชา"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "von-neumann-and-harvard"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพCU/ALU/memory/input/output storedprogram locationaddressและข้อจำกัดคำว่าlinear"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "von-neumann-and-harvard"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพinstruction/dataแยกทาง ALU/I/O hybridL1/mainmemory DSP/microcontroller"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "bus-lines-and-sharing"
+        ],
+        "status": "explained",
+        "note": "data/address/control point-to-point/multipointและภาพCPU-memory-I/Oครบ"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "bus-lines-and-sharing"
+        ],
+        "status": "explained",
+        "note": "ตรวจmultipointcontroller/disk/monitorและprotocol;flagcontrollerป้ายผิดที่ต่อจอ"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "bus-arbitration"
+        ],
+        "status": "explained",
+        "note": "master/slaveและarbitration4แบบครบพร้อมลำดับ/บทบาท"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "software-controls-hardware"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพhardwaredata→functions→resultเทียบsoftwareinstruction→interpreter→control→functions"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "software-controls-hardware"
+        ],
+        "status": "explained",
+        "note": "softwaresequenceแทนrewiring CPUinterpreter/functions I/Oรับแปลงรายงานผล"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "address-buffer-top-level"
+        ],
+        "status": "explained",
+        "note": "สอนMAR/MBR/I/OAR/I/OBRแยกตำแหน่งกับข้อมูล"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "address-buffer-top-level"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพCPUregister/executionunit-systembus-mainmemoryinstruction/data-I/Omodulebuffers"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "basic-fetch-cycle"
+        ],
+        "status": "explained",
+        "note": "ตรวจSTART-fetch-execute-loop-HALT"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "basic-fetch-cycle"
+        ],
+        "status": "explained",
+        "note": "PCfetch IR increment interpretพร้อมข้อจำกัดPC+1ตามเครื่อง"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "hypothetical-machine"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็ม6states memory300–302/940–941 registerPCIRAC opcode1/2/5 instruction4+12 signedmagnitude แตกtraceครบและแยกจากMARIE"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "instruction-state-diagram"
+        ],
+        "status": "explained",
+        "note": "ทุกstateและloopmultipleoperands/results string/vectorและinstructioncomplete"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "instruction-state-diagram"
+        ],
+        "status": "context",
+        "note": "หน้าคั่นSimpleComputerFunctionไม่มีเนื้อหาใหม่"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "marie-registers-architecture"
+        ],
+        "status": "explained",
+        "note": "register7ตัวขนาด/หน้าที่ครบ พร้อมแก้ACถือconditionaloperatorเป็นค่าที่ตรวจ"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "marie-registers-architecture"
+        ],
+        "status": "explained",
+        "note": "ตรวจCPUALUACMBRMARPCIRIn/Outและmemory0–4095;คำนวณ12บิตเสริม"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "marie-datapath"
+        ],
+        "status": "explained",
+        "note": "commonbus deviceselectและทางตรงAC/MBR/ALUไม่ใช้mainbus"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "marie-datapath"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็มselect0–7ทุกตัว16bitbusและทางALU ไม่ปนbusselectorกับmemoryaddress"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "marie-isa-format"
+        ],
+        "status": "explained",
+        "note": "ISAinterfaceและMARIE13instructions โดยแยกว่าตารางถัดไปแสดง9พื้นฐาน"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "marie-isa-format"
+        ],
+        "status": "explained",
+        "note": "ตรวจinstructionformat4+12และตาราง9แถวopcodebinary/hex/mnemonic/meaningครบ"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "load-and-skipcond-bits"
+        ],
+        "status": "explained",
+        "note": "ตรวจbitpattern1003=Load003ทีละfield"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "load-and-skipcond-bits"
+        ],
+        "status": "explained",
+        "note": "ตรวจbitpattern8800 bits11:10=10 AC>0ข้ามหนึ่งคำสั่ง"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "rtl-microoperations"
+        ],
+        "status": "explained",
+        "note": "microoperation RTL M[X]และ←พร้อมแยกassignment/equality"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "rtl-microoperations"
+        ],
+        "status": "explained",
+        "note": "LoadและAddRTLทุกบรรทัดและเหตุผลACแทนค่ากับสะสม"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "rtl-microoperations"
+        ],
+        "status": "explained",
+        "note": "SkipcondRTLทุกเงื่อนไขพร้อมแก้11เป็น10สำหรับAC>0โดยเทียบหน้า24และMARIE.js"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "fetch-decode-execute-flow"
+        ],
+        "status": "explained",
+        "note": "fetchIR decode operandMBR executeตามลำดับ"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "fetch-decode-execute-flow"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็มทุกกล่อง/decision/loopพร้อมข้อจำกัดstoreoperandreadและIRdirectreadเป็นรูปย่อ"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "interrupt-introduction-and-isr"
+        ],
+        "status": "explained",
+        "note": "CtrlC I/O criticalerror hardware/softwareinterruptพร้อมแยกsystemcall/exceptionให้แม่น"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "interrupt-introduction-and-isr"
+        ],
+        "status": "explained",
+        "note": "ตรวจdecisioninterruptyesprocess/noFDEและloop"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "interrupt-introduction-and-isr"
+        ],
+        "status": "explained",
+        "note": "save/vector/PC/branch/ISR/return/restoreทุกกล่องครบ"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "masking-and-polling"
+        ],
+        "status": "explained",
+        "note": "flags masking nonmaskableและข้อจำกัดdisableall/ignoredไม่เท่ากับdiscardทุกกรณี"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "masking-and-polling"
+        ],
+        "status": "explained",
+        "note": "MARIEprogrammedI/O pollingInREG→ACและOutREGไม่อ้างใช้interruptI/Oเอง"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "marie-simple-program"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็มตาราง7แถวbinary/hex/mnemonic/addressesครบ เก็บ4106ผิดต้นฉบับและแก้2106ก่อนtrace"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "marie-simple-program"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็มตารางRTNและPCIRMARMBRACทุกแถว Add105ได้000C;อธิบายFFE9−23"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "interrupt-classes"
+        ],
+        "status": "explained",
+        "note": "ตารางProgram Timer I/O HardwareFailureทุกกลุ่ม/ตัวอย่างครบ"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "control-transfer-with-interrupts"
+        ],
+        "status": "explained",
+        "note": "ตรวจ3panelnointerrupt short/longwait user1/2/3 I/O4/5กากบาท2a/b3a/bลูกศรครบ"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "control-transfer-with-interrupts"
+        ],
+        "status": "explained",
+        "note": "useri→handler→i+1และความจำเป็นรักษาสถานะ"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "control-transfer-with-interrupts"
+        ],
+        "status": "explained",
+        "note": "fetch/execute/interruptcheck enabled/disabled/HALTทุกทาง"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "short-and-long-io-timing"
+        ],
+        "status": "explained",
+        "note": "อ่านtimelineสีเขียวผู้ใช้เทาควบคุมดำรอ shortwaitซ้อน2a/3aแยกb;ไม่แต่งตัวเลขในภาพ"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "short-and-long-io-timing"
+        ],
+        "status": "explained",
+        "note": "longwaitยังมีprocessorwaitหลังงานอิสระหมดเทียบไม่มีinterrupt"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "interrupt-state-and-multiple"
+        ],
+        "status": "explained",
+        "note": "ตรวจstatediagramเพิ่มinterruptcheck interrupt/nointerruptกับloopข้อมูลเดิม"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "interrupt-state-and-multiple"
+        ],
+        "status": "explained",
+        "note": "sequentialเทียบnested X/YและลำดับกลับY→X→user"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "multiple-interrupt-time-sequence"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพเต็มuser/printer/communication/diskและt0/10/15/25/35/40;คำนวณเวลาบริการไม่เติมarrival/priority/unitที่ไม่แสดง"
+      },
+      {
+        "page": 46,
+        "sectionIds": [
+          "closing-self-check"
+        ],
+        "status": "context",
+        "note": "Q&Aไม่มีหัวข้อใหม่ คำถามฝึกเสริมระบุป้าย"
+      }
+    ],
+    "issues": [
+      "หน้า3คำว่าexecution/memorysequential-linearเป็นภาพพื้นฐาน ไม่ใช่ห้ามbranchหรือpipeline;ขยายข้อจำกัดเพื่อไม่ให้ผู้เริ่มต้นติดความเข้าใจผิด",
+      "หน้า6ภาพที่ต่อmonitorพิมพ์ชื่อcontrollerว่าDiskController;ใช้หลักcontrollerทั่วไปและเปิดเผยป้ายชวนสับสน",
+      "หน้า14เป็นhypotheticalmachineมีAddopcode5และsign/magnitude ซึ่งต่างจากMARIEAdd3และการอ่านFFE9two’scomplementในหน้า35–36;แยกเครื่องและจุดsnapshotPCชัดเจน",
+      "หน้า17ACถูกอธิบายว่าholdsconditionaloperatorเช่นless-than ซึ่งคลาดบทบาท;ACถือค่าที่ตรวจ ส่วนเงื่อนไขอยู่instructionfield;IR16บิตอนุมานจากinstructionformatเพราะรายการไม่พิมพ์ขนาดไว้",
+      "หน้า21บอก13instructionsแต่หน้า22ให้ตารางเพียง9fundamentalinstructions;เก็บทั้งสองข้อและไม่อ้างว่าตารางแสดงครบ13",
+      "หน้า27SkipcondRTLกรณีAC>0เขียนIR[11:10]=11 ซึ่งขัดกับหน้า24ที่เป็น10;แก้เป็น10อย่างเปิดเผยและตรวจMARIE.js primaryproject https://github.com/MARIE-js/MARIE.js/wiki/MARIE-Instruction-Set-(with-Opcodes)",
+      "หน้า29ผังoperandfetchย่อไม่ครอบคลุมStoreทุกจังหวะ และหน้า36อ่านIR←M[MAR]ตรงโดยละบัฟเฟอร์กลาง;อธิบายเป็นระดับการย่อไม่กำหนดให้ทุกimplementationข้ามMBR",
+      "หน้า30ใช้interruptเป็นร่มรวมhardware/software/systemcall/criticalerrorและยกCtrlC;เสริมแยกexceptionกับexternalinterruptและเส้นทางผ่านOS ไม่อ้างCtrlCเป็นคำสั่งCPUโดยตรง",
+      "หน้า33disableall/ignoredเป็นคำย่อที่ไม่ครอบคลุมnonmaskable,nesting,pending;อธิบายกติกาที่ทำให้ไม่ขัดภาพnestedหน้า44",
+      "หน้า35แถว102ชื่อStore106แต่binary0100000100000110และhex4106คือSubt106ตามตารางหน้า22;Storeที่ถูกคือbinary0010000100000110hex2106 เก็บต้นฉบับพร้อมแก้ในtraceและแสดงผลหากใช้ค่าผิดจริง",
+      "หน้า41–42ไม่มีตัวเลขสเกลเวลา;ตัวอย่างคำนวณoverlapเป็นเสริมเท่านั้น หน้า45ให้จุดdispatch/returnt10,15,25,35,40แต่ไม่ให้หน่วยเวลา,diskarrivalหรือเลขpriorityจึงไม่เติมเป็นsourcefact"
+    ]
+  },
+  {
+    "id": "04",
+    "code": "CA03",
+    "file": "itds-211_comp_arch_Chapter03_RiscV.pdf",
+    "pages": 118,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "chapter-roadmap"
+        ],
+        "status": "context",
+        "note": "Data Representation (แผนที่บทและการแทนข้อมูล); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "chapter-roadmap"
+        ],
+        "status": "context",
+        "note": "Data Representation (แผนที่บทและการแทนข้อมูล); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "chapter-roadmap"
+        ],
+        "status": "context",
+        "note": "Data Representation (แผนที่บทและการแทนข้อมูล); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "chapter-roadmap"
+        ],
+        "status": "context",
+        "note": "Data Representation (แผนที่บทและการแทนข้อมูล); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "bits-and-bases"
+        ],
+        "status": "explained",
+        "note": "ภาพ n บิตและช่วง 0 ถึง 2ⁿ−1"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "bits-and-bases"
+        ],
+        "status": "explained",
+        "note": "ตรวจแผนผัง Data → Quantitative/Qualitative → Integer/Non-integer → Signed/Unsigned"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "bits-and-bases"
+        ],
+        "status": "explained",
+        "note": "เก็บชุดสัญลักษณ์ฐานสิบ สอง แปด สิบหกครบ"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "bits-and-bases"
+        ],
+        "status": "explained",
+        "note": "เก็บตัวอย่าง 20, ±20, 10.25, 3.33333…, 1/8=0.125"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "sign-and-magnitude"
+        ],
+        "status": "explained",
+        "note": "สามวิธีแทน signed integer"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "sign-and-magnitude"
+        ],
+        "status": "explained",
+        "note": "แผนผัง sign + n magnitude bits; ชี้ความหมาย n"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "sign-and-magnitude"
+        ],
+        "status": "explained",
+        "note": "เฉลยช่วงรวม8บิตและศูนย์สองรหัส"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "sign-and-magnitude"
+        ],
+        "status": "explained",
+        "note": "ข้อดี/ข้อเสียและตัวอย่าง2+(−3)"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "general-complements"
+        ],
+        "status": "explained",
+        "note": "ฐาน/radixและสองชนิดพร้อมฐาน10/2"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "general-complements"
+        ],
+        "status": "explained",
+        "note": "นิยาม(rⁿ−1)−mและrⁿ−m"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "general-complements"
+        ],
+        "status": "explained",
+        "note": "คำนวณ382→617/618และแจ้งป้ายชื่อคลาดเคลื่อน"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "ones-complement"
+        ],
+        "status": "explained",
+        "note": "กลับบิต0101และ00101011;ศูนย์สองรหัส;ช่วง8บิต"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "ones-complement"
+        ],
+        "status": "explained",
+        "note": "อ่านขั้น110+100และend-around carry;ชี้6เกินช่วงsigned3บิต"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "twos-complement"
+        ],
+        "status": "explained",
+        "note": "สร้าง2’sและช่วง8บิต"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "twos-complement"
+        ],
+        "status": "explained",
+        "note": "0101011กลับบิตบวก1และทางลัด"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "twos-complement"
+        ],
+        "status": "explained",
+        "note": "6+(−5)คง4บิตและทิ้งcarry"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "twos-complement"
+        ],
+        "status": "explained",
+        "note": "เทียบศูนย์ ช่วง และใช้adderทำsub"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "twos-complement"
+        ],
+        "status": "explained",
+        "note": "ถอดตารางค่าขอบและอธิบายwrap around/+1"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "bias-notation"
+        ],
+        "status": "explained",
+        "note": "นิยามValue=Stored−B;ช่วงbias127และขอบผลรวม"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "bias-notation"
+        ],
+        "status": "explained",
+        "note": "เก็บทุกแถวของตารางBiased-127"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "floating-layout"
+        ],
+        "status": "explained",
+        "note": "ตัวอย่างฐาน10ทั้งสองและส่วนของscientific notation"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "floating-layout"
+        ],
+        "status": "explained",
+        "note": "สูตรN=(−1)^s m2^eและช่องเก็บ"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "floating-layout"
+        ],
+        "status": "explained",
+        "note": "ตารางsingle/doubleพร้อมตำแหน่งบิต"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "floating-layout"
+        ],
+        "status": "explained",
+        "note": "hidden1และexcess127"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "floating-layout"
+        ],
+        "status": "explained",
+        "note": "ช่วงnormalizedและชี้การประมาณค่าสูงสุด/รหัสพิเศษ"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "binary-fractions"
+        ],
+        "status": "explained",
+        "note": "Binary Fractions (อ่านและสร้างเศษส่วนฐานสอง); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "ieee-1715"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพS/E/mantissaของ17.15;สอนnormalizeและแก้บิตเศษที่ตัดคลาดเคลื่อน"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "characters-and-ascii"
+        ],
+        "status": "explained",
+        "note": "ประเภทletters/digits/symbols/controlครบ"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "characters-and-ascii"
+        ],
+        "status": "explained",
+        "note": "8บิต256รูปแบบ;ASCII/EBCDIC/Unicode"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "characters-and-ascii"
+        ],
+        "status": "explained",
+        "note": "128รหัส7บิตและparity"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "characters-and-ascii"
+        ],
+        "status": "explained",
+        "note": "ถอดแถว0–15และ32–63พร้อมHex/Symbol"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "characters-and-ascii"
+        ],
+        "status": "explained",
+        "note": "ถอดแถว64–111พร้อมHex/Symbol"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "characters-and-ascii"
+        ],
+        "status": "explained",
+        "note": "digitไม่เท่าค่าจำนวน;A/aและ0x20;ข้อจำกัด128ตัว"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "assignment-two"
+        ],
+        "status": "context",
+        "note": "เก็บเงื่อนไขกลุ่ม2คน 16บิต add/sub สองวิธี ส่งทุกคน และกำหนดเดิม"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "instruction-language"
+        ],
+        "status": "context",
+        "note": "หน้าเปิดภาษาคำสั่ง"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "instruction-language"
+        ],
+        "status": "context",
+        "note": "ป้ายPart I RISC-V"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "instruction-language"
+        ],
+        "status": "explained",
+        "note": "ต่างISA/ความเรียบง่ายกับimplementation"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "instruction-language"
+        ],
+        "status": "explained",
+        "note": "ที่มาopenISAและตัวอย่างembeddedตามสไลด์"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "arithmetic-and-registers"
+        ],
+        "status": "explained",
+        "note": "สามoperandและหลักregularity"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "arithmetic-and-registers"
+        ],
+        "status": "explained",
+        "note": "นิพจน์fและชี้add/subผิด"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "arithmetic-and-registers"
+        ],
+        "status": "explained",
+        "note": "32×64-bit,word/doubleword,smallerisfaster"
+      },
+      {
+        "page": 46,
+        "sectionIds": [
+          "arithmetic-and-registers"
+        ],
+        "status": "explained",
+        "note": "ตารางหน้าที่รีจิสเตอร์ครบ"
+      },
+      {
+        "page": 47,
+        "sectionIds": [
+          "arithmetic-and-registers"
+        ],
+        "status": "explained",
+        "note": "โค้ดจริงx19–x23พร้อมx5/x6"
+      },
+      {
+        "page": 48,
+        "sectionIds": [
+          "memory-immediates"
+        ],
+        "status": "explained",
+        "note": "ตรวจทิศaddressของbig/little-endianและE-bit"
+      },
+      {
+        "page": 49,
+        "sectionIds": [
+          "memory-immediates"
+        ],
+        "status": "explained",
+        "note": "byteaddress/loadstore/array/alignmentพร้อมขอบเขต"
+      },
+      {
+        "page": 50,
+        "sectionIds": [
+          "memory-immediates"
+        ],
+        "status": "explained",
+        "note": "A12=h+A8;offset64/96และโค้ด"
+      },
+      {
+        "page": 51,
+        "sectionIds": [
+          "memory-immediates"
+        ],
+        "status": "explained",
+        "note": "registerเร็ว;loadstore;spill"
+      },
+      {
+        "page": 52,
+        "sectionIds": [
+          "memory-immediates"
+        ],
+        "status": "explained",
+        "note": "addi x22,x22,4และcommoncase"
+      },
+      {
+        "page": 53,
+        "sectionIds": [
+          "memory-immediates"
+        ],
+        "status": "explained",
+        "note": "ช่วงsignedunsigned;negate2;signextension"
+      },
+      {
+        "page": 54,
+        "sectionIds": [
+          "instruction-formats"
+        ],
+        "status": "explained",
+        "note": "machinecodeและ32bitคำสั่ง"
+      },
+      {
+        "page": 55,
+        "sectionIds": [
+          "instruction-formats"
+        ],
+        "status": "explained",
+        "note": "Rformatทุกfield/ขนาด"
+      },
+      {
+        "page": 56,
+        "sectionIds": [
+          "instruction-formats"
+        ],
+        "status": "explained",
+        "note": "0/21/20/0/9/51และ0x015A04B3"
+      },
+      {
+        "page": 57,
+        "sectionIds": [
+          "instruction-formats"
+        ],
+        "status": "explained",
+        "note": "Iformat12bit/signextendและcompromise"
+      },
+      {
+        "page": 58,
+        "sectionIds": [
+          "instruction-formats"
+        ],
+        "status": "explained",
+        "note": "Sformatimmediateแยก7+5"
+      },
+      {
+        "page": 59,
+        "sectionIds": [
+          "instruction-formats"
+        ],
+        "status": "explained",
+        "note": "ภาพprocessor/memoryทั้งprogram/dataและbinarycompatibility"
+      },
+      {
+        "page": 60,
+        "sectionIds": [
+          "logical-operations"
+        ],
+        "status": "explained",
+        "note": "ตารางC/Java/RISC-Vทั้ง6งาน"
+      },
+      {
+        "page": 61,
+        "sectionIds": [
+          "logical-operations"
+        ],
+        "status": "explained",
+        "note": "formatshift6bitและslli/srli"
+      },
+      {
+        "page": 62,
+        "sectionIds": [
+          "logical-operations"
+        ],
+        "status": "explained",
+        "note": "ภาพANDmaskและค่า0DC0/3C00→0C00"
+      },
+      {
+        "page": 63,
+        "sectionIds": [
+          "logical-operations"
+        ],
+        "status": "explained",
+        "note": "ภาพOR→3DC0"
+      },
+      {
+        "page": 64,
+        "sectionIds": [
+          "logical-operations"
+        ],
+        "status": "explained",
+        "note": "ภาพXORกับonesเป็นNOT→…F23F;แก้คำบรรยาย"
+      },
+      {
+        "page": 65,
+        "sectionIds": [
+          "branches-and-loops"
+        ],
+        "status": "explained",
+        "note": "beq/bneและfallthrough"
+      },
+      {
+        "page": 66,
+        "sectionIds": [
+          "branches-and-loops"
+        ],
+        "status": "explained",
+        "note": "โค้ดifelseและอธิบายภาพทางแยก"
+      },
+      {
+        "page": 67,
+        "sectionIds": [
+          "branches-and-loops"
+        ],
+        "status": "explained",
+        "note": "โค้ดwhileทุกบรรทัดและoffset"
+      },
+      {
+        "page": 68,
+        "sectionIds": [
+          "branches-and-loops"
+        ],
+        "status": "explained",
+        "note": "ภาพbasicblock/ทางเข้าออก"
+      },
+      {
+        "page": 69,
+        "sectionIds": [
+          "branches-and-loops"
+        ],
+        "status": "explained",
+        "note": "blt/bgeและif(a>b)"
+      },
+      {
+        "page": 70,
+        "sectionIds": [
+          "branches-and-loops"
+        ],
+        "status": "explained",
+        "note": "บิตเดิมsigned−1เทียบunsigned4294967295"
+      },
+      {
+        "page": 71,
+        "sectionIds": [
+          "procedure-contract"
+        ],
+        "status": "explained",
+        "note": "ขั้นส่งarguments/call/storage/work/result/returnครบ6"
+      },
+      {
+        "page": 72,
+        "sectionIds": [
+          "procedure-contract"
+        ],
+        "status": "explained",
+        "note": "jal/jalrและผลต่อx1/PC"
+      },
+      {
+        "page": 73,
+        "sectionIds": [
+          "leaf-stack"
+        ],
+        "status": "explained",
+        "note": "Cleafตัวรับ/ค่ากลับ/temporary"
+      },
+      {
+        "page": 74,
+        "sectionIds": [
+          "leaf-stack"
+        ],
+        "status": "explained",
+        "note": "โค้ดครบ13ขั้นพร้อมแก้x13และวงเล็บ"
+      },
+      {
+        "page": 75,
+        "sectionIds": [
+          "leaf-stack"
+        ],
+        "status": "explained",
+        "note": "อธิบายภาพbefore/push/popและoffset0/8/16"
+      },
+      {
+        "page": 76,
+        "sectionIds": [
+          "leaf-stack"
+        ],
+        "status": "explained",
+        "note": "แยกcaller-savedtemporaryกับcallee-saved"
+      },
+      {
+        "page": 77,
+        "sectionIds": [
+          "recursive-procedure"
+        ],
+        "status": "explained",
+        "note": "สิ่งที่ต้องเก็บเมื่อnestedcall"
+      },
+      {
+        "page": 78,
+        "sectionIds": [
+          "recursive-procedure"
+        ],
+        "status": "explained",
+        "note": "Cfactorial;returnfผิดต้อง1"
+      },
+      {
+        "page": 79,
+        "sectionIds": [
+          "recursive-procedure"
+        ],
+        "status": "explained",
+        "note": "assemblyrecursiveครบ;branchn−1;save/restore/mul;หัวข้อผิด"
+      },
+      {
+        "page": 80,
+        "sectionIds": [
+          "memory-and-frames"
+        ],
+        "status": "explained",
+        "note": "ภาพtext/static/heap/stackพร้อมPC/gp/spและที่อยู่ตัวอย่าง"
+      },
+      {
+        "page": 81,
+        "sectionIds": [
+          "memory-and-frames"
+        ],
+        "status": "explained",
+        "note": "ภาพก่อน/ระหว่าง/หลังเฟรมและทุกช่องsaved/local"
+      },
+      {
+        "page": 82,
+        "sectionIds": [
+          "subword-character-ops"
+        ],
+        "status": "explained",
+        "note": "ASCII95+33,Latin1,Unicode/UTFและขอบเขตคำ32bit"
+      },
+      {
+        "page": 83,
+        "sectionIds": [
+          "subword-character-ops"
+        ],
+        "status": "explained",
+        "note": "ตารางlb/lh/lw,lbu/lhu/lwu,sb/sh/swครบ"
+      },
+      {
+        "page": 84,
+        "sectionIds": [
+          "self-study-entry"
+        ],
+        "status": "context",
+        "note": "Part II: Self-study (ส่วนศึกษาด้วยตนเอง); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      },
+      {
+        "page": 85,
+        "sectionIds": [
+          "string-copy"
+        ],
+        "status": "explained",
+        "note": "อธิบายCwhile assignmentและnullterminator"
+      },
+      {
+        "page": 86,
+        "sectionIds": [
+          "string-copy"
+        ],
+        "status": "explained",
+        "note": "โค้ดครบพร้อมแก้sourcebasey=x11และpush/pop"
+      },
+      {
+        "page": 87,
+        "sectionIds": [
+          "wide-constants"
+        ],
+        "status": "explained",
+        "note": "lui20บิตลง31:12/signextend;976และ128/0x500ไม่ตรง"
+      },
+      {
+        "page": 88,
+        "sectionIds": [
+          "addressing-and-encoding"
+        ],
+        "status": "explained",
+        "note": "SBfieldครบ/PC+imm×2และความหมายหน่วย"
+      },
+      {
+        "page": 89,
+        "sectionIds": [
+          "addressing-and-encoding"
+        ],
+        "status": "explained",
+        "note": "UJfieldและLUI+JALRไกล"
+      },
+      {
+        "page": 90,
+        "sectionIds": [
+          "addressing-and-encoding"
+        ],
+        "status": "explained",
+        "note": "อธิบายลูกศรของimmediate/register/base/PC-relative"
+      },
+      {
+        "page": 91,
+        "sectionIds": [
+          "addressing-and-encoding"
+        ],
+        "status": "explained",
+        "note": "ถอดตารางformat6แบบพร้อมขนาดสัมพันธ์"
+      },
+      {
+        "page": 92,
+        "sectionIds": [
+          "atomic-synchronization"
+        ],
+        "status": "explained",
+        "note": "data raceและatomic operation"
+      },
+      {
+        "page": 93,
+        "sectionIds": [
+          "atomic-synchronization"
+        ],
+        "status": "explained",
+        "note": "lr.d/sc.dค่ากลับ0/nonzero;reservationไม่ใช่ล็อกกั้นการอ่าน"
+      },
+      {
+        "page": 94,
+        "sectionIds": [
+          "atomic-synchronization"
+        ],
+        "status": "explained",
+        "note": "atomic swap/lock/unlockครบและแก้syntaxsc"
+      },
+      {
+        "page": 95,
+        "sectionIds": [
+          "translation-link-load"
+        ],
+        "status": "explained",
+        "note": "แผนภาพcompiler/assembler/object/library/linker/executable/loader/memoryครบ"
+      },
+      {
+        "page": 96,
+        "sectionIds": [
+          "translation-link-load"
+        ],
+        "status": "explained",
+        "note": "Objectทั้ง6ส่วนพร้อมหน้าที่"
+      },
+      {
+        "page": 97,
+        "sectionIds": [
+          "translation-link-load"
+        ],
+        "status": "explained",
+        "note": "สามขั้นlinkและขอบเขตvirtualmemory"
+      },
+      {
+        "page": 98,
+        "sectionIds": [
+          "translation-link-load"
+        ],
+        "status": "explained",
+        "note": "loadครบ6ขั้น/startup/main/exit"
+      },
+      {
+        "page": 99,
+        "sectionIds": [
+          "dynamic-and-java"
+        ],
+        "status": "explained",
+        "note": "dynamiclinkเหตุผล/relocatable/version"
+      },
+      {
+        "page": 100,
+        "sectionIds": [
+          "dynamic-and-java"
+        ],
+        "status": "explained",
+        "note": "อธิบายภาพสองด้านfirst/subsequentครบทุกองค์ประกอบ"
+      },
+      {
+        "page": 101,
+        "sectionIds": [
+          "dynamic-and-java"
+        ],
+        "status": "explained",
+        "note": "ภาพJava compiler/class/JVM/JIT/library/nativeครบ"
+      },
+      {
+        "page": 102,
+        "sectionIds": [
+          "swap-procedure"
+        ],
+        "status": "explained",
+        "note": "Cswapครบ3assignmentและregistermapping"
+      },
+      {
+        "page": 103,
+        "sectionIds": [
+          "swap-procedure"
+        ],
+        "status": "explained",
+        "note": "assemblyswapครบ7คำสั่ง/offset8"
+      },
+      {
+        "page": 104,
+        "sectionIds": [
+          "sort-loops-and-saves"
+        ],
+        "status": "explained",
+        "note": "Csortทุกชั้น/size_tjและชนิดalgorithm"
+      },
+      {
+        "page": 105,
+        "sectionIds": [
+          "sort-loops-and-saves"
+        ],
+        "status": "explained",
+        "note": "outerloopครบtest/body/increment/backedge"
+      },
+      {
+        "page": 106,
+        "sectionIds": [
+          "sort-loops-and-saves"
+        ],
+        "status": "explained",
+        "note": "innerloopครบและตรวจregisterparameterclobber"
+      },
+      {
+        "page": 107,
+        "sectionIds": [
+          "sort-loops-and-saves"
+        ],
+        "status": "explained",
+        "note": "save5register40bytes;sd/ldผิด;ตัวอย่างแก้48bytes"
+      },
+      {
+        "page": 108,
+        "sectionIds": [
+          "compiler-language-performance"
+        ],
+        "status": "explained",
+        "note": "รักษา4กราฟด้วยตารางค่าประมาณและอธิบายแกน/เงื่อนไขเครื่อง"
+      },
+      {
+        "page": 109,
+        "sectionIds": [
+          "compiler-language-performance"
+        ],
+        "status": "explained",
+        "note": "รักษา3กราฟ/6configurationพร้อมrelativebaselineและspeedup"
+      },
+      {
+        "page": 110,
+        "sectionIds": [
+          "compiler-language-performance"
+        ],
+        "status": "explained",
+        "note": "บทเรียนIC/CPI/compiler/JIT/algorithmครบ"
+      },
+      {
+        "page": 111,
+        "sectionIds": [
+          "arrays-versus-pointers"
+        ],
+        "status": "explained",
+        "note": "arrayindexคูณsizeบวกbaseและpointerเป็นaddress"
+      },
+      {
+        "page": 112,
+        "sectionIds": [
+          "arrays-versus-pointers"
+        ],
+        "status": "explained",
+        "note": "ตารางC/assemblyทั้งสองวิธี;ชี้int8byteและzero-size"
+      },
+      {
+        "page": 113,
+        "sectionIds": [
+          "arrays-versus-pointers"
+        ],
+        "status": "explained",
+        "note": "strengthreduction/inductionvariableelimination/compiler/clarity"
+      },
+      {
+        "page": 114,
+        "sectionIds": [
+          "mips-and-extensions"
+        ],
+        "status": "explained",
+        "note": "MIPSโครงหลัก/32register/FP/loadstore/branch"
+      },
+      {
+        "page": 115,
+        "sectionIds": [
+          "mips-and-extensions"
+        ],
+        "status": "explained",
+        "note": "เก็บตารางเทียบRISC-V/MIPSทั้ง4ชนิด"
+      },
+      {
+        "page": 116,
+        "sectionIds": [
+          "mips-and-extensions"
+        ],
+        "status": "explained",
+        "note": "auipc/setless/w/RV32Iครบพร้อมแก้ชื่อ"
+      },
+      {
+        "page": 117,
+        "sectionIds": [
+          "mips-and-extensions"
+        ],
+        "status": "explained",
+        "note": "extensionsM/A/F/D/Cครบ"
+      },
+      {
+        "page": 118,
+        "sectionIds": [
+          "questions-and-coverage"
+        ],
+        "status": "context",
+        "note": "Q & A (ตรวจความเข้าใจและขอบเขตที่สอน); ตรวจภาพต้นฉบับและอธิบายรายละเอียดในหัวข้อนี้"
+      }
+    ],
+    "issues": [
+      "หน้า10ใช้nเป็นบิตของmagnitudeและมีsignเพิ่มอีก1 ต่างจากnบิตรวมในหน้า5;บทเรียนแยกwบิตรวมเพื่อไม่ใช้ช่วงผิด",
+      "หน้า14ขอบเขตr’s complementเขียนof nแทนof m;กรณีm=0ต้องตีความแบบคงnหลัก",
+      "หน้า15เป็นเลขฐานสิบ382แต่ข้อความเสริมเรียก1’/2’complement;ชื่อที่ตรงฐานคือ9’s/10’s complement",
+      "หน้า17ตัวอย่าง6+(−3)ในsignedone’scomplement3บิตเกินช่วง−3ถึง3 บทเรียนรักษาขั้น110+100แล้วชี้ปัญหาและสาธิต4บิตที่ถูกช่วง",
+      "หน้า23ผลรวมบิตพิมพ์i=0ถึงn;เมื่อมีnบิตขอบบนควรn−1",
+      "หน้า29ค่าสูงสุดเขียน2×2^127=2^128เป็นการประมาณ ค่าจำกัดจริง(2−2^-23)×2^127;E=0ยังรวมzero/subnormalไม่ใช่เพียงinfinity/NaN",
+      "หน้า31เลข17.15ฐานสองไม่จบ ภาพmantissaตัดและเติมบางบิตผิด;บทเรียนแยกค่าประมาณต้นฉบับจากIEEE32ที่ตรวจได้0x41893333",
+      "หน้า35–36ตารางที่พิมพ์แสดง0–15และ32–111 ไม่ได้แสดง16–31/112–127;ไม่ได้สรุปว่ารหัสที่หายไม่มีในASCII",
+      "หน้า37ข้อความShiftkeyclearsbit5เป็นคำอธิบายรหัสASCIIสำหรับตัวอักษรละติน ไม่ใช่รับประกันการทำงานkeyboardทุกภาษา",
+      "หน้า44นิพจน์และcommentเป็นลบแต่mnemonicบรรทัดท้ายเป็นadd;ใช้subตามหน้า47",
+      "หน้า45กล่าว32registerแต่พิมพ์x0ถึงx30;หมายเลขครบคือx0ถึงx31",
+      "หน้า48ชื่อE-bitไม่ได้เป็นคำอธิบายคำสั่งRISC-Vที่สอนในบท;ใช้ภาพอธิบายลำดับไบต์โดยไม่อนุมานว่ามีE-bitให้สลับทุกระบบ",
+      "หน้า49ข้อความRISC-Vไม่บังคับalignedต้องจำกัดความ:misalignedload/storeขึ้นกับexecutionenvironment;บางระบบtrapได้",
+      "หน้า53ช่วงsignedพิมพ์ยกกำลังไม่ชัด บทเรียนใช้−2^(n−1)ถึง2^(n−1)−1;หน้า70ค่าบวก4294967295เป็นกรณี32บิต ไม่ใช่64บิตเต็ม",
+      "หน้า60C>>ไม่ใช่logicalrightทุกsignedtype;หน้า64บรรยายXORเหมือนORแต่ผลจริงคือtoggleเมื่อmask1",
+      "หน้า74sd x20,0(spขาดวงเล็บและadd x6,x12,x1ขาด3ของx13;แก้ตามmappingi/jและcomment",
+      "หน้า73เลือกsavex5/x6แม้temporariesไม่ใช่callee-savedตามหน้า76;ไม่ควรสรุปว่าต้องsaveทุกtemporary",
+      "หน้า74/86/107เฟรม24/8/40ไบต์เป็นตัวอย่างสาธิต ไม่รักษา16-bytealignmentของstandardABIเมื่อspเดิมaligned;บทเรียนชี้และตัวอย่างsortปรับ48ไบต์",
+      "หน้า78returnfไม่มีตัวแปรfและขัดbasecaseในหน้า79ซึ่งคืน1;หัวข้อหน้า79เขียนLeafแต่factเป็นNon-leaf",
+      "หน้า82เรียกUnicode32-bit character setเป็นคำย่อ;ต้องแยกcodepointจากUTF8/16/32encoding",
+      "หน้า86คำนวณต้นทางy[i]โดยใช้x10เหมือนปลายทางx[i];ตามCparametersต้องอ่านจากx11",
+      "หน้า87addi128แต่commentและภาพ0x500;128=0x80 ส่วน0x500=1280 บทเรียนคำนวณแยกทั้งสองทาง",
+      "หน้า88Target=PC+immediate×2หมายถึงimmediateที่ยังไม่เติมบิต0 หากถอดoffsetเต็มแล้วห้ามคูณ2ซ้ำ;JALRoffsetไม่คูณ2",
+      "หน้า93–94รูปเขียนSCเรียงaddressก่อนrs2;assemblerมาตรฐานเรียงrd,rs2,(rs1) Reservationไม่ใช่ล็อกห้ามaccessอื่นและSCอาจfailแม้ค่าเดิมไม่เปลี่ยน",
+      "หน้า94lockเป็นตัวอย่างกลไกLR/SCตัดย่อ ยังต้องจัดmemoryordering/acquirereleaseตามระบบจริง",
+      "หน้า97คำว่าvirtualmemoryทำให้ไม่ต้องrelocateเป็นกรณีจัดที่อยู่virtualคงที่ ไม่ควรขยายว่าไม่ต้องrelocationในระบบdynamicทุกแบบ",
+      "หน้า102เรียกsortว่าbubbleแต่ลูปหน้า104เลื่อนสมาชิกใหม่กลับซ้ายแบบinsertionผ่านadjacentswap;อธิบายพฤติกรรมจริงพร้อมคงชื่อกราฟต้นฉบับ",
+      "หน้า104jเป็นsize_tunsignedแต่ใช้j>=0และi−1;ต้องใช้signedindexหรือเปลี่ยนเงื่อนไขเพื่อไม่underflow",
+      "หน้า106ย้ายnจากx11หลังx11ถูกเปลี่ยนเป็นjและไม่มีการคืนก่อนoutertest;ตัวอย่างประกอบแก้เก็บbase/nในx21/x22ครั้งเดียวก่อนลูป",
+      "หน้า107ฝั่งrestoreใช้sdทั้งหมดแต่ต้องเป็นldเพื่ออ่านค่าคืน",
+      "หน้า108–109กราฟไม่มีdatalabelตัวเลขบนแท่ง ตารางบทเรียนจึงแสดงประมาณจากภาพและไม่อ้างความแม่นยำเป็นข้อมูลดิบ",
+      "หน้า112Cเป็นintแต่assemblyคูณ8/sd/เพิ่ม8จึงไม่ตรงint32ของABIปกติ อีกทั้งassemblyทดสอบท้ายลูปต่างจากCเมื่อsize=0 ต้องguardก่อนเขียน",
+      "หน้า116sltuiควรsltiuและรายการshiftพิมพ์srlwซ้ำแทนsraw"
+    ]
+  },
+  {
+    "id": "05",
+    "code": "CA04",
+    "file": "itds-211_comp_arch_Chapter04.pdf",
+    "pages": 112,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "memory-roadmap"
+        ],
+        "status": "context",
+        "note": "ปกชื่อบทและตำแหน่งในรายวิชา"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "memory-roadmap"
+        ],
+        "status": "context",
+        "note": "CourseOutlineเชื่อมหน่วยความจำกับI/Oและstorage"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "memory-roadmap"
+        ],
+        "status": "context",
+        "note": "ChapterOverviewรวมassociativity,VMและFSM"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "locality-hierarchy"
+        ],
+        "status": "explained",
+        "note": "Temporal/spatiallocalityพร้อมตัวอย่างลูปและอาร์เรย์"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "locality-hierarchy"
+        ],
+        "status": "explained",
+        "note": "คัดdisk→DRAM→SRAMตามlocality"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "locality-hierarchy"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพพีระมิดregistersถึงtapeและความสัมพันธ์ความเร็ว/ขนาด"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "locality-hierarchy"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพwordtransferและblocktransferรวมL1/L2/L3"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "locality-hierarchy"
+        ],
+        "status": "explained",
+        "note": "นิยามblock,hit/miss,ratioและpenalty"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "memory-technologies"
+        ],
+        "status": "explained",
+        "note": "ตารางSRAM/DRAM/diskเวลาและราคาตามยุคเอกสาร"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "memory-technologies"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพbank/row/columnและrefreshประจุ"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "memory-technologies"
+        ],
+        "status": "explained",
+        "note": "Burst,DDRและQDR"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "memory-technologies"
+        ],
+        "status": "explained",
+        "note": "ตรวจตารางปี1980–2007ครบทุกแถวและกราฟTrac/Tcac"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "memory-technologies"
+        ],
+        "status": "explained",
+        "note": "Rowbuffer,synchronousDRAMและbanking"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "wide-interleaved"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพสามorganizationพร้อมสูตร17/20cycles"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "flash-memory"
+        ],
+        "status": "explained",
+        "note": "ภาพผลิตภัณฑ์flashและข้อแลกเปลี่ยนตามเอกสาร"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "flash-memory"
+        ],
+        "status": "explained",
+        "note": "NOR/NAND,wearและwearlevelingพร้อมข้อจำกัดข้อความต้นฉบับ"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "disk-basics"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพdisk,track,sector,cylinder"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "disk-basics"
+        ],
+        "status": "explained",
+        "note": "โครงสร้างsectorและองค์ประกอบเวลาaccess"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "disk-basics"
+        ],
+        "status": "explained",
+        "note": "โจทย์512B/15000rpmคำนวณครบและปัดผล"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "disk-basics"
+        ],
+        "status": "explained",
+        "note": "seekจริง,logicalsectors,controllercacheและprefetch"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "cache-design"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพก่อน/หลังอ้างXnและสองคำถามการค้น"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "cache-design"
+        ],
+        "status": "explained",
+        "note": "ตรวจรายการออกแบบรวมFIFO/LFUและcacheunified/split"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "direct-mapping"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพdirectmappingและสูตรmodulo"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "direct-mapping"
+        ],
+        "status": "explained",
+        "note": "Tagและvalidรวมค่าเริ่มต้น"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "direct-trace"
+        ],
+        "status": "explained",
+        "note": "ตัวอย่าง8ช่องเริ่มinvalidทุกช่อง"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "direct-trace"
+        ],
+        "status": "explained",
+        "note": "22missช่อง110และtag10"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "direct-trace"
+        ],
+        "status": "explained",
+        "note": "26missช่อง010และtag11"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "direct-trace"
+        ],
+        "status": "explained",
+        "note": "22และ26hitโดยแคชไม่เปลี่ยน"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "direct-trace"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพยืนยันคำขอ16,3,16และสถานะช่อง000/011"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "direct-trace"
+        ],
+        "status": "explained",
+        "note": "18missแทน26ที่ช่อง010และสถานะสุดท้าย"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "address-fields"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ64bitaddress,52tag,10index,2offsetและวงจรhit"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "address-fields"
+        ],
+        "status": "explained",
+        "note": "คำนวณ1200→block75→index11และoffset/tag"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "block-miss"
+        ],
+        "status": "explained",
+        "note": "ข้อแลกเปลี่ยนblocksize,pollution,earlyrestart"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "block-miss"
+        ],
+        "status": "explained",
+        "note": "Instruction/data missและการstall/restart"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "write-policies"
+        ],
+        "status": "explained",
+        "note": "Write-through,CPI11และwritebuffer"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "write-policies"
+        ],
+        "status": "explained",
+        "note": "Write-backและdirtyvictim"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "write-policies"
+        ],
+        "status": "explained",
+        "note": "Writeallocateเทียบwrite-around"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "fastmath-example"
+        ],
+        "status": "explained",
+        "note": "FastMATH12stage,split16KBและmissrates"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "fastmath-example"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพtag18/index8/wordoffset4/byteoffset2และmux"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "main-memory-support"
+        ],
+        "status": "explained",
+        "note": "คำนวณบล็อก4wordบนmemory1word65buscycles"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "cache-performance"
+        ],
+        "status": "explained",
+        "note": "แยกexecution/stallcyclesและสูตรสองฐานนับ"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "cache-performance"
+        ],
+        "status": "explained",
+        "note": "โจทย์I2%/D4%ได้CPI5.44และratio2.72"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "cache-performance"
+        ],
+        "status": "explained",
+        "note": "AMAT2nsพร้อมจำกัดความหมายcycles/instruction"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "cache-performance"
+        ],
+        "status": "explained",
+        "note": "ผลลดbaseCPIและเพิ่มclockต่อสัดส่วนmemoryรอ"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "นิยามfullyและnwayพร้อมต้นทุนcomparators"
+      },
+      {
+        "page": 46,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพblock12เลือกช่อง4,set0หรือทุกช่อง"
+      },
+      {
+        "page": 47,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "ตรวจspectrum8entriesทุกแบบ1/2/4/8way"
+      },
+      {
+        "page": 48,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "ลำดับ0,8,0,6,8แบบdirectทุกแถว"
+      },
+      {
+        "page": 49,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "ลำดับเดียวกัน2wayและfullyพร้อมสถานะและLRU"
+      },
+      {
+        "page": 50,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "ตารางmissrates10.3/8.6/8.3/8.1"
+      },
+      {
+        "page": 51,
+        "sectionIds": [
+          "associative-cache"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพวงจร4way256setsและtag22/index8/offset2"
+      },
+      {
+        "page": 52,
+        "sectionIds": [
+          "replacement-policy"
+        ],
+        "status": "explained",
+        "note": "นโยบายpreferinvalid,LRUและrandom"
+      },
+      {
+        "page": 53,
+        "sectionIds": [
+          "multilevel-performance"
+        ],
+        "status": "explained",
+        "note": "หลักL1/L2/L3แบ่งหน้าที่ความเร็วและความจุ"
+      },
+      {
+        "page": 54,
+        "sectionIds": [
+          "multilevel-performance"
+        ],
+        "status": "explained",
+        "note": "4GHz,100ns,400cyclesและCPI9"
+      },
+      {
+        "page": 55,
+        "sectionIds": [
+          "multilevel-performance"
+        ],
+        "status": "explained",
+        "note": "ตรวจค่าขัดแย้ง500กับ400;คำนวณL2CPI3.4"
+      },
+      {
+        "page": 56,
+        "sectionIds": [
+          "multilevel-performance"
+        ],
+        "status": "explained",
+        "note": "L1เน้นhittime,L2เน้นmissrateและblocksize"
+      },
+      {
+        "page": 57,
+        "sectionIds": [
+          "advanced-cpu-software"
+        ],
+        "status": "explained",
+        "note": "Out-of-order,load/storeunit,reservationstationsและsimulation"
+      },
+      {
+        "page": 58,
+        "sectionIds": [
+          "advanced-cpu-software"
+        ],
+        "status": "explained",
+        "note": "ตรวจกราฟRadix/Quicksortทั้งinstructions,cycles,missesperitem"
+      },
+      {
+        "page": 59,
+        "sectionIds": [
+          "blocking-dgemm"
+        ],
+        "status": "explained",
+        "note": "อธิบายinnerloopDGEMMและcolumn-majorindex"
+      },
+      {
+        "page": 60,
+        "sectionIds": [
+          "blocking-dgemm"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพolder/newaccessesC/A/Bขนาด6×6"
+      },
+      {
+        "page": 61,
+        "sectionIds": [
+          "blocking-dgemm"
+        ],
+        "status": "explained",
+        "note": "อธิบายBLOCKSIZE32,si/sj/skและทุกชั้นloop"
+      },
+      {
+        "page": 62,
+        "sectionIds": [
+          "blocking-dgemm"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพtileและกราฟunoptimized/blockedทั้ง4ขนาด"
+      },
+      {
+        "page": 63,
+        "sectionIds": [
+          "dependability"
+        ],
+        "status": "explained",
+        "note": "ภาพserviceaccomplishment/interruptionและfault/failure"
+      },
+      {
+        "page": 64,
+        "sectionIds": [
+          "dependability"
+        ],
+        "status": "explained",
+        "note": "MTTF/MTTR/MTBF/availabilityและทางปรับปรุง"
+      },
+      {
+        "page": 65,
+        "sectionIds": [
+          "hamming-ecc"
+        ],
+        "status": "explained",
+        "note": "Hammingdistance2/3และขอบเขตตรวจเทียบแก้"
+      },
+      {
+        "page": 66,
+        "sectionIds": [
+          "hamming-ecc"
+        ],
+        "status": "explained",
+        "note": "ตรวจตารางparitycoverageตำแหน่ง1–12ครบ"
+      },
+      {
+        "page": 67,
+        "sectionIds": [
+          "hamming-ecc"
+        ],
+        "status": "explained",
+        "note": "Syndrome0000/1010และการแก้ตำแหน่ง10"
+      },
+      {
+        "page": 68,
+        "sectionIds": [
+          "hamming-ecc"
+        ],
+        "status": "explained",
+        "note": "ตรวจSEC/DEC→SECDEDและแก้เกณฑ์Hเป็นzero/nonzero"
+      },
+      {
+        "page": 69,
+        "sectionIds": [
+          "virtual-machines"
+        ],
+        "status": "explained",
+        "note": "VMhost/guest,isolationและตัวอย่างประวัติ"
+      },
+      {
+        "page": 70,
+        "sectionIds": [
+          "virtual-machines"
+        ],
+        "status": "explained",
+        "note": "VMMmapping,trapและgenericvirtualI/O"
+      },
+      {
+        "page": 71,
+        "sectionIds": [
+          "virtual-machines"
+        ],
+        "status": "explained",
+        "note": "TimervirtualizationลำดับOSเทียบVMM"
+      },
+      {
+        "page": 72,
+        "sectionIds": [
+          "virtual-machines"
+        ],
+        "status": "explained",
+        "note": "ISAuser/systemmodeและprivilegedresources"
+      },
+      {
+        "page": 73,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "Virtualmemory,addressspace,pageและpagefault"
+      },
+      {
+        "page": 74,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพmappingและ48→40bitaddressโดยoffset12ไม่เปลี่ยน"
+      },
+      {
+        "page": 75,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "Pagefaultpenaltyและfullyassociativeplacement"
+      },
+      {
+        "page": 76,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "PTE,page-table-register,present/swapและstatus"
+      },
+      {
+        "page": 77,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพtranslationผ่านPTEเลขหน้า36→28บิต"
+      },
+      {
+        "page": 78,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพvalidPTEเชื่อมRAMและinvalidเชื่อมdisk"
+      },
+      {
+        "page": 79,
+        "sectionIds": [
+          "virtual-memory-pages"
+        ],
+        "status": "explained",
+        "note": "Referencebit,LRUapproximation,dirtyและwrite-back"
+      },
+      {
+        "page": 80,
+        "sectionIds": [
+          "tlb-translation"
+        ],
+        "status": "explained",
+        "note": "TLBนิยามและตัวเลขขนาด/เวลา/rateตามสไลด์"
+      },
+      {
+        "page": 81,
+        "sectionIds": [
+          "tlb-translation"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพTLB,pageTable,RAM,diskและเส้นทางhit"
+      },
+      {
+        "page": 82,
+        "sectionIds": [
+          "tlb-translation"
+        ],
+        "status": "explained",
+        "note": "แยกTLBmissหน้าอยู่กับหน้าไม่อยู่"
+      },
+      {
+        "page": 83,
+        "sectionIds": [
+          "tlb-translation"
+        ],
+        "status": "explained",
+        "note": "Misshandlerต้องไม่เขียนdestinationก่อนrestart"
+      },
+      {
+        "page": 84,
+        "sectionIds": [
+          "tlb-translation"
+        ],
+        "status": "explained",
+        "note": "Pagefaulthandlerเลือกvictim,write,read,update,restart"
+      },
+      {
+        "page": 85,
+        "sectionIds": [
+          "tlb-cache-protection"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพTLBก่อนphysicaltagcacheและaliasing"
+      },
+      {
+        "page": 86,
+        "sectionIds": [
+          "tlb-cache-protection"
+        ],
+        "status": "explained",
+        "note": "Memoryprotection,supervisormodeและecall"
+      },
+      {
+        "page": 87,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "สี่คำถามร่วมของทุกmemoryhierarchy"
+      },
+      {
+        "page": 88,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "Placementตามassociativityและข้อแลกเปลี่ยน"
+      },
+      {
+        "page": 89,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "ตารางfinding/index/ncomparisons/fulllookupครบ"
+      },
+      {
+        "page": 90,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "LRU/randomและvirtualmemoryapproximation"
+      },
+      {
+        "page": 91,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "Write-through/backและเหตุVMต้องwrite-back"
+      },
+      {
+        "page": 92,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "3Cscompulsory/capacity/conflict"
+      },
+      {
+        "page": 93,
+        "sectionIds": [
+          "common-framework"
+        ],
+        "status": "explained",
+        "note": "ตารางผลดีผลเสียcache-size/ways/block-size"
+      },
+      {
+        "page": 94,
+        "sectionIds": [
+          "cache-controller-fsm"
+        ],
+        "status": "explained",
+        "note": "Cachecontroller16KB/16byteblockและ18/10/4bits"
+      },
+      {
+        "page": 95,
+        "sectionIds": [
+          "cache-controller-fsm"
+        ],
+        "status": "explained",
+        "note": "สัญญาณCPU32bitและmemory128bitพร้อมValid/Ready"
+      },
+      {
+        "page": 96,
+        "sectionIds": [
+          "cache-controller-fsm"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพstateregister/logicและสมการnext/output"
+      },
+      {
+        "page": 97,
+        "sectionIds": [
+          "cache-controller-fsm"
+        ],
+        "status": "explained",
+        "note": "ตรวจFSMIdle/Compare/Writeback/Allocateทุกtransition"
+      },
+      {
+        "page": 98,
+        "sectionIds": [
+          "coherence-consistency"
+        ],
+        "status": "explained",
+        "note": "ตารางcoherenceproblemwrite-throughA/B/Xทุกแถว"
+      },
+      {
+        "page": 99,
+        "sectionIds": [
+          "coherence-consistency"
+        ],
+        "status": "explained",
+        "note": "นิยามcoherenceสามเงื่อนไข"
+      },
+      {
+        "page": 100,
+        "sectionIds": [
+          "coherence-consistency"
+        ],
+        "status": "explained",
+        "note": "Snooping,directory,migrationและreplication"
+      },
+      {
+        "page": 101,
+        "sectionIds": [
+          "coherence-consistency"
+        ],
+        "status": "explained",
+        "note": "ตารางinvalidateพร้อมownerส่งค่าใหม่ทุกแถว"
+      },
+      {
+        "page": 102,
+        "sectionIds": [
+          "coherence-consistency"
+        ],
+        "status": "explained",
+        "note": "Consistencyและสมมติฐานwriteorderของโมเดล"
+      },
+      {
+        "page": 103,
+        "sectionIds": [
+          "real-hierarchies"
+        ],
+        "status": "explained",
+        "note": "ตรวจตารางA53/Corei7ครบL1/L2/L3และlabelตามต้นฉบับ"
+      },
+      {
+        "page": 104,
+        "sectionIds": [
+          "real-hierarchies"
+        ],
+        "status": "explained",
+        "note": "ตรวจตาราง2levelTLBครบaddress/page/entry/associativity"
+      },
+      {
+        "page": 105,
+        "sectionIds": [
+          "real-hierarchies"
+        ],
+        "status": "explained",
+        "note": "Multibank,requestedwordfirst,nonblockingและprefetch"
+      },
+      {
+        "page": 106,
+        "sectionIds": [
+          "system-instructions"
+        ],
+        "status": "explained",
+        "note": "ตารางRISC-Vfence/CSR/systemทุกmnemonicตามเอกสาร"
+      },
+      {
+        "page": 107,
+        "sectionIds": [
+          "dgemm-combined"
+        ],
+        "status": "explained",
+        "note": "ตรวจกราฟDGEMM4methods×4sizesและค่าทุกแท่ง"
+      },
+      {
+        "page": 108,
+        "sectionIds": [
+          "memory-pitfalls"
+        ],
+        "status": "explained",
+        "note": "Byte36กับword36และstridelocality"
+      },
+      {
+        "page": 109,
+        "sectionIds": [
+          "memory-pitfalls"
+        ],
+        "status": "explained",
+        "note": "Sharedcachewaysและข้อจำกัดAMATบนout-of-order"
+      },
+      {
+        "page": 110,
+        "sectionIds": [
+          "memory-pitfalls"
+        ],
+        "status": "explained",
+        "note": "SegmentและISAที่ไม่เหมาะกับVMM"
+      },
+      {
+        "page": 111,
+        "sectionIds": [
+          "memory-conclusion"
+        ],
+        "status": "explained",
+        "note": "สรุปlocality/hierarchyและmultiprocessormemory"
+      },
+      {
+        "page": 112,
+        "sectionIds": [
+          "memory-conclusion"
+        ],
+        "status": "context",
+        "note": "Q&Aไม่มีหัวข้อเทคนิคใหม่"
+      }
+    ],
+    "issues": [
+      "หน้า4พิมพ์small promotionของaddressspace;บริบทหมายถึงsmall portion(ส่วนเล็ก)จึงสอนlocalityตามความหมายนี้",
+      "หน้า9และ12เป็นราคา/เทคโนโลยีตามยุคของแหล่งสไลด์ ไม่ใช่ข้อมูลตลาดปัจจุบัน;หน้า18เรียก4096bytesว่าproposedจึงคงบริบทประวัติ",
+      "หน้า16คำว่าNOR random read/writeและNAND block-at-a-timeย่อข้อจำกัดการprogram/eraseมากเกินไป;บทเรียนแยกอ่าน/เขียน/ลบและไม่ตีความว่าflashแทนdiskไม่ได้",
+      "หน้า29ข้อความสกัดเหมือน30แต่ตรวจภาพจริงเป็นwordaddress3(binary00011);ใช้3ตามภาพ",
+      "หน้า32สัญลักษณ์floorสกัดเพี้ยน;ใช้⌊1200/16⌋. คำblocknumberในสูตรหมายถึงcacheindexจึงแยกชื่อจากmemoryblockaddress",
+      "หน้า43คำว่า2cycles/instructionเกิดจากโมเดลI-cacheหนึ่งfetchต่อinstruction;AMATจริงเป็นต่อaccess ไม่ใช่CPIรวมอัตโนมัติ",
+      "หน้า55พิมพ์Extra penalty500cycles แต่100ns/0.25ns=400และสมการใช้400;บทเรียนเปิดเผยและคำนวณ400",
+      "หน้า65distance3ตรวจสองบิตได้ในแบบdetectionแต่ไม่รับรองการแยกจากsingleerrorพร้อมแก้;ต้องเพิ่มoverallparityสำหรับSECDED",
+      "หน้า68SEC/DECเป็นชื่อผิดสำหรับกลไกSECDED(single-error correction,double-error detection);H even/oddกำกวม ต้องใช้syndromezero/nonzeroร่วมกับoverallparity",
+      "หน้า103ช่องL1writepolicyCorei7ระบุWrite-back,No-write-allocateตามต้นฉบับและไม่ได้ระบุรุ่นละเอียด;คงlabelพร้อมระบุว่าตารางนี้ไม่ใช่คุณสมบัติทุกรุ่น",
+      "หน้า106ใช้ชื่อsfence.vmตามสไลด์เก่า ต้องตรวจคู่มือISA/assemblerรุ่นใช้งาน ไม่ถือว่าชื่อในตารางเป็นรายการปัจจุบันสำหรับทุกเครื่อง"
+    ]
+  },
+  {
+    "id": "06",
+    "code": "CA05",
+    "file": "itds-211_comp_arch_Chapter05.pdf",
+    "pages": 52,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "io-context"
+        ],
+        "status": "context",
+        "note": "ปกI/O Systemsและขอบเขตบท"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "io-context"
+        ],
+        "status": "context",
+        "note": "CourseOutlineเชื่อมmemoryกับI/O/storage"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "io-module-device"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพgenericmodule,address/data/controlและlinks"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "io-module-device"
+        ],
+        "status": "explained",
+        "note": "Externaldevicesครบhuman/machine/communication"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "io-module-device"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพcontrollogic/buffer/transducerและลูกศรstatus/control/data"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "io-module-device"
+        ],
+        "status": "explained",
+        "note": "หน้าที่moduleทั้ง5หมวดครบ"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "io-module-device"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพregisters,I/Ologicและexternalinterfacesหลายตัว"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "io-techniques"
+        ],
+        "status": "explained",
+        "note": "นิยามprogrammed/interrupt/DMAและบทบาทCPU"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "io-techniques"
+        ],
+        "status": "explained",
+        "note": "ตรวจตารางnointerrupt/interruptกับผ่านCPU/ตรงmemory"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "io-techniques"
+        ],
+        "status": "explained",
+        "note": "Control/Test/Read/Writecommandsพร้อมทิศทาง"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "io-techniques"
+        ],
+        "status": "explained",
+        "note": "ตรวจflowchartsสามวิธีครบbranchready/error/doneและงานอื่น"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "io-addressing"
+        ],
+        "status": "explained",
+        "note": "UniqueaddressและMMIOsingleaddressspace"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "io-addressing"
+        ],
+        "status": "explained",
+        "note": "ตารางMMIO/isolatedข้อแตกต่างaddress/commands/select"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "io-addressing"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพregister516/517bit7/bit0และคำสั่งสองแบบทุกบรรทัด"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "interrupt-processing"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพinterrupt-drivenออกงาน/ทำอื่น/แจ้ง/ย้าย/กลับ"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "interrupt-processing"
+        ],
+        "status": "explained",
+        "note": "ตรวจhardware/softwareinterruptstepsและsavePC/PSW"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "interrupt-processing"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพN+1,Y,Y+L,T,T−Mและsave/restorearrows"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "interrupt-processing"
+        ],
+        "status": "explained",
+        "note": "สองdesignissuesผู้ขอและpriority"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "interrupt-processing"
+        ],
+        "status": "explained",
+        "note": "Identificationครบ4วิธีและvectoredinterrupt"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "interrupt-controller"
+        ],
+        "status": "explained",
+        "note": "ตรวจ82C59Aslave/masterIR0–7ถึง80386และ64devices"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "ppi-8255"
+        ],
+        "status": "explained",
+        "note": "ตรวจ8255block/pinlayout40ขาและportsA/B/C"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "ppi-8255"
+        ],
+        "status": "explained",
+        "note": "ตรวจmodecontrolทุกbitและBSRportCmapping000–111"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "ppi-8255"
+        ],
+        "status": "explained",
+        "note": "ตรวจkeyboard/displaydataพร้อมCready/ack/blank/clear/interrupt"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "dma-operation"
+        ],
+        "status": "explained",
+        "note": "ข้อจำกัดCPUtest/serviceและinstructionsต่อtransfer"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "dma-operation"
+        ],
+        "status": "explained",
+        "note": "ตรวจgenericDMAcount/data/address/controlและsignals"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "dma-operation"
+        ],
+        "status": "explained",
+        "note": "ตรวจDMA/interruptbreakpointsตามinstructioncycle"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "dma-operation"
+        ],
+        "status": "explained",
+        "note": "ตรวจDMAconfigsdetached/integrated/IObusครบ3"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "dma-8237"
+        ],
+        "status": "explained",
+        "note": "ตรวจ8237busHRQ/HLDA/DREQ/DACKและIOR/IOW/MEMR/MEMW"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "dma-8237"
+        ],
+        "status": "explained",
+        "note": "ตรวจfly-bydataไม่พักDMAและmemory-to-memoryผ่านregister"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "dma-registers"
+        ],
+        "status": "explained",
+        "note": "ตรวจTable7.2ครบทุกbit/registerและแจ้งแก้StatusD5–7"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "dca-chip"
+        ],
+        "status": "explained",
+        "note": "DCAตอบmemorytrafficจากnetworkratesตามยุคสไลด์"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "dca-chip"
+        ],
+        "status": "explained",
+        "note": "ตรวจXeon8coresL1/L2,8L3slices,ring,QPI/PCIe/DDR3"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "network-packet-paths"
+        ],
+        "status": "explained",
+        "note": "Ethernet/IP/TCPheader/payloadและNICทั้งสองทิศ"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "network-packet-paths"
+        ],
+        "status": "explained",
+        "note": "DMAapplication/systembuffersและการcopyheaders"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "network-packet-paths"
+        ],
+        "status": "explained",
+        "note": "Packetstepsincoming7ขั้น/outgoing6ขั้นครบ"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "dca-ddio"
+        ],
+        "status": "explained",
+        "note": "DCAprefetchprototypeกับcacheinjection/DDIO"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "dca-ddio"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพDMA/DDIO4กรณีและcoherencetraffic"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "io-evolution-channels"
+        ],
+        "status": "explained",
+        "note": "Evolutionครบ6ขั้นถึงI/Oprocessorมีlocalmemory"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "io-evolution-channels"
+        ],
+        "status": "explained",
+        "note": "ตรวจselector/multiplexorchannels,pathCPU/memory/controllers"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "interface-assignment"
+        ],
+        "status": "context",
+        "note": "Assignment9กลุ่ม6–7คนรายงานและนำเสนอพร้อมวันตามเอกสาร"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "usb"
+        ],
+        "status": "explained",
+        "note": "USBgenerations/ratesทุกแถวและhosttree"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "firewire"
+        ],
+        "status": "explained",
+        "note": "FireWireIEEE1394,daisychain63devices/1022busesและhotplug"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "scsi"
+        ],
+        "status": "explained",
+        "note": "SCSIsharedparallelbusพร้อมเปิดเผยwidth/unitissues"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "thunderbolt"
+        ],
+        "status": "explained",
+        "note": "Thunderbolt10Gbpsต่อทิศ/10Wตามรุ่นสไลด์"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "infiniband"
+        ],
+        "status": "explained",
+        "note": "InfiniBandfabric64000และSAN"
+      },
+      {
+        "page": 46,
+        "sectionIds": [
+          "pci-express",
+          "sata"
+        ],
+        "status": "explained",
+        "note": "สอนทั้งPCI/PCIeและSATAพร้อมแก้ความขัดแย้งหน่วย"
+      },
+      {
+        "page": 47,
+        "sectionIds": [
+          "ethernet"
+        ],
+        "status": "explained",
+        "note": "Ethernetbus3Mbpsสู่switch100Gbpsตามยุคเอกสาร"
+      },
+      {
+        "page": 48,
+        "sectionIds": [
+          "wifi"
+        ],
+        "status": "explained",
+        "note": "Wi-Fi802.11ac(2014)/3.2Gbpsเป็นข้อความในเอกสารไม่ใช่current"
+      },
+      {
+        "page": 49,
+        "sectionIds": [
+          "ibm-channel-subsystem"
+        ],
+        "status": "explained",
+        "note": "ตรวจIBM4subsystems/15partitions/256channelsและแก้1024channels"
+      },
+      {
+        "page": 50,
+        "sectionIds": [
+          "ibm-io-frames"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพตู้frontviewและlabelsไฟ/แบต/บริการ/books/interconnect/cooling"
+      },
+      {
+        "page": 51,
+        "sectionIds": [
+          "ibm-io-system"
+        ],
+        "status": "explained",
+        "note": "ตรวจIBM4booksผ่านPCIeหรือHCA/InfiniBandสู่controllers"
+      },
+      {
+        "page": 52,
+        "sectionIds": [
+          "ibm-io-system"
+        ],
+        "status": "context",
+        "note": "Q&Aไม่มีหัวข้อเทคนิคใหม่"
+      }
+    ],
+    "issues": [
+      "หน้า14คำสั่งเป็นinstructionmodelเพื่ออธิบายไม่ใช่RISC-Vassembly;ช่องที่อยู่บางบรรทัดว่างในต้นฉบับจึงไม่สร้างเลขaddressใหม่อ้างว่าอยู่ในภาพ",
+      "หน้า17รูประบุPC/SPก่อนลูกศรsave/restore ต้องอ่านการเปลี่ยนตามลูกศร ไม่ตีความPCY+Lว่าเป็นจุดที่โปรแกรมผู้ใช้ต้องกลับ",
+      "หน้า29คำว่าไม่ระหว่างmemoryสองตำแหน่งกล่าวถึงfly-byโดยตรง;กล่องกลางระบุmemory-to-memoryviaregister จึงต้องสอนทั้งเงื่อนไขไม่ตัดข้อความหนึ่งทิ้ง",
+      "หน้า30StatusD5–D7พิมพ์Channel0requestซ้ำ;แก้เป็นChannel1/2/3โดยเปิดเผยและตรวจdatasheet82C37Aตระกูลเข้ากันได้ของRenesas https://www.renesas.com/ja/document/dst/82c37a-datasheet",
+      "หน้า36ใช้ชื่อDirectDataI/Oแต่IntelเรียกDataDirectI/O;DCAprototypehintขาเข้าไม่ใช่ข้อจำกัดของDDIOทุกชนิด ตรวจIntelPrimer https://www.intel.com/content/dam/www/public/us/en/documents/technology-briefs/data-direct-i-o-technology-brief.pdf",
+      "หน้า37ภาพย่อแยกdataflowกับcoherence/speculativetrafficไม่ชัด จึงอธิบายร่วมIntelPrimer ไม่ตีความลูกศรทุกเส้นเป็นcopyโดยCPU",
+      "หน้า41ชื่อUSBถูกจับคู่ตามโหมดในสไลด์แต่ไม่ได้กำหนดรูปหัวต่อ/ความสามารถทุกสาย;ตัวเลขusableไม่ใช่filethroughputรับประกัน",
+      "หน้า43ใช้Mbpsกับ5และ160ของSCSIซึ่งควรเป็นMB/s;ตัวเลขbuswidth16/32และจำนวน16/32devicesเหมารวมรุ่นเกินไป จึงสอนnarrow8bit/wide16bitพร้อมคงให้เห็นsourceclaim ตรวจIBMUltra160และSeagateSCSIrevisionlevels",
+      "หน้า44คำว่าmostrecent/fastestและหน้า47/48คำว่าcurrentเป็นคำตามยุคสไลด์ ไม่ใช่ข้อมูลล่าสุด;Thunderbolt10Gbps,Eth100Gbps,Wi-Fi802.11ac2014เป็นบริบทที่สอน",
+      "หน้า46หัวข้อ6เขียนPCIแต่ป้ายPCIExpressจึงแยกPCI/PCIe;SATA6Gbpsขัดกับmaximum300Mbps ตรวจSATA-IO6Gb/sระบุ600MB/s https://sata-io.org/sites/default/files/documents/SATA-Revision-3.0-FAQ-FINAL.pdf",
+      "หน้า49วงเล็บล่างพิมพ์≤1024partitionspersystemแต่ด้านบนมี≤60partitionsและ4subsystems×256channels จึงแก้เป็น≤1024channelsโดยเปิดเผย",
+      "หน้า51ไม่ขยายSC1/SC0หรืออัตราของ8X จึงคงlabelและไม่เดาความหมายละเอียดที่เอกสารไม่ได้ให้"
+    ]
+  },
+  {
+    "id": "07",
+    "code": "CA06",
+    "file": "itds-211_comp_arch_Chapter06.pdf",
+    "pages": 45,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "storage-position"
+        ],
+        "status": "context",
+        "note": "ตรวจปก/สารบัญ/สรุป/ถามตอบ ไม่มีโจทย์ใหม่"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "storage-position"
+        ],
+        "status": "context",
+        "note": "ตรวจปก/สารบัญ/สรุป/ถามตอบ ไม่มีโจทย์ใหม่"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "storage-position"
+        ],
+        "status": "context",
+        "note": "ตรวจปก/สารบัญ/สรุป/ถามตอบ ไม่มีโจทย์ใหม่"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "magnetic-platter"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "magnetic-head"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "magnetic-head"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "disk-layout"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "disk-zones"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "winchester-format"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "disk-characteristics"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "disk-characteristics"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "disk-characteristics"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "hdd-parameters"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "disk-timing"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "disk-timing"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "raid-basics"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "raid-basics"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "raid-diagrams"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "raid-diagrams"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "raid-diagrams"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "raid-zero-one"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "raid-zero-one"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "raid-two-three"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "raid-two-three"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "raid-four-five-six"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "raid-four-five-six"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "raid-comparison"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "raid-comparison"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "ssd-hdd"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "ssd-hdd"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "ssd-architecture"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "ssd-practical"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "optical-products"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "cd-production"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "cd-production"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "cd-block-format"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "optical-rewrite"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "optical-rewrite"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "optical-layers"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "optical-layers"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "magnetic-tape"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "magnetic-tape"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "lto-table"
+        ],
+        "status": "explained",
+        "note": "ตรวจข้อความและภาพต้นฉบับ; อธิบายส่วนประกอบ/ลูกศรและเก็บตาราง/ตัวเลขที่เกี่ยวข้องในหัวข้อที่เชื่อม"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "storage-closing"
+        ],
+        "status": "context",
+        "note": "ตรวจปก/สารบัญ/สรุป/ถามตอบ ไม่มีโจทย์ใหม่"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "storage-closing"
+        ],
+        "status": "context",
+        "note": "ตรวจปก/สารบัญ/สรุป/ถามตอบ ไม่มีโจทย์ใหม่"
+      }
+    ],
+    "issues": [
+      "หน้า16สรุปparityเป็นลักษณะร่วมของRAID แต่0ไม่มีredundancyและ1ใช้mirroring ต้องอ่านแยกตามตาราง17/ภาพ18 ไม่สรุปว่าทุกระดับมีparity",
+      "หน้า19มีภาพแทรกRAID10แม้สารบัญ/summaryระบุ0–6: รวมคำอธิบายและตัวอย่าง10ด้วยหลังตรวจภาพ",
+      "หน้า22คำว่าno write penaltyหมายถึงไม่มีงานปรับparity ไม่ได้แปลว่าไม่ต้องเขียนสำเนาทั้งคู่",
+      "หน้า23กล่าวถึงHammingตรวจสองบิต/แก้หนึ่งบิตแบบกว้าง การตรวจสองบิตอย่างแยกชัดต้องดูรูปแบบรหัสที่ใช้;บทนี้ไม่เพิ่มการรับประกันเกินกลไกในCA04",
+      "หน้า24Figure/Tableใช้bit-interleaved แต่หมายเหตุไทยใช้byte-level:เน้นหน่วยเล็กและparallelaccessพร้อมระบุความต่างถ้อยคำ",
+      "หน้า13/30/43เป็นตารางตัวอย่างตามเอกสารเก่า คงตัวเลข หน่วย และช่องว่าง ไม่อ้างเป็นข้อมูลสินค้า/ราคา/ขีดจำกัดปัจจุบัน;หน้า30พิมพ์Mbpsจึงคงไว้พร้อมเตือนแยกMB/s",
+      "หน้า32หัวข้อพิมพ์SDDแทนSSD และอ่าน–ลบ–เขียนเป็นคำอธิบายระดับแนวคิด ไม่รับประกันว่าทุกhostwriteเขียนblockเดิมโดยตรง",
+      "หน้า40ลูกศร2.11/1.32/0.58µmไม่ได้กำกับชื่อมิติชัดเจน จึงคงตัวเลขและบอกตำแหน่งลูกศร ไม่เรียกเป็นtrackpitchโดยเดา",
+      "หน้า43LTO6–8ยังเป็นTBA/ช่องว่างในตารางต้นฉบับ บันทึกตามนั้น ไม่ตีความว่าเป็นสถานะปัจจุบัน",
+      "หน้า17/22ใช้ชื่อRAID1กว้างรวมstripingกับคู่สำเนา แต่ภาพแทรก19แยกRAID10; โจทย์เสริมจึงแยกการนับ2Nตามสไลด์ออกจากfour-waymirrorในห้องทดลอง และอธิบายสองชุดRAID1อิสระกับRAID10ต่างกันที่การรวมไดรฟ์/striping"
+    ]
+  },
+  {
+    "id": "08",
+    "code": "CA07",
+    "file": "itds-211_comp_arch_Chapter07.pdf",
+    "pages": 53,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "computing-unit-map"
+        ],
+        "status": "context",
+        "note": "Computing Unit (ขอบเขตหน่วยประมวลผล);ตรวจภาพต้นฉบับและสอนความหมาย/ทางข้อมูลในหัวข้อนี้"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "computing-unit-map"
+        ],
+        "status": "context",
+        "note": "Computing Unit (ขอบเขตหน่วยประมวลผล);ตรวจภาพต้นฉบับและสอนความหมาย/ทางข้อมูลในหัวข้อนี้"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "laundry-pipeline"
+        ],
+        "status": "explained",
+        "note": "ภาพlaundryสองเวลา/สี่ชุด;สูตร8/3.5และ2n/(0.5n+1.5)"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "five-stages"
+        ],
+        "status": "explained",
+        "note": "นิยามIF/ID/EX/MEM/WBครบพร้อมผลต่อขั้น"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "pipeline-timing"
+        ],
+        "status": "explained",
+        "note": "ตารางตัวเลข4ชนิดครบ;max800/maxstage200"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "pipeline-timing"
+        ],
+        "status": "explained",
+        "note": "ภาพ3loads800vs200;pipelinefill/drainและlatency/throughput"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "isa-design"
+        ],
+        "status": "explained",
+        "note": "32bitbase/regularformat/loadstoreและแก้x86max15"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "hazard-families"
+        ],
+        "status": "explained",
+        "note": "นิยามhazardทั้ง3"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "hazard-families"
+        ],
+        "status": "explained",
+        "note": "singlememoryIF/MEMชน;stallbubble;separateI/D"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "raw-and-forwarding"
+        ],
+        "status": "explained",
+        "note": "addx19/subอ่านx19และภาพรอค่าเก่า"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "raw-and-forwarding"
+        ],
+        "status": "explained",
+        "note": "addx1/subx4และลูกศรEX→EX"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "raw-and-forwarding"
+        ],
+        "status": "explained",
+        "note": "ld/subและข้อจำกัดเวลาMEM→EXต้อง1stall"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "code-scheduling"
+        ],
+        "status": "explained",
+        "note": "โค้ดสองชุดครบ7คำสั่งและstall2จุด13→11;ข้อสมมติการย้าย"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "control-and-prediction"
+        ],
+        "status": "explained",
+        "note": "branchต้องรู้เงื่อนไข/เป้าหมายเร็ว"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "control-and-prediction"
+        ],
+        "status": "explained",
+        "note": "ภาพstallbranchและความหมายinterval400ps"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "control-and-prediction"
+        ],
+        "status": "explained",
+        "note": "predictnottaken/ผิดจึงกู้ทาง"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "control-and-prediction"
+        ],
+        "status": "explained",
+        "note": "staticbackward/forwardและdynamichistory/update"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "control-and-prediction"
+        ],
+        "status": "explained",
+        "note": "throughputไม่ใช่ลดlatencyและhazard3ประเภท"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "datapath-and-pipeline-registers"
+        ],
+        "status": "explained",
+        "note": "ทุกหน่วยPC/I-memory/register/imm/mux/ALU/D-memoryและสองfeedback"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "datapath-and-pipeline-registers"
+        ],
+        "status": "explained",
+        "note": "pipeline-register4แท่งและหน้าที่คงข้อมูล"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "datapath-and-pipeline-registers"
+        ],
+        "status": "explained",
+        "note": "singleclockภาพสถานะเทียบmulticlockเวลา"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "load-stages-and-rd"
+        ],
+        "status": "explained",
+        "note": "IFใช้PC/I-memory/PC+4/IFID"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "load-stages-and-rd"
+        ],
+        "status": "explained",
+        "note": "IDอ่านbase/สร้างimmediate/IDEX"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "load-stages-and-rd"
+        ],
+        "status": "explained",
+        "note": "EXALUSrcเลือกoffsetและบวกaddress"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "load-stages-and-rd"
+        ],
+        "status": "explained",
+        "note": "MEMอ่านdataและMEMWB"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "load-stages-and-rd"
+        ],
+        "status": "explained",
+        "note": "ภาพWrongregisternumberเป็นตัวอย่างข้อบกพร่องตั้งใจสอน"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "load-stages-and-rd"
+        ],
+        "status": "explained",
+        "note": "แก้ด้วยrd5บิตไหลผ่านทุกpipeline register"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "store-stages"
+        ],
+        "status": "explained",
+        "note": "EXstoreแยกaddressกับReadData2"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "store-stages"
+        ],
+        "status": "explained",
+        "note": "MEMstoreใช้MemWrite/WriteDataและชี้ป้ายldผิด"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "store-stages"
+        ],
+        "status": "explained",
+        "note": "WBstoreRegWrite0ไม่มีผลต่อregister"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "reading-cycle-diagrams"
+        ],
+        "status": "explained",
+        "note": "ภาพresourceusage5คำสั่ง/9รอบ"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "reading-cycle-diagrams"
+        ],
+        "status": "explained",
+        "note": "ตารางtraditionalเทียบresourceusage"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "reading-cycle-diagrams"
+        ],
+        "status": "explained",
+        "note": "snapshotCC5ระบุคำสั่งในทุกstage"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "pipeline-control"
+        ],
+        "status": "explained",
+        "note": "ระบุPCSrc/Branch/RegWrite/ALUSrc/ALUOp/MemRead/Write/MemtoRegและcontrolต้องpipeline"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "alu-dependencies"
+        ],
+        "status": "explained",
+        "note": "ลำดับsub/and/or/add/sdครบและoperandที่พึ่ง"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "alu-dependencies"
+        ],
+        "status": "explained",
+        "note": "ภาพx2=10→−20,CC5write/read,forwardEXMEM/MEMWB"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "forward-detection-and-paths"
+        ],
+        "status": "explained",
+        "note": "เปรียบrdกับrs1/rs2ครบ4กรณี"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "forward-detection-and-paths"
+        ],
+        "status": "explained",
+        "note": "RegWriteและRd≠0ป้องกันstore/branch/x0"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "forward-detection-and-paths"
+        ],
+        "status": "explained",
+        "note": "ภาพMuxA/B3ทาง/forwardingunit/data/control"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "forward-detection-and-paths"
+        ],
+        "status": "explained",
+        "note": "ตารางForwardA/Bทั้ง6แถว00/10/01ครบ"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "double-hazard-and-priority"
+        ],
+        "status": "explained",
+        "note": "ลำดับaddx1สามครั้งและpriorityผลใหม่"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "double-hazard-and-priority"
+        ],
+        "status": "explained",
+        "note": "เงื่อนไขMEMfullสำหรับA/B;แก้≠เป็น=ในnotEXmatch"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "double-hazard-and-priority"
+        ],
+        "status": "explained",
+        "note": "ภาพforwardingพร้อมcontrolEX/M/WBและการพกหมายเลข"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "load-use-detector"
+        ],
+        "status": "explained",
+        "note": "LoadUseตรวจในID;แก้Rs1ซ้ำเป็นRs2และขอบเขตuseflags"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "load-use-detector"
+        ],
+        "status": "explained",
+        "note": "zeroIDEXcontrol/freezepc/ifid/oldercontinueครบ"
+      },
+      {
+        "page": 46,
+        "sectionIds": [
+          "load-use-detector"
+        ],
+        "status": "explained",
+        "note": "อ่านรูปloadandoradd/bubbleและคงandจริง"
+      },
+      {
+        "page": 47,
+        "sectionIds": [
+          "load-use-detector"
+        ],
+        "status": "explained",
+        "note": "ภาพhazardunit/PCWrite/IFIDWrite/controlmux0รวมforwarding"
+      },
+      {
+        "page": 48,
+        "sectionIds": [
+          "load-use-detector"
+        ],
+        "status": "explained",
+        "note": "stallถูกต้องแต่ลดperformance/compilerต้องรู้pipeline"
+      },
+      {
+        "page": 49,
+        "sectionIds": [
+          "branch-in-mem"
+        ],
+        "status": "explained",
+        "note": "ภาพbranchMEMCC4/flush44,48,52/target72CC5;ตัวอย่างld100"
+      },
+      {
+        "page": 50,
+        "sectionIds": [
+          "early-branch-and-flush"
+        ],
+        "status": "explained",
+        "note": "โค้ดbranchtakenครบ/target40+16×2=72และแก้orr"
+      },
+      {
+        "page": 51,
+        "sectionIds": [
+          "early-branch-and-flush"
+        ],
+        "status": "explained",
+        "note": "snapshotClock3IFand/IDbeq/EXsub/PCtarget/IFflush"
+      },
+      {
+        "page": 52,
+        "sectionIds": [
+          "early-branch-and-flush"
+        ],
+        "status": "explained",
+        "note": "snapshotClock4IFld72/IDbubble/EXbeq/MEMsub;PC+4=76"
+      },
+      {
+        "page": 53,
+        "sectionIds": [
+          "pipeline-questions"
+        ],
+        "status": "context",
+        "note": "Q & A (ตรวจเส้นทางและเงื่อนไขด้วยตนเอง);ตรวจภาพต้นฉบับและสอนความหมาย/ทางข้อมูลในหัวข้อนี้"
+      }
+    ],
+    "issues": [
+      "หน้า3สูตร2n/0.5n+1.5ขาดวงเล็บชัดเจน ต้องอ่าน2n/(0.5n+1.5)ให้สอดคล้องเวลา4ขั้นและspeedupเข้าใกล้4",
+      "หน้า7ระบุx86คำสั่ง1–17ไบต์ ข้อความตัวเลขควรแก้สูงสุด15ไบต์ตามIntelSDM;RISC-V32บิตในภาพเป็นฐานที่สอนไม่รวมcompressed16บิต",
+      "หน้า15ลูกศร400psเป็นช่วงเริ่มbranchถึงเริ่มคำสั่งถัดไป มี200psเป็นช่วงปกติและเพิ่มรอ200psในภาพ ไม่ควรจำเป็นstall400psทุกbranch",
+      "หน้า18same latencyเป็นถ้อยคำสรุปว่าคำสั่งไม่ข้ามขั้น ไม่ควรตีความว่าlatencyเท่ากับsinglecycle:ตัวอย่างหน้า5–6single800psแต่pipeline5×200=1000ps",
+      "หน้า19–34เป็นdatapathลดรายละเอียด การใช้controlต้องพกตามpipelineและหมายเลขrdต้องตามคำสั่ง;หน้า26เป็นข้อบกพร่องตั้งใจแสดงและหน้า27แก้ ไม่ใช่ใช้หน้า26เป็นวงจรถูกต้อง",
+      "หน้า29หัวข้อMEMforStoreแต่ป้ายเล็กเป็นldและแรเงาคล้ายทางReadData;ความหมายstoreต้องส่งWriteDataด้วยMemWrite ไม่ใช่อ่านค่าแบบload",
+      "หน้า13นับ13/11cyclesตามตำแหน่ง5stageถึงWBแม้storeไม่มีWBwrite;ถ้านับผลstoreที่MEMเวลาจบอาจน้อยลงหนึ่งรอบแต่ส่วนต่างยัง2",
+      "หน้า36สมมติwriteก่อนreadในรอบเดียวกันจึงมีx2=10/−20ที่CC5;ต้องระบุข้อตกลงนี้ก่อนอ้างว่าaddอ่านค่าใหม่ทันโดยไม่forward",
+      "หน้า42เงื่อนไขNOT(EXhazard)พิมพ์EX/MEM.Rd≠ID/EX.Rs1/Rs2ผิด ต้องเป็นเท่ากันเพื่อห้ามใช้ผลMEM/WBเมื่อมีผู้ผลิตEX/MEMที่ตรงและใหม่กว่า",
+      "หน้า44สูตรload-useพิมพ์IF/ID.RegisterRs1ซ้ำในOR ต้องเปลี่ยนตัวที่สองเป็นRs2เพื่อครอบคลุมoperandสอง",
+      "หน้า44สูตรเป็นแบบย่อ:ตรวจuse-rsจริงและrd≠x0จะช่วยไม่stallเกินจำเป็นเมื่อfieldไม่ได้ใช้หรือเขียนx0",
+      "หน้า49–52เลขbranch16ถูกใช้เป็นครึ่งระยะเพื่อ40+16×2=72 แต่assemblerโดยทั่วไปใช้label/byteoffset จึงต้องแยกfieldunitsจากsyntax ไม่คูณ2ซ้ำ",
+      "หน้า49เป็นตัวอย่างbeqx1,x0และldx4,100(x7);หน้า50–52เปลี่ยนเป็นbeqx1,x3และldx4,50(x7) จึงรักษาเป็นคนละตัวอย่าง ไม่ย้ายoperandข้ามรูปโดยเงียบ ๆ",
+      "หน้า50พิมพ์orrซึ่งไม่ใช่mnemonicRISC-Vในชุดนี้ ใช้orตามบริบท",
+      "หน้า50–52ลดbranchdelayโดยสมมติค่าที่compareพร้อมในID;ถ้าพึ่งผลก่อนหน้ายังต้องforwardเข้าcomparatorหรือstallเพิ่ม"
+    ]
+  },
+  {
+    "id": "09",
+    "code": "CA08",
+    "file": "itds-211_comp_arch_Chapter08.pdf",
+    "pages": 41,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "chapter-map"
+        ],
+        "status": "context",
+        "note": "ปกVIII Parallel Processors from Client to Cloud;ตรวจภาพและกำหนดขอบเขตบท"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "chapter-map"
+        ],
+        "status": "context",
+        "note": "Course Outlineเน้นmultiprocessor architecture;ตรวจภาพและเชื่อมกับลำดับวิชา"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "chapter-map"
+        ],
+        "status": "explained",
+        "note": "ภาพtaxonomyทั้ง4สาย SISD/SIMD/MISD/MIMD;vector/array;shared/distributed;SMP/NUMA/clusters อธิบายกิ่งครบและตรวจภาพขยาย"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "chapter-map"
+        ],
+        "status": "context",
+        "note": "Chapter Overview8หัวข้อ;อธิบายลำดับจากโปรแกรมขนานถึงnetwork ไม่อ้างว่าหน้านี้มีรายละเอียดเพิ่ม"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "purpose-and-software"
+        ],
+        "status": "explained",
+        "note": "เป้าหมายperformance/scalability/availability/power;แยกtask-level,โปรแกรมเดียวหลายprocessorและmulticore"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "purpose-and-software"
+        ],
+        "status": "explained",
+        "note": "ตารางhardwareserial/parallelกับsoftwaresequential/concurrent เก็บPentium4,Xeone5345,matrixmultiply,OSและข้อสรุปการจับคู่"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "purpose-and-software"
+        ],
+        "status": "explained",
+        "note": "ทบทวนsynchronization,subword,ILP,cachecoherence พร้อมนิยาม;เลขsectionหนังสือใช้เป็นบริบทไม่สวมรายละเอียดที่ไม่มีในหน้า"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "parallel-programming-cost"
+        ],
+        "status": "explained",
+        "note": "partitioning,coordination,communicationoverheadและเกณฑ์ต้องได้ประโยชน์คุ้มsingleprocessor"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "instruction-data-streams"
+        ],
+        "status": "explained",
+        "note": "ตาราง2×2ครบ4ช่องพร้อมตัวอย่างPentium4/SSE/ไม่มีตัวอย่างMISD/Xeone5345;SPMDและconditionalcode"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "vector-processors"
+        ],
+        "status": "explained",
+        "note": "memory→vectorregister→functionalunit→register→memory;32×64×64บิต;คำสั่งfld.v/fsd.v/fadd.d.v/fadd.d.vs"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "daxpy-code"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพขยายDAXPYทั้งC,scalarและvector;เก็บ512,+8,ทุกคำสั่งและdependencyลูกศร;เพิ่มtraceตัวเลขและinstructioncountที่ติดป้าย"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "vector-simd-lanes"
+        ],
+        "status": "explained",
+        "note": "loop-carrieddependence,ลดhardwarechecks,interleaved/burst,ลดbranch/control,เทียบmultimediaและcompiler"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "vector-simd-lanes"
+        ],
+        "status": "explained",
+        "note": "elementwiseSIMD,128bitในสไลด์,การควบคุมร่วม/ประสานง่าย/data-parallel;แก้MMX64โดยอ้างIntel"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "vector-simd-lanes"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพpipelined/array/mixed4lanes;เก็บสมาชิก0,4,8/1,5,9/2,6,10/3,7,11;variable/fixedwidth,stride;ระบุป้ายคลาด/ภาพตัด"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "hardware-multithreading"
+        ],
+        "status": "explained",
+        "note": "จำลองregister/PCและเปรียบfineทุกcycleกับcoarseเมื่อlongstall/L2missและข้อจำกัดshortstall"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "hardware-multithreading"
+        ],
+        "status": "explained",
+        "note": "SMT,multipleissue,dynamic scheduling,dependency/renaming;Pentium4HT2threadsแชร์units/cacheแยกregister"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "hardware-multithreading"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพขยายสีA/B/C/D แกนtime/issue slotsและช่องว่าง เปรียบcoarse/fine/SMTจากสีในแถว"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "hardware-multithreading"
+        ],
+        "status": "explained",
+        "note": "ทิศทางตามยุคเอกสารเรื่องpower,simplemicroarchitecture,ซ่อนcachemissและsharedresourcesของsimplecores"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "shared-memory"
+        ],
+        "status": "explained",
+        "note": "processor-cache-network-memory/I/Oภาพหน่วยความจำร่วม;singlephysicaladdress,lock,UMA/NUMAและความต่างการขยายSMP"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "sum-reduction"
+        ],
+        "status": "explained",
+        "note": "ครบ64,000/64processors/Pn0..63/1000ต่อช่วงและโค้ดindex;partialsum,divide-and-conquer,ต้องsync"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "sum-reduction"
+        ],
+        "status": "explained",
+        "note": "ขยายโค้ดsynch/oddcase/halfหาร2/Pn<halfและต้นไม้8ช่อง;trace64→1และเสริมodd5พร้อมค่าระหว่างทำ"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "gpu-history-system"
+        ],
+        "status": "explained",
+        "note": "framebuffer→3DhighendSGI→PC/consoleGPU;vertex,pixel,shading,texture,rasterizationนิยามครบ"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "gpu-history-system"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพระบบ3แบบ;CPU/bridge/PCI/VGA/framebuffer/LAN/UARTและIntel/AMD GPUlinks128bit667MT/s,x16,x4,HyperTransportพร้อมทางข้อมูล"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "gpu-architecture-fermi"
+        ],
+        "status": "explained",
+        "note": "data-parallel,multithreadingซ่อนmemorylatency,widebandwidth,heterogeneousCPU/GPUและชื่อAPI/languagesครบ"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "gpu-architecture-fermi"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ16lanes,instructionregister,register/loadstore,addresscoalescing,network,local64KiB/global;เปิดเผยregisterป้าย1Kขัดหน้า26"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "gpu-architecture-fermi"
+        ],
+        "status": "explained",
+        "note": "16lanes/32elements/2cycles/32K×32bit/64registerpercontextครบ;traceงบregisterและขอบเขตสมมติฐาน"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "gpu-memory-classification"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพthreadprivate/blocklocal/grid0→sync→grid1/GPUmemoryและsequence;แยกชื่อLocalในหนังสือกับCUDA"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "gpu-memory-classification"
+        ],
+        "status": "explained",
+        "note": "conditionalexecutionและผลเสีย;ตารางILP/VLIW/SuperscalarกับDLP/SIMDVector/Teslaครบ;อธิบายstatic/dynamic"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "cpu-gpu-comparison"
+        ],
+        "status": "explained",
+        "note": "ขยายตารางครบ11แถว คงทุกค่า4–8/8–16/2–4/16–32/2:1/8MB/0.75MB/64bit/8–256GB/4–6GBและYes/No;ระบุยุคข้อมูล"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "gpu-terms"
+        ],
+        "status": "explained",
+        "note": "ขยายตารางศัพท์ภาพ-onlyครบ12แถวและ4กลุ่ม คงชื่อเชิงอธิบาย/ศัพท์เดิม/CUDA พร้อมแปลbookdefinitionและmask/predicate/scoreboard"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "message-cluster-grid"
+        ],
+        "status": "explained",
+        "note": "ภาพprocessor-cache-memoryส่วนตัวต่อnetworkและprivatephysicaladdressspace;สอนsend/receiveเทียบหน้า19"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "message-cluster-grid"
+        ],
+        "status": "explained",
+        "note": "clusterprivateOS/memory,IO/Ethernet/switch/Internet,งานweb/database/simulation,availability/scaling/costและข้อจำกัดadmin/VM/bandwidth"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "message-cluster-grid"
+        ],
+        "status": "explained",
+        "note": "gridlonghaul/Internet,workunits/results,idlePCและตัวอย่างSETI@home/WorldCommunityGridตามยุคเอกสาร"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "network-topologies"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพขยายทั้งbus6/ring6/mesh4×4/cube3D8/full6;อธิบายเส้น/จุดและแจ้งmeshมีwraparound"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "crossbar-omega"
+        ],
+        "status": "explained",
+        "note": "ขยาย3ภาพCrossbar8×8/Omega3ขั้น×4กล่อง/switch2×2A,B→C,D;อธิบายทางกลับ/จุดตัดและเสริมblocking/นับวงจร"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "network-characteristics"
+        ],
+        "status": "explained",
+        "note": "unloadedlatency,throughput,link/total/bisectionbandwidth,congestion,cost,power,siliconroutabilityครบ;ตัวอย่างคำนวณแยกเป็นเสริม"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "parallel-benchmarks"
+        ],
+        "status": "explained",
+        "note": "ตารางLinpack/SPECrate/SPLASH/NAS/PARSECพร้อมชื่อเต็ม/งาน/strongscaling/Pthreads/OpenMPครบ"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "parallel-benchmarks"
+        ],
+        "status": "explained",
+        "note": "fixedcode/dataเทียบapplicationdefinedbenchmarkรวมalgorithm/language/tools;ตัวอย่างLinpack/BerkeleyDesignPatternsและเหตุผลต่อinnovation"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "arithmetic-intensity"
+        ],
+        "status": "explained",
+        "note": "GFLOP/s,kernels,AI=FLOPs/bytes,peakcomputeจากdatasheet,peakmemoryจากSTREAM;สูตรเพดานและตัวเลขฝึกแสดงว่าเป็นส่วนเสริม"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "conclusion-questions"
+        ],
+        "status": "explained",
+        "note": "higherperformance,software/architecturechallenges,SaaS/clustersและperformance/dollar,performance/Joule,mobile/WSCครบ"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "conclusion-questions"
+        ],
+        "status": "context",
+        "note": "Q&Aไม่มีโจทย์เพิ่มเติม;ใช้ชุดคำถามทบทวนที่ติดป้ายเสริม ไม่สร้างSelf-studyต้นฉบับขึ้นเอง"
+      }
+    ],
+    "issues": [
+      "หน้า3ขยายSMPเป็นSymmetric Multiprocessor ขณะที่หน้า19ใช้Shared Memory Multiprocessor จึงอธิบายตามบริบทและไม่สรุปว่าsharedmemoryทุกแบบเป็นUMA",
+      "หน้า10–11ใช้ขนาดvector32×64สมาชิกและmnemonicเป็นแบบจำลองการสอน โค้ดvectorไม่แสดงการตั้งความยาว;บทเรียนระบุสมมติฐาน64สมาชิกแทนการนำเสนอเป็นโค้ดที่รันได้กับRISC-Vทุกเครื่อง",
+      "หน้า11Cรับnทั่วไป แต่assemblyกำหนดช่วง512ไบต์และเลื่อน8ไบต์ จึงเป็น64double;แยกสองระดับนี้ก่อนนับ514คำสั่งเทียบ6 และไม่ตีความinstructionratioเป็นtime-speedup",
+      "หน้า13วางMMX/SSEคู่กับข้อความ128-bit อาจทำให้จำMMXเป็น128ผิด;แก้ว่าMMX64บิตและSSE128บิตโดยอ้างIntel Instruction Set Extensions Technology ในเนื้อหา",
+      "หน้า14ป้ายlaneบนภาพเป็น0,2,3,4ไม่ต่อเนื่อง แต่ข้อมูลใน4ช่องเป็น0/1/2/3mod4 และภาพส่วนล่างถูกตัด;บทเรียนยึดสมาชิกในช่อง อธิบายส่วนที่เห็น และไม่เดาคำบรรยายที่ขาด",
+      "หน้า21เป็นpseudocodeที่ใช้synch()และรูปdoไม่มีbracesแบบCครบ;เติมวงเล็บเพื่ออ่านกลุ่มคำสั่งแต่คงลำดับ oddcheckก่อนหารhalf และแสดงว่าhalfต้องเป็นสถานะส่วนตัวของprocessorในคำอธิบายเสริม",
+      "หน้า25วาด16lanes ป้ายregisterแต่ละlane1K×32 รวมเป็น16Kregisters แต่หน้า26ระบุ32K×32บิต จึงแจ้งความขัดกันอย่างชัดและใช้32Kเฉพาะโจทย์ที่อ้างข้อความหน้า26 ไม่เดาค่าจริงต่อlane",
+      "หน้า27/30ใช้Local Memoryเป็นชื่อเชิงสถาปัตยกรรมของพื้นที่ใกล้block/SMที่ตารางเทียบCUDA Shared Memory;CUDA local memoryหมายถึงprivateของthread จึงอ้างCUDA Programming Guide8.0เพื่อกันสับสนชื่อ",
+      "หน้า29เป็นตารางCPU/GPUยุคตัวอย่าง ไม่ระบุรุ่นให้ทุกช่อง เช่นdemandpaging/cachecoherentเป็นNoฝั่งGPU;คงค่าทั้ง11แถวแต่ไม่อ้างเป็นข้อจำกัดGPUปัจจุบันทุกเครื่อง",
+      "หน้า34ภาพติดป้าย2DMeshมีเส้นวนขอบ ถ้าเป็นlinksต่อขอบตรงข้ามจะเป็นwrappedmesh/torus จึงระบุความกำกวมและไม่นับสายด้วยสูตรopenmeshจากภาพนี้",
+      "หน้า39ให้ตัวแปรสำหรับmodelingแต่ไม่มีสมการrooflineหรือค่าทดสอบเครื่อง;สูตรmin(peakcompute,AI×bandwidth),DAXPYAIและตัวเลข200/60เป็นส่วนเสริมติดป้ายแยก",
+      "หน้า41เป็นQ&Aไม่มีSelf-studyแยกหรือโจทย์ให้แก้ ชุดreview/cards/quizในบทเป็นแบบฝึกเพิ่ม ไม่อ้างว่าเป็นข้อสอบจริง"
+    ]
+  },
+  {
+    "id": "10",
+    "code": "OS01",
+    "file": "Lecture 1 - Introduction.pdf",
+    "pages": 40,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "introduction-route"
+        ],
+        "status": "context",
+        "note": "ตรวจภาพปก: ชื่อ Lecture 1 ผู้สอน คณะ และวันที่; ใช้ระบุตัวเอกสาร"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "introduction-route"
+        ],
+        "status": "context",
+        "note": "ตรวจภาพ Outline ครบสี่กลุ่มหัวข้อและลำดับบท"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "introduction-route"
+        ],
+        "status": "context",
+        "note": "หน้าคั่น Course Logistics; ผูกกับทางเดินบท ไม่อ้างว่าเป็นเนื้อหาวิชาการเพิ่ม"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "why-and-three-questions"
+        ],
+        "status": "explained",
+        "note": "อธิบายเหตุผลเรียน OS, abstraction, performance tuning, resource coordination, security และ parallel computing; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "why-and-three-questions"
+        ],
+        "status": "explained",
+        "note": "อธิบาย Process/Memory/Files/I/O และคำถาม virtualization/concurrency/persistence ครบ; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "course-materials"
+        ],
+        "status": "context",
+        "note": "เก็บ ICT MyCourses หนังสือสามรายการและลิงก์ OSTEP ตามภาพ; ไม่อ้างว่าตรวจหนังสือออนไลน์ครบ"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "class-schedule-record"
+        ],
+        "status": "context",
+        "note": "ขยายภาพอ่านตาราง Section 1 และ 2 ครบทุกแถว วันที่ เวลา ห้อง และเหตุผล รวมสองช่วงวันที่ 12 พฤศจิกายน"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "tentative-topic-map"
+        ],
+        "status": "context",
+        "note": "เก็บตาราง OS#1–OS#7 ครบและชี้ความต่างเลขครั้งกับเลขไฟล์ Lecture; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "grading-record"
+        ],
+        "status": "context",
+        "note": "เก็บนโยบายศูนย์คะแนน ตาราง 10/10/30 และการรวมคะแนน CoA; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "computer-system-layers"
+        ],
+        "status": "context",
+        "note": "หน้าคั่น Computer Architecture Review เชื่อมเข้าส่วนทบทวน"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "computer-system-layers"
+        ],
+        "status": "explained",
+        "note": "อธิบาย user 1..n, compiler/assembler/editor/database, OS, hardware และลูกศรสองทางจากภาพครบ"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "computer-system-layers"
+        ],
+        "status": "explained",
+        "note": "อธิบายนิยามองค์ประกอบระบบทั้งสี่ พร้อมผู้ใช้ที่เป็นคน/เครื่อง/คอมพิวเตอร์อื่น; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "simplified-architecture"
+        ],
+        "status": "explained",
+        "note": "อธิบาย registers/ALU/CU/RAM/I/O controllers และรายชื่ออุปกรณ์ครบ; ตรวจทางเชื่อมในภาพแล้ว"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "instruction-cycle"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพนิ่งวิดีโอ ตรวจ PC/MAR/BR/IR/ALU/CU และ address/data/control buses พร้อมลิงก์; ไม่อนุมาน trace หรือ opcode ที่ไม่ปรากฏ"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "instruction-cycle"
+        ],
+        "status": "explained",
+        "note": "อธิบาย Fetch–Decode–Execute และวนจนโปรแกรมจบ พร้อมตัวอย่างบวกสองจำนวน; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "easy-system-and-roles"
+        ],
+        "status": "context",
+        "note": "หน้าคั่น Operating Systems ใช้เปิดส่วนบทบาท OS"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "easy-system-and-roles"
+        ],
+        "status": "explained",
+        "note": "อธิบายหลายโปรแกรม/หลายผู้ใช้ แบ่ง memory คุม I/O และเป้าหมาย correct/efficient/easy; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "easy-system-and-roles"
+        ],
+        "status": "explained",
+        "note": "อธิบาย virtualization, API, resource manager ครบสามบทบาท; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "virtualization-extended-machine"
+        ],
+        "status": "explained",
+        "note": "อธิบายทรัพยากรจำกัดและคำ infinite ในฐานะมุมมอง ไม่ใช่อนันต์จริง; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "virtualization-extended-machine"
+        ],
+        "status": "explained",
+        "note": "อธิบาย Program 1–4 ลูกศร Resources ชั้น OS/Hardware และกรอบ Extended Machine จากภาพครบ"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "virtualizing-cpu"
+        ],
+        "status": "explained",
+        "note": "อธิบายภาพสลับสามโปรแกรมลง CPU และสองคำถามเรื่องกลไก/นโยบาย; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "virtualizing-memory"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ อ่าน 0x00000 ของสามโปรแกรมกับป้ายจริง 0x00000/0x32000 อธิบายสามคำถามและข้อจำกัดการคำนวณ"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "apis-and-interface"
+        ],
+        "status": "explained",
+        "note": "อธิบาย API ตัวอย่างเริ่มโปรแกรม/แฟ้ม/จัดสรร memory และแยก library กับ system call; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "apis-and-interface"
+        ],
+        "status": "explained",
+        "note": "อธิบายชั้น Applications/OS/Hardware และลูกศรชี้ Beautiful/Ugly interface; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "resource-management"
+        ],
+        "status": "explained",
+        "note": "อธิบาย CPU time memory disk/I/O และ efficiency/fairness; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "os-design-goals"
+        ],
+        "status": "explained",
+        "note": "อธิบาย abstraction performance/overhead protection พลังงาน security mobility ครบ; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "history-human-operators"
+        ],
+        "status": "context",
+        "note": "หน้าคั่น History of Operating Systems เชื่อมสู่ลำดับยุค"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "history-human-operators"
+        ],
+        "status": "explained",
+        "note": "อธิบาย human operators/mainframes/job และเวลารอคนพร้อมภาพห้องเครื่อง; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "history-batch-system"
+        ],
+        "status": "explained",
+        "note": "อธิบาย batch/automatic sequencing/setup/science-engineering/FORTRAN/Assembly ครบ; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "history-batch-system"
+        ],
+        "status": "explained",
+        "note": "อธิบายภาพ (a)–(f), 1401/7094, input/system/output tapes และการย้ายด้วยคนครบ"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "history-batch-system"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพบัตรเจาะรู ผังรู กองบัตร และ FORTRAN STATEMENT; อธิบายสื่อ ไม่แต่งโปรแกรมจากอักขระที่อ่านไม่ครบ"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "history-multiprogramming"
+        ],
+        "status": "explained",
+        "note": "อธิบาย multiprogramming/CPU utilization พร้อมภาพ memory partitions OS+Job 1–3 และ IBM System/360"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "history-spooling"
+        ],
+        "status": "explained",
+        "note": "อธิบาย Spooling ชื่อขยาย overlap input/compute/print, job pool/queue และ buffer; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "history-personal-computers"
+        ],
+        "status": "explained",
+        "note": "อธิบาย PC multitasking multiprocessing GUI และความต่างคำ; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "personal-computer-timeline"
+        ],
+        "status": "explained",
+        "note": "ขยายเส้นเวลา ถอดป้ายครบ 21 เหตุการณ์ 1975–2009/present พร้อมข้อสังเกต mixed hardware/OS และป้ายประวัติที่ต้องตรวจ"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "history-mobile-requirements"
+        ],
+        "status": "explained",
+        "note": "อธิบายสามข้อกำหนดมือถือ และเก็บข้อกล่าว since 2017 โดยระบุว่าไม่ให้ตัวชี้วัด; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "mobile-computer-timeline"
+        ],
+        "status": "explained",
+        "note": "ขยาย HTC timeline ถอดเหตุการณ์ทุกปี 1997–2017 รวม 2014/2016 หลายสินค้า พร้อมแยกข้อความ world-first ตามภาพ"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "feature-migration"
+        ],
+        "status": "explained",
+        "note": "ขยาย migration chart อธิบายสี่สายเวลา ป้ายคุณสมบัติ จุด MULTICS/UNIX และลูกศรทแยงครบ"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "os-zoo-classification"
+        ],
+        "status": "explained",
+        "note": "เก็บ OS Zoo ห้าประเภทพร้อมตัวอย่างทุกชื่อ ชี้ Unix-like และตัวอย่างรุ่นเก่า; ตรวจภาพแล้ว"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "os-zoo-classification"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพโลโก้ อ่านชื่อครบทุกแถวและแยกองค์กร/OS/virtualization/distributions/BSD ไม่ตีความเป็นกราฟส่วนแบ่ง"
+      }
+    ],
+    "issues": [
+      "หน้า 7 เป็นภาพตารางและไม่ระบุปีในแต่ละแถว จึงอ่านวัน/วันที่/เวลา/ห้อง/เหตุผลตามภาพโดยไม่อนุมานประกาศล่าสุด; กลุ่ม 2 วันที่ 12 พฤศจิกายนมีสองช่วงเรียนจริงในภาพ ไม่ลบเป็นแถวซ้ำ",
+      "หน้า 8 ใช้ OS#2 สำหรับ Process and Process Scheduling แต่ชุดเอกสารมี Lecture 2 – Process และ Lecture 3 – Process Scheduling แยกไฟล์ เลข OS# ในแผนจึงไม่ตรงหนึ่งต่อหนึ่งกับหมายเลข PDF",
+      "หน้า 14 เป็นภาพนิ่งจากวิดีโอลิงก์ภายนอก ตรวจภาพและอธิบายองค์ประกอบ/ทางส่งได้ แต่ไม่ได้มี trace หรือคำอธิบาย opcode 3C ครบใน PDF จึงไม่แต่งความหมาย opcode หรือผลโปรแกรม; ไม่อ้างว่าได้ดูวิดีโอเต็ม",
+      "หน้า 19 คำว่าเหมือนมีทรัพยากร infinite เป็นคำอธิบายมุมมองเสมือน ส่วนทรัพยากรจริงยังจำกัด; หน้า 21 run one instruction at a time เป็นแบบจำลองง่ายเพื่อสอน CPU virtualization ไม่ใช่ข้อสรุปสำหรับฮาร์ดแวร์ทุกชนิด",
+      "หน้า 22 ป้าย Physical Address และ 0x32000 ส่วนบนซ้อน/ชิดกันในภาพ พื้นที่สามโปรแกรมไม่มีฐานและขนาดครบ จึงอ่านแนวคิดได้แต่หาตารางแปลงหรือขนาดแต่ละโปรแกรมเป็นตัวเลขไม่ได้",
+      "หน้า 23 จัด system calls กับ standard library ไว้ใต้ API ร่วมกัน ต้องแยกว่า API เป็นรอยต่อ library เป็นฟังก์ชัน และ system call เป็นทางเข้าบริการระบบ ไม่ใช่ทุก library call คือ system call; ส่วนขยายระบุ [อธิบายเสริม]",
+      "หน้า 31 ภาพบัตรเป็นตัวอย่างสื่อและมีคำ FORTRAN STATEMENT แต่รายละเอียดรหัสบัตรไม่ใช่รายการโปรแกรมที่อ่านครบได้ จึงอธิบายตำแหน่งรู/กองบัตรโดยไม่สร้างโค้ดหรือผลรันขึ้นเอง",
+      "หน้า 35 เส้นเวลาผสมฮาร์ดแวร์/ภาษา/OS และมีช่วง present ในภาพเก่า ป้าย First time using GUI ของ Lisa กับ IBM PC XT 286/PC-DOS เป็นข้อความประวัติที่อาจคลาดเคลื่อนหรือรวมหลายสิ่ง จึงคงตามภาพพร้อมข้อจำกัด ไม่อ้างเป็นความเป็นรายแรกหรือวันเปิดตัวที่ตรวจยืนยันแล้ว",
+      "หน้า 36 ข้อกล่าว mobile OS ใช้มากที่สุด since 2017 ไม่ระบุตัวชี้วัด ขอบเขต หรือแหล่งสถิติ จึงเป็นบริบทของต้นฉบับ ไม่ยืนยันสถานะส่วนแบ่งปัจจุบัน",
+      "หน้า 37 เป็น timeline ของแบรนด์ HTC ไม่ใช่ประวัติ mobile computers ทั้งหมด ข้อกล่าว World’s first และอันดับแบรนด์คงเป็นข้อความในภาพ ไม่ได้ตรวจยืนยันการแข่งขันหรือประวัติรายแรกจากภายนอก",
+      "หน้า 38 ตำแหน่งปีและคุณสมบัติเป็นแผนภาพโดยประมาณ ลูกศร MULTICS → UNIX → UNIX สื่อการส่งต่อแนวคิดข้ามประเภทเครื่อง ไม่ได้ยืนยันความเหมือนกันของโค้ดหรือวันเปิดตัวแบบละเอียด",
+      "หน้า 39 รวม Linux และ FreeBSD ไว้ในวงเล็บ UNIX แบบกว้าง; อธิบายเสริมว่าเป็นตระกูล/แนว Unix-like ไม่ใช่ผลิตภัณฑ์เดียวกัน และชื่อ Windows 2012 R2, Windows 7/10 เป็นตัวอย่างตามเอกสาร ไม่ใช่รายการเวอร์ชันปัจจุบัน",
+      "หน้า 40 รวมโลโก้ผู้ผลิต/องค์กร OS ระบบทำเสมือน และชุดแจกจ่าย Linux/BSD ไว้ในรูปเดียว จึงแยกประเภทในการสอน ไม่อ้างว่าโลโก้ทุกตัวเป็น OS อิสระชนิดเดียวกัน"
+    ]
+  },
+  {
+    "id": "11",
+    "code": "OS02",
+    "file": "Lecture 2 - Process.pdf",
+    "pages": 41,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "process-route"
+        ],
+        "status": "context",
+        "note": "ตรวจภาพปก: ชื่อ Lecture 2: Process รายวิชา ผู้สอน สังกัด และวันที่ 10 September 2026"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "process-route"
+        ],
+        "status": "context",
+        "note": "ตรวจ Agenda ครบทุกหัวข้อ รวม Process Scheduling ที่เชื่อมไปบท OS03"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "process-route"
+        ],
+        "status": "context",
+        "note": "ตรวจหน้าคั่น The Abstraction: The Process; ไม่มีนิยามหรือภาพเนื้อหาเพิ่ม"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "process-abstraction"
+        ],
+        "status": "explained",
+        "note": "สอนเหตุที่ต้องมี process abstraction, running program, multiprogramming และ virtualization"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "process-abstraction"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพอบขนม: recipe/program, ingredient/input, oven/resources, baker/OS และ baking/process ครบ"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "process-abstraction"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ CPU/Memory/Disk; อธิบาย loading จาก code/static data บนดิสก์ไป address space"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "address-space-state"
+        ],
+        "status": "explained",
+        "note": "ขยายผัง 0→max: text/data/heap/stack พร้อมข้อมูลในแต่ละส่วนและลูกศรทิศขยาย"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "address-space-state"
+        ],
+        "status": "explained",
+        "note": "อธิบาย machine state: instructions/data, eax/ebx, PC, stack/frame pointer และ open files"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "execution-observation"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ program→process, CPU ผลัด Process 1–5, thread pointer/priority table, scheduler และ preemption"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "execution-observation"
+        ],
+        "status": "explained",
+        "note": "ขยาย Windows Task Manager/macOS Activity Monitor; สอนคอลัมน์และอ่านค่าตัวอย่าง CPU/memory/PID/threads จริง"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "execution-observation"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ top สองภาพ; อ่าน PID/USER/PR/NI/VIRT/RES/SHR/S/%CPU/%MEM/TIME+/COMMAND พร้อมค่าตัวอย่าง"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "process-api-creation"
+        ],
+        "status": "explained",
+        "note": "บริการ Create, Destroy, Wait, Miscellaneous Control (suspend/resume) และ Status ครบ"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "process-api-creation"
+        ],
+        "status": "explained",
+        "note": "ขั้นสร้างงาน 4 ขั้น: load/prepare memory, default stdin/stdout/stderr, first instruction, transfer CPU"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "process-states"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพสถานะครบสี่ลูกศร Scheduled/Descheduled/I/O initiate/I/O done พร้อมนิยาม Running/Ready/Blocked"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "process-states"
+        ],
+        "status": "explained",
+        "note": "ขยายและเก็บตาราง Time 1–10 ครบทุกแถว พร้อม trace I/O ที่ 3/7 และงานจบที่ 8/10"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "pcb-information"
+        ],
+        "status": "explained",
+        "note": "เหตุที่ OS ต้องติดตามงานด้วยโครงสร้างข้อมูล และนิยาม Process Control Block"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "pcb-information"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ Process Table PID 1/2/…/n ชี้ PCB สามก้อน และสอนช่อง PC/registers/state/priority/address/open files/flags"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "pcb-information"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ PCB และรักษาทุกช่องในตาราง Process/Memory/File management พร้อมความหมายและการจัดกลุ่ม"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "pcb-c-structure"
+        ],
+        "status": "explained",
+        "note": "ขยายแล้วถอด struct proc, struct context และ enum proc_state ทั้งหมด พร้อมสอนทุก field และแยกบริบท x86/xv6"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "unix-api-route"
+        ],
+        "status": "context",
+        "note": "หน้าทบทวนคำถาม 3 ข้อ เน้น Process API ก่อนเริ่มตัวอย่าง C"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "c-first-program"
+        ],
+        "status": "explained",
+        "note": "ขยาย first.c ครบ code/คำสั่ง more/gcc/./first และผลพิมพ์; อธิบาย void main ตามต้นฉบับเทียบรูปมาตรฐาน"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "fork-parent-child"
+        ],
+        "status": "explained",
+        "note": "fork สร้างลูก, ความสัมพันธ์แม่/ลูก, PID และผลคืนแม่/ลูก; อธิบายข้อจำกัดคำว่า exact copy"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "fork-parent-child"
+        ],
+        "status": "explained",
+        "note": "ขยายโค้ด fork1 ครบและผล PID 2326/2327; ตามเงื่อนไข wait/exit และแยก fork return จาก PID จริง"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "wait-and-fork-loop"
+        ],
+        "status": "explained",
+        "note": "อธิบายแม่รอลูกและเงื่อนไขลูกพิมพ์ก่อน; บันทึกข้อความต้นฉบับที่ซ้ำ"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "wait-and-fork-loop"
+        ],
+        "status": "explained",
+        "note": "ขยายโค้ด fork2/ผลรัน/หมายเหตุ exit(0); ไล่ 1→2→4→8 และ 42 แปดครั้งภายใต้สมมติฐาน พร้อมแจ้งโค้ดกับภาพผลไม่ตรงกัน"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "parent-child-address-space"
+        ],
+        "status": "explained",
+        "note": "ตรวจภาพ Parent→fork→Child ที่ต่างฝ่ายมี text/data/heap/stack และ PCB ของตน ไม่ใช่ตัวแปรร่วม"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "exec-replacement"
+        ],
+        "status": "explained",
+        "note": "exec เปลี่ยนโปรแกรมในโปรเซสเดิม ไม่สร้างงานเพิ่ม และไม่กลับเมื่อสำเร็จ"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "exec-replacement"
+        ],
+        "status": "explained",
+        "note": "ขยายโค้ด x=10/fork/child x+2/execlp/wait ครบ; คงรายการ exec หกรูปแบบและชี้ข้อผิดพลาด run echo/argv[0] อย่างตรงไปตรงมา"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "resources-route"
+        ],
+        "status": "context",
+        "note": "หน้าทบทวนคำถาม 3 ข้อ เน้นวิธีเข้าถึงทรัพยากร เพื่อเริ่ม system calls"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "limited-direct-execution"
+        ],
+        "status": "explained",
+        "note": "นิยาม Direct Execution และเหตุจำกัดการเข้าถึงทรัพยากรเพื่อคุมความปลอดภัย"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "limited-direct-execution"
+        ],
+        "status": "explained",
+        "note": "ขยายผัง user/kernel และ mode bit 1/0; ตาม call→trap→execute→return พร้อมแยกสิทธิ์"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "library-and-system-calls"
+        ],
+        "status": "explained",
+        "note": "ขยาย printf Greetings→standard C library→write system call; รักษารายชื่อบริการทั้งหมด 17 ชื่อ"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "library-and-system-calls"
+        ],
+        "status": "explained",
+        "note": "ขยายและรักษาทุกเซลล์ตาราง open/close/read/write/lseek เทียบ library; ชี้ gets เป็น API เก่าไม่ควรใช้เขียนใหม่"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "read-trap-flow"
+        ],
+        "status": "explained",
+        "note": "ขยายผัง read ครบขั้น 1–11, user/kernel space, dispatcher/table/handler และ SP; ชี้ลำดับอาร์กิวเมนต์หัวสไลด์ไม่ตรง API จริง"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "trap-table-lifecycle"
+        ],
+        "status": "explained",
+        "note": "ขยายผังสามคอลัมน์ทั้งรูป; อธิบาย boot/init trap table, handlers และ lifecycle ตั้งแต่สร้างถึง exit"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "trap-table-lifecycle"
+        ],
+        "status": "explained",
+        "note": "ขยายผังซ้ำโดยเน้น trap, save/restore kernel stack และ return-from-trap เพื่อลดสิทธิ์กลับผู้เรียก"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "switching-route"
+        ],
+        "status": "context",
+        "note": "หน้าทบทวนคำถาม 3 ข้อ เน้นวิธี OS สลับระหว่างโปรเซส"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "regaining-cpu"
+        ],
+        "status": "explained",
+        "note": "เหตุให้ OS กลับมาคุม: yield, blocked I/O, wait child, termination; ปัญหา infinite loop"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "regaining-cpu"
+        ],
+        "status": "explained",
+        "note": "timer interrupt เป็นระยะ, handler/OS regains CPU และขั้น boot ตั้ง handler/เริ่ม timer"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "context-save-restore"
+        ],
+        "status": "explained",
+        "note": "ขยายภาพ save CPU→Prog1 State และ restore Prog2 State→CPU; อธิบาย PC/SP และโค้ด/ข้อมูลที่คงใน memory"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "context-save-restore"
+        ],
+        "status": "explained",
+        "note": "ขยายผัง boot กับ timer และ A→k-stack(A)→proc_t(A), restore B/switch stack/return-from-trap→B’s PC ครบทุกขั้น"
+      }
+    ],
+    "issues": [
+      "หน้า 13 ใช้ main() เป็นตัวอย่าง first instruction และอธิบายการโหลดแบบย่อ; [อธิบายเสริม] ระบบจริงมี runtime/startup ก่อน main และอาจโหลดบางส่วนเมื่อใช้ ไม่ควรตีความว่าไฟล์มี heap/stack ที่ทำงานแล้วให้คัดมาทั้งก้อน.",
+      "หน้า 21 ใช้ void main(); คงโค้ดต้นฉบับและอธิบายเสริมว่า C แบบ hosted ที่ต้องการรูปมาตรฐานใช้ int main(void) หรือรูป int ที่รับ argc/argv (WG14 N1570 §5.1.2.2.1).",
+      "หน้า 22 ใช้คำว่า child initially exact copy; ต้องอ่านคู่หน้า 26 ว่ามี address space/PCB แยก และ [อธิบายเสริม] ไม่เหมือนทุกคุณสมบัติ เช่น PID กับค่าคืน fork ต่างกันตั้งแต่ต้น.",
+      "หน้า 23 โค้ดใช้ if(pid > 0) / else โดยไม่มีทางตรวจ pid < 0 จึงเข้า else ได้แม้ fork ล้มเหลว; คงต้นฉบับแล้วแนะนำการแยก failure. wait อยู่หลัง printf แม่ จึงไม่รับประกันลูกพิมพ์ก่อนบรรทัดแม่.",
+      "หน้า 24 มีข้อความนิยาม wait และการให้แม่รอลูกซ้ำสองชุด ไม่มีความหมายหรือบริการเพิ่มจากการซ้ำ.",
+      "หน้า 25 ภาพผลรันใช้สตริง Starting a new process with / The main process ID is / loop #0/#1 ไม่ตรงสตริงโค้ดที่แสดง จึงไม่ยืนยันว่าเป็นผลตรงตัวของโค้ดทุกบรรทัด. บทเรียนคงโค้ดและแยกวิเคราะห์ภายใต้ fork สำเร็จ.",
+      "หน้า 25 มี wait(NULL) เพียงหนึ่งครั้งต่อโปรเซส จึงไม่ใช่การรอลูกหลายตัวและลูกหลานทั้งหมด. คำแนะนำให้เปลี่ยน return 0 เป็น exit(0) ไม่แก้ข้อจำกัดนี้; return 0 จาก main แบบ int เป็นการจบปกติอยู่แล้ว.",
+      "หน้า 28 บรรทัด execlp(\"/bin/ls\", \"/home\", NULL) มีคอมเมนต์ run echo แต่ระบุโปรแกรม ls; /home อยู่ตำแหน่ง argv[0] จึงไม่ใช่อาร์กิวเมนต์เลือกโฟลเดอร์. เพิ่มตัวอย่างแก้ที่ระบุ argv[0] = ls และส่ง /home เป็นอาร์กิวเมนต์ถัดไปโดยติดป้ายอธิบายเสริม.",
+      "หน้า 28 เรียกหกรูปแบบว่า exec system calls; [อธิบายเสริม] บน Linux รายการนี้เป็นฟังก์ชันห่อ execve และ execvpe เป็นส่วนขยาย GNU จึงไม่ควรสรุปว่าเป็นชุด syscall ที่เหมือนกันทุก Unix. โค้ดไม่ตรวจผลล้มเหลวของ exec และอาจ return 0 แม้ exec ไม่สำเร็จ.",
+      "หน้า 32 ใช้คำ system calls รวมรายชื่อ API เช่น signal และ exec family เพื่อการสอน; [อธิบายเสริม] แต่ละชื่ออาจผ่านฟังก์ชันห่ออีกชั้น ไม่ใช่ทุกชื่อเป็น kernel entry แยกตรงตัว. หน้า 33 เป็นตารางความสัมพันธ์ ไม่ใช่คำรับประกันหนึ่ง library call ต่อหนึ่ง syscall.",
+      "หน้า 33 มี gets ในตารางตามแหล่งเดิม; คงชื่อเพื่อเทียบต้นฉบับ แต่ระบุว่าไม่มีขอบเขตรับข้อมูลและ C11 ถอดออกแล้ว ไม่ใช้เป็นแบบฝึกเขียนใหม่ (Linux man-pages gets(3)).",
+      "หน้า 34 หัวสไลด์เขียน read(fd, nbytes, buffer) แต่รูป POSIX/C จริงคือ read(fd, buffer, nbytes). คงคำต้นฉบับพร้อมคำแก้และแหล่ง read(2); ผัง push &buffer/stack/ที่อยู่ 32 บิตเป็นภาพตัวอย่าง ไม่ใช่ calling convention สากล.",
+      "หน้า 35–36 ผังสรุป exit แล้ว free memory/remove from process list แบบย่อ; [อธิบายเสริม] Unix อาจคงระเบียนผลจบแบบ zombie จนแม่ wait จึงไม่ใช้ผังย่อปฏิเสธสถานะ ZOMBIE ที่ปรากฏหน้า 19.",
+      "หน้า 41 ใช้ชื่อ proc_t(A/B) ในผัง ขณะที่หน้า 19 ยก struct proc ของ xv6 และชื่อรีจิสเตอร์ x86; อธิบายว่าเป็นสัญกรณ์ของระเบียนโปรเซสตามรูป ไม่อ้างว่าเป็นโค้ด/ชนิดข้อมูลเดียวกันทุกระบบ."
+    ]
+  },
+  {
+    "id": "12",
+    "code": "OS03",
+    "file": "Lecture 3 - Process Scheduling.pdf",
+    "pages": 48,
+    "coverage": [
+      {
+        "page": 1,
+        "sectionIds": [
+          "scheduling-context"
+        ],
+        "status": "context",
+        "note": "ปกCPU Schedulingวันที่24ก.ย.2026และผู้สอน"
+      },
+      {
+        "page": 2,
+        "sectionIds": [
+          "scheduling-context"
+        ],
+        "status": "context",
+        "note": "ตรวจตารางClassScheduleครบSection1/2ทั้งหมด14แถวเป็นcontext"
+      },
+      {
+        "page": 3,
+        "sectionIds": [
+          "scheduling-context"
+        ],
+        "status": "context",
+        "note": "Outlineบทนำ/นโยบาย/I/O/MLFQ/OSexamples"
+      },
+      {
+        "page": 4,
+        "sectionIds": [
+          "scheduling-context"
+        ],
+        "status": "context",
+        "note": "หน้าคั่นIntroductionไม่มีหัวข้อใหม่"
+      },
+      {
+        "page": 5,
+        "sectionIds": [
+          "cpu-io-bursts"
+        ],
+        "status": "explained",
+        "note": "CPU/IOburstและเพิ่มutilizationด้วยงานreadyอื่น"
+      },
+      {
+        "page": 6,
+        "sectionIds": [
+          "cpu-io-bursts"
+        ],
+        "status": "explained",
+        "note": "CPU-boundกับI/O-boundและความยาวburst"
+      },
+      {
+        "page": 7,
+        "sectionIds": [
+          "cpu-io-bursts"
+        ],
+        "status": "explained",
+        "note": "Multiprogramming,deschedule/scheduleและvirtualCPUs"
+      },
+      {
+        "page": 8,
+        "sectionIds": [
+          "scheduling-events"
+        ],
+        "status": "explained",
+        "note": "เหตุเลือกงานyield/block/childwait/exit/timer"
+      },
+      {
+        "page": 9,
+        "sectionIds": [
+          "scheduling-events"
+        ],
+        "status": "explained",
+        "note": "ตรวจqueueingdiagramready/CPU/สี่แขนงและทางกลับ"
+      },
+      {
+        "page": 10,
+        "sectionIds": [
+          "scheduling-events"
+        ],
+        "status": "explained",
+        "note": "Schedulingpolicyกับคำถามalgorithm/metrics"
+      },
+      {
+        "page": 11,
+        "sectionIds": [
+          "scheduling-goals"
+        ],
+        "status": "explained",
+        "note": "Goalsทั่วไปและbatchทั้งfairness/policy/balance/throughput/T/utilization"
+      },
+      {
+        "page": 12,
+        "sectionIds": [
+          "scheduling-goals"
+        ],
+        "status": "explained",
+        "note": "Interactiveและreal-timeทั้งresponse/proportionality/deadline/predictability"
+      },
+      {
+        "page": 13,
+        "sectionIds": [
+          "scheduling-metrics"
+        ],
+        "status": "explained",
+        "note": "นิยาม5metricsและจำกัดสูตรย่อไม่รวมI/O"
+      },
+      {
+        "page": 14,
+        "sectionIds": [
+          "scheduling-metrics"
+        ],
+        "status": "explained",
+        "note": "โจทย์P1/P2และเฉลยP3แบบparameterเพราะburstไม่ให้"
+      },
+      {
+        "page": 15,
+        "sectionIds": [
+          "metric-targets"
+        ],
+        "status": "explained",
+        "note": "ทิศทางmax/minของmetrics"
+      },
+      {
+        "page": 16,
+        "sectionIds": [
+          "algorithm-map"
+        ],
+        "status": "context",
+        "note": "หน้าคั่นSchedulingAlgorithmsไม่มีตัวอย่างใหม่"
+      },
+      {
+        "page": 17,
+        "sectionIds": [
+          "algorithm-map"
+        ],
+        "status": "context",
+        "note": "รายการ6นโยบายและเกณฑ์เลือก"
+      },
+      {
+        "page": 18,
+        "sectionIds": [
+          "fifo-equal"
+        ],
+        "status": "explained",
+        "note": "ตรวจGanttA0–10/B10–20/C20–30และTAverage20"
+      },
+      {
+        "page": 19,
+        "sectionIds": [
+          "fifo-convoy"
+        ],
+        "status": "explained",
+        "note": "ตรวจGanttA0–100/B100–110/C110–120,TAverage110และconvoy"
+      },
+      {
+        "page": 20,
+        "sectionIds": [
+          "sjf-all-ready"
+        ],
+        "status": "explained",
+        "note": "ตรวจGanttSJF B0–10/C10–20/A20–120และT50"
+      },
+      {
+        "page": 21,
+        "sectionIds": [
+          "sjf-late-arrival"
+        ],
+        "status": "explained",
+        "note": "ตรวจlatearrivalT10ไม่preemptและT310/3=103.3"
+      },
+      {
+        "page": 22,
+        "sectionIds": [
+          "sjf-late-arrival"
+        ],
+        "status": "explained",
+        "note": "Nonpreemptiveเทียบpreemptiveและเหตุtimer/priority"
+      },
+      {
+        "page": 23,
+        "sectionIds": [
+          "stcf"
+        ],
+        "status": "explained",
+        "note": "ตรวจSTCF A0–10/B10–20/C20–30/A30–120และT50"
+      },
+      {
+        "page": 24,
+        "sectionIds": [
+          "priority-scheduling"
+        ],
+        "status": "explained",
+        "note": "Priorityเลขน้อยสูงและstarvation"
+      },
+      {
+        "page": 25,
+        "sectionIds": [
+          "priority-scheduling"
+        ],
+        "status": "explained",
+        "note": "ตรวจตารางP1–P5ครบburst/priorityและเฉลยT12/W8.2"
+      },
+      {
+        "page": 26,
+        "sectionIds": [
+          "round-robin"
+        ],
+        "status": "explained",
+        "note": "RRquantum,responseและข้อแลกเปลี่ยน"
+      },
+      {
+        "page": 27,
+        "sectionIds": [
+          "round-robin"
+        ],
+        "status": "explained",
+        "note": "ตรวจRR15ช่องABCครบกับสูตรR1/T14และเปิดเผย15sขัดกราฟ5s"
+      },
+      {
+        "page": 28,
+        "sectionIds": [
+          "round-robin"
+        ],
+        "status": "explained",
+        "note": "ตรวจSJFสามแท่ง5s/jobและR5/T10"
+      },
+      {
+        "page": 29,
+        "sectionIds": [
+          "context-switch-cost"
+        ],
+        "status": "explained",
+        "note": "Contextswitchcost1/10ประมาณ10%เทียบ1/11เวลารวม"
+      },
+      {
+        "page": 30,
+        "sectionIds": [
+          "incorporating-io"
+        ],
+        "status": "context",
+        "note": "หน้าคั่นIncorporatingI/O"
+      },
+      {
+        "page": 31,
+        "sectionIds": [
+          "incorporating-io"
+        ],
+        "status": "explained",
+        "note": "เลือกเมื่อblocked/completeและหลักoverlap"
+      },
+      {
+        "page": 32,
+        "sectionIds": [
+          "io-no-overlap"
+        ],
+        "status": "explained",
+        "note": "ตรวจCPU/Diskทุกช่วง0–140แบบไม่overlapและแก้หน่วย50s→50ms"
+      },
+      {
+        "page": 33,
+        "sectionIds": [
+          "io-overlap-stcf"
+        ],
+        "status": "explained",
+        "note": "ตรวจCPU/Diskสิบช่วง0–100แบบSTCFoverlapและT95"
+      },
+      {
+        "page": 34,
+        "sectionIds": [
+          "mlfq-motivation"
+        ],
+        "status": "context",
+        "note": "หน้าคั่นMLFQ"
+      },
+      {
+        "page": 35,
+        "sectionIds": [
+          "mlfq-motivation"
+        ],
+        "status": "explained",
+        "note": "Motivationไม่รู้runtimeแต่ต้องการทั้งresponse/turnaround"
+      },
+      {
+        "page": 36,
+        "sectionIds": [
+          "mlfq-motivation"
+        ],
+        "status": "explained",
+        "note": "ตรวจqueueภาพQ8สูง/Q1ต่ำ,A/B/C/DและRRในqueue"
+      },
+      {
+        "page": 37,
+        "sectionIds": [
+          "mlfq-rules"
+        ],
+        "status": "explained",
+        "note": "MLFQครบ5rulesแยกquantumกับallotment"
+      },
+      {
+        "page": 38,
+        "sectionIds": [
+          "mlfq-simple-timeline"
+        ],
+        "status": "explained",
+        "note": "ตรวจlong/shortT100สามqueueQ2สูงและช่วง0–200ตามภาพ"
+      },
+      {
+        "page": 39,
+        "sectionIds": [
+          "mlfq-io-intensive"
+        ],
+        "status": "explained",
+        "note": "ตรวจinteractiveI/Oแท่งเทาสั้นQ2กับดำQ0และขอบเขตข้อมูลเวลา"
+      },
+      {
+        "page": 40,
+        "sectionIds": [
+          "mlfq-accounting"
+        ],
+        "status": "explained",
+        "note": "ตรวจaccountingซ้าย/ขวาและRule4นับสะสมกันgaming"
+      },
+      {
+        "page": 41,
+        "sectionIds": [
+          "mlfq-priority-boost"
+        ],
+        "status": "explained",
+        "note": "ตรวจboostซ้าย/ขวากันstarvationโดยไม่เดาค่าS"
+      },
+      {
+        "page": 42,
+        "sectionIds": [
+          "mlfq-different-config"
+        ],
+        "status": "explained",
+        "note": "ตรวจconfigurationQ0RR8/Q1RR16/Q2FCFSและงบเพิ่มเติม"
+      },
+      {
+        "page": 43,
+        "sectionIds": [
+          "real-schedulers-context"
+        ],
+        "status": "context",
+        "note": "หน้าคั่นReal-worldExamplesและขอบเขตตามรุ่นสไลด์"
+      },
+      {
+        "page": 44,
+        "sectionIds": [
+          "linux-cfs"
+        ],
+        "status": "explained",
+        "note": "LinuxpoliciesRT/Normalและแก้ขอบเขตCFS2.6.23"
+      },
+      {
+        "page": 45,
+        "sectionIds": [
+          "linux-cfs"
+        ],
+        "status": "explained",
+        "note": "Vruntime,nice−20…19,physical/virtualtimeและRBTree"
+      },
+      {
+        "page": 46,
+        "sectionIds": [
+          "windows-priority"
+        ],
+        "status": "explained",
+        "note": "Windows32levels,readyhighest,preemptionและqueueperpriority"
+      },
+      {
+        "page": 47,
+        "sectionIds": [
+          "windows-priority-table"
+        ],
+        "status": "explained",
+        "note": "ตรวจPriorityClassesตาราง7แถว×6คอลัมน์ทุกค่าครบ"
+      },
+      {
+        "page": 48,
+        "sectionIds": [
+          "windows-dynamic-priority"
+        ],
+        "status": "explained",
+        "note": "Dynamicpriorityลดไม่ต่ำกว่าbase,boostหลังwaitและแจ้ง3xกำกวม"
+      }
+    ],
+    "issues": [
+      "หน้า5CPUidleระหว่างI/Oหมายถึงหากไม่สลับงานอื่น ไม่ใช่ทุกระบบCPUต้องidleเมื่อdeviceทำงาน",
+      "หน้า13Turnaround=CPUtime+waitingtimeเป็นสูตรย่อกรณีไม่มีI/O;ในกรณีทั่วไปT=C−arrivalและรวมI/Owaitด้วยตามตัวอย่าง32–33",
+      "หน้า14ไม่ให้CPUburstP3 จึงให้waiting27และT3=27+B3ภายใต้ลำดับตามตัวอย่าง ไม่เดาB3=3เป็นข้อมูลต้นฉบับ",
+      "หน้า24เลขpriorityน้อยสูง แต่Rule1หน้า37ใช้>ในความหมายสำคัญเชิงนโยบายและWindows46ใช้เลขมากสูง จึงต้องแยกconvention",
+      "หน้า27ข้อความeachneeds15sขัดกับกราฟABC5รอบq1และผลcompletion13/14/15;กราฟใช้5s/jobรวม15s. ถ้า15s/jobจริงRRจบ43/44/45และTเฉลี่ย44s",
+      "หน้า29roughly10%ใช้การประมาณหรือฐานproductive10ms;ถ้าสัดส่วนelapsedหนึ่งรอบ10+1msคือ1/11≈9.09%",
+      "หน้า32ข้อความCPU50sขัดI/O10ms/axisและผล90/140;ใช้50msตามกราฟเพื่อให้หน่วยสอดคล้องโดยแจ้งข้อผิดพลาด",
+      "หน้า36queueQ8สูง/Q1ต่ำ;38–41Q2สูง/Q0ต่ำ;42Q0สูง/Q2ต่ำเป็นคนละconfiguration ไม่ใช่ลำดับเลขqueueสากล",
+      "หน้า38–41ไม่ได้ระบุquantum/allotment/Sและเวลารายแท่งย่อยครบ;สอนรูป/แกน/การแทรกที่เห็นและใช้คำประมาณเมื่ออ่านขอบแท่ง ไม่สร้างเวลาจบเฉลี่ยที่ข้อมูลไม่พอ",
+      "หน้า44หัวข้อLinux2.6+กว้างเกินในแง่CFS ซึ่งรวมเข้า2.6.23ตามเอกสารkernel https://www.kernel.org/doc/html/v6.6/scheduler/sched-design-CFS.html;ตัวอย่างทั้งหมดเป็นบริบทสไลด์ไม่ใช่คู่มือschedulerล่าสุด",
+      "หน้า46priority0memory-managementthreadระบุอย่างกว้าง;Microsoftเจาะจงzero-pagethreadที่ล้างหน้าว่าง ไม่ใช่ทุกmemory-managementthread https://learn.microsoft.com/en-us/windows/win32/procthread/scheduling-priorities",
+      "หน้า48Foregroundwindow3xpriorityboostไม่ระบุรุ่น/settingและอาจสับสนกับquantumboost จึงไม่ยืนยันสูตรpriorityคูณ3;สอนdynamicboost/decayที่มีหลักฐานและแจ้งความกำกวม https://learn.microsoft.com/th-th/windows/win32/procthread/priority-boosts"
+    ]
+  }
+]

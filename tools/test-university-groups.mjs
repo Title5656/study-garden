@@ -18,9 +18,9 @@ try {
   await page.goto('https://study-garden.test/index.html');
   const search = page.locator('#subject-search');
   for (const [query, groups, courses] of [
-    ['มหิดล', 1, 3], ['MAHIDOL', 1, 3], ['ศิลปากร', 1, 1], ['Silpakorn', 1, 1],
+    ['มหิดล', 1, 4], ['MAHIDOL', 1, 4], ['ศิลปากร', 1, 1], ['Silpakorn', 1, 1],
     ['Thermodynamics', 1, 1], ['ITDS261', 1, 1], ['Electronic Commerce', 1, 1],
-    ['ไม่มีวิชานี้', 0, 0], ['', 2, 4],
+    ['ไม่มีวิชานี้', 0, 0], ['', 2, 5],
   ]) {
     await search.fill(query);
     assert.equal(await page.locator('.university-group:visible').count(), groups, `${query}: visible universities`);

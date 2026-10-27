@@ -1,0 +1,1709 @@
+{
+  "id": "11",
+  "code": "OS02",
+  "title": "โปรเซส: จากโปรแกรมบนดิสก์ถึงการสลับงานของระบบปฏิบัติการ",
+  "englishTitle": "Lecture 2: Process",
+  "sourceFile": "Lecture 2 - Process.pdf",
+  "sourcePages": 41,
+  "overview": [
+    "Process (โปรเซส) คือโปรแกรมที่กำลังทำงาน พร้อมข้อมูลและตำแหน่งที่ทำค้างไว้ จึงต่างจากไฟล์โปรแกรมที่เก็บอยู่เฉย ๆ",
+    "ระบบปฏิบัติการสร้างงาน จัดพื้นที่ข้อมูล บันทึกสถานะ และทำให้หลายงานผลัดกันใช้หน่วยประมวลผลได้",
+    "ตัวอย่างภาษา C (ภาษาซี: ภาษาสำหรับเขียนคำสั่งโปรแกรม) แสดงการสร้างงานลูก การรอลูก และการเปลี่ยนโปรแกรมภายในงานเดิมทีละขั้น",
+    "การขอบริการของระบบต้องผ่านทางเข้าที่ควบคุมสิทธิ์ และตัวจับเวลาช่วยให้ระบบกลับมาควบคุมเครื่องได้",
+    "ท้ายบทเชื่อมการบันทึกและคืนค่าของงานเข้ากับการสลับงาน ส่วนกติกาเลือกว่างานใดได้ทำก่อนเรียนต่อใน OS03"
+  ],
+  "prerequisitesHtml": "<p>[อธิบายเสริม] ทบทวนจาก OS01: Operating System หรือ OS (ระบบปฏิบัติการ) คือซอฟต์แวร์ที่จัดการเครื่องและให้บริการโปรแกรม; Kernel (เคอร์เนล) คือส่วนหลักของ OS ที่ควบคุมทรัพยากรสำคัญ. CPU หรือ Central Processing Unit (หน่วยประมวลผลกลาง) ทำคำสั่ง ส่วน Memory/RAM (หน่วยความจำหลัก) เก็บคำสั่งและข้อมูลขณะทำงาน. Disk (ดิสก์/ที่เก็บถาวร) เก็บไฟล์แม้ปิดโปรแกรมแล้ว. I/O หรือ Input/Output (การรับเข้า/ส่งออก) คือการแลกข้อมูลกับอุปกรณ์ เช่น อ่านไฟล์หรือรับแป้นพิมพ์.</p><p>[อธิบายเสริม] ทบทวนจาก CA02–CA03: Register (รีจิสเตอร์) คือช่องเก็บค่าขนาดเล็กใน CPU; Program Counter หรือ PC (ตัวนับตำแหน่งคำสั่ง) บอกตำแหน่งคำสั่งที่จะทำต่อ; Stack (สแตก) เก็บข้อมูลการเรียกฟังก์ชัน; Stack Pointer หรือ SP (ตัวชี้สแตก) บอกตำแหน่งสแตกที่กำลังใช้. Function (ฟังก์ชัน) คือชุดคำสั่งย่อยที่เรียกแล้วกลับมายังจุดเดิมได้. Context (บริบทการทำงาน) คือชุดค่าที่ต้องเก็บเพื่อกลับมาทำต่อให้ถูกจุด.</p><p>[อธิบายเสริม] อ่าน C (ภาษาซี) ในบทนี้เพียงพื้นฐาน: <code>int x = 10;</code> สร้างตัวแปรจำนวนเต็มชื่อ x ที่มีค่า 10; <code>x = x + 2;</code> อ่านค่าเดิม บวก 2 แล้วเก็บกลับ; <code>if</code> เลือกทางตามเงื่อนไข; <code>for</code> ทำซ้ำ; <code>return</code> กลับจากฟังก์ชัน. เครื่องหมาย <code>==</code> ถามว่าเท่ากันหรือไม่ ส่วน <code>=</code> คือการกำหนดค่า. คำอธิบายต่อไปนี้ใช้แบบจำลอง CPU หนึ่งแกนเมื่อต้องนับว่าใครกำลัง Running; เครื่องหลายแกนอาจมีหลายงาน Running พร้อมกันได้.</p>",
+  "sections": [
+    {
+      "id": "process-route",
+      "title": "Process roadmap (แผนที่บทโปรเซส)",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "question": "ถ้าเปิดหลายโปรแกรมพร้อมกัน ระบบต้องจดจำอะไรเพื่อให้แต่ละงานทำต่อได้ถูกต้อง?",
+      "html": "<p>ปกต้นฉบับคือ Lecture 2: Process ของ ITDS211 Computer Architecture and Operating Systems โดย รศ.ดร.สุดสงวน งามสุริยโรจน์ คณะ ICT มหาวิทยาลัยมหิดล ลงวันที่ 10 September 2026. หน้า 2 วางลำดับจากโปรเซส → โปรแกรมกับงานจริง → บริการจัดการและสร้างงาน → สถานะ → รายการและระเบียนข้อมูลควบคุมงาน → การเลือกงานใช้ CPU → คำสั่งจัดการงานแบบยูนิกซ์ → การเรียกบริการระบบ. ชื่อภาษาอังกฤษและความหมายของแต่ละแนวคิดจะปูทีละขั้นในหัวข้อตามลำดับนี้. หน้า 3 เป็นหน้าคั่น The Abstraction: The Process.</p><p>เส้นทางของบทนี้เริ่มจากนิยามงานที่กำลังทำ แล้วดูพื้นที่ข้อมูล สถานะ และบันทึกของงาน ก่อนใช้ตัวอย่างสร้างงานลูก และตามเส้นทางเข้าออก OS จนสลับไปทำอีกงานได้. การเลือกว่างานใดควรได้ CPU ก่อนเป็นหัวข้อเชื่อมไป OS03; บทนี้ปูสิ่งที่ต้องมีเพื่อให้การเลือกและสลับทำได้จริง.</p>"
+    },
+    {
+      "id": "process-abstraction",
+      "title": "Program vs Process (โปรแกรมกับงานที่กำลังทำ)",
+      "pages": [
+        4,
+        5,
+        6
+      ],
+      "question": "เหตุใดไฟล์โปรแกรมอย่างเดียวจึงยังไม่พอที่จะบอกว่าคอมพิวเตอร์กำลังทำงานอะไร?",
+      "html": "<p>การรันโปรแกรมต้องเตรียมคำสั่ง ข้อมูล หน่วยความจำ อุปกรณ์ และตำแหน่งที่จะเริ่มทำ หากผู้ใช้ต้องจัดทั้งหมดเองทุกครั้งจะยุ่งยากมาก. OS จึงให้ Abstraction (นามธรรม/แบบมองอย่างย่อ) ชื่อ Process (โปรเซส): โปรแกรมที่กำลังทำงานพร้อมสถานะที่จำเป็น โดยซ่อนรายละเอียดเครื่องไว้หลังสิ่งที่ผู้ใช้เรียกใช้ได้.</p><p>Program (โปรแกรม) คือชุดคำสั่งพร้อมข้อมูลที่เก็บไว้; Process คือการนำชุดคำสั่งนั้นมาทำงานจริง. Multiprogramming (การมีหลายโปรแกรมให้ระบบสลับทำ) และ Virtualization (การทำให้ทรัพยากรจริงดูเหมือนมีทรัพยากรเสมือนให้แต่ละงานใช้) ทำให้ผู้ใช้เริ่มหลายโปรแกรมได้โดยไม่ต้องคอยถามว่า CPU ว่างหรือยัง.</p><h3>ภาพอบขนมในต้นฉบับ</h3><p>ภาพหน้า 5 ใช้ Recipe (สูตรอาหาร) แทน Program, Ingredient (วัตถุดิบ) แทน Input (ข้อมูลเข้า), Oven (เตาอบ) แทน Resources (ทรัพยากร), Baker (ผู้ทำขนม) แทน OS และคำว่า “Baking” (การลงมืออบ) แทน Process. สูตรอยู่เฉย ๆ ยังไม่เกิดขนม ต้องมีการลงมือ ใช้วัตถุดิบ และใช้เตา; เช่นเดียวกับไฟล์โปรแกรมที่ต้องถูก OS เตรียมให้ทำงาน.</p><h3>อ่านภาพดิสก์ → หน่วยความจำ → CPU</h3><p>หน้า 6 วาด Disk มี Program ที่ประกอบด้วย code (รหัสคำสั่ง) และ static data (ข้อมูลที่เตรียมไว้กับโปรแกรม). ลูกศรเส้นประ Loading (การโหลด) นำสิ่งเหล่านี้เข้าสู่ Address Space (พื้นที่ที่อยู่ของโปรเซส: ชุดตำแหน่งหน่วยความจำที่งานนั้นใช้ได้) ใน Memory ซึ่งมี code, static data, Heap (ฮีป: พื้นที่ขอเพิ่มขณะรัน) และ stack; CPU จึงอ่านคำสั่งและข้อมูลผ่านระบบเชื่อมต่อเพื่อทำงาน. รูปแยกตำแหน่ง “เก็บโปรแกรม” ออกจาก “ใช้ข้อมูลขณะทำงาน”. [อธิบายเสริม] เปิดโปรแกรมเดียวกันสองครั้งอาจได้สองโปรเซสที่ใช้โค้ดเดียวกัน แต่มีค่าตัวแปรและตำแหน่งที่ทำค้างไว้คนละชุด.</p>"
+    },
+    {
+      "id": "address-space-state",
+      "title": "Address space and machine state (ข้อมูลที่ทำให้งานมีชีวิต)",
+      "pages": [
+        7,
+        8
+      ],
+      "question": "โปรเซสต้องจำทั้งข้อมูลในหน่วยความจำและค่าภายใน CPU เพราะอะไร?",
+      "html": "<p>คำสั่งอย่างเดียวไม่บอกว่าทำถึงไหนแล้ว หรือฟังก์ชันที่เรียกอยู่มีตัวแปรอะไร. Machine State (สถานะของเครื่องที่เกี่ยวกับงานนี้) จึงรวมทั้งคำสั่งและข้อมูลใน Address Space, ค่าในรีจิสเตอร์ และทรัพยากร I/O ที่งานเปิดใช้อยู่ เช่น Open File (ไฟล์ที่เปิดแล้วและระบบจดไว้ให้ใช้งานต่อ).</p><p>ภาพหน้า 7 ไล่ที่อยู่จาก <code>0</code> ด้านล่างไป <code>max</code> ด้านบน: Text/Code (ส่วนคำสั่ง), Data (ส่วนข้อมูล เช่น Global Variable หรือตัวแปรส่วนกลางที่หลายฟังก์ชันใช้), Heap (ฮีป: พื้นที่ขอเพิ่มแบบพลวัตระหว่างรัน), ช่องว่าง และ Stack (ข้อมูลชั่วคราวจากการเรียกฟังก์ชัน เช่น Return Address หรือตำแหน่งที่จะกลับไปทำ, Parameter หรือค่าที่ส่งให้ฟังก์ชัน, Local Variable หรือตัวแปรภายในฟังก์ชัน). ลูกศรฮีปชี้ขึ้น ส่วนสแตกชี้ลง แสดงการขยายเข้าหาพื้นที่ว่างในแบบภาพนี้.</p><p>หน้า 8 ระบุ General-purpose Registers (รีจิสเตอร์ใช้งานทั่วไป) เช่น <code>eax</code>, <code>ebx</code>, PC, SP และ Frame Pointer (ตัวชี้กรอบการเรียกฟังก์ชัน: ตำแหน่งอ้างอิงข้อมูลของฟังก์ชันที่กำลังทำ). ชื่อ eax/ebx เป็นตัวอย่างจากตระกูล x86; ใจความคือ OS ต้องรู้ทั้งหน่วยความจำและค่าที่บอกตำแหน่งการทำงาน ไม่ใช่เพียงชื่อไฟล์.</p><p>[อธิบายเสริม] เปรียบเหมือนอ่านหนังสือทำแบบฝึกหัด: ตัวหนังสือคือโค้ด กระดาษคำตอบคือข้อมูล ที่คั่นหน้าคือ PC และบันทึกว่ากำลังแก้ข้อย่อยไหนคล้ายสแตก. มีเพียงหนังสือแต่ไม่มีคำตอบกับที่คั่น ก็เริ่มต่อจากจุดเดิมไม่ได้. การวางส่วนต่าง ๆ และทิศเติบโตในภาพเป็นแบบจำลองเพื่อเรียน ไม่ใช่ผังที่ทุก OS และทุกสถาปัตยกรรมต้องเหมือนกัน.</p>"
+    },
+    {
+      "id": "execution-observation",
+      "title": "Execution and process monitors (สลับทำและมองเห็นงานจริง)",
+      "pages": [
+        9,
+        10,
+        11
+      ],
+      "question": "ทำไมดูเหมือนหลายโปรแกรมทำงานพร้อมกัน และจะเห็นข้อมูลของงานเหล่านั้นได้ที่ไหน?",
+      "html": "<p>ภาพหน้า 9 เริ่มจาก Program ที่มี Instruction #1 ถึง #N บนดิสก์ ผ่านลูกศร Instantiate (สร้างสิ่งที่ทำงานจริงจากโปรแกรม) เป็น Process ใน RAM. วง CPU ด้านขวาแสดงการผลัดไปทำ Process 1–5. การมีห้างานไม่ได้หมายความว่า CPU หนึ่งแกนทำคำสั่งของห้างานในจังหวะเดียว แต่ OS สลับงานจนผู้ใช้เห็นความคืบหน้าของหลายงาน.</p><p>ครึ่งล่างของภาพแยก Process #1 ถึง #M ใน RAM และรวบรวม Pointer (ตัวชี้: ค่าที่ระบุตำแหน่งข้อมูล) ไปยังตารางของ Thread (เธรด: สายการทำงานภายในโปรเซส) พร้อม Priority (ลำดับความสำคัญ): Thread #1 high, #2 low, #3 med, #4 low, …, #K high. Scheduler (ส่วนเลือกงานของ OS) เลือกสายการทำงานให้ CPU ผ่านลูกศร Execute; เส้น Context Switch (การสลับบริบท) และ Preemption (การดึง CPU จากงานที่ยังทำไม่เสร็จ) แสดงว่าระบบอาจหยุดสายเดิมแล้วเลือกสายใหม่. ภาพนี้บอกว่าระบบจริงอาจเลือกในระดับเธรด ส่วนบทนี้ใช้โปรเซสเป็นหน่วยอธิบายหลัก; ยังไม่มีกติกาว่า high ต้องได้เวลาเท่าไร.</p><h3>อ่านภาพตัวตรวจงานโดยไม่สับสนกับโค้ดโปรแกรม</h3><p>หน้า 10 แสดง Task Manager ของ Windows และ Activity Monitor ของ macOS. แต่ละแถวให้ชื่อและการใช้ทรัพยากร; ชื่อแอปหนึ่งรายการอาจรวมหลายโปรเซส เช่น Microsoft PowerPoint (5) และ Windows Explorer (3). PID (Process Identifier: หมายเลขระบุตัวโปรเซส) ใช้แยกแต่ละงาน. ค่า CPU เป็นสัดส่วนการใช้ในช่วงที่เครื่องมือนั้นวัด ส่วน CPU Time คือเวลาสะสม จึงอ่านแทนกันไม่ได้.</p><table><thead><tr><th>ภาพต้นฉบับ</th><th>ข้อมูลที่อ่านได้</th><th>ใช้สังเกตอะไร</th></tr></thead><tbody><tr><td>Windows Task Manager</td><td>รวม CPU 2%, Memory 71%, Disk 1%, Network 0%; Google Chrome: CPU 0.3%, Memory 54.1 MB, Disk 0.1 MB/s, Network 0.1 Mbps</td><td>มีทั้ง Apps กับ Background processes</td></tr><tr><td>macOS Activity Monitor</td><td>แถว WindowS…: CPU 13.1%, CPU Time 30:35.45, Threads 12, PID 147; แถว Google C…: CPU 6.9%, PID 6509</td><td>ชื่อถูกตัดท้ายในภาพ; PID แยกตัวงาน</td></tr><tr><td>macOS ส่วนล่าง</td><td>System 4.55%, User 7.40%, Idle 88.06%; Threads 2,120; Processes 509</td><td>จำนวนเธรดกับจำนวนโปรเซสเป็นคนละค่า</td></tr></tbody></table><p>หน้า 11 แสดงคำสั่ง <code>top</code> ใน Linux (เครื่องมือรายงานงานแบบปรับข้อมูลต่อเนื่อง). หัวตารางมี PID (Process Identifier: หมายเลขระบุตัวโปรเซส), USER (เจ้าของ), PR (priority), NI (ค่า nice ที่ใช้ปรับความสำคัญ), VIRT (พื้นที่เสมือน), RES (หน่วยความจำที่อยู่ใน RAM), SHR (ส่วนที่ใช้ร่วม), S (สถานะ), %CPU, %MEM, TIME+ (เวลาสะสมที่ใช้ CPU) และ COMMAND (ชื่อคำสั่ง). ตัวอย่างภาพล่าง: PID 5289 ชื่อ <code>top</code> มี S = R, %CPU = 1.0, %MEM = 0.1 และ TIME+ = 0:00.20; PID 1803 ชื่อ <code>gnome-she+</code> มี S = S, %CPU = 10.2, %MEM = 7.3 และ TIME+ = 2:54.84. ภาพบนมี Tasks 567 total / 2 running / 443 sleeping / 0 stopped / 0 zombie ส่วนภาพล่างมี 249 total / 1 running / 197 sleeping / 0 stopped / 7 zombie. เป็นภาพคนละช่วง/คนละเครื่อง ไม่ควรรวมเป็นข้อมูลชุดเดียว.</p><p>[อธิบายเสริม] ในการอ่าน top ค่า S = R ใช้กับงานที่กำลังรันหรือพร้อมรัน, S = S คือ sleeping (พักรอ), Z คือ zombie (งานจบแล้วแต่ยังมีระเบียนผลจบให้แม่เก็บ). ตัวอักษรสถานะของเครื่องมือจริงจึงไม่ตรงแบบหนึ่งต่อหนึ่งกับแผนภาพสามสถานะที่จะเรียน. การเปิดหน้าดูงานเป็นการสังเกตข้อมูล ไม่ใช่การจำลอง PCB ทั้งก้อน.</p>"
+    },
+    {
+      "id": "process-api-creation",
+      "title": "Process API and creation (บริการจัดการงานและขั้นตอนสร้าง)",
+      "pages": [
+        12,
+        13
+      ],
+      "question": "เมื่อกดเปิดโปรแกรม OS ต้องจัดอะไรให้ก่อนส่ง CPU ไปทำคำสั่งแรก?",
+      "html": "<p>Application Programming Interface หรือ API (ส่วนติดต่อที่โปรแกรมใช้เรียกบริการ) ทำให้ผู้ใช้หรือโปรแกรมจัดการโปรเซสได้โดยไม่ต้องแก้โครงสร้างภายใน OS เอง. หน้า 12 แบ่งบริการเป็น Create (สร้างงาน), Destroy (ยุติงาน; งานส่วนมากจบเอง แต่สั่ง kill ได้), Wait (รออีกงาน), Miscellaneous Control (ควบคุมอื่น เช่น Suspend หยุดพัก และ Resume ให้ทำต่อ) และ Status (ตรวจสถานะ เช่น เวลารันหรือสถานะปัจจุบัน).</p><ol><li>OS โหลด code และ static data จากดิสก์เข้าสู่หน่วยความจำ และเตรียม code, data, heap, stack ให้พร้อมใช้งาน.</li><li>OS เตรียม I/O ตั้งต้น. ใน Unix คือ Standard Input หรือ stdin (ทางรับข้อมูลปกติ), Standard Output หรือ stdout (ทางออกผลปกติ), Standard Error หรือ stderr (ทางออกข้อความผิดพลาด).</li><li>OS กำหนดจุดเริ่มคำสั่ง เช่น <code>main()</code> ซึ่งเป็นฟังก์ชันหลักที่ตัวอย่างใช้เริ่มอธิบาย.</li><li>OS ส่งการควบคุม CPU ให้โปรเซสเริ่มทำคำสั่ง.</li></ol><p>[อธิบายเสริม] ค่าเลขของ File Descriptor (หมายเลขช่องอ้างอิงไฟล์/ทาง I/O ที่เปิดในโปรเซส) ตามธรรมเนียม Unix คือ stdin = 0, stdout = 1, stderr = 2; อุปมาเหมือนเตรียมช่องรับงาน ช่องส่งผลงาน และช่องแจ้งปัญหาไว้แยกกัน. การโหลดไม่ใช่การคัดลอก heap/stack ที่ทำงานแล้วจากไฟล์ทุกครั้ง แต่เป็นการจัดโครงสร้างสำหรับเริ่มงาน; ระบบจริงอาจโหลดบางส่วนเมื่อใช้จริง และมีโค้ดเริ่มต้นก่อน main.</p>"
+    },
+    {
+      "id": "process-states",
+      "title": "Process states (กำลังทำ พร้อมทำ และติดรอ)",
+      "pages": [
+        14,
+        15
+      ],
+      "question": "งานที่ยังไม่จบแต่ไม่ได้ใช้ CPU กำลังรอคิว หรือยังทำต่อไม่ได้กันแน่?",
+      "html": "<p>OS ต้องแยกเหตุที่งานไม่ได้ CPU เพื่อไม่เลือกงานที่ยังรอข้อมูลให้เสียเวลา. Running (กำลังทำ) คือ CPU กำลังทำคำสั่งของงาน; Ready (พร้อมทำ) คือทำต่อได้แต่ OS ยังไม่เลือก; Blocked/Block (ติดรอ) คือรอเหตุการณ์ เช่น I/O จบ จึงยังทำต่อไม่ได้แม้ CPU ว่าง.</p><table><thead><tr><th>จาก → ไป</th><th>ป้ายลูกศรต้นฉบับ</th><th>ความหมาย</th></tr></thead><tbody><tr><td>Ready → Running</td><td>Scheduled</td><td>OS เลือกงานพร้อมให้ได้ CPU</td></tr><tr><td>Running → Ready</td><td>Descheduled</td><td>OS ถอดงานออกจาก CPU ทั้งที่ยังพร้อมทำ</td></tr><tr><td>Running → Blocked</td><td>I/O: initiate</td><td>งานเริ่มขอ I/O แล้วต้องรอ</td></tr><tr><td>Blocked → Ready</td><td>I/O: done</td><td>เหตุที่รอเสร็จแล้ว พร้อมกลับมาแย่ง CPU</td></tr></tbody></table><p>ในแผนภาพไม่มีลูกศร Blocked → Running โดยตรง: I/O จบทำให้งานพร้อม แต่ยังต้องผ่านการเลือก. [อธิบายเสริม] เปรียบจุดบริการหนึ่งช่อง: Running คือคนหน้าเคาน์เตอร์, Ready คือคนมีเอกสารครบกำลังต่อคิว, Blocked คือคนออกไปรอเอกสารจากอีกหน่วยงาน. เอาคนเอกสารยังไม่ครบกลับมาหน้าเคาน์เตอร์ไม่ได้ช่วยให้งานเดิน.</p><h3>ตารางเวลาต้นฉบับครบทุกแถว</h3><table><thead><tr><th>Time</th><th>Process₀</th><th>Process₁</th><th>Notes ตามภาพ</th></tr></thead><tbody><tr><td>1</td><td>Running</td><td>Ready</td><td></td></tr><tr><td>2</td><td>Running</td><td>Ready</td><td></td></tr><tr><td>3</td><td>Running</td><td>Ready</td><td>Process₀ initiates I/O</td></tr><tr><td>4</td><td>Blocked</td><td>Running</td><td>Process₀ is blocked, so Process₁ runs</td></tr><tr><td>5</td><td>Blocked</td><td>Running</td><td></td></tr><tr><td>6</td><td>Blocked</td><td>Running</td><td></td></tr><tr><td>7</td><td>Ready</td><td>Running</td><td>I/O done</td></tr><tr><td>8</td><td>Ready</td><td>Running</td><td>Process₁ now done</td></tr><tr><td>9</td><td>Running</td><td>–</td><td></td></tr><tr><td>10</td><td>Running</td><td>–</td><td>Process₀ now done</td></tr></tbody></table><p>อ่านเป็นภาพสถานะตามเวลา: ที่ 3 งาน 0 ขอ I/O จึงเห็น Blocked ที่ 4–6 และ OS ให้ 1 ทำแทน. ที่ 7 I/O ของ 0 เสร็จ แต่ 0 เป็น Ready ขณะที่ 1 ยัง Running. เมื่อ 1 จบที่ 8 จึงให้ 0 กลับมา Running ที่ 9–10. เครื่องหมาย “–” หมายถึงงาน 1 จบไปแล้ว ไม่ใช่ Ready. ตารางนี้สอนสถานะและเหตุ ไม่ได้ระบุหน่วยเวลาหรืออัลกอริทึมจัดตาราง.</p>"
+    },
+    {
+      "id": "pcb-information",
+      "title": "Process list and PCB (ระเบียนที่ OS ใช้จำแต่ละงาน)",
+      "pages": [
+        16,
+        17,
+        18
+      ],
+      "question": "เมื่อมีหลายโปรเซส OS จะรู้ได้อย่างไรว่าใครพร้อม ทำค้างที่ไหน และเปิดไฟล์อะไรไว้?",
+      "html": "<p>Process Control Block หรือ PCB (บล็อกข้อมูลควบคุมโปรเซส) คือระเบียนที่ OS เก็บข้อมูลของโปรเซสหนึ่งตัว. Structure/struct (โครงสร้างข้อมูลแบบรวมหลายช่องของภาษา C) ทำให้เก็บข้อมูลเหล่านี้ไว้เป็นชุด. Process List/Process Table (รายการ/ตารางโปรเซส) รวมทางอ้างอิงไปยังระเบียนแต่ละตัว เพื่อค้นและเลือกงานจากสถานะได้.</p><p>หน้า 17 วาด Process Table สองคอลัมน์ PID และ PCB แถว 1, 2, …, n. จุดในคอลัมน์ PCB เป็นตัวชี้: ลูกศรจาก PID 1 ไป PCB ขวาบน, PID 2 ไป PCB กลาง และ n ไป PCB ซ้ายล่าง. ทุกก้อนมี Program counter, Registers, State, Priority, Address space, Open files, …, Other flags (ธงข้อมูลอื่น). ลูกศรเป็นการเชื่อมระเบียน ไม่ใช่ลำดับที่ CPU ต้องรัน 1 แล้ว 2 แล้ว n.</p><p>หน้า 18 ซ้ายย่อ PCB เป็น process state, process number, program counter, registers, memory limits และ list of open files. ตารางขวาขยายข้อมูลเป็นสามกลุ่มดังนี้ โดยคงชื่อช่องทั้งหมด:</p><table><thead><tr><th>Process management (จัดการงาน)</th><th>Memory management (จัดการหน่วยความจำ)</th><th>File management (จัดการไฟล์)</th></tr></thead><tbody><tr><td>Registers; Program counter; Program status word; Stack pointer; Process state; Priority; Scheduling parameters; Process ID; Parent process; Process group; Signals; Time when process started; CPU time used; Children’s CPU time; Time of next alarm</td><td>Pointer to text segment; Pointer to data segment; Pointer to stack segment</td><td>Root directory; Working directory; File descriptors; User ID; Group ID</td></tr></tbody></table><p>Program Status Word (คำสถานะโปรแกรม) เก็บธงควบคุม/ผลของ CPU; Scheduling Parameters (ค่าที่ใช้เลือกงาน) ช่วย scheduler; Parent Process (โปรเซสแม่) และ Process Group (กลุ่มโปรเซส) บอกความสัมพันธ์; Signal (สัญญาณแจ้งเหตุ) ใช้ส่งเหตุให้โปรเซส; เวลาที่เริ่ม เวลาที่ใช้ CPU เวลาลูก และเวลาปลุกครั้งถัดไปใช้ติดตามการทำงาน. ตัวชี้ส่วน text/data/stack บอกว่าโค้ดและข้อมูลอยู่ที่ใด; Memory Limits (ขอบเขตหน่วยความจำ) บอกข้อจำกัด. Root Directory (รากของระบบไฟล์ที่งานเห็น), Working Directory (โฟลเดอร์ปัจจุบัน), File Descriptors, User ID (หมายเลขผู้ใช้) และ Group ID (หมายเลขกลุ่มผู้ใช้) ให้บริบทการเข้าถึงไฟล์และสิทธิ์.</p><p>[อธิบายเสริม] PCB คล้ายแฟ้มประจำงาน: มีเลขงาน สถานะ ตำแหน่งที่หยุด และรายการทรัพยากร. ตัวโปรแกรม/ข้อมูลจริงไม่จำเป็นต้องยัดอยู่ในแฟ้มทั้งหมด แฟ้มอาจเก็บเพียงตัวชี้ไปยังส่วนเหล่านั้น. ข้อมูลในตารางเป็นตัวอย่างของสิ่งที่ระบบอาจบันทึก ไม่ใช่ข้อบังคับว่าทุก OS ใช้ชื่อช่องหรือรูปแบบเดียวกัน.</p>"
+    },
+    {
+      "id": "pcb-c-structure",
+      "title": "PCB in C (อ่านโครงสร้างตัวอย่าง xv6)",
+      "pages": [
+        19
+      ],
+      "question": "จะเก็บทั้งสถานะ หน่วยความจำ และค่าที่ต้องคืนให้ CPU อยู่ในระเบียนเดียวได้อย่างไร?",
+      "html": "<p>ภาพต้นฉบับใช้โค้ดจาก xv6 (ระบบปฏิบัติการตัวอย่างสำหรับการศึกษา) เพื่อให้เห็นว่า PCB เป็นข้อมูลที่เขียนเป็นช่องได้จริง. อ่านชื่อช่องกับคำอธิบายเป็นหลัก ไม่ต้องเขียน OS ทั้งระบบก่อนเข้าใจบทนี้.</p><pre><code>// the information xv6 tracks about each process\n// including its register context and state\nstruct proc {\n  char *mem;                 // Start of process memory\n  uint sz;                   // Size of process memory\n  char *kstack;              // Bottom of kernel stack\n                             // for this process\n  enum proc_state state;     // Process state\n  int pid;                   // Process ID\n  struct proc *parent;       // Parent process\n  void *chan;                // If !zero, sleeping on chan\n  int killed;                // If !zero, has been killed\n  struct file *ofile[NOFILE]; // Open files\n  struct inode *cwd;         // Current directory\n  struct context context;   // Switch here to run process\n  struct trapframe *tf;      // Trap frame for the\n                             // current interrupt\n};</code></pre><pre><code>struct context {\n  int eip;\n  int esp;\n  int ebx;\n  int ecx;\n  int edx;\n  int esi;\n  int edi;\n  int ebp;\n};</code></pre><pre><code>// the different states a process can be in\nenum proc_state { UNUSED, EMBRYO, SLEEPING,\n                  RUNNABLE, RUNNING, ZOMBIE };</code></pre><p><code>mem</code> ชี้ต้นหน่วยความจำของงาน; <code>sz</code> เก็บขนาด; <code>kstack</code> ชี้ Kernel Stack (สแตกของโปรเซสที่ใช้ขณะทำในเคอร์เนล); <code>state</code> และ <code>pid</code> บอกสถานะกับตัวตน; <code>parent</code> ชี้แม่; <code>chan</code> ผูกกับสิ่งที่กำลังหลับรอ; <code>killed</code> เป็นธงเรื่องการยุติ; <code>ofile[NOFILE]</code> เป็นชุดทางอ้างอิงไฟล์ที่เปิด; <code>cwd</code> ชี้โฟลเดอร์ปัจจุบัน. <code>context</code> เก็บค่าที่ใช้สลับกลับมารัน ส่วน <code>tf</code> ชี้ Trap Frame (กรอบบันทึกค่าตอนเข้าเคอร์เนลจากเหตุ trap/interrupt).</p><p>ก้อน <code>struct context</code> ในภาพเก็บ <code>eip</code> (ตำแหน่งคำสั่ง), <code>esp</code> (ตำแหน่งสแตก), <code>ebx, ecx, edx, esi, edi</code> (รีจิสเตอร์อื่น) และ <code>ebp</code> (ตำแหน่งกรอบฟังก์ชัน). นี่คือตัวอย่าง x86 ตามเอกสาร ไม่ใช่รายชื่อรีจิสเตอร์ RISC-V.</p><p>[อธิบายเสริม] <code>char *mem</code> อ่านว่า “ช่อง mem เก็บตัวชี้”; <code>uint</code> เป็นจำนวนเต็มไม่ติดลบ; <code>enum</code> จำกัดชื่อสถานะให้เลือกจากรายการ. UNUSED คือช่องยังไม่ใช้, EMBRYO กำลังสร้าง, SLEEPING คล้าย Blocked, RUNNABLE คล้าย Ready, RUNNING กำลังรัน และ ZOMBIE คืองานจบแต่ยังรอแม่รับผลจบ. รายการหกชื่อนี้ขยายรายละเอียดของระบบตัวอย่าง ไม่ขัดกับแบบจำลองสามสถานะหน้า 14. <code>context</code> กับ <code>trapframe</code> มีหน้าที่เกี่ยวข้องกันแต่เก็บคนละช่วงของเส้นทางเข้าออก/สลับงาน; อย่ารวมเป็น “โปรแกรมทั้งหมด” ก้อนเดียว.</p>"
+    },
+    {
+      "id": "unix-api-route",
+      "title": "UNIX API roadmap (จากภาพรวมสู่คำสั่งจริง)",
+      "pages": [
+        20
+      ],
+      "question": "จากแบบจำลองโปรเซส จะสั่งให้ OS สร้างและควบคุมงานผ่านโปรแกรมได้อย่างไร?",
+      "html": "<p>หน้า 20 ตั้งคำถามสามข้อ: (1) Process API มีหน้าตาอย่างไร (2) โปรเซสเข้าถึงทรัพยากรอย่างไร (3) OS สลับระหว่างโปรเซสอย่างไร. ช่วงถัดไปตอบข้อแรกผ่าน UNIX (ยูนิกซ์: ตระกูลระบบปฏิบัติการที่มีแนวทาง API ร่วมกัน) และโค้ดภาษา C; เมื่อเข้าใจ fork/wait/exec แล้ว จึงตามเส้นทางขอบริการและการสลับงานในช่วงท้าย.</p>"
+    },
+    {
+      "id": "c-first-program",
+      "title": "C program to running process (อ่านตัวอย่างแรก)",
+      "pages": [
+        21
+      ],
+      "question": "ไฟล์ข้อความภาษา C กลายเป็นงานที่พิมพ์ผลออกจอได้ผ่านขั้นตอนใดบ้าง?",
+      "html": "<p>ก่อนมีงานแม่/ลูก ให้เริ่มจากโปรแกรมเดียว. <code>#include &lt;stdio.h&gt;</code> ทำให้ใช้ส่วนประกาศฟังก์ชันรับส่งข้อมูลมาตรฐาน; <code>printf</code> คือฟังก์ชันพิมพ์ข้อความตามรูปแบบ; <code>%d</code> แทนค่าจำนวนเต็ม และ <code>\\n</code> ขึ้นบรรทัดใหม่. โค้ดในภาพเป็น:</p><pre><code>#include &lt;stdio.h&gt;\n\nvoid main ()\n{\n    int x;\n\n    x = 10;\n    printf (&quot; Hello World \\n&quot;);\n    printf (&quot; value of x is %d\\n&quot;, x);\n}</code></pre><p>Terminal (หน้าต่างพิมพ์คำสั่ง) ในภาพเริ่มจาก <code>more first.c</code> เพื่อดูไฟล์ แล้วใช้ Compiler (ตัวแปลภาษาให้เป็นโปรแกรมที่เครื่องรันได้) ชื่อ GCC ผ่าน <code>gcc -o first first.c</code>. ตัวเลือก <code>-o first</code> ตั้งชื่อไฟล์ผลลัพธ์. คำสั่ง <code>./first</code> เรียกไฟล์ first ในโฟลเดอร์ปัจจุบันให้ OS สร้างและเริ่มโปรเซส. ผลในภาพคือ:</p><pre><code>Hello World\nvalue of x is 10</code></pre><p>อ่านการไหล: เข้าฟังก์ชัน main → เตรียม x → กำหนด 10 → พิมพ์ Hello World → แทน %d ด้วย 10 → จบ. ในภาพยังไม่มี fork จึงไม่เกิดงานลูกจากโค้ดนี้.</p><p>[อธิบายเสริม] ต้นฉบับใช้ <code>void main()</code>. สำหรับโปรแกรม C แบบ hosted ที่ต้องการรูปมาตรฐาน ใช้ <code>int main(void)</code> และ <code>return 0;</code> เพื่อส่งสถานะสำเร็จกลับระบบ; ดู <a href=\"https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf\">WG14 N1570 §5.1.2.2.1</a>. ตัวอย่างต่อไปใช้ API แบบ Unix/Linux; shell ของ Windows ปกติไม่ได้ทำให้ fork มีอยู่โดยอัตโนมัติ.</p>"
+    },
+    {
+      "id": "fork-parent-child",
+      "title": "fork() (สร้างโปรเซสลูกและแยกทางทำงาน)",
+      "pages": [
+        22,
+        23
+      ],
+      "question": "จะเริ่มงานอีกตัวที่มีข้อมูลเริ่มต้นเหมือนงานเดิม โดยให้ทั้งคู่ทำต่อจากจุดเดียวกันได้อย่างไร?",
+      "html": "<p><code>fork()</code> คือบริการสร้าง Child Process (โปรเซสลูก) จาก Parent Process (โปรเซสแม่: ตัวที่เรียก fork). ลูกเริ่มจากสำเนาสถานะของแม่ในจังหวะนั้นและทำต่อจากจุดที่ fork คืนค่า ไม่ย้อนกลับไปเริ่ม main ใหม่. ทั้งคู่มี PID ของตนเอง. แม่กับลูกจึงแยกทางจากค่าที่ fork คืนได้:</p><table><thead><tr><th>ผู้รับค่า</th><th>ค่าที่ fork() คืนเมื่อสำเร็จ</th><th>อ่านอย่างไร</th></tr></thead><tbody><tr><td>แม่</td><td>PID ของลูก (> 0)</td><td>จำหมายเลขลูกไว้ควบคุม/รอได้</td></tr><tr><td>ลูก</td><td>0</td><td>บอกว่าโค้ดที่กำลังทำอยู่เป็นฝั่งลูก ไม่ใช่ว่า PID จริงของลูกเป็น 0</td></tr></tbody></table><p>[อธิบายเสริม] หากสร้างไม่สำเร็จ fork คืน <code>-1</code> ให้ผู้เรียกและไม่มีลูกเกิด. คำว่า exact copy ในสไลด์หมายถึงข้อมูลและจุดทำงานเริ่มต้น ไม่ใช่เหมือนกันทุกคุณสมบัติ เพราะ PID และผลคืนจาก fork ต่างกัน; ดู <a href=\"https://man7.org/linux/man-pages/man2/fork.2.html\">Linux man-pages: fork(2)</a>.</p><h3>โค้ดแม่/ลูกตามภาพ</h3><pre><code>#include &lt;stdio.h&gt;\n#include &lt;stdlib.h&gt;\n#include &lt;unistd.h&gt;\n#include &lt;sys/wait.h&gt;\n\nint main (int argc, char* argv[])\n{\n    int pid, ppid;\n    int x;\n\n    x = getpid();\n    printf(&quot; PID of this process is %d\\n&quot;, x);\n\n    printf(&quot; create a process \\n&quot;);\n    pid = fork();\n\n    if (pid &gt; 0)\n    {\n        printf(&quot; I am a parent process with PID = %d of child process %d\\n&quot;, getpid(), pid);\n        wait (NULL);\n        exit (0);\n    }\n    else\n    {\n        printf(&quot; I am a child process with PID = %d\\n&quot;, getpid());\n        printf(&quot; My parent process with PID = %d\\n&quot;, getppid());\n        exit(0);\n    }\n}</code></pre><p><code>getpid()</code> อ่าน PID ของผู้เรียก; <code>getppid()</code> อ่าน PID ของแม่; <code>exit(0)</code> จบโปรเซสพร้อมสถานะสำเร็จ; <code>NULL</code> คือค่าตัวชี้ว่างที่ใช้เมื่อไม่ต้องเก็บรายละเอียดในตำแหน่งนั้น. ไฟล์ส่วนประกาศ <code>unistd.h</code> เกี่ยวกับ API แบบ Unix, <code>sys/wait.h</code> ประกาศ wait และ <code>stdlib.h</code> ประกาศ exit. ในโค้ดนี้ ppid ถูกประกาศแต่ไม่ได้ใช้.</p><p>ภาพใช้ <code>gcc -o fork1 fork1.c</code> และ <code>./fork1</code>. แม่มี PID 2326 ลูกมี PID 2327: ก่อน fork พิมพ์ PID 2326 และ Create a Process; แม่ได้ค่า pid = 2327 จึงพิมพ์ว่าเป็นแม่ PID 2326 ของลูก 2327; ลูกได้ค่า pid = 0 แต่ getpid() = 2327 จึงพิมพ์ PID 2327 และ getppid() = 2326. ภาพแสดงบรรทัดแม่ก่อนบรรทัดลูก เป็นผลการรันหนึ่งครั้ง; fork ไม่รับประกันว่าใครได้ CPU ก่อน. ในโค้ดนี้แม่พิมพ์ก่อนค่อยเรียก wait จึงใช้ wait ยืนยันว่าบรรทัดแม่ต้องอยู่หลังลูกไม่ได้.</p><p>[อธิบายเสริม] ข้อควรอ่านต้นฉบับ: <code>else</code> จับทั้ง pid = 0 และ pid &lt; 0 จึงยังไม่จัดการความผิดพลาดอย่างถูกต้อง. ควรตรวจ <code>pid &lt; 0</code> แยก แล้วค่อยตรวจ <code>pid == 0</code> สำหรับลูก. นอกจากนี้เลข PID 2326/2327 เป็นข้อมูลตัวอย่าง ไม่ใช่เลขที่ต้องได้ทุกเครื่อง.</p>"
+    },
+    {
+      "id": "wait-and-fork-loop",
+      "title": "wait() and a fork loop (รอลูกหนึ่งตัวและนับงานที่แตกเพิ่ม)",
+      "pages": [
+        24,
+        25
+      ],
+      "question": "ถ้าแม่ต้องใช้ผลหลังลูกจบ จะจัดลำดับอย่างไร และเมื่อทุกงาน fork ซ้ำจะมีงานกี่ตัว?",
+      "html": "<p><code>wait()</code> คือบริการรอและรับผลจบของลูก. หน้า 24 ย้ำข้อความเรื่องแม่รอลูกสองรอบ และยกเป้าหมายว่าทำให้ลูกพิมพ์ก่อนแม่ได้: ต้องวางบรรทัดพิมพ์ของแม่ <em>หลัง</em> wait. คำว่า “รออีกโปรเซส” ในบทนำ API ถูกทำให้เฉพาะเจาะจงใน Unix ว่ารอลูกของผู้เรียก ไม่ใช่เลือกโปรเซสใดในเครื่องก็ได้.</p><p>[อธิบายเสริม] <code>wait(NULL)</code> หนึ่งครั้งสำเร็จเมื่อรับผลจบของลูกหนึ่งตัว; ถ้าลูกจบแล้วก็คืนได้ทันที ถ้ายังไม่จบก็รอ และถ้าไม่มีลูกที่รอรับผลจะคืน -1. NULL หมายถึงไม่ขอเก็บค่า exit status (ผลการจบงาน) ในตัวแปร. ถ้าต้องรอลูกหลายตัว ต้องรอซ้ำหรือระบุลูกด้วย waitpid ตามจุดประสงค์; ดู <a href=\"https://man7.org/linux/man-pages/man2/wait.2.html\">Linux man-pages: wait(2)</a>.</p><h3>ตัวอย่าง fork ก่อนลูป แล้ว fork ในลูปสองรอบ</h3><pre><code>#include &lt;stdio.h&gt;\n#include &lt;stdlib.h&gt;\n#include &lt;unistd.h&gt;\n#include &lt;sys/wait.h&gt;\n\nint main (int argc, char* argv[])\n{\n    int pid, ppid;\n\n    printf(&quot; starting a new process \\n&quot;);\n\n    pid = fork();\n    printf (&quot;main process id = %d\\n&quot;, pid);\n    for (int i=0; i&lt;2; i++) {\n        pid=fork();\n        printf (&quot;process id in loop = %d\\n&quot;, pid);\n    }\n    wait(NULL);\n    printf (&quot;42\\n&quot;);\n    return 0;\n}</code></pre><p>[อธิบายเสริม] ไล่โค้ดต้นฉบับ: ไม่มี if แยกแม่กับลูกก่อนลูป ทุกโปรเซสจึงทำลูปที่เหลือต่อ. ภายใต้สมมติฐานว่า fork ทุกครั้งสำเร็จและไม่มีงานจบกลางทาง จำนวนงานเป็น 1 → 2 หลัง fork แรก → 4 หลังรอบ i = 0 → 8 หลังรอบ i = 1; สร้างใหม่รวม 7 ตัว. ทุกตัวถึง <code>printf(\"42\\n\")</code> คนละหนึ่งครั้ง จึงมี “42” รวม 8 บรรทัดเมื่อทุกตัวทำถึงจุดนั้น. wait ครั้งเดียวท้ายโค้ดไม่เปลี่ยนการแตกกิ่งที่เกิดก่อนหน้าให้เหลือเพียงงานเดียว.</p><p>ภาพผลรันหน้า 25 มี PID 3814–3821, ค่า 0 ในฝั่งลูก, บรรทัด loop #0/#1, “42” หลายบรรทัด และมีข้อความลูกแทรกต่อหลัง terminal กลับมาแสดง prompt (ข้อความบอกว่าพร้อมรับคำสั่งใหม่). อย่างไรก็ดีข้อความในภาพไม่ตรงกับสตริงในโค้ดที่แสดง: ภาพมี “Starting a new process with 3814”, “The main process ID is …” และหมายเลขรอบ แต่โค้ดไม่มีรูปแบบพิมพ์เหล่านั้น. จึงใช้ภาพดูการสลับและค่า fork เท่านั้น ไม่อ้างว่าเป็นผลตรงตัวของโค้ดข้างบนทุกอักขระ.</p><p>[อธิบายเสริม] ลูกไม่ได้พิมพ์ PID จริงว่า 0; มันพิมพ์ตัวแปร pid ซึ่งเก็บค่าคืนของ fork ล่าสุด. ต้นฉบับเสนอให้เปลี่ยน <code>return 0;</code> เป็น <code>exit(0)</code> ถ้าไม่ทำงาน แต่การ return 0 จาก main แบบ int เป็นทางจบปกติอยู่แล้ว การเปลี่ยนคำนี้ไม่ได้แก้การไม่ตรวจ fork หรือการ wait ลูกเพียงครั้งเดียว. อุปมาเหมือนถ่ายสำเนาใบงาน: เมื่อสำเนาทุกใบมีคำสั่ง “ถ่ายอีกใบ” จำนวนจึงเพิ่มทุกกิ่ง ไม่ใช่เฉพาะต้นฉบับ.</p>"
+    },
+    {
+      "id": "parent-child-address-space",
+      "title": "Parent and child address spaces (ข้อมูลเริ่มเหมือน แต่เป็นคนละงาน)",
+      "pages": [
+        26
+      ],
+      "question": "หลัง fork ถ้าลูกเปลี่ยนตัวแปร แม่ต้องเห็นค่าของลูกเปลี่ยนตามหรือไม่?",
+      "html": "<p>ลูกมี Address Space และ PCB ของตนเอง. รูปหน้า 26 วาดแท่ง Parent กับ Child แยกกัน แต่ละแท่งมี 0→max และ text, data, heap, stack เหมือนกัน พร้อมลูกศร <code>fork()</code> จากแม่ไปลูก. ลูกศรแสดงการสร้างงานใหม่จากแม่ ไม่ใช่ว่าสองแท่งเป็นหน่วยความจำตัวแปรชุดเดียว.</p><p>ค่าข้อมูลเริ่มต้นจึงเหมือนกันได้ แต่เมื่อเขียนค่าตัวแปรปกติในฝ่ายหนึ่ง อีกฝ่ายมีค่าของตัวเอง. จุดนี้จำเป็นก่อนอ่านตัวอย่าง exec ที่แม่เริ่ม x = 10 และลูกปรับ x เป็น 12.</p><p>[อธิบายเสริม] เปรียบเหมือนถ่ายสำเนากระดาษคำตอบที่ยังมีคำตอบเท่ากัน ลูกแก้บนสำเนาของลูกไม่ทำให้ต้นฉบับเปลี่ยน. ระบบอาจใช้เทคนิคภายในเพื่อลดการคัดลอก แต่ความหมายที่โปรแกรมเห็นคือพื้นที่แยก; บทนี้ไม่ได้สอน shared memory (หน่วยความจำที่ตั้งใจใช้ร่วม) หรือกลไกแบ่งปันไฟล์ทั้งหมด.</p>"
+    },
+    {
+      "id": "exec-replacement",
+      "title": "exec() family (เปลี่ยนโปรแกรมในโปรเซสเดิม)",
+      "pages": [
+        27,
+        28
+      ],
+      "question": "ถ้ามีโปรเซสลูกแล้ว จะเปลี่ยนให้มันทำโปรแกรมอีกไฟล์โดยไม่สร้างงานเพิ่มได้อย่างไร?",
+      "html": "<p><code>exec()</code> เป็นชื่อเรียกรวมของกลุ่มบริการเปลี่ยน Process Image (ภาพโปรแกรมในหน่วยความจำของโปรเซส) เป็นโปรแกรมใหม่. ไม่สร้างโปรเซสเพิ่ม. ถ้าสำเร็จ โค้ดเก่าถูกแทนที่ จึงไม่มีการกลับมาทำบรรทัดถัดจาก exec ของโปรแกรมเก่า. [อธิบายเสริม] PID ยังเป็นตัวเดิม หากเรียกไม่สำเร็จจึงจะคืนความผิดพลาดกลับมา; อุปมาเหมือนพนักงานคนเดิมเปลี่ยนคู่มือและงานที่กำลังทำ ไม่ได้จ้างพนักงานเพิ่ม.</p><h3>หกรูปแบบตามรายการในสไลด์</h3><table><thead><tr><th>ชื่อ/รูปแบบต้นฉบับ</th><th>[อธิบายเสริม] อ่านส่วนต่างของชื่อ</th></tr></thead><tbody><tr><td>execl(path, arg0, arg1, ..., NULL)</td><td>l: ส่งอาร์กิวเมนต์ทีละตัว</td></tr><tr><td>execv(path, argv)</td><td>v: ส่งอาร์กิวเมนต์เป็นอาร์เรย์</td></tr><tr><td>execlp(file, arg0, arg1, ..., NULL)</td><td>l + p: รายการ และค้นเส้นทางโปรแกรม</td></tr><tr><td>execvp(file, argv)</td><td>v + p: อาร์เรย์ และค้นเส้นทางโปรแกรม</td></tr><tr><td>execle(path, arg0, arg1, ..., NULL, envp)</td><td>l + e: รายการ และกำหนดชุด environment</td></tr><tr><td>execvpe(file, argv, envp)</td><td>v + p + e: อาร์เรย์ ค้นเส้นทาง และกำหนด environment</td></tr></tbody></table><p>[อธิบายเสริม] Argument (อาร์กิวเมนต์) คือข้อมูลที่ส่งให้โปรแกรมใหม่; argv เป็นชุดข้อความของข้อมูลเหล่านั้น; Environment (สภาพแวดล้อม) คือชุดค่าชื่อ/ค่า เช่น PATH (รายการโฟลเดอร์ค้นหาโปรแกรม), ส่วน envp คือชุดค่าที่ส่งระบุเอง. p จะค้น PATH เมื่อชื่อไฟล์ไม่มี <code>/</code>; ถ้ามี slash ใช้เส้นทางนั้น. arg0 คือชื่อที่ส่งเป็น argv[0] ไม่ใช่อาร์กิวเมนต์งานตัวแรก. หกรูปแบบเป็นรายการในเอกสาร ไม่ใช่ข้อสรุปว่าทุกระบบมี exec เพียงหกรูป; บน Linux หลายฟังก์ชันห่อบริการ execve และ execvpe เป็นส่วนขยาย GNU. ดู <a href=\"https://man7.org/linux/man-pages/man3/exec.3.html\">Linux man-pages: exec(3)</a>.</p><h3>โค้ดต้นฉบับ: ลูกเปลี่ยน x แล้ว exec</h3><pre><code>#include &lt;stdio.h&gt;\n#include &lt;stdlib.h&gt;\n#include &lt;unistd.h&gt;\n#include &lt;string.h&gt;\n#include &lt;sys/wait.h&gt;\n\nint main (int argc, char* argv[])\n{\n    int x = 10;\n    printf(&quot; Hello World (pid=%d) \\n&quot;, (int) getpid());\n\n    int pid = fork();\n\n    if (pid &lt; 0) {\n        fprintf(stderr, &quot; fork failed \\n&quot;);\n        exit (1);\n    }\n    else if (pid == 0) {  // create a child process\n        x = x + 2;\n        printf(&quot; Hello, child process %d has x = %d \\n&quot;, getpid(), x);\n        fflush(stdout);\n        execlp(&quot;/bin/ls&quot;, &quot;/home&quot;, NULL); // run echo\n        printf(&quot;Child process again = %d\\n&quot;, x);\n        fflush(stdout);\n    }\n    else {\n        wait(NULL);\n        printf(&quot; Parent pid = %d has x = %d\\n&quot;, (int) getpid(), x);\n        exit(0);\n    }\n    return 0;\n}</code></pre><p>เริ่ม x = 10 → fork → แม่เก็บ x = 10 ของแม่ ส่วนลูกได้สำเนา 10 แล้วทำ x = x + 2 เป็น 12 → ลูกพิมพ์ 12 และ <code>fflush(stdout)</code> (สั่งส่งข้อมูลที่ค้างในช่องส่งออกให้ไปจริง) → ลองเปลี่ยนเป็น /bin/ls. ถ้าสำเร็จบรรทัด “Child process again” ของโค้ดเก่าไม่ทำงาน; เมื่อโปรแกรมใหม่ของลูกจบ แม่พ้น wait และพิมพ์ x = 10. หาก exec ไม่สำเร็จโค้ดเดิมยังอยู่ จึงพิมพ์ “Child process again = 12” แล้วไหลไป return 0; ตัวอย่างยังไม่มีรายงานข้อผิดพลาด exec โดยเฉพาะ.</p><p>[อธิบายเสริม] ต้องแยกความคลาดเคลื่อนในบรรทัด <code>execlp(\"/bin/ls\", \"/home\", NULL); // run echo</code>: โปรแกรมที่ระบุคือ ls ไม่ใช่ echo; “/home” เป็น argv[0] จึงไม่ได้สั่งให้ ls แสดงโฟลเดอร์ /home แต่ไม่มีอาร์กิวเมนต์โฟลเดอร์เลย และ ls จะใช้โฟลเดอร์ปัจจุบันตามปกติ. ถ้าต้องการแสดง /home ใช้ตัวอย่างแก้ชัดเจน <code>execlp(\"/bin/ls\", \"ls\", \"/home\", (char *)NULL);</code>. นี่คือคำอธิบายเสริมเพื่ออ่าน API ให้ถูก ไม่ได้แก้เงียบให้เหมือนต้นฉบับ.</p>"
+    },
+    {
+      "id": "resources-route",
+      "title": "Resource access roadmap (จาก API ไปสู่สิทธิ์)",
+      "pages": [
+        29
+      ],
+      "question": "เมื่อโปรแกรมเรียก API แล้ว ใครควรมีสิทธิ์เข้าถึงอุปกรณ์จริง?",
+      "html": "<p>หน้า 29 กลับมาที่คำถามสามข้อเดิมและเน้นข้อ 2: “How does a process access resources?” หลังทราบการสร้างและเปลี่ยนงานแล้ว ปัญหาต่อไปคือให้งานทำคำสั่งได้รวดเร็ว แต่ยังต้องป้องกันไม่ให้งานหนึ่งแก้ระบบหรือทรัพยากรของงานอื่นตามใจ.</p>"
+    },
+    {
+      "id": "limited-direct-execution",
+      "title": "Limited direct execution and dual mode (ทำโดยตรงภายใต้ขอบเขตสิทธิ์)",
+      "pages": [
+        30,
+        31
+      ],
+      "question": "ทำอย่างไรให้โปรแกรมใช้ CPU ได้เร็ว พร้อมยังขอบริการที่ได้รับการป้องกันได้อย่างปลอดภัย?",
+      "html": "<p>Direct Execution (การทำคำสั่งโดยตรง) คือ OS เตรียมโปรเซสแล้วปล่อยให้ CPU ทำคำสั่งของโปรแกรมเอง ไม่ต้องให้ OS แปลทุกคำสั่งทีละบรรทัด. แต่หากปล่อยให้เข้าถึงทรัพยากรระบบได้ทั้งหมด งานอาจทำลายระบบหรือรบกวนงานอื่น. Limited Direct Execution (การทำโดยตรงที่จำกัดสิทธิ์) จึงให้ฮาร์ดแวร์กับ OS ร่วมกันบังคับขอบเขต.</p><p>Dual Mode (แนวทางสองระดับสิทธิ์) แยก User Mode (โหมดผู้ใช้: จำกัดการกระทำบางอย่าง) กับ Kernel Mode (โหมดเคอร์เนล: ให้ OS ทำ Privileged Operation หรือการกระทำที่ต้องมีสิทธิ์สูง เช่น ควบคุมอุปกรณ์บางส่วน). โปรเซสผู้ใช้ที่ต้องการบริการเหล่านี้เรียก System Call (การเรียกบริการของระบบปฏิบัติการ) ให้เคอร์เนลทำแทนตามกติกา.</p><p>ภาพหน้า 31 แบ่งชั้น user process ด้านบนกับ kernel ด้านล่าง: user process executing → calls system call → Trap (ทางเข้าที่ควบคุมเพื่อส่งการทำงานเข้าเคอร์เนล) → execute system call → return → return from system call. ภาพกำหนด Mode Bit (บิตบอกโหมด) เป็น 1 ใน user และ 0 ใน kernel; ตอน trap เปลี่ยนเป็น 0 ตอนกลับเปลี่ยนเป็น 1. ค่าบิตนี้เป็นข้อตกลงในภาพ ไม่ใช่ค่าเลขสากลของทุกสถาปัตยกรรม.</p><p>[อธิบายเสริม] เปรียบพนักงานทั่วไปทำงานในพื้นที่ที่อนุญาตได้เอง แต่จะเปิดตู้ควบคุมต้องส่งคำขอผ่านเจ้าหน้าที่ที่ถือกุญแจ. “ขอให้ OS ทำ” ไม่ใช่การให้สิทธิ์สูงแก่คำสั่งผู้ใช้ทุกบรรทัดหลังจากนั้น; เมื่อบริการเสร็จต้องกลับมาระดับสิทธิ์เดิม.</p>"
+    },
+    {
+      "id": "library-and-system-calls",
+      "title": "Library calls vs system calls (ฟังก์ชันสะดวกใช้กับทางเข้าเคอร์เนล)",
+      "pages": [
+        32,
+        33
+      ],
+      "question": "เหตุใดเรียก printf แบบฟังก์ชันธรรมดาแล้วจึงเกิดผลกับอุปกรณ์ที่ OS ควบคุม?",
+      "html": "<p>Standard C Library (ไลบรารีมาตรฐานภาษา C: ชุดฟังก์ชันที่ใช้ร่วมกัน) ทำให้ผู้เขียนเรียกบริการผ่านรูปแบบฟังก์ชันที่คุ้นเคยได้. ภาพหน้า 32 เริ่มจากโค้ด <code>printf(\"Greetings\");</code> ใน user mode ลูกศรลงสู่ standard C library แล้วผ่าน <code>write()</code> ลงไปทำ write system call ใน kernel mode ก่อนลูกศรย้อนกลับมาหาผู้เรียก. ฟังก์ชันหน้าตาคล้ายกันไม่ได้แปลว่าทำงานในระดับสิทธิ์เดียวกัน.</p><pre><code>#include &lt;stdio.h&gt;\nint main ( )\n{\n    /* ... */\n    printf (&quot;Greetings&quot;);\n    /* ... */\n    return 0;\n}</code></pre><p>[อธิบายเสริม] เครื่องหมายจุดไข่ปลาในภาพสื่อว่ามีโค้ดส่วนอื่น จึงเขียนเป็นความคิดเห็น <code>/* ... */</code> ในภาพประกอบข้อความข้างบน. ฟังก์ชันไลบรารีอาจจัดรูปแบบหรือพักข้อมูลก่อนค่อยขอ OS; ไม่ได้มีข้อบังคับว่าหนึ่ง printf ต้องเท่ากับหนึ่ง write เสมอ.</p><h3>รายชื่อบริการทั้งหมดที่สไลด์ยก</h3><table><thead><tr><th>กลุ่ม</th><th>ชื่อในต้นฉบับ</th><th>ความหมายสำหรับเริ่มอ่าน</th></tr></thead><tbody><tr><td>ไฟล์/ไดเรกทอรี</td><td>open(), read(), write(), close(), link(), unlink(), mount(), chdir(), chown()</td><td>เปิด อ่าน เขียน ปิด; สร้าง/ลบชื่อเชื่อมไฟล์; เชื่อมระบบไฟล์; เปลี่ยนโฟลเดอร์; เปลี่ยนเจ้าของ</td></tr><tr><td>โปรเซส/เหตุการณ์</td><td>kill(), signal(), fork(), wait(), exec(), getpid()</td><td>ส่งสัญญาณ/ตั้งการรับสัญญาณ; สร้างลูก; รอลูก; เปลี่ยนโปรแกรม; อ่าน PID</td></tr><tr><td>ตัวตนและสิทธิ์</td><td>setuid(), getuid()</td><td>กำหนด/อ่านรหัสผู้ใช้ตามสิทธิ์ที่ระบบอนุญาต</td></tr></tbody></table><h3>ตารางความสัมพันธ์ตามหน้า 33</h3><table><thead><tr><th>System calls</th><th>Library calls</th></tr></thead><tbody><tr><td>open</td><td>fopen</td></tr><tr><td>close</td><td>fclose</td></tr><tr><td>read</td><td>fread, getchar, scanf, fscanf, getc, fgetc, gets, fgets</td></tr><tr><td>write</td><td>fwrite, putchar, printf, fprintf, putc, fputc, puts, fputs</td></tr><tr><td>lseek</td><td>fseek</td></tr></tbody></table><p>ตารางเชื่อมงานระดับล่างกับฟังก์ชันระดับสูงที่อาจใช้มัน: เช่น <code>read</code> อ่านไบต์ ส่วน <code>scanf</code> ยังแปลข้อความเป็นค่าตามรูปแบบ; <code>lseek</code> เปลี่ยนตำแหน่งในไฟล์ ส่วน <code>fseek</code> ใช้กับสตรีมของไลบรารี. Stream (สตรีม) คือช่องข้อมูลที่ไลบรารีจัดการรายละเอียดให้ จึงไม่ใช่ File Descriptor ตัวเลขเดียวกัน.</p><p>[อธิบายเสริม] รายชื่อหน้า 32 เป็นคำเรียกรวมระดับการสอน บางชื่อคือฟังก์ชัน/กลุ่ม wrapper (ฟังก์ชันห่อ) ที่ลงไปใช้ kernel interface อีกที เช่น exec family ไม่ใช่ทุกชื่อเป็น syscall หมายเลขเดียวโดยตรง. หน้า 33 มี gets ตามต้นฉบับ แต่ฟังก์ชันนี้ไม่มีขอบเขตรับข้อมูล ถูกถอดจากมาตรฐาน C11; ไม่ควรนำไปเป็นแบบฝึกเขียนใหม่ ใช้ fgets ที่ระบุขนาดแทน ตาม <a href=\"https://man7.org/linux/man-pages/man3/gets.3.html\">Linux man-pages: gets(3)</a>.</p>"
+    },
+    {
+      "id": "read-trap-flow",
+      "title": "read and trap (ตามเส้นทางเรียกอ่านข้อมูล 11 ขั้น)",
+      "pages": [
+        34
+      ],
+      "question": "การเรียก read ส่งข้อมูลจากโปรแกรมเข้าสู่ผู้ให้บริการในเคอร์เนลและกลับมาได้อย่างไร?",
+      "html": "<p>Trap ในบริบทสไลด์นี้คือเหตุจากซอฟต์แวร์ที่โปรแกรมตั้งใจทำให้ CPU เปลี่ยนจาก user mode เข้า kernel mode เพื่อให้ OS ทำบริการที่ได้รับการป้องกัน. รูปหน้า 34 แบ่ง User Space (พื้นที่ของโค้ด/ข้อมูลฝั่งผู้ใช้) ด้านบน กับ Kernel Space (พื้นที่ของ OS) ด้านล่าง และแบ่งโค้ดผู้เรียกออกจาก Library Procedure read (ฟังก์ชันห่อ read).</p><p>หัวสไลด์เขียน <code>read(fd, nbytes, buffer)</code> แต่ต้องระวังลำดับอาร์กิวเมนต์. [อธิบายเสริม] รูปเรียก POSIX/C ที่ใช้จริงคือ <code>read(fd, buffer, nbytes)</code>: fd ระบุช่องไฟล์, buffer คือพื้นที่ที่จะรับข้อมูล, nbytes คือจำนวนไบต์สูงสุดที่ขออ่าน; ดู <a href=\"https://man7.org/linux/man-pages/man2/read.2.html\">Linux man-pages: read(2)</a>. ผังในภาพยังใช้สอนการ push ค่าและ trap ได้ แต่ไม่ควรคัดลำดับในหัวสไลด์ไปใช้เขียนโปรแกรม.</p><ol><li><strong>1 Push nbytes:</strong> วางจำนวนข้อมูลที่ขออ่านบนสแตกตามแบบภาพ.</li><li><strong>2 Push &amp;buffer:</strong> วางตำแหน่งพื้นที่รับข้อมูล.</li><li><strong>3 Push fd:</strong> วางหมายเลขไฟล์/ช่องอ่าน.</li><li><strong>4 Call read:</strong> กระโดดจากโค้ดผู้ใช้เข้าสู่ฟังก์ชัน read ของไลบรารี โดยมีตำแหน่งกลับ.</li><li><strong>5 Put code for read in register:</strong> ฟังก์ชันห่อใส่หมายเลขบริการอ่านในรีจิสเตอร์ เพื่อบอก OS ว่าต้องการบริการใด.</li><li><strong>6 Trap to the kernel:</strong> เข้าเคอร์เนลตามทางเข้าที่ระบบกำหนด.</li><li><strong>7 Dispatch:</strong> ตัวแจกงานของเคอร์เนลใช้หมายเลขบริการค้นรายการ.</li><li><strong>8 Sys call handler:</strong> ไปยังฟังก์ชันจัดการบริการ read ที่เลือกไว้และทำงานที่ร้องขอ.</li><li><strong>9 Return to library:</strong> ออกจากเคอร์เนลกลับไปยังส่วนไลบรารี พร้อมผลการทำงาน.</li><li><strong>10 Return to caller:</strong> กลับจากฟังก์ชัน read ไปยังโปรแกรมผู้เรียก.</li><li><strong>11 Increment SP:</strong> ปรับ SP เอาพื้นที่อาร์กิวเมนต์ออกตามข้อตกลงการเรียกในภาพ แล้วทำคำสั่งถัดไป.</li></ol><p>[อธิบายเสริม] หมายเลข 1–11 เป็นลำดับขั้น ไม่ใช่หมายเลข system call จริง. เลขที่อยู่ <code>0</code> ด้านล่างและ <code>0xFFFFFFFF</code> ด้านบนเป็นผังช่วงที่อยู่ 32 บิตที่ใช้ประกอบภาพ. การวางพารามิเตอร์บนสแตกและลูกศร &amp;buffer เป็นภาพแนวคิดตามข้อตกลงการเรียกหนึ่งแบบ; ระบบจริงอาจส่งผ่านรีจิสเตอร์และใช้ layout ต่างกัน. สิ่งสำคัญคือเส้นทางผู้เรียก → wrapper → เคอร์เนล → ผู้เรียก โดยไม่เปิดให้ผู้ใช้เลือกกระโดดเข้าเคอร์เนลตำแหน่งใดก็ได้.</p>"
+    },
+    {
+      "id": "trap-table-lifecycle",
+      "title": "Trap table and system-call lifecycle (เตรียมทางเข้าก่อนให้โปรแกรมใช้)",
+      "pages": [
+        35,
+        36
+      ],
+      "question": "ฮาร์ดแวร์จะรู้ได้อย่างไรว่าต้องเข้าโค้ด OS จุดใด และกลับมาที่คำสั่งเดิมอย่างไร?",
+      "html": "<p>Trap Table (ตารางทางเข้าเหตุ) เก็บจุดอ้างอิงไปยัง Trap Handler (ฟังก์ชันจัดการเหตุในหน่วยความจำ) ของแต่ละเหตุ เช่น system call หรือ keyboard interrupt (เหตุขัดจังหวะจากแป้นพิมพ์). OS ตั้งตารางตอน Boot (เริ่มระบบ) ใน kernel mode แล้วแจ้งฮาร์ดแวร์ให้จำทางเข้า. โปรแกรมผู้ใช้จึงขอเข้าทางที่เตรียมไว้ ไม่ได้เลือกเปลี่ยนสิทธิ์และที่อยู่ handler ได้ตามใจ.</p><p>หน้า 35–36 ใช้ผังสามคอลัมน์ OS / Hardware / Program. อ่านจากบนลงล่างและข้ามคอลัมน์เมื่อมีการส่งต่อการควบคุม:</p><table><thead><tr><th>ช่วง</th><th>ผู้ทำ</th><th>สิ่งที่เกิดตามผัง</th></tr></thead><tbody><tr><td>Boot</td><td>OS → Hardware</td><td>initialize trap table → จำ address ของ syscall handler</td></tr><tr><td>เตรียมโปรเซส</td><td>OS</td><td>Create entry for process list; Allocate memory; Load program; Setup user stack with argv; Fill kernel stack with reg/PC; return-from-trap</td></tr><tr><td>เริ่มผู้ใช้</td><td>Hardware → Program</td><td>restore regs จาก kernel stack; move to user mode; jump to main → Run main()</td></tr><tr><td>ขอบริการ</td><td>Program → Hardware</td><td>Call system call; trap into OS → save regs to kernel stack; move to kernel mode; jump to trap handler</td></tr><tr><td>ให้บริการ</td><td>OS</td><td>Handle trap; Do work of syscall; return-from-trap</td></tr><tr><td>กลับงานเดิม</td><td>Hardware → Program</td><td>restore regs จาก kernel stack; move to user mode; jump to PC after trap → ทำคำสั่งต่อ</td></tr><tr><td>จบงาน</td><td>Program → OS</td><td>return from main; trap via exit() → Free memory of process; Remove from process list</td></tr></tbody></table><p>จุดเด่นหน้า 36 คือ Kernel Stack เก็บข้อมูลของผู้เรียกไว้ระหว่างเข้าเคอร์เนล เพื่อคืนรีจิสเตอร์และ PC ได้ถูกต้อง; <code>return-from-trap</code> คือคำสั่งพิเศษที่กลับออกจากเหตุพร้อมลดสิทธิ์. จึงต่างจาก <code>return</code> ของฟังก์ชัน C ธรรมดาที่ไม่ใช่ทางควบคุมสิทธิ์ของฮาร์ดแวร์.</p><p>[อธิบายเสริม] อุปมาเหมือนตารางเบอร์ต่อภายในที่เจ้าหน้าที่กำหนดก่อนเปิดสำนักงาน: ผู้ใช้กดชนิดบริการ แล้วระบบพาไปเจ้าหน้าที่ที่กำหนด พร้อมเก็บหมายเลขคิวไว้ส่งกลับให้ถูกคน. ผังวาดการทำงานร่วมกันแบบย่อ; รายละเอียดว่าค่าใดฮาร์ดแวร์บันทึกเองหรือ handler ช่วยบันทึกขึ้นกับสถาปัตยกรรม. ขั้น “Remove from process list” เป็นภาพวงจรแบบย่อ ใน Unix ยังอาจเหลือระเบียนผลจบแบบ zombie จนแม่ wait รับผล ดังที่ชื่อสถานะในหน้า 19 สื่อไว้.</p>"
+    },
+    {
+      "id": "switching-route",
+      "title": "Context-switch roadmap (โจทย์สุดท้ายของบท)",
+      "pages": [
+        37
+      ],
+      "question": "แม้กลับจาก system call ได้แล้ว OS จะหยุดงานหนึ่งและกลับไปทำอีกงานหนึ่งได้อย่างไร?",
+      "html": "<p>หน้า 37 เน้นคำถามข้อ 3 จากชุดเดิม: “How does the OS switch between processes?” คำตอบต้องมีสองส่วน: ระบบต้องได้การควบคุม CPU กลับมาก่อน แล้วต้องเก็บค่าของงานเก่าและคืนค่าของงานใหม่ได้. การเข้าเคอร์เนลจาก system call เพียงอย่างเดียวไม่ได้บังคับว่าต้องเปลี่ยนเป็นอีกโปรเซสทุกครั้ง.</p>"
+    },
+    {
+      "id": "regaining-cpu",
+      "title": "Regaining CPU and timer interrupt (ระบบกลับมาคุมเครื่อง)",
+      "pages": [
+        38,
+        39
+      ],
+      "question": "ถ้าโปรแกรมวนลูปไม่สิ้นสุดและไม่ยอมเรียกบริการ OS จะได้ CPU กลับมาได้อย่างไร?",
+      "html": "<p>หน้า 38 ระบุจังหวะที่ OS ต้องพิจารณางานถัดไป: Process Yields (งานยอมคืน CPU), งาน Blocked เพราะ I/O, แม่สร้างลูกแล้ว Wait ให้ลูกจบ, และ Terminated (งานสิ้นสุด). เหตุเหล่านี้พา OS กลับมาควบคุมได้เมื่อโปรแกรมยอมเข้าระบบหรือไปต่อไม่ได้. แต่ Infinite Loop (ลูปไม่สิ้นสุด) ที่ทำคำนวณไปเรื่อย ๆ อาจไม่ทำเหตุเหล่านั้นเลย.</p><p>Timer Interrupt (เหตุขัดจังหวะจากตัวจับเวลา) แก้ปัญหานี้: อุปกรณ์ timer ส่ง interrupt ทุกระยะตามการตั้ง เช่น ทุกหลายมิลลิวินาที → CPU เข้า Interrupt Handler (ฟังก์ชัน OS จัดการเหตุขัดจังหวะ) → OS ได้ CPU กลับมาและตัดสินใจว่าจะให้ใครทำต่อ. ขณะบูต OS แจ้งฮาร์ดแวร์ว่าเมื่อ timer ส่งเหตุจะใช้ handler ใด แล้วเริ่ม timer.</p><p>[อธิบายเสริม] Timer คล้ายเสียงกริ่งหมดเวลาในห้องประชุม ต่อให้ผู้พูดยังพูดไม่จบ ผู้ดำเนินการก็มีโอกาสจัดคิวใหม่. การเกิด interrupt เปิดโอกาสให้เลือกใหม่ แต่ไม่ได้แปลว่าต้องเปลี่ยนโปรเซสทุกครั้ง; OS อาจเลือกตัวเดิม. Trap ของ system call เกิดจากโปรแกรมตั้งใจขอ ส่วน timer interrupt มาจากอุปกรณ์ตามเวลา จึงไม่ต้องรอความร่วมมือของลูปผู้ใช้.</p>"
+    },
+    {
+      "id": "context-save-restore",
+      "title": "Saving and restoring context (เก็บงานเก่าแล้วคืนงานใหม่)",
+      "pages": [
+        40,
+        41
+      ],
+      "question": "จะให้โปรเซสหยุดกลางทางแล้วกลับมาทำต่อได้โดยไม่ทำค่าตัวแปรหรือตำแหน่งคำสั่งปนกันอย่างไร?",
+      "html": "<p>Context Switching (การสลับบริบท) คือกิจวัตรของ OS เมื่อสลับโปรเซสที่กำลังรัน: (1) Save Context (บันทึกค่าที่ใช้ทำงาน) ของตัวเดิม (2) Restore Context (คืนค่า) ของอีกตัว. บันทึกทั้งจุดทำคำสั่งและรีจิสเตอร์ที่จำเป็น ไม่ใช่เริ่มโปรแกรมใหม่ทุกครั้ง.</p><p>ภาพหน้า 40 วาด Memory ที่มี Prog1 Code/Data และ Prog2 Code/Data อยู่แล้ว พร้อมช่อง Prog1 State และ Prog2 State แยกต่างหาก. ภาพซ้าย OS suspends Prog1: ลูกศรจากรีจิสเตอร์ CPU รวม SP/PC ไปยัง Prog1 State เพื่อจำจุดหยุด. ภาพขวา OS resumes Prog2: ลูกศรจาก Prog2 State กลับเข้ารีจิสเตอร์ CPU แล้วใช้คำสั่ง/ข้อมูลของ Prog2 ต่อ. ลูกศรบอกทิศการย้ายค่าบริบท ไม่ได้บอกว่าต้องคัดลอกโค้ดกับข้อมูลทั้งหมดระหว่างงานทุกครั้ง.</p><h3>ผังรายละเอียด A → B ตามหน้า 41</h3><ol><li><strong>ตอนบูต:</strong> OS initialize trap table ให้ฮาร์ดแวร์จำ address ของ syscall handler และ timer handler แล้ว start interrupt timer; อุปกรณ์เริ่มนับและจะ interrupt CPU ใน X ms ตามการตั้ง.</li><li><strong>A ทำใน user mode:</strong> Process A ใช้รีจิสเตอร์และ PC ของตน.</li><li><strong>Timer interrupt:</strong> เส้นทางเข้าระบบบันทึก <code>regs(A) → k-stack(A)</code>, เปลี่ยนเป็น kernel mode และไป trap handler.</li><li><strong>OS จัดการเหตุและเรียก switch():</strong> บันทึก <code>regs(A) → proc_t(A)</code>, คืน <code>regs(B) ← proc_t(B)</code> แล้วสลับไป <code>k-stack(B)</code>. proc_t(A/B) ในผังหมายถึงระเบียนโปรเซสของแต่ละตัว.</li><li><strong>return-from-trap into B:</strong> คืน <code>regs(B) ← k-stack(B)</code>, กลับ user mode และกระโดดไป B’s PC.</li><li><strong>B ทำต่อ:</strong> Process B เดินหน้าจากตำแหน่งที่เคยพักไว้ ไม่ใช้ PC ของ A.</li></ol><p>ผังนี้แยกการเก็บบน kernel stack ตอนเข้าเหตุออกจากการเก็บ/คืนชุดค่าที่ switch ใช้เลือกอีกงาน จึงมีทั้ง k-stack และระเบียนโปรเซส. [อธิบายเสริม] ชื่อ/จำนวนรีจิสเตอร์ที่บันทึกในแต่ละชั้นขึ้นกับ OS และฮาร์ดแวร์ ไม่ควรถือว่าลูกศรสองครั้งหมายถึงคัดลอกรีจิสเตอร์ทุกตัวซ้ำอย่างเหมือนกันทั้งหมด.</p><p>[อธิบายเสริม] เปรียบสลับคนเล่นเกมเครื่องเดียว: เก็บจุดเซฟของ A แล้วโหลดจุดเซฟของ B จึงไม่ปนคะแนนและตำแหน่งตัวละคร. การเปลี่ยน User Mode → Kernel Mode เป็นการเปลี่ยนสิทธิ์; การเปลี่ยน A → B เป็นการเปลี่ยนงาน ทั้งสองเกิดร่วมกันได้ แต่ไม่ใช่ความหมายเดียวกัน. ตอนนี้มีเครื่องมือครบสำหรับเรียน OS03 ว่า scheduler จะเลือก B ด้วยกติกาใด.</p>"
+    }
+  ],
+  "workedExamples": [
+    {
+      "title": "[อธิบายเสริม] ไล่ first.c จากค่าตัวแปรสู่ผลพิมพ์",
+      "pages": [
+        21
+      ],
+      "html": "<p>[อธิบายเสริม] ใช้โค้ดต้นฉบับหน้า 21 โดยตามค่าทีละจุด แยกการแปลไฟล์ออกจากการรัน.</p><ol><li><code>gcc -o first first.c</code> แปลไฟล์ข้อความเป็นไฟล์โปรแกรมชื่อ first ยังไม่ใช่การพิมพ์ Hello World ของโปรแกรมนั้น.</li><li><code>./first</code> ขอให้ OS เริ่มโปรเซสจากไฟล์ first แล้วเข้าสู่ main ตามเส้นทางเริ่มโปรแกรม.</li><li><code>int x;</code> จองช่องตัวแปรชื่อ x; ยังไม่ควรอ่านค่า x ก่อนกำหนดค่า.</li><li><code>x = 10;</code> ทำให้ x มีค่า 10.</li><li>printf แรกส่งข้อความ Hello World และขึ้นบรรทัดใหม่.</li><li>printf ที่สองนำ x = 10 แทน <code>%d</code> ได้ “value of x is 10”. ไม่มี fork จึงไม่มีสำเนางานลูกจากส่วนนี้.</li></ol><p>ถ้าเปลี่ยนเฉพาะค่าที่กำหนดเป็น 12 ในแบบฝึกใหม่ ข้อความบรรทัดที่สองจะเปลี่ยนเป็น 12; บรรทัด Hello World ไม่เปลี่ยนเพราะไม่มีตัวแปรให้แทน.</p>"
+    },
+    {
+      "title": "[อธิบายเสริม] อ่านตารางสถานะที่เวลา 3, 4, 7, 8 และ 9",
+      "pages": [
+        14,
+        15
+      ],
+      "html": "<p>[อธิบายเสริม] ใช้แถวของตารางต้นฉบับ ไม่เพิ่มนโยบายจัดตารางให้ภาพ.</p><ol><li>เวลา 3: Process₀ Running และเริ่ม I/O. Process₁ Ready จึงมีงานอื่นทำต่อได้เมื่อ 0 ต้องรอ.</li><li>เวลา 4: 0 เป็น Blocked, 1 เป็น Running. CPU ยังมีงานทำระหว่างอุปกรณ์ทำงานของ 0.</li><li>เวลา 7: I/O ของ 0 จบ สถานะ 0 เปลี่ยนเป็น Ready; 1 ยังคง Running. “พร้อม” จึงไม่เท่ากับ “ได้ CPU แล้ว”.</li><li>เวลา 8: 1 ทำงานจนจบ ตอนแถวนั้นยังแสดง Running พร้อมหมายเหตุ now done.</li><li>เวลา 9: 1 เป็น “–” เพราะจบ ส่วน 0 กลับมา Running. ต้องผ่าน Ready → Running เมื่อ OS เลือก ไม่ใช่กระโดด Blocked → Running ทันทีที่ I/O จบ.</li></ol><p>อย่าหา waiting time เป็นมิลลิวินาทีจากตารางนี้เอง เพราะต้นฉบับไม่ได้กำหนดหน่วยและช่วงขอบเวลาละเอียดสำหรับโจทย์คำนวณ scheduling.</p>"
+    },
+    {
+      "title": "[อธิบายเสริม] จับคู่ fork return กับ PID จริง 2326/2327",
+      "pages": [
+        22,
+        23
+      ],
+      "html": "<p>[อธิบายเสริม] สมมติ fork สำเร็จตามตัวเลขผลรันในภาพ และแม่ยังอยู่ในช่วงที่ลูกอ่าน getppid.</p><table><thead><tr><th>จุดตรวจ</th><th>แม่</th><th>ลูก</th></tr></thead><tbody><tr><td>ก่อน fork</td><td>getpid() = 2326; x = 2326</td><td>ยังไม่เกิด</td></tr><tr><td>หลัง fork</td><td>pid = 2327; getpid() = 2326</td><td>pid = 0; getpid() = 2327; getppid() = 2326</td></tr><tr><td>ค่าของ x ที่สืบทอด</td><td>2326</td><td>2326 เพราะคัดค่าก่อน fork ไม่ได้เรียก getpid ให้ x ใหม่</td></tr><tr><td>เงื่อนไข</td><td>pid > 0 เป็นจริง จึงเข้าฝั่งแม่</td><td>pid > 0 เป็นเท็จ จึงเข้าฝั่ง else</td></tr><tr><td>การจบ</td><td>พิมพ์บรรทัดแม่ → wait → exit</td><td>พิมพ์สองบรรทัดลูก → exit</td></tr></tbody></table><p>0 จึงเป็นค่าคืนในตัวแปร pid ของลูก ไม่ใช่ตัวตนของลูก. การที่ x ของลูกยังเป็น 2326 ช่วยเห็นว่า fork คัดค่าเดิม ไม่ได้รันบรรทัด x = getpid() อีกรอบ. บรรทัดแม่กับลูกอาจสลับลำดับกัน; wait ของแม่ในโค้ดอยู่หลังบรรทัดพิมพ์แม่.</p>"
+    },
+    {
+      "title": "[อธิบายเสริม] แตกกิ่งลูป fork: 1 → 2 → 4 → 8",
+      "pages": [
+        25
+      ],
+      "html": "<p>[อธิบายเสริม] ตั้งชื่อ A–H เพื่ออ่านง่าย ชื่อเหล่านี้ไม่ใช่ PID ในต้นฉบับ. สมมติ fork สำเร็จทุกครั้งและทุกโปรเซสทำจบโค้ด.</p><table><thead><tr><th>ช่วง</th><th>งานที่มีหลังช่วงนั้น</th><th>จำนวนรวม</th><th>สร้างใหม่ในช่วง</th></tr></thead><tbody><tr><td>เริ่ม</td><td>A</td><td>1</td><td>0</td></tr><tr><td>fork ก่อนลูป</td><td>A, B</td><td>2</td><td>1</td></tr><tr><td>i = 0: A สร้าง C, B สร้าง D</td><td>A, B, C, D</td><td>4</td><td>2</td></tr><tr><td>i = 1: A→E, B→F, C→G, D→H</td><td>A, B, C, D, E, F, G, H</td><td>8</td><td>4</td></tr></tbody></table><ol><li>รอบแรกนอกลูปมีเพียง A เรียก fork จึงได้ 2 ตัว.</li><li>รอบ i = 0 ทั้ง A และ B เรียก ไม่ได้มีเพียง A: 2 × 2 = 4.</li><li>ลูกที่เกิดรอบ i = 0 ทำต่อหลัง fork ของรอบนั้น แล้วเพิ่ม i เป็น 1 เช่นเดียวกับแม่. รอบ i = 1 จึงมีผู้เรียก 4 ตัว: 4 × 2 = 8.</li><li>รวมตัวสร้างใหม่ = 1 + 2 + 4 = 7; รวมตัวเดิม = 8. คิดแบบ 2³ ได้เพราะมีการแตกครบสามระดับบนทุกทาง ภายใต้สมมติฐานข้างต้น.</li><li>ออกลูปแล้วแต่ละตัวเรียก wait หนึ่งครั้ง. ตัวที่ไม่มีลูกได้ข้อผิดพลาดกลับ; ตัวที่มีลูกอาจรอ/รับผลลูกหนึ่งตัว. แต่ละตัวพิมพ์ 42 คนละหนึ่งครั้ง จึงรวม 8 บรรทัดเมื่อทุกตัวถึง printf.</li></ol><p>สายสัมพันธ์จริง: A มีลูก B,C,E; B มีลูก D,F; C มีลูก G; D มีลูก H. wait ครั้งเดียวของ A ไม่ได้รอ B,C,E และลูกหลานทั้งหมดพร้อมกัน. การนับจำนวนโปรเซสกับการรับประกันลำดับจึงต้องคิดแยกกัน.</p>"
+    },
+    {
+      "title": "[อธิบายเสริม] ตาม x = 10/12 และผลสำเร็จ/ล้มเหลวของ exec",
+      "pages": [
+        26,
+        27,
+        28
+      ],
+      "html": "<p>[อธิบายเสริม] แยกสองกรณีตามโค้ดต้นฉบับ และสมมติ fork สำเร็จ.</p><ol><li>ก่อน fork มี x = 10 ชุดเดียว.</li><li>หลัง fork แม่ x = 10 และลูก x = 10 ในพื้นที่ของตน.</li><li>ลูกทำ x = x + 2: แทนค่า 10 + 2 = 12 เก็บใน x ของลูก; x ของแม่ยัง 10.</li><li>ลูกพิมพ์ค่า 12 แล้ว fflush ก่อนเรียก execlp.</li><li>ถ้า exec สำเร็จ: โปรแกรมใหม่ /bin/ls เข้ามาแทนโค้ดลูกเดิม ภายในโปรเซสลูกตัวเดิม; ไม่ทำ “Child process again”. เมื่อลูกจบ แม่พ้น wait แล้วพิมพ์ค่า 10.</li><li>ถ้า exec ล้มเหลว: ยังอยู่ในโค้ดเดิม จึงพิมพ์ “Child process again = 12” และ return 0. ตัวอย่างนี้จึงอาจจบด้วย 0 แม้ exec ล้มเหลว ต้องเพิ่มการตรวจ error หากพัฒนาเป็นโปรแกรมจริง.</li></ol><p>บรรทัด execlp เดิมส่ง /home เป็น argv[0] ไม่ใช่พารามิเตอร์โฟลเดอร์ของ ls. แบบฝึกแก้ API ที่ตั้งใจให้แสดง /home ต้องมีทั้งชื่อ argv[0] และอาร์กิวเมนต์ /home เช่น <code>execlp(\"/bin/ls\", \"ls\", \"/home\", (char *)NULL)</code>.</p>"
+    },
+    {
+      "title": "[อธิบายเสริม] ใครทำอะไรระหว่างขอ read หนึ่งครั้ง",
+      "pages": [
+        31,
+        34,
+        35,
+        36
+      ],
+      "html": "<p>[อธิบายเสริม] สมมติคำขออ่านกลับได้ตามปกติ โดยใช้รูป API ที่แก้ลำดับแล้ว <code>read(fd, buffer, nbytes)</code>.</p><ol><li>โปรแกรมใน user mode เตรียม fd, ตำแหน่ง buffer และ nbytes.</li><li>เข้าฟังก์ชันห่อ read ของไลบรารี ซึ่งเตรียมหมายเลขบริการในรีจิสเตอร์.</li><li>trap เข้าทางที่ OS ลงทะเบียนไว้; เส้นทางเข้าระบบเก็บค่าที่ต้องใช้กลับบน kernel stack และเปลี่ยนสิทธิ์เป็น kernel mode.</li><li>dispatcher ใช้หมายเลขไปเลือก read handler ทำบริการ ไม่ได้อนุญาตให้โปรแกรมข้ามไปโค้ดเคอร์เนลจุดใดก็ได้.</li><li>เมื่อเสร็จ ใช้เส้นทาง return-from-trap คืนค่าผู้เรียก กลับ user mode.</li><li>ฟังก์ชันห่อกลับไปยังโปรแกรม แล้วโปรแกรมใช้ผลอ่านและทำคำสั่งต่อ.</li></ol><p>ลูกศรไปกลับนี้เป็นการเข้าออกเคอร์เนลของโปรเซสเดิม หากต้องรอ I/O หรือ OS เลือกงานอื่น อาจมี context switch เพิ่ม แต่ไม่ใช่ข้อบังคับว่าทุก read ต้องเปลี่ยนโปรเซสเสมอ.</p>"
+    },
+    {
+      "title": "[อธิบายเสริม] บันทึกและคืนค่า A/B ด้วยตัวเลขสมมติ",
+      "pages": [
+        40,
+        41
+      ],
+      "html": "<p>[อธิบายเสริม] ตัวเลขทั้งหมดในตัวอย่างนี้แต่งเพื่อฝึกอ่านทิศทางค่า ไม่ใช่เลขในสไลด์: A มี PC = 120, SP = 900, R = 7; B ที่พักอยู่มี PC = 500, SP = 800, R = 20. R เป็นชื่อรีจิสเตอร์สมมติ.</p><table><thead><tr><th>ขั้น</th><th>CPU / ข้อมูลที่เก็บ</th><th>เหตุผล</th></tr></thead><tbody><tr><td>A ทำงาน</td><td>CPU ใช้ (PC=120, SP=900, R=7)</td><td>เป็นบริบทปัจจุบันของ A</td></tr><tr><td>เข้าเหตุและ save A</td><td>เก็บบริบท A ไว้ในข้อมูลของ A ตามเส้นทาง kernel stack/ระเบียน</td><td>หากไม่เก็บจะเสียจุดทำค้าง</td></tr><tr><td>restore B</td><td>CPU ได้ (PC=500, SP=800, R=20)</td><td>ใช้ทั้งตำแหน่งคำสั่ง สแตก และค่ารีจิสเตอร์ของ B</td></tr><tr><td>กลับ user mode</td><td>ทำต่อที่ PC ของ B</td><td>ไม่ใช้ PC=120 ของ A และไม่เริ่ม B ใหม่</td></tr><tr><td>ภายหลังจะกลับ A</td><td>ต้องเก็บค่าล่าสุดของ B ก่อน แล้วคืนค่าของ A</td><td>แต่ละงานจึงรักษาความคืบหน้าตัวเอง</td></tr></tbody></table><p>การคืนเพียง PC แต่ปล่อย SP/R ของ A อยู่จะปนข้อมูลสองงาน; การคืนเพียงข้อมูลใน RAM แต่ไม่คืน PC ก็ไม่รู้ว่าจะทำคำสั่งใดต่อ. บริบทจึงต้องคืนเป็นชุดที่สอดคล้องกัน.</p>"
+    }
+  ],
+  "figures": [
+    {
+      "title": "สูตรกับการลงมือ: ความหมายของ Program/Process",
+      "pages": [
+        5,
+        6
+      ],
+      "description": "จัดภาพใหม่จากอุปมาในสไลด์: สูตรเก็บคำสั่ง แต่การอบต้องมีคน วัตถุดิบ และอุปกรณ์. ลูกศรโหลดในหน้า 6 เชื่อมโปรแกรมที่เก็บไว้กับพื้นที่ทำงานในหน่วยความจำ.",
+      "parts": [
+        "Recipe/Program: สูตรหรือคำสั่งที่เก็บไว้",
+        "Ingredient/Input: ข้อมูลที่ใช้",
+        "Baker/OS: ผู้จัดการให้เริ่มทำ",
+        "Oven/Resources: ทรัพยากรที่ใช้",
+        "Baking/Process: งานที่เกิดขึ้นจริง"
+      ],
+      "flow": [
+        "Program บน Disk",
+        "OS เตรียมและโหลด",
+        "Process ใน Memory",
+        "CPU ทำคำสั่ง"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "Address space: อ่านจาก 0 ไป max",
+      "pages": [
+        7,
+        8
+      ],
+      "description": "ส่วน text/data อยู่ช่วงล่าง ฮีปขยายขึ้นและสแตกขยายลงเข้าหาช่องว่างตามภาพตัวอย่าง. รีจิสเตอร์และไฟล์ที่เปิดเป็นส่วนข้อมูลการทำงานนอกแท่งผังหน่วยความจำด้วย.",
+      "parts": [
+        "Text: คำสั่ง",
+        "Data: ตัวแปรส่วนกลาง",
+        "Heap: พื้นที่ขอเพิ่มขณะรัน",
+        "Stack: ค่าพารามิเตอร์ ตัวแปรเฉพาะ และที่อยู่กลับ",
+        "Registers/PC/SP: ค่าและจุดทำงานใน CPU"
+      ],
+      "flow": [
+        "0: text",
+        "data",
+        "heap ↑",
+        "ช่องว่าง",
+        "↓ stack: max"
+      ],
+      "kind": "memory"
+    },
+    {
+      "title": "จากโปรแกรมสู่งานที่ scheduler เลือก",
+      "pages": [
+        9
+      ],
+      "description": "ด้านบนแสดงการสร้างโปรเซสจากดิสก์สู่ RAM; ด้านล่างรวบรวมตัวชี้เธรดและ priority ให้ scheduler เลือก. ลูกศร execute ส่งงานไป CPU และเส้น preemption/context switch สื่อการหยุดแล้วเลือกใหม่.",
+      "parts": [
+        "RAM: มี Process #1 ถึง #M",
+        "ตาราง: Thread #1 high, #2 low, #3 med, #4 low, …, #K high",
+        "Scheduler: ส่วนของ OS ที่เลือกงาน",
+        "CPU: ทำงานที่ถูกเลือก"
+      ],
+      "flow": [
+        "Program",
+        "Instantiate → Process",
+        "Collect thread pointers",
+        "Select for execution",
+        "CPU; ภายหลังอาจ preempt"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "สามสถานะและเหตุเปลี่ยน",
+      "pages": [
+        14,
+        15
+      ],
+      "description": "ลูกศรมีสี่เส้น: Scheduled, Descheduled, I/O initiate และ I/O done. ตารางเวลาแสดงว่า I/O done ที่ 7 เพียงทำให้ Process₀ Ready ขณะที่ Process₁ ยัง Running.",
+      "parts": [
+        "Running: CPU กำลังทำงานนี้",
+        "Ready: ทำต่อได้แต่ยังรอ CPU",
+        "Blocked: รอเหตุจึงยังทำต่อไม่ได้"
+      ],
+      "flow": [
+        "Ready → Running: Scheduled",
+        "Running → Ready: Descheduled",
+        "Running → Blocked: I/O initiate",
+        "Blocked → Ready: I/O done"
+      ],
+      "kind": "state"
+    },
+    {
+      "title": "Process table ชี้ไปยัง PCB แต่ละตัว",
+      "pages": [
+        17,
+        18,
+        19
+      ],
+      "description": "จุดในคอลัมน์ PCB เป็นทางอ้างอิงจากแถว PID ไปก้อนข้อมูลของงานนั้น; ไม่ใช่ลูกศรลำดับการรัน. ก้อนข้อมูลมีทั้งค่าที่จะคืนให้ CPU ข้อมูลหน่วยความจำ และบริบทไฟล์/สิทธิ์.",
+      "parts": [
+        "แถว PID 1,2,…,n: ระบุตัวงาน",
+        "PCB: PC, registers, state, priority, address space, open files, flags",
+        "C ตัวอย่าง: mem/sz/kstack/state/pid/parent/chan/killed/ofile/cwd/context/tf"
+      ],
+      "flow": [
+        "ค้น PID",
+        "ตามตัวชี้ PCB",
+        "อ่านสถานะ/ทรัพยากร",
+        "ใช้ข้อมูลเลือกหรือกลับมารัน"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "fork ให้พื้นที่ข้อมูลแม่/ลูกแยกกัน",
+      "pages": [
+        22,
+        26,
+        28
+      ],
+      "description": "ลูกศร fork จากแท่ง Parent ไป Child สร้างงานใหม่พร้อมพื้นที่และ PCB ของตน. ค่าเริ่มต้นเหมือนกันได้ แต่ตัวอย่าง x ของลูกเปลี่ยนเป็น 12 ขณะที่แม่ยัง 10.",
+      "parts": [
+        "Parent: text/data/heap/stack และ PCB ของแม่",
+        "Child: text/data/heap/stack และ PCB ของลูก",
+        "ค่าคืน: แม่ได้ PID ลูก; ลูกได้ 0"
+      ],
+      "flow": [
+        "แม่ x=10",
+        "fork",
+        "แม่ x=10 | ลูก x=10",
+        "ลูกบวก 2 → ลูก x=12; แม่ยัง 10"
+      ],
+      "kind": "comparison"
+    },
+    {
+      "title": "fork, wait, exec ทำหน้าที่คนละจุด",
+      "pages": [
+        22,
+        24,
+        27,
+        28
+      ],
+      "description": "ภาพทบทวนตามหน้าที่ API: fork เพิ่มงาน, exec เปลี่ยนโปรแกรมในงานเดิม, wait จัดความสัมพันธ์กับผลจบของลูก. [อธิบายเสริม] เส้นทางรวมเป็นภาพแต่งเพื่อเชื่อมแนวคิด ไม่ใช่ผังที่บังคับให้ทุกโปรแกรมเรียกครบสามอย่าง.",
+      "parts": [
+        "fork: สร้างโปรเซสใหม่",
+        "exec: แทนโปรแกรมในโปรเซสเดิม",
+        "wait: รอ/รับผลจบลูกหนึ่งตัวต่อครั้งสำเร็จ"
+      ],
+      "flow": [
+        "แม่ fork",
+        "ลูก exec โปรแกรมใหม่",
+        "ลูกทำจนจบ",
+        "แม่ผ่าน wait แล้วทำต่อ"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "ข้ามขอบสิทธิ์แล้วกลับมาที่ผู้ใช้",
+      "pages": [
+        31,
+        32
+      ],
+      "description": "ผัง user process → calls system call → trap → kernel execute → return. ภาพต้นฉบับกำหนด mode bit 1 ให้ user และ 0 ให้ kernel; printf ผ่านไลบรารีไปยัง write เป็นตัวอย่างช่องทางนี้.",
+      "parts": [
+        "User mode: โปรแกรมมีสิทธิ์จำกัด",
+        "Library: ฟังก์ชันสะดวกใช้/ห่อคำขอ",
+        "Kernel mode: OS ตรวจและทำบริการ",
+        "Return: คืนโหมดเดิม"
+      ],
+      "flow": [
+        "User code",
+        "Library wrapper",
+        "Trap เข้า kernel",
+        "ทำ system call",
+        "กลับ user"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "read: ฟังก์ชันห่อกับ handler เป็นคนละส่วน",
+      "pages": [
+        34
+      ],
+      "description": "จัดหมายเลข 1–11 เป็นช่วง: เตรียมอาร์กิวเมนต์ 1–3, call 4, ใส่รหัสบริการ 5, trap 6, dispatch/handler 7–8, กลับ 9–10 และคืนพื้นที่สแตก 11. หัวสไลด์สลับอาร์กิวเมนต์; รูปใช้จริงเป็น read(fd, buffer, nbytes).",
+      "parts": [
+        "Caller: เตรียมข้อมูลและจุดกลับ",
+        "Library read: ใส่รหัสและ trap",
+        "Dispatch/table: เลือก handler",
+        "Handler: ทำงานใน kernel",
+        "SP: ปรับคืนเมื่อกลับตามภาพ"
+      ],
+      "flow": [
+        "1–3 เตรียม",
+        "4–5 wrapper",
+        "6 trap",
+        "7–8 handler",
+        "9–10 กลับ",
+        "11 ปรับ SP"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "Boot, system call และกลับงานเดิม",
+      "pages": [
+        35,
+        36
+      ],
+      "description": "อ่านผังสามคอลัมน์ OS/Hardware/Program จากบนลงล่าง. OS เตรียมตารางและโปรเซส; ฮาร์ดแวร์/ทางเข้าออกบันทึกและคืนค่า; โปรแกรมทำ main แล้วขอ system call. ผังจบด้วย exit และคืนทรัพยากรแบบย่อ.",
+      "parts": [
+        "OS @ boot: initialize trap table",
+        "Hardware: จำ address ของ handler",
+        "OS @ run: เตรียมโปรเซสและ kernel stack",
+        "Program: main → system call",
+        "Kernel stack: ข้อมูลสำหรับกลับจุดเดิม"
+      ],
+      "flow": [
+        "เตรียมตอน boot",
+        "เริ่ม user",
+        "trap",
+        "handler",
+        "return-from-trap",
+        "user ทำต่อ"
+      ],
+      "kind": "flow"
+    },
+    {
+      "title": "บันทึก A แล้วคืน B",
+      "pages": [
+        39,
+        40,
+        41
+      ],
+      "description": "Timer interrupt ทำให้เข้า kernel ได้แม้ A ไม่ยอมคืน CPU. ภาพหน้า 40 บันทึก Prog1 State แล้วคืน Prog2 State; หน้า 41 แยก k-stack และระเบียนโปรเซส ก่อนกลับไป B’s PC.",
+      "parts": [
+        "Timer: เหตุเพื่อให้ OS ได้ควบคุม",
+        "k-stack(A): ค่าตอนเข้าเหตุของ A",
+        "proc_t(A/B): ระเบียนที่ switch ใช้เก็บ/คืน",
+        "k-stack(B): เส้นทางกลับไป B",
+        "PC/SP: ต้องเป็นชุดของ B เมื่อ B ทำต่อ"
+      ],
+      "flow": [
+        "A รัน",
+        "timer interrupt",
+        "save A",
+        "restore B; เปลี่ยน stack",
+        "return-from-trap into B",
+        "B รัน"
+      ],
+      "kind": "flow"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Program",
+      "thai": "โปรแกรม",
+      "meaning": "ชุดคำสั่งพร้อมข้อมูลที่เก็บไว้เพื่อนำมารัน",
+      "note": "ยังไม่บอกว่ารันถึงคำสั่งใดหรือมีค่าตัวแปรขณะทำเท่าใด",
+      "pages": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "term": "Process",
+      "thai": "โปรเซส",
+      "meaning": "โปรแกรมที่กำลังทำงานพร้อมข้อมูลและสถานะของตัวเอง",
+      "note": "เป็นนามธรรมพื้นฐานที่ OS ใช้จัดการงาน",
+      "pages": [
+        4,
+        6,
+        8
+      ]
+    },
+    {
+      "term": "Abstraction",
+      "thai": "นามธรรม/แบบมองอย่างย่อ",
+      "meaning": "ให้มองสิ่งซับซ้อนผ่านแนวคิดที่ใช้จัดการง่าย",
+      "note": "Process ซ่อนรายละเอียด machine state แต่ OS ยังต้องเก็บรายละเอียดนั้น",
+      "pages": [
+        3,
+        4,
+        8
+      ]
+    },
+    {
+      "term": "Multiprogramming",
+      "thai": "การมีหลายโปรแกรมให้สลับทำ",
+      "meaning": "ให้หลายงานอยู่ในระบบเพื่อผลัดกันใช้ทรัพยากร",
+      "note": "หนึ่งแกนไม่ได้ทำคำสั่งหลายโปรเซสในจังหวะเดียว",
+      "pages": [
+        4,
+        9
+      ]
+    },
+    {
+      "term": "Virtualization",
+      "thai": "การทำทรัพยากรเสมือน",
+      "meaning": "จัดทรัพยากรจริงให้ผู้ใช้เห็นว่ามีสภาพแวดล้อมสำหรับแต่ละงาน",
+      "note": "บทนี้ใช้โปรเซสเพื่ออธิบายการทำงานหลายงาน",
+      "pages": [
+        4,
+        9
+      ]
+    },
+    {
+      "term": "Address space",
+      "thai": "พื้นที่ที่อยู่ของโปรเซส",
+      "meaning": "ชุดตำแหน่งหน่วยความจำที่โปรเซสใช้กับโค้ดและข้อมูล",
+      "note": "ภาพแยก text/data/heap/stack; ลูกมีพื้นที่ของตน",
+      "pages": [
+        6,
+        7,
+        26
+      ]
+    },
+    {
+      "term": "Text / Code",
+      "thai": "ส่วนคำสั่ง",
+      "meaning": "พื้นที่ที่มีคำสั่งของโปรแกรม",
+      "note": "คำว่า text ในผังนี้หมายถึงโค้ด ไม่ใช่ไฟล์เอกสารทั่วไป",
+      "pages": [
+        7
+      ]
+    },
+    {
+      "term": "Data / Global variable",
+      "thai": "ส่วนข้อมูล/ตัวแปรส่วนกลาง",
+      "meaning": "ค่าข้อมูลที่โปรแกรมเก็บและใช้ร่วมระหว่างฟังก์ชันตามขอบเขตภาษา",
+      "note": "แยกจากข้อมูลชั่วคราวใน stack",
+      "pages": [
+        7
+      ]
+    },
+    {
+      "term": "Heap",
+      "thai": "ฮีป",
+      "meaning": "พื้นที่หน่วยความจำที่ขอเพิ่มขณะโปรแกรมทำงาน",
+      "note": "ลูกศรในภาพแสดงการขยายขึ้นเข้าหาช่องว่าง",
+      "pages": [
+        7
+      ]
+    },
+    {
+      "term": "Stack",
+      "thai": "สแตก",
+      "meaning": "พื้นที่ข้อมูลการเรียกฟังก์ชัน เช่น ตัวแปรเฉพาะและตำแหน่งกลับ",
+      "note": "User stack กับ kernel stack มีบริบทใช้งานต่างกัน",
+      "pages": [
+        7,
+        19,
+        36
+      ]
+    },
+    {
+      "term": "Program counter (PC)",
+      "thai": "ตัวนับตำแหน่งคำสั่ง",
+      "meaning": "ค่าที่ทำให้ CPU รู้ว่าจะทำคำสั่งใดต่อ",
+      "note": "ต้องเก็บ/คืนให้ตรงโปรเซสเมื่อสลับ",
+      "pages": [
+        8,
+        17,
+        40
+      ]
+    },
+    {
+      "term": "Stack pointer / Frame pointer",
+      "thai": "ตัวชี้สแตก/ตัวชี้กรอบฟังก์ชัน",
+      "meaning": "รีจิสเตอร์ที่ใช้ระบุตำแหน่งข้อมูลบนสแตก",
+      "note": "ตัวอย่าง x86 ใช้ esp/ebp ส่วนสถาปัตยกรรมอื่นมีชื่ออื่น",
+      "pages": [
+        8,
+        19
+      ]
+    },
+    {
+      "term": "Thread",
+      "thai": "เธรด",
+      "meaning": "สายการทำงานภายในโปรเซส",
+      "note": "ภาพหน้า 9 รวบรวมตัวชี้เธรดและ priority ให้ scheduler เลือก",
+      "pages": [
+        9
+      ]
+    },
+    {
+      "term": "Scheduler",
+      "thai": "ส่วนเลือกงาน",
+      "meaning": "ส่วนของ OS ที่ตัดสินใจให้งานที่พร้อมตัวใดได้ CPU",
+      "note": "กติกาเลือกงานโดยละเอียดอยู่ใน OS03",
+      "pages": [
+        9,
+        38
+      ]
+    },
+    {
+      "term": "Process API",
+      "thai": "ส่วนติดต่อจัดการโปรเซส",
+      "meaning": "บริการที่เรียกเพื่อสร้าง ยุติ รอ ควบคุม และดูสถานะงาน",
+      "note": "API คือทางเรียก ไม่ใช่ข้อมูล PCB เอง",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "term": "stdin / stdout / stderr",
+      "thai": "ทางรับเข้า/ทางส่งออก/ทางแจ้งข้อผิดพลาด",
+      "meaning": "ช่อง I/O ตั้งต้นที่ Unix เตรียมให้โปรเซส",
+      "note": "[อธิบายเสริม] เลข descriptor ปกติคือ 0/1/2 ตามลำดับ",
+      "pages": [
+        13
+      ]
+    },
+    {
+      "term": "Running",
+      "thai": "กำลังทำ",
+      "meaning": "CPU กำลังทำคำสั่งของโปรเซสนี้",
+      "note": "ในแบบจำลองหนึ่ง CPU มีงาน Running ได้ครั้งละหนึ่งตัว",
+      "pages": [
+        14,
+        15
+      ]
+    },
+    {
+      "term": "Ready",
+      "thai": "พร้อมทำ",
+      "meaning": "มีสิ่งที่ต้องใช้ครบเพื่อทำต่อ แต่ยังไม่ได้ CPU",
+      "note": "I/O done เปลี่ยน Blocked เป็น Ready ก่อน",
+      "pages": [
+        14,
+        15
+      ]
+    },
+    {
+      "term": "Blocked",
+      "thai": "ติดรอเหตุ",
+      "meaning": "ยังทำต่อไม่ได้จนเหตุที่รอเกิด เช่น I/O เสร็จ",
+      "note": "ต่างจาก Ready ซึ่งรอเพียงการเลือก CPU",
+      "pages": [
+        14,
+        15
+      ]
+    },
+    {
+      "term": "Process table / Process list",
+      "thai": "ตาราง/รายการโปรเซส",
+      "meaning": "ชุดรายการที่ OS ใช้อ้างถึงงานต่าง ๆ",
+      "note": "ลูกศรจาก PID ไป PCB แสดงทางอ้างอิง ไม่ใช่ลำดับรัน",
+      "pages": [
+        16,
+        17
+      ]
+    },
+    {
+      "term": "Process Control Block (PCB)",
+      "thai": "บล็อกข้อมูลควบคุมโปรเซส",
+      "meaning": "ระเบียนรวมข้อมูลที่ OS ต้องรู้เกี่ยวกับโปรเซสหนึ่งตัว",
+      "note": "มี state, registers, PC, ข้อมูลหน่วยความจำและไฟล์",
+      "pages": [
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "term": "PID / PPID",
+      "thai": "หมายเลขโปรเซส/หมายเลขแม่",
+      "meaning": "ตัวระบุงาน และตัวระบุโปรเซสที่เป็นแม่",
+      "note": "getpid อ่าน PID จริง ไม่เหมือนค่าคืน fork ที่ลูกได้ 0",
+      "pages": [
+        22,
+        23
+      ]
+    },
+    {
+      "term": "fork()",
+      "thai": "สร้างโปรเซสลูก",
+      "meaning": "สร้างงานใหม่ที่ทำต่อจากจุด fork โดยเริ่มข้อมูลจากแม่",
+      "note": "แม่ได้ PID ลูก; ลูกได้ 0; [อธิบายเสริม] ล้มเหลวได้ -1",
+      "pages": [
+        22,
+        23,
+        26
+      ]
+    },
+    {
+      "term": "Parent / Child process",
+      "thai": "โปรเซสแม่/โปรเซสลูก",
+      "meaning": "ผู้เรียก fork และงานใหม่ที่เกิดจากการเรียกนั้น",
+      "note": "มี PID, PCB และ address space ของตน",
+      "pages": [
+        22,
+        26
+      ]
+    },
+    {
+      "term": "wait()",
+      "thai": "รอและรับผลจบลูก",
+      "meaning": "ทำให้แม่จัดลำดับหลังลูกและเก็บผลจบได้",
+      "note": "[อธิบายเสริม] หนึ่งครั้งรับผลลูกหนึ่งตัว ไม่ใช่ลูกหลานทุกตัว",
+      "pages": [
+        24,
+        25
+      ]
+    },
+    {
+      "term": "exec() family",
+      "thai": "กลุ่มเปลี่ยนโปรแกรม",
+      "meaning": "แทนโปรแกรมในโปรเซสเดิมด้วยโปรแกรมใหม่",
+      "note": "สำเร็จแล้วไม่กลับมาบรรทัดถัดไปของโปรแกรมเก่า",
+      "pages": [
+        27,
+        28
+      ]
+    },
+    {
+      "term": "Argument / argv / envp",
+      "thai": "อาร์กิวเมนต์/ชุดอาร์กิวเมนต์/ชุดสภาพแวดล้อม",
+      "meaning": "ข้อมูลที่ส่งให้โปรแกรมใหม่ และชุดค่าบริบทที่ส่งกำหนดเอง",
+      "note": "[อธิบายเสริม] argv[0] เป็นชื่อโปรแกรมตามธรรมเนียม; p/l/v/e แยกรูปแบบ exec",
+      "pages": [
+        28
+      ]
+    },
+    {
+      "term": "Limited direct execution",
+      "thai": "การทำโดยตรงที่จำกัดสิทธิ์",
+      "meaning": "ให้โปรแกรมทำคำสั่งบน CPU เองแต่มีขอบเขตการเข้าถึงระบบ",
+      "note": "รวมความเร็วจาก direct execution กับการคุมทรัพยากร",
+      "pages": [
+        30,
+        31
+      ]
+    },
+    {
+      "term": "User mode / Kernel mode",
+      "thai": "โหมดผู้ใช้/โหมดเคอร์เนล",
+      "meaning": "ระดับสิทธิ์จำกัดของโปรแกรม กับระดับสิทธิ์ที่ OS ใช้ทำบริการป้องกัน",
+      "note": "Mode bit 1/0 เป็นเลขตามภาพตัวอย่าง",
+      "pages": [
+        31
+      ]
+    },
+    {
+      "term": "System call",
+      "thai": "การเรียกบริการของระบบ",
+      "meaning": "ทางขอให้ OS ทำงานที่โปรแกรมต้องใช้บริการเคอร์เนล",
+      "note": "ฟังก์ชันไลบรารีอาจห่อคำขอนี้อีกชั้น",
+      "pages": [
+        31,
+        32,
+        33
+      ]
+    },
+    {
+      "term": "Standard C library",
+      "thai": "ไลบรารีมาตรฐานภาษา C",
+      "meaning": "ฟังก์ชันสะดวกใช้ เช่น printf/fopen/fread",
+      "note": "ไม่ใช่ทุก library call เท่ากับ kernel entry หนึ่งครั้ง",
+      "pages": [
+        32,
+        33
+      ]
+    },
+    {
+      "term": "File descriptor",
+      "thai": "หมายเลขช่องอ้างอิงไฟล์",
+      "meaning": "ค่าจำนวนเต็มที่โปรเซสใช้ระบุช่องไฟล์/I/O ที่เปิด",
+      "note": "ใน read fd บอกช่องอ่าน ไม่ใช่จำนวนไบต์",
+      "pages": [
+        18,
+        34
+      ]
+    },
+    {
+      "term": "Trap",
+      "thai": "ทางเข้าระบบจากเหตุซอฟต์แวร์",
+      "meaning": "ในบทนี้คือเหตุที่โปรแกรมตั้งใจใช้เข้าเคอร์เนลเพื่อขอบริการ",
+      "note": "ต่างจาก timer interrupt ที่อุปกรณ์ส่งมาโดยไม่รอคำขอโปรแกรม",
+      "pages": [
+        31,
+        34,
+        36
+      ]
+    },
+    {
+      "term": "Trap table / Trap handler",
+      "thai": "ตารางทางเข้าเหตุ/ฟังก์ชันจัดการเหตุ",
+      "meaning": "ตารางบอกว่าจะไปโค้ด OS จุดใดเมื่อเกิดเหตุแต่ละชนิด",
+      "note": "OS ตั้งตอน boot; handler เป็นฟังก์ชันในหน่วยความจำ",
+      "pages": [
+        35,
+        36
+      ]
+    },
+    {
+      "term": "Kernel stack / Trap frame",
+      "thai": "สแตกเคอร์เนล/กรอบบันทึกตอนเข้าเหตุ",
+      "meaning": "พื้นที่และข้อมูลที่เก็บค่าผู้เรียกเพื่อให้กลับออกจากเคอร์เนลได้ถูกต้อง",
+      "note": "ต่างจากข้อมูลอาร์กิวเมนต์และตัวแปรบน user stack",
+      "pages": [
+        19,
+        36,
+        41
+      ]
+    },
+    {
+      "term": "return-from-trap",
+      "thai": "คำสั่งกลับออกจากเหตุ",
+      "meaning": "คืนสถานะเพื่อกลับไปทำโปรแกรมผู้ใช้พร้อมลดสิทธิ์",
+      "note": "เป็นกลไกพิเศษของเครื่อง ไม่ใช่ return ฟังก์ชัน C ธรรมดา",
+      "pages": [
+        35,
+        36,
+        41
+      ]
+    },
+    {
+      "term": "Timer interrupt",
+      "thai": "เหตุขัดจังหวะจากตัวจับเวลา",
+      "meaning": "อุปกรณ์ส่งเหตุเมื่อถึงเวลาที่ตั้ง เพื่อให้ OS ได้ควบคุม CPU",
+      "note": "ทำให้ OS กลับมาได้แม้งานวนลูปโดยไม่ขอบริการ",
+      "pages": [
+        38,
+        39,
+        41
+      ]
+    },
+    {
+      "term": "Context switch",
+      "thai": "การสลับบริบท",
+      "meaning": "บันทึกค่าของงานเดิมและคืนค่าของงานใหม่เพื่อทำต่อ",
+      "note": "ไม่ต้องเริ่มโปรแกรมใหม่หรือโหลดโค้ดทั้งหมดทุกครั้ง",
+      "pages": [
+        40,
+        41
+      ]
+    },
+    {
+      "term": "Preemption / Deschedule",
+      "thai": "การดึง CPU คืน/เอางานออกจาก CPU",
+      "meaning": "หยุดงานที่ยังไม่จบเพื่อเปิดให้ระบบเลือกตัวอื่นได้",
+      "note": "งานที่ยังทำต่อได้จะกลับ Ready ไม่ใช่ Blocked",
+      "pages": [
+        9,
+        14,
+        39
+      ]
+    },
+    {
+      "term": "Zombie",
+      "thai": "งานจบที่ยังรอรับผลจบ",
+      "meaning": "งานไม่ทำคำสั่งแล้ว แต่ยังมีระเบียนผลจบให้แม่รับ",
+      "note": "[อธิบายเสริม] ช่วยเชื่อม ZOMBIE ใน xv6 กับหน้าที่ wait",
+      "pages": [
+        19,
+        24,
+        25
+      ]
+    }
+  ],
+  "confusions": [
+    {
+      "title": "Program vs Process vs PCB",
+      "pages": [
+        4,
+        6,
+        16,
+        17
+      ],
+      "html": "<table><thead><tr><th>สิ่งที่เทียบ</th><th>คืออะไร</th><th>ใช้ตอบคำถาม</th></tr></thead><tbody><tr><td>Program</td><td>ไฟล์/ชุดคำสั่งพร้อมข้อมูล</td><td>จะให้เครื่องทำอะไร</td></tr><tr><td>Process</td><td>การทำงานจริงพร้อมสถานะและทรัพยากร</td><td>ขณะนี้งานทำถึงไหนและมีข้อมูลอะไร</td></tr><tr><td>PCB</td><td>ระเบียนที่ OS เก็บเกี่ยวกับโปรเซสหนึ่งตัว</td><td>OS จะค้น ติดตาม หรือกลับไปทำงานนั้นอย่างไร</td></tr></tbody></table><p>โปรแกรมเดียวอาจสร้างหลายโปรเซส; PCB บันทึกข้อมูลจัดการงาน ไม่ใช่ชื่ออีกชื่อหนึ่งของไฟล์โปรแกรม.</p>"
+    },
+    {
+      "title": "Ready vs Blocked และ I/O done vs ได้ CPU",
+      "pages": [
+        14,
+        15
+      ],
+      "html": "<table><thead><tr><th>จุดเปรียบเทียบ</th><th>Ready</th><th>Blocked</th></tr></thead><tbody><tr><td>ทำต่อได้ไหมถ้าได้รับ CPU</td><td>ได้</td><td>ยังไม่ได้จนเหตุที่รอเสร็จ</td></tr><tr><td>สิ่งที่กำลังรอ</td><td>การเลือกจาก OS</td><td>เช่น I/O หรือผลจบลูก</td></tr><tr><td>เหตุเปลี่ยนไปอีกขั้น</td><td>Scheduled → Running</td><td>I/O done → Ready</td></tr></tbody></table><p>แถวเวลา 7 พิสูจน์จุดนี้: Process₀ Ready และ Process₁ ยัง Running พร้อมกัน จึงตีความว่า I/O done บังคับแย่ง CPU ทันทีไม่ได้.</p>"
+    },
+    {
+      "title": "PID จริง vs ค่าคืน fork",
+      "pages": [
+        22,
+        23,
+        25
+      ],
+      "html": "<table><thead><tr><th>ค่า</th><th>แม่ PID 2326</th><th>ลูก PID 2327</th></tr></thead><tbody><tr><td>getpid()</td><td>2326</td><td>2327</td></tr><tr><td>ผลคืน fork ที่เก็บใน pid</td><td>2327</td><td>0</td></tr><tr><td>getppid() ของลูก</td><td>ไม่ใช่สิ่งที่ใช้ระบุลูกในฝั่งแม่</td><td>2326 ตามตัวอย่าง</td></tr></tbody></table><p>ข้อความ “process id” ที่พิมพ์ตัวแปร pid หลัง fork ในหน้า 25 จึงอาจแสดง 0 แม้โปรเซสนั้นมี PID จริงที่ไม่ใช่ 0. อย่าใช้ชื่อตัวแปรแทนการตรวจว่าค่าได้มาจากฟังก์ชันใด.</p>"
+    },
+    {
+      "title": "fork vs wait vs exec",
+      "pages": [
+        22,
+        24,
+        25,
+        27,
+        28
+      ],
+      "html": "<table><thead><tr><th>บริการ</th><th>จำนวนโปรเซส</th><th>ผลหลัก</th><th>บรรทัดถัดไปของโค้ดเก่า</th></tr></thead><tbody><tr><td>fork สำเร็จ</td><td>เพิ่มหนึ่งตัวต่อการเรียก</td><td>สร้างลูกที่มีข้อมูลเริ่มต้นจากแม่</td><td>ทั้งแม่และลูกทำต่อ แยกด้วยค่าคืน</td></tr><tr><td>wait สำเร็จ</td><td>ไม่สร้างเพิ่ม</td><td>รับผลจบลูกหนึ่งตัว</td><td>ผู้รอทำต่อเมื่อเงื่อนไขรอสำเร็จ</td></tr><tr><td>exec สำเร็จ</td><td>ไม่เพิ่ม</td><td>แทนโปรแกรมในตัวเดิม</td><td>ไม่ทำต่อ เพราะโค้ดเก่าถูกแทนแล้ว</td></tr></tbody></table><p>[อธิบายเสริม] wait ที่ไม่มีลูปไม่ได้รอลูกหลานทั้งหมด; exec ที่ล้มเหลวจึงจะกลับมาบรรทัดถัดไปได้. การแยกสามหน้าที่นี้เป็นพื้นฐานอ่านโปรแกรม shell และโปรแกรมที่แบ่งงาน.</p>"
+    },
+    {
+      "title": "ข้อมูลเริ่มเหมือน vs ใช้ตัวแปรชุดเดียวกัน",
+      "pages": [
+        22,
+        26,
+        28
+      ],
+      "html": "<p>หลัง fork ค่าตัวแปรเริ่มต้นเท่ากันเพราะคัดสถานะเริ่มต้นจากแม่ แต่พื้นที่ของแม่/ลูกแยกกัน. ลูกเปลี่ยน x จาก 10 เป็น 12 ไม่ทำให้แม่เปลี่ยนจาก 10 เป็น 12. อย่าสรุปจากคำว่า exact copy ว่า PID ผลคืน fork หรือพื้นที่ตัวแปรเป็นสิ่งเดียวกัน.</p>"
+    },
+    {
+      "title": "Library function vs System call",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "html": "<table><thead><tr><th>ระดับ</th><th>ตัวอย่าง</th><th>งานที่รับผิดชอบ</th></tr></thead><tbody><tr><td>ไลบรารี</td><td>printf, scanf, fopen, fread, fseek</td><td>จัดรูปแบบ/จัดการสตรีมและเรียกบริการที่เกี่ยวข้อง</td></tr><tr><td>บริการเคอร์เนล</td><td>write, read, open, lseek ตามตัวอย่าง</td><td>ทำงานกับทรัพยากรตามสิทธิ์ผ่านขอบระบบ</td></tr></tbody></table><p>เรียกฟังก์ชัน C ไม่ได้แปลว่าทุกคำสั่งข้างในเป็น kernel mode. ภาพ printf → library → write แสดงหลายชั้น และการเรียกจริงอาจมีการพักข้อมูล.</p>"
+    },
+    {
+      "title": "Mode switch vs Context switch",
+      "pages": [
+        31,
+        36,
+        39,
+        40,
+        41
+      ],
+      "html": "<table><thead><tr><th>สิ่งที่เปลี่ยน</th><th>Mode switch (เปลี่ยนระดับสิทธิ์)</th><th>Context switch (เปลี่ยนบริบทงาน)</th></tr></thead><tbody><tr><td>คำถามหลัก</td><td>ขณะนี้ใช้สิทธิ์ระดับใด</td><td>ขณะนี้ทำงานของโปรเซสใด</td></tr><tr><td>ตัวอย่าง</td><td>โปรเซส A trap เข้า kernel แล้วกลับ A</td><td>หยุด A เก็บค่า แล้วคืนค่าของ B</td></tr><tr><td>จำเป็นต้องเปลี่ยนโปรเซสไหม</td><td>ไม่เสมอ</td><td>มีการเปลี่ยนงานที่กำลังรัน</td></tr></tbody></table><p>[อธิบายเสริม] system call อาจเข้าออกเคอร์เนลของ A แล้วกลับ A; timer interrupt อาจทำให้ OS เลือก A ต่อเช่นกัน. จึงห้ามสรุปว่า trap/interrupt ทุกครั้งต้องสลับไป B.</p>"
+    },
+    {
+      "title": "System-call trap vs Timer interrupt",
+      "pages": [
+        34,
+        35,
+        38,
+        39
+      ],
+      "html": "<table><thead><tr><th>เหตุ</th><th>แหล่งเริ่ม</th><th>ทำไมมี</th></tr></thead><tbody><tr><td>Trap ตามบริบท system call</td><td>โปรแกรมตั้งใจขอบริการ</td><td>ให้ OS ทำการกระทำที่ป้องกันไว้</td></tr><tr><td>Timer interrupt</td><td>อุปกรณ์ตามเวลาที่ OS ตั้ง</td><td>ให้ OS กลับมาควบคุมได้แม้โปรแกรมไม่ยอมคืน CPU</td></tr></tbody></table><p>ทั้งคู่ต้องมีเส้นทางเข้า handler และเก็บค่าพอให้กลับได้ แต่เหตุเริ่มคนละแบบ.</p>"
+    }
+  ],
+  "recap": [
+    "Program คือชุดคำสั่ง; Process คือการทำงานจริงที่มีสถานะและข้อมูลของตัวเอง.",
+    "Address space แบ่ง text/data/heap/stack ในภาพตัวอย่าง; machine state ยังรวมรีจิสเตอร์ PC/SP และไฟล์ที่เปิด.",
+    "การสร้างงานเตรียมโค้ด/ข้อมูล พื้นที่ทำงาน I/O ตั้งต้น และจุดเริ่ม ก่อนส่งการควบคุม CPU.",
+    "Running ได้ CPU; Ready ทำต่อได้แต่ยังไม่ได้ CPU; Blocked ต้องรอเหตุ. I/O done พากลับ Ready.",
+    "Process table อ้างถึง PCB; PCB เก็บข้อมูลให้ OS ติดตาม เลือก และคืนบริบทงาน.",
+    "fork สร้างลูก: แม่ได้ PID ลูก ลูกได้ 0; getpid ของลูกยังเป็น PID จริงของลูก.",
+    "แม่/ลูกมี address space และ PCB ของตน; ลูกเปลี่ยนตัวแปรปกติไม่ทำให้แม่เปลี่ยนตาม.",
+    "wait ช่วยรอ/รับผลจบลูก; [อธิบายเสริม] ต้องดูตำแหน่งรอและจำนวนครั้ง ไม่สรุปว่ารอลูกหลานทั้งหมด.",
+    "exec สำเร็จแทนโปรแกรมในโปรเซสเดิม และไม่กลับไปบรรทัดถัดไปของโค้ดเก่า.",
+    "System call เข้า kernel ผ่านเส้นทางควบคุม; ไลบรารีเป็นอีกชั้นที่ช่วยเรียกและจัดข้อมูล.",
+    "OS ตั้ง trap table ตอน boot และเก็บข้อมูลกลับบน kernel stack เพื่อ return-from-trap ได้.",
+    "Timer interrupt ทำให้ OS ได้ CPU กลับแม้โปรแกรมวนลูป; context switch เก็บ A แล้วคืน B.",
+    "เปลี่ยนสิทธิ์กับเปลี่ยนโปรเซสเป็นคนละมิติ และไม่จำเป็นต้องเปลี่ยนงานทุกครั้งที่เข้า kernel."
+  ],
+  "review": [
+    {
+      "question": "[อธิบายเสริม] อธิบาย Program, Process และ PCB โดยเชื่อมกับภาพสูตรขนมและการโหลดโปรแกรม",
+      "pages": [
+        4,
+        5,
+        6,
+        16,
+        17
+      ],
+      "answerHtml": "<p>Program เป็นชุดคำสั่งพร้อมข้อมูลที่เก็บไว้ เหมือนสูตรขนม. Process เป็นการนำโปรแกรมมาทำจริงพร้อมข้อมูลและจุดทำงาน เหมือนการลงมืออบโดยใช้วัตถุดิบกับเตา. OS เตรียมและโหลด code/static data เข้าพื้นที่ทำงาน แล้วให้ CPU ทำคำสั่ง. PCB เป็นระเบียนข้อมูลที่ OS ใช้จัดการโปรเซส เช่น state, PC, registers, memory และ open files จึงไม่ใช่ไฟล์สูตรหรือคำสั่งทั้งหมดเอง.</p><p>การเปิดโปรแกรมเดียวสองครั้งอาจมีสองโปรเซสที่อ้างโค้ดเดียวกัน แต่ค่าตัวแปรและจุดค้างต่างกัน OS จึงต้องมีข้อมูลจัดการแยกตามงาน ไม่ใช่จำเพียงชื่อโปรแกรม.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ใน Address Space มีส่วนใดบ้าง และเหตุใดเก็บ RAM อย่างเดียวแต่ไม่เก็บ PC/SP จึงยังกลับมาทำต่อไม่พอ?",
+      "pages": [
+        7,
+        8,
+        19,
+        40
+      ],
+      "answerHtml": "<p>ตามภาพเรียงจากที่อยู่ต่ำเป็น text (คำสั่ง), data (เช่นตัวแปรส่วนกลาง), heap (พื้นที่ขอเพิ่มขณะรัน), ช่องว่าง และ stack (ตัวแปรเฉพาะ พารามิเตอร์ ที่อยู่กลับ). ภาพแสดง heap โตขึ้นและ stack โตลง แต่ไม่ได้บังคับรูปแบบของทุกระบบ.</p><p>RAM เก็บโค้ดและข้อมูล แต่ PC บอกคำสั่งที่จะทำต่อ ส่วน SP/Frame Pointer ช่วยระบุข้อมูลบนสแตกและกรอบฟังก์ชัน. หากคืนแต่ RAM ยังไม่รู้จะทำคำสั่งใด หากคืน PC แต่ใช้ SP/รีจิสเตอร์ของอีกโปรเซสก็จะทำกับข้อมูลผิดชุด. จึงต้องเก็บและคืนบริบทที่สอดคล้องกันด้วย.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ทำไมเวลา 7 ในตาราง Process₀ จึง Ready แม้ I/O เสร็จแล้ว และเมื่อใดจึง Running?",
+      "pages": [
+        14,
+        15
+      ],
+      "answerHtml": "<p>ที่เวลา 3 Process₀ ขอ I/O แล้วเป็น Blocked ที่ 4–6 เพราะยังทำต่อไม่ได้. I/O done ที่เวลา 7 ลบเหตุที่ต้องรอ จึงเปลี่ยน Blocked → Ready เท่านั้น. ขณะนั้น Process₁ ยัง Running จึงไม่ได้ให้ Process₀ ใช้ CPU พร้อมกันในแบบหนึ่ง CPU ของตาราง.</p><p>Process₁ จบตามหมายเหตุเวลา 8 แล้ว OS จึงเลือก Process₀ ให้ Running ที่ 9–10. เหตุนี้ยืนยันว่า Ready หมายถึงมีคุณสมบัติพร้อมให้เลือก ไม่ใช่คำพ้องกับ Running และ I/O done ไม่ใช่คำสั่งบังคับแย่ง CPU.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] จากตัวอย่างแม่ PID 2326 ลูก PID 2327 แต่ละฝ่ายเห็นค่า fork(), getpid() และ getppid() ของลูกเท่าไร?",
+      "pages": [
+        22,
+        23
+      ],
+      "answerHtml": "<ol><li>แม่เรียก fork แล้วสำเร็จ ค่า return ที่เก็บใน pid ของแม่คือ 2327 ซึ่งเป็น PID ของลูก.</li><li>แม่เรียก getpid ได้ 2326 ซึ่งเป็นตัวตนแม่ ไม่ใช่ 2327.</li><li>ลูกทำต่อหลัง fork โดยค่า return ที่เก็บใน pid คือ 0 ใช้ตรวจว่าตนอยู่ฝั่งลูก.</li><li>getpid ของลูกให้ 2327 และ getppid ของลูกให้ 2326 ตามผลรันนี้.</li></ol><p>ก่อน fork มี x = getpid() เป็น 2326; ค่านี้ถูกคัดไปให้ลูก หากไม่ได้กำหนด x ใหม่ ลูกก็ยังมี x = 2326 แม้ getpid ของลูกให้ 2327. ต้องตามที่มาของตัวแปรแยกจากหมายเลขจริงของโปรเซส.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] โค้ดหน้า 23 วาง wait หลังบรรทัดพิมพ์ของแม่ รับประกันให้ลูกพิมพ์ก่อนแม่ได้หรือไม่ และควรวางอย่างไร?",
+      "pages": [
+        23,
+        24
+      ],
+      "answerHtml": "<p>รับประกันไม่ได้ เพราะฝั่งแม่อาจได้ CPU แล้วพิมพ์ข้อความแม่ก่อนค่อยเรียก wait; ผลรันในภาพก็แสดงแม่ก่อนลูก. wait มีผลต่อคำสั่งที่ตามหลังมัน ไม่ย้อนกลับไปจัดลำดับสิ่งที่พิมพ์ไปแล้ว.</p><p>ถ้าต้องการให้ข้อความแม่ออกหลังลูกทำเสร็จ ให้ฝั่งแม่เรียก wait สำเร็จก่อนจึงพิมพ์ข้อความนั้น ส่วนลูกพิมพ์แล้ว exit. ในตัวอย่างที่มีลูกหนึ่งตัวจะได้เงื่อนไขการจบของลูกก่อนบรรทัดแม่ โดยยังต้องตรวจความล้มเหลวของ fork/wait และเรื่องการส่งข้อมูลออกเมื่อเขียนโปรแกรมจริง.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] fork หนึ่งครั้งก่อนลูป และในลูปอีกสองรอบโดยทุกงานทำต่อ จะมีงานกี่ตัวและพิมพ์ 42 กี่ครั้ง?",
+      "pages": [
+        25
+      ],
+      "answerHtml": "<p>ภายใต้สมมติฐานว่า fork สำเร็จทุกครั้ง ไม่มีงานจบก่อนแตกกิ่งครบ และทุกงานถึง printf: เริ่ม 1 ตัว; fork ก่อนลูปได้ 1 × 2 = 2; รอบ i = 0 งานทั้ง 2 แตกเป็น 2 × 2 = 4; รอบ i = 1 งานทั้ง 4 แตกเป็น 4 × 2 = 8. จึงมีรวม 8 ตัว โดยเป็นตัวเกิดใหม่ 8 − 1 = 7.</p><p>แต่ละตัวออกจากลูปแล้วไป wait หนึ่งครั้งและ printf 42 หนึ่งครั้ง จึงมี 42 รวม 8 บรรทัดเมื่อทุกตัวทำถึงจุดนั้น. wait หนึ่งครั้งของงานที่มีลูกหลายตัวไม่ได้รอลูกทั้งหมด จึงใช้การมี wait ท้ายโปรแกรมรับประกันลำดับ output ของทุกกิ่งไม่ได้. ภาพผลรันยังมีข้อความต่างจากโค้ดที่แสดง จึงไม่นับจากข้อความภาพโดยไม่อ่านโค้ด.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ในหน้า 28 ลูกเปลี่ยน x เป็น 12 แล้ว exec สำเร็จ แม่พิมพ์ x เท่าไร และ Child process again จะปรากฏหรือไม่?",
+      "pages": [
+        26,
+        27,
+        28
+      ],
+      "answerHtml": "<p>แม่ยังพิมพ์ x = 10 เพราะแม่/ลูกมีพื้นที่ตัวแปรของตัวเอง. ลูกได้สำเนาเริ่มต้น 10 แล้วบวก 2 เป็น 12 ในพื้นที่ลูก. การเปลี่ยนค่านี้ไม่ได้แก้ x ของแม่.</p><p>หาก exec สำเร็จ โค้ดลูกเดิมถูกแทนด้วย /bin/ls และใช้โปรเซสลูกตัวเดิม จึงไม่ทำ printf “Child process again”. หลังโปรแกรมใหม่ของลูกจบ แม่ผ่าน wait จึงพิมพ์ 10. หาก exec ล้มเหลว โค้ดเก่ายังอยู่ จึงอาจพิมพ์ “Child process again = 12”. ต้องแยกคำว่า “คืนจาก exec” ในกรณีล้มเหลวออกจาก “ไม่มีการคืน” ในกรณีสำเร็จ.</p><p>บรรทัดต้นฉบับมี /home เป็น argv[0] และคอมเมนต์ run echo ไม่ตรง /bin/ls; ถ้าต้องการแสดง /home ต้องส่งอาร์กิวเมนต์ /home หลังชื่อโปรแกรมอีกตัว.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] อธิบายการขอ read ตั้งแต่ user program ผ่าน library จนเข้า kernel และกลับออกมา พร้อมแก้รูปเรียกที่หัวสไลด์",
+      "pages": [
+        31,
+        32,
+        34,
+        35,
+        36
+      ],
+      "answerHtml": "<p>รูป API ที่ใช้จริงคือ read(fd, buffer, nbytes) ไม่ใช่ลำดับ read(fd, nbytes, buffer) ที่หัวหน้า 34. ผู้ใช้เตรียมหมายเลขช่องไฟล์ ตำแหน่งพื้นที่รับ และจำนวนไบต์ → ฟังก์ชันห่อใส่รหัสบริการในรีจิสเตอร์ → trap เข้าทางที่ OS ลงทะเบียนไว้ → dispatcher เลือก handler ตามรหัส → handler ทำบริการ → return-from-trap คืนข้อมูล/โหมด → ฟังก์ชันห่อกลับผู้เรียก.</p><p>ตามผัง 1–11: 1–3 เตรียมอาร์กิวเมนต์บนสแตก, 4 call read, 5 ใส่รหัส, 6 trap, 7–8 dispatch และ handler, 9 กลับไลบรารี, 10 กลับผู้เรียก, 11 ปรับ SP. รูปการวางสแตกเป็นภาพตัวอย่างของ calling convention ไม่ใช่รูปแบบของทุกเครื่อง. การเข้า kernel ต้องเก็บข้อมูลพอกลับตำแหน่งเดิมและลดสิทธิ์เมื่อกลับ.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ทำไมต้องตั้ง trap table ตอน boot และทำไมใช้ return ของภาษา C แทน return-from-trap ไปเลยไม่ได้?",
+      "pages": [
+        35,
+        36
+      ],
+      "answerHtml": "<p>ฮาร์ดแวร์ต้องรู้ทางเข้า handler ของเหตุแต่ละชนิดก่อนปล่อยโปรแกรมผู้ใช้ทำงาน. OS จึงกำหนด trap table ใน kernel mode และแจ้งฮาร์ดแวร์ให้จำตำแหน่ง. เมื่อเกิดเหตุจึงเข้าจุดที่กำหนด แทนการให้โปรแกรมเลือกตำแหน่งภายใน kernel เอง.</p><p>การ return ฟังก์ชันทั่วไปจัดการการกลับจากการเรียกฟังก์ชันตามสแตก/ข้อตกลงเรียก ส่วน return-from-trap เป็นเส้นทางพิเศษที่คืนสถานะ CPU จากเหตุ รวมการกลับไป user mode และ PC ที่เหมาะสม. ต้องคืนข้อมูลที่เก็บบน kernel stack อย่างถูกต้อง ไม่ใช่กระโดดข้ามขอบสิทธิ์ตามใจด้วย return ธรรมดา.</p>"
+    },
+    {
+      "question": "[อธิบายเสริม] ถ้า A วนลูปไม่ยอมคืน CPU ระบบหยุดมันและไปทำ B ได้อย่างไร และการเข้า kernel ทุกครั้งแปลว่าสลับงานหรือไม่?",
+      "pages": [
+        38,
+        39,
+        40,
+        41
+      ],
+      "answerHtml": "<ol><li>ตอน boot OS ลงทะเบียน timer handler และเริ่ม timer.</li><li>แม้ A ไม่ yield หรือเรียก system call อุปกรณ์ timer ก็ส่ง interrupt เมื่อถึงเวลา.</li><li>เส้นทางเข้าเหตุบันทึก regs(A) บน k-stack(A), เข้า kernel และไป handler.</li><li>เมื่อ OS เลือก B จะใช้ switch เก็บบริบท A ในระเบียนของ A คืนบริบท B จากระเบียนของ B และเปลี่ยนไป kernel stack ของ B.</li><li>return-from-trap into B คืนค่าผู้ใช้ของ B กลับ user mode และไป B’s PC.</li></ol><p>การเข้า kernel ไม่เท่ากับการเปลี่ยนงานเสมอ. OS อาจให้ A ทำต่อหลัง timer interrupt หรือ system call; จะเป็น context switch เมื่อเปลี่ยนงานที่กำลังรันจริง. PC/SP และรีจิสเตอร์ของ B ต้องกลับมาเป็นชุดเดียวกันเพื่อไม่ปนกับ A.</p>"
+    }
+  ],
+  "cards": [
+    [
+      "Program (โปรแกรม)",
+      "ชุดคำสั่งพร้อมข้อมูลที่เก็บไว้; ยังไม่ใช่การทำงานจริง"
+    ],
+    [
+      "Process (โปรเซส)",
+      "โปรแกรมที่กำลังทำงานพร้อมข้อมูล สถานะ และจุดทำค้างของตน"
+    ],
+    [
+      "Address space (พื้นที่ที่อยู่)",
+      "ตำแหน่งหน่วยความจำที่งานใช้เก็บโค้ดและข้อมูล"
+    ],
+    [
+      "Text / Data (คำสั่ง/ข้อมูล)",
+      "Text เก็บคำสั่ง; Data ในผังเก็บข้อมูล เช่นตัวแปรส่วนกลาง"
+    ],
+    [
+      "Heap (ฮีป)",
+      "พื้นที่หน่วยความจำที่ขอเพิ่มระหว่างรัน"
+    ],
+    [
+      "Stack (สแตก)",
+      "เก็บข้อมูลการเรียกฟังก์ชัน เช่น พารามิเตอร์ ตัวแปรเฉพาะ และที่อยู่กลับ"
+    ],
+    [
+      "PC / SP (ตำแหน่งคำสั่ง/ตัวชี้สแตก)",
+      "PC บอกจุดทำคำสั่งต่อ; SP บอกตำแหน่งสแตกที่ใช้"
+    ],
+    [
+      "Running (กำลังทำ)",
+      "CPU กำลังทำคำสั่งของงานนี้"
+    ],
+    [
+      "Ready (พร้อมทำ)",
+      "ทำต่อได้แต่ยังรอให้ OS เลือก CPU"
+    ],
+    [
+      "Blocked (ติดรอ)",
+      "ยังทำต่อไม่ได้จนเหตุที่รอเกิด เช่น I/O จบ"
+    ],
+    [
+      "I/O done (เหตุรับส่งข้อมูลเสร็จ)",
+      "ทำให้งานจาก Blocked กลับ Ready; ยังต้องรอเลือกให้ Running"
+    ],
+    [
+      "PCB (บล็อกข้อมูลควบคุมโปรเซส)",
+      "ระเบียนที่ OS เก็บ state, PC, registers และข้อมูลทรัพยากรของงาน"
+    ],
+    [
+      "Process table (ตารางโปรเซส)",
+      "รายการที่เชื่อม PID ไปยังข้อมูล PCB ของงานนั้น"
+    ],
+    [
+      "fork() (สร้างลูก)",
+      "แม่ได้ PID ลูก ส่วนลูกได้ 0; ทั้งคู่ทำต่อหลัง fork"
+    ],
+    [
+      "getpid() / getppid() (อ่านตัวตน/อ่านแม่)",
+      "อ่าน PID จริงของผู้เรียก และ PID ของแม่ตามลำดับ"
+    ],
+    [
+      "Parent / Child (แม่/ลูก)",
+      "ผู้เรียก fork กับงานใหม่ที่เกิดขึ้น; มีข้อมูลจัดการและพื้นที่ของตน"
+    ],
+    [
+      "wait() (รอ/รับผลลูก)",
+      "ช่วยทำส่วนถัดไปหลังลูกจบ; [อธิบายเสริม] หนึ่งครั้งสำเร็จรับผลหนึ่งลูก"
+    ],
+    [
+      "exec() (เปลี่ยนโปรแกรม)",
+      "แทนโปรแกรมในโปรเซสเดิม; สำเร็จแล้วไม่กลับโค้ดเก่าบรรทัดถัดไป"
+    ],
+    [
+      "User / Kernel mode (โหมดผู้ใช้/เคอร์เนล)",
+      "ระดับสิทธิ์จำกัดของโปรแกรม กับระดับที่ OS ใช้ให้บริการที่ป้องกัน"
+    ],
+    [
+      "System call (เรียกบริการระบบ)",
+      "ทางให้โปรแกรมขอ OS ทำบริการผ่านทางเข้าที่ควบคุม"
+    ],
+    [
+      "Library call (เรียกฟังก์ชันไลบรารี)",
+      "ฟังก์ชันสะดวกใช้ อาจจัดรูปแบบ/พักข้อมูลแล้วค่อยขอระบบ"
+    ],
+    [
+      "Trap (ทางเข้าเคอร์เนล)",
+      "ในบทนี้คือเหตุซอฟต์แวร์ที่ตั้งใจใช้ขอบริการระบบ"
+    ],
+    [
+      "Trap table (ตารางทางเข้าเหตุ)",
+      "OS ตั้งตอน boot เพื่อบอกฮาร์ดแวร์ว่าจะเข้า handler ใด"
+    ],
+    [
+      "Kernel stack (สแตกเคอร์เนล)",
+      "เก็บข้อมูลผู้เรียกระหว่างทำใน kernel เพื่อกลับให้ถูกจุด"
+    ],
+    [
+      "return-from-trap (กลับออกจากเหตุ)",
+      "คืนบริบทและสิทธิ์กลับไปโปรแกรมผู้ใช้"
+    ],
+    [
+      "Timer interrupt (เหตุจากตัวจับเวลา)",
+      "ทำให้ OS ได้การควบคุม CPU แม้โปรแกรมไม่ยอมคืน"
+    ],
+    [
+      "Context switch (สลับบริบท)",
+      "เก็บค่าของงานเดิมแล้วคืนค่าของงานใหม่เพื่อทำต่อ"
+    ],
+    [
+      "Mode switch vs Context switch (สิทธิ์กับงาน)",
+      "อย่างแรกเปลี่ยนระดับสิทธิ์; อย่างหลังเปลี่ยนงานที่รัน ไม่จำเป็นต้องเกิดคู่กันทุกครั้ง"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "[อธิบายเสริม] ข้อใดอธิบายความต่างระหว่าง Program กับ Process ได้ถูกต้อง?",
+      "options": [
+        "Program เป็นชุดคำสั่งที่เก็บไว้ ส่วน Process เป็นการทำงานจริงพร้อมสถานะ",
+        "ทั้งสองคำหมายถึง PCB ก้อนเดียวกัน",
+        "Program ต้องอยู่ใน CPU เท่านั้น ส่วน Process ต้องอยู่บนดิสก์เท่านั้น",
+        "หนึ่ง Program ทำให้เกิดได้เพียงหนึ่ง Process ตลอดไป"
+      ],
+      "answer": 0,
+      "explanation": "Program คือคำสั่ง/ข้อมูล ส่วน Process คือโปรแกรมที่กำลังทำงานพร้อมสถานะ. PCB เป็นระเบียนจัดการจึงไม่ใช่ทั้งสองคำ; คำสั่ง/ข้อมูลทำงานใช้หน่วยความจำไม่ใช่อยู่ CPU ทั้งหมด; โปรแกรมเดียวอาจถูกรันหลายครั้งเป็นหลายโปรเซสได้."
+    },
+    {
+      "q": "[อธิบายเสริม] I/O ของ A เสร็จ ขณะ B ยัง Running ตามตารางหน้า 15 ข้อใดถูก?",
+      "options": [
+        "A เปลี่ยนจาก Blocked เป็น Running ทันทีเสมอ",
+        "A ต้องคง Blocked จน B จบ แม้ I/O เสร็จแล้ว",
+        "A เปลี่ยนเป็น Ready และรอให้ OS เลือก",
+        "A กลายเป็นไฟล์ Program และต้อง compile ใหม่"
+      ],
+      "answer": 2,
+      "explanation": "I/O done ลบเหตุรอจึงทำให้ A Ready; ยังต้องเลือกให้ Running. ไม่ได้คง Blocked เมื่อเหตุรอหายไป และไม่ได้แปลงกลับเป็นไฟล์หรือแปลใหม่. เวลา 7 แสดง A Ready ขณะที่ B ยัง Running."
+    },
+    {
+      "q": "[อธิบายเสริม] เหตุใด PCB ต้องเก็บ PC และรีจิสเตอร์ของงาน?",
+      "options": [
+        "เพื่อใช้แทนไฟล์โค้ดทั้งหมดบนดิสก์",
+        "เพื่อคืนค่าและจุดทำค้างเมื่อให้โปรเซสทำต่อ",
+        "เพื่อกำหนดให้ทุกโปรเซสมี PID เท่ากัน",
+        "เพื่อยืนยันว่าทุกงาน Running พร้อมกันบน CPU หนึ่งแกน"
+      ],
+      "answer": 1,
+      "explanation": "PC/รีจิสเตอร์เป็นบริบทให้ทำต่อได้ถูกจุด. PCB ไม่แทนไฟล์โค้ดทั้งหมด ไม่ทำให้ PID เท่ากัน และการมีระเบียนหลายงานไม่ได้ทำให้หนึ่งแกนรันทุกงานในจังหวะเดียว."
+    },
+    {
+      "q": "[อธิบายเสริม] แม่ PID 2326 fork ลูก PID 2327 สำเร็จ ลูกเห็นค่าคืน fork และ getpid เท่าไร?",
+      "options": [
+        "fork = 2327, getpid = 2326",
+        "fork = 2326, getpid = 0",
+        "fork = 0, getpid = 0",
+        "fork = 0, getpid = 2327"
+      ],
+      "answer": 3,
+      "explanation": "ลูกได้ค่าคืน fork เป็น 0 เพื่อแยกทางโค้ด แต่ getpid อ่านตัวตนจริงคือ 2327. 2326 เป็น PID แม่; 2327 ที่คืนจาก fork อยู่ในฝั่งแม่. ไม่มีกรณีที่ค่าคืน 0 ทำให้ PID จริงของลูกเป็น 0."
+    },
+    {
+      "q": "[อธิบายเสริม] เริ่มหนึ่งโปรเซส fork หนึ่งครั้ง แล้วทุกงาน fork ในลูปสองรอบโดยไม่จบกลางทาง ถ้าสำเร็จทั้งหมดมีรวมกี่ตัว?",
+      "options": [
+        "8 ตัว",
+        "3 ตัว",
+        "4 ตัว",
+        "7 ตัว"
+      ],
+      "answer": 0,
+      "explanation": "จำนวนเพิ่มเป็น 1→2→4→8 เพราะลูกทำลูปที่เหลือต่อด้วย. 3 คือจำนวนระดับที่แตก ไม่ใช่จำนวนงาน; 4 หยุดนับก่อนรอบสุดท้าย; 7 เป็นจำนวนงานใหม่ ไม่รวมตัวเริ่มต้น."
+    },
+    {
+      "q": "[อธิบายเสริม] แม่มีลูกหลายตัวและเรียก wait(NULL) สำเร็จหนึ่งครั้ง ควรสรุปอย่างไร?",
+      "options": [
+        "ลูกหลานทุกตัวในเครื่องจบทั้งหมดแล้ว",
+        "ได้รับผลจบของลูกหนึ่งตัว แต่ยังสรุปว่าลูกทั้งหมดจบไม่ได้",
+        "wait สร้างลูกเพิ่มหนึ่งตัว",
+        "wait เปลี่ยนโปรแกรมแม่เป็นโปรแกรมของลูก"
+      ],
+      "answer": 1,
+      "explanation": "wait สำเร็จหนึ่งครั้งรับผลลูกหนึ่งตัวของผู้เรียก. ไม่ได้รอลูกหลานทั้งหมดหรือทุกงานในเครื่อง; การสร้างลูกเป็นหน้าที่ fork ส่วนการเปลี่ยนโปรแกรมเป็นหน้าที่ exec."
+    },
+    {
+      "q": "[อธิบายเสริม] ลูกเปลี่ยน x จาก 10 เป็น 12 แล้ว exec สำเร็จ ข้อใดถูก?",
+      "options": [
+        "แม่ต้องเห็น x = 12 และมีโปรเซสเพิ่มอีกตัวเพราะ exec",
+        "ลูกกลับไปพิมพ์ทุกบรรทัดหลัง exec ของโค้ดเก่าเสมอ",
+        "แม่ยังมี x = 10 และโค้ดเก่าหลัง exec ของลูกไม่ทำต่อ",
+        "แม่กับลูกต้องเปลี่ยน PID เป็นเลขเดียวกัน"
+      ],
+      "answer": 2,
+      "explanation": "ตัวแปรปกติของแม่/ลูกอยู่คนละพื้นที่ แม่จึงยัง 10. exec สำเร็จแทนโปรแกรมในลูกตัวเดิม ไม่เพิ่มโปรเซส ไม่กลับบรรทัดโค้ดเก่า และไม่รวม PID แม่กับลูกเป็นตัวเดียว."
+    },
+    {
+      "q": "[อธิบายเสริม] ลำดับใดตรงแนวคิดการเรียกบริการ read ผ่านขอบสิทธิ์?",
+      "options": [
+        "ผู้ใช้กระโดดเข้า kernel address ใดก็ได้ → กลายเป็น kernel ถาวร",
+        "printf ทุกครั้ง → ต้อง context switch ไปอีกโปรเซสเสมอ",
+        "เก็บไฟล์บนดิสก์ → ไม่ต้องมี CPU หรือ handler",
+        "ผู้ใช้/ฟังก์ชันห่อ → trap → kernel handler → กลับ user mode"
+      ],
+      "answer": 3,
+      "explanation": "การขอบริการผ่านทางเข้าที่ควบคุม ไป handler แล้วคืนโหมด/ตำแหน่งกลับ. ผู้ใช้เลือก kernel address ตามใจไม่ได้; library call ไม่บังคับ context switch ทุกครั้ง; การให้บริการยังต้องมีการทำงาน CPU/handler ไม่ใช่ดิสก์อย่างเดียว."
+    },
+    {
+      "q": "[อธิบายเสริม] ถ้าโปรแกรมวนลูปคำนวณไม่สิ้นสุดและไม่ yield กลไกใดให้ OS ได้ CPU กลับโดยไม่รอโปรแกรมร้องขอ?",
+      "options": [
+        "เพิ่มตัวแปรใน heap เท่านั้น",
+        "Timer interrupt ที่ OS ตั้งไว้ตอน boot",
+        "รอให้โปรแกรมสมัครใจเรียก wait เสมอ",
+        "เรียก compile ไฟล์เดิมอีกครั้งโดยอัตโนมัติ"
+      ],
+      "answer": 1,
+      "explanation": "อุปกรณ์ timer ส่ง interrupt ตามเวลาให้เข้า handler จึงไม่ต้องรอลูปให้ความร่วมมือ. การเพิ่ม heap ไม่ดึง CPU กลับ; รอ wait ไม่ช่วยงานที่ไม่ยอมเรียก; compile ใหม่ไม่ใช่กลไกขัดจังหวะโปรเซสที่รันอยู่."
+    },
+    {
+      "q": "[อธิบายเสริม] ข้อใดแยก Mode switch กับ Context switch ได้ถูกต้อง?",
+      "options": [
+        "Mode switch เปลี่ยนระดับสิทธิ์ ส่วน Context switch เก็บ/คืนข้อมูลเพื่อเปลี่ยนงานที่รัน",
+        "ทั้งสองคำหมายถึงโหลดโปรแกรมใหม่จากดิสก์เสมอ",
+        "ทุก system call ต้องเปลี่ยนจาก A ไป B",
+        "คืน PC ของ B แต่คง SP ของ A คือ context switch ที่ครบถ้วนแล้ว"
+      ],
+      "answer": 0,
+      "explanation": "การเข้า kernel เปลี่ยนสิทธิ์และอาจกลับโปรเซสเดิมได้ ส่วนสลับ A→B ต้องคืนบริบท B ให้สอดคล้องกัน. ไม่ต้องโหลดโค้ดใหม่ทุกครั้ง ไม่บังคับเปลี่ยนงานทุก system call และห้ามผสม PC ของ B กับ SP ของ A."
+    }
+  ],
+  "coverage": [
+    {
+      "page": 1,
+      "sectionIds": [
+        "process-route"
+      ],
+      "status": "context",
+      "note": "ตรวจภาพปก: ชื่อ Lecture 2: Process รายวิชา ผู้สอน สังกัด และวันที่ 10 September 2026"
+    },
+    {
+      "page": 2,
+      "sectionIds": [
+        "process-route"
+      ],
+      "status": "context",
+      "note": "ตรวจ Agenda ครบทุกหัวข้อ รวม Process Scheduling ที่เชื่อมไปบท OS03"
+    },
+    {
+      "page": 3,
+      "sectionIds": [
+        "process-route"
+      ],
+      "status": "context",
+      "note": "ตรวจหน้าคั่น The Abstraction: The Process; ไม่มีนิยามหรือภาพเนื้อหาเพิ่ม"
+    },
+    {
+      "page": 4,
+      "sectionIds": [
+        "process-abstraction"
+      ],
+      "status": "explained",
+      "note": "สอนเหตุที่ต้องมี process abstraction, running program, multiprogramming และ virtualization"
+    },
+    {
+      "page": 5,
+      "sectionIds": [
+        "process-abstraction"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพอบขนม: recipe/program, ingredient/input, oven/resources, baker/OS และ baking/process ครบ"
+    },
+    {
+      "page": 6,
+      "sectionIds": [
+        "process-abstraction"
+      ],
+      "status": "explained",
+      "note": "ขยายภาพ CPU/Memory/Disk; อธิบาย loading จาก code/static data บนดิสก์ไป address space"
+    },
+    {
+      "page": 7,
+      "sectionIds": [
+        "address-space-state"
+      ],
+      "status": "explained",
+      "note": "ขยายผัง 0→max: text/data/heap/stack พร้อมข้อมูลในแต่ละส่วนและลูกศรทิศขยาย"
+    },
+    {
+      "page": 8,
+      "sectionIds": [
+        "address-space-state"
+      ],
+      "status": "explained",
+      "note": "อธิบาย machine state: instructions/data, eax/ebx, PC, stack/frame pointer และ open files"
+    },
+    {
+      "page": 9,
+      "sectionIds": [
+        "execution-observation"
+      ],
+      "status": "explained",
+      "note": "ขยายภาพ program→process, CPU ผลัด Process 1–5, thread pointer/priority table, scheduler และ preemption"
+    },
+    {
+      "page": 10,
+      "sectionIds": [
+        "execution-observation"
+      ],
+      "status": "explained",
+      "note": "ขยาย Windows Task Manager/macOS Activity Monitor; สอนคอลัมน์และอ่านค่าตัวอย่าง CPU/memory/PID/threads จริง"
+    },
+    {
+      "page": 11,
+      "sectionIds": [
+        "execution-observation"
+      ],
+      "status": "explained",
+      "note": "ขยายภาพ top สองภาพ; อ่าน PID/USER/PR/NI/VIRT/RES/SHR/S/%CPU/%MEM/TIME+/COMMAND พร้อมค่าตัวอย่าง"
+    },
+    {
+      "page": 12,
+      "sectionIds": [
+        "process-api-creation"
+      ],
+      "status": "explained",
+      "note": "บริการ Create, Destroy, Wait, Miscellaneous Control (suspend/resume) และ Status ครบ"
+    },
+    {
+      "page": 13,
+      "sectionIds": [
+        "process-api-creation"
+      ],
+      "status": "explained",
+      "note": "ขั้นสร้างงาน 4 ขั้น: load/prepare memory, default stdin/stdout/stderr, first instruction, transfer CPU"
+    },
+    {
+      "page": 14,
+      "sectionIds": [
+        "process-states"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพสถานะครบสี่ลูกศร Scheduled/Descheduled/I/O initiate/I/O done พร้อมนิยาม Running/Ready/Blocked"
+    },
+    {
+      "page": 15,
+      "sectionIds": [
+        "process-states"
+      ],
+      "status": "explained",
+      "note": "ขยายและเก็บตาราง Time 1–10 ครบทุกแถว พร้อม trace I/O ที่ 3/7 และงานจบที่ 8/10"
+    },
+    {
+      "page": 16,
+      "sectionIds": [
+        "pcb-information"
+      ],
+      "status": "explained",
+      "note": "เหตุที่ OS ต้องติดตามงานด้วยโครงสร้างข้อมูล และนิยาม Process Control Block"
+    },
+    {
+      "page": 17,
+      "sectionIds": [
+        "pcb-information"
+      ],
+      "status": "explained",
+      "note": "ขยายภาพ Process Table PID 1/2/…/n ชี้ PCB สามก้อน และสอนช่อง PC/registers/state/priority/address/open files/flags"
+    },
+    {
+      "page": 18,
+      "sectionIds": [
+        "pcb-information"
+      ],
+      "status": "explained",
+      "note": "ขยายภาพ PCB และรักษาทุกช่องในตาราง Process/Memory/File management พร้อมความหมายและการจัดกลุ่ม"
+    },
+    {
+      "page": 19,
+      "sectionIds": [
+        "pcb-c-structure"
+      ],
+      "status": "explained",
+      "note": "ขยายแล้วถอด struct proc, struct context และ enum proc_state ทั้งหมด พร้อมสอนทุก field และแยกบริบท x86/xv6"
+    },
+    {
+      "page": 20,
+      "sectionIds": [
+        "unix-api-route"
+      ],
+      "status": "context",
+      "note": "หน้าทบทวนคำถาม 3 ข้อ เน้น Process API ก่อนเริ่มตัวอย่าง C"
+    },
+    {
+      "page": 21,
+      "sectionIds": [
+        "c-first-program"
+      ],
+      "status": "explained",
+      "note": "ขยาย first.c ครบ code/คำสั่ง more/gcc/./first และผลพิมพ์; อธิบาย void main ตามต้นฉบับเทียบรูปมาตรฐาน"
+    },
+    {
+      "page": 22,
+      "sectionIds": [
+        "fork-parent-child"
+      ],
+      "status": "explained",
+      "note": "fork สร้างลูก, ความสัมพันธ์แม่/ลูก, PID และผลคืนแม่/ลูก; อธิบายข้อจำกัดคำว่า exact copy"
+    },
+    {
+      "page": 23,
+      "sectionIds": [
+        "fork-parent-child"
+      ],
+      "status": "explained",
+      "note": "ขยายโค้ด fork1 ครบและผล PID 2326/2327; ตามเงื่อนไข wait/exit และแยก fork return จาก PID จริง"
+    },
+    {
+      "page": 24,
+      "sectionIds": [
+        "wait-and-fork-loop"
+      ],
+      "status": "explained",
+      "note": "อธิบายแม่รอลูกและเงื่อนไขลูกพิมพ์ก่อน; บันทึกข้อความต้นฉบับที่ซ้ำ"
+    },
+    {
+      "page": 25,
+      "sectionIds": [
+        "wait-and-fork-loop"
+      ],
+      "status": "explained",
+      "note": "ขยายโค้ด fork2/ผลรัน/หมายเหตุ exit(0); ไล่ 1→2→4→8 และ 42 แปดครั้งภายใต้สมมติฐาน พร้อมแจ้งโค้ดกับภาพผลไม่ตรงกัน"
+    },
+    {
+      "page": 26,
+      "sectionIds": [
+        "parent-child-address-space"
+      ],
+      "status": "explained",
+      "note": "ตรวจภาพ Parent→fork→Child ที่ต่างฝ่ายมี text/data/heap/stack และ PCB ของตน ไม่ใช่ตัวแปรร่วม"
+    },
+    {
+      "page": 27,
+      "sectionIds": [
+        "exec-replacement"
+      ],
+      "status": "explained",
+      "note": "exec เปลี่ยนโปรแกรมในโปรเซสเดิม ไม่สร้างงานเพิ่ม และไม่กลับเมื่อสำเร็จ"
+    },
+    {
+      "page": 28,
+      "sectionIds": [
+        "exec-replacement"
+      ],
+      "status": "explained",
+      "note": "ขยายโค้ด x=10/fork/child x+2/execlp/wait ครบ; คงรายการ exec หกรูปแบบและชี้ข้อผิดพลาด run echo/argv[0] อย่างตรงไปตรงมา"
+    },
+    {
+      "page": 29,
+      "sectionIds": [
+        "resources-route"
+      ],
+      "status": "context",
+      "note": "หน้าทบทวนคำถาม 3 ข้อ เน้นวิธีเข้าถึงทรัพยากร เพื่อเริ่ม system calls"
+    },
+    {
+      "page": 30,
+      "sectionIds": [
+        "limited-direct-execution"
+      ],
+      "status": "explained",
+      "note": "นิยาม Direct Execution และเหตุจำกัดการเข้าถึงทรัพยากรเพื่อคุมความปลอดภัย"
+    },
+    {
+      "page": 31,
+      "sectionIds": [
+        "limited-direct-execution"
+      ],
+      "status": "explained",
+      "note": "ขยายผัง user/kernel และ mode bit 1/0; ตาม call→trap→execute→return พร้อมแยกสิทธิ์"
+    },
+    {
+      "page": 32,
+      "sectionIds": [
+        "library-and-system-calls"
+      ],
+      "status": "explained",
+      "note": "ขยาย printf Greetings→standard C library→write system call; รักษารายชื่อบริการทั้งหมด 17 ชื่อ"
+    },
+    {
+      "page": 33,
+      "sectionIds": [
+        "library-and-system-calls"
+      ],
+      "status": "explained",
+      "note": "ขยายและรักษาทุกเซลล์ตาราง open/close/read/write/lseek เทียบ library; ชี้ gets เป็น API เก่าไม่ควรใช้เขียนใหม่"
+    },
+    {
+      "page": 34,
+      "sectionIds": [
+        "read-trap-flow"
+      ],
+      "status": "explained",
+      "note": "ขยายผัง read ครบขั้น 1–11, user/kernel space, dispatcher/table/handler และ SP; ชี้ลำดับอาร์กิวเมนต์หัวสไลด์ไม่ตรง API จริง"
+    },
+    {
+      "page": 35,
+      "sectionIds": [
+        "trap-table-lifecycle"
+      ],
+      "status": "explained",
+      "note": "ขยายผังสามคอลัมน์ทั้งรูป; อธิบาย boot/init trap table, handlers และ lifecycle ตั้งแต่สร้างถึง exit"
+    },
+    {
+      "page": 36,
+      "sectionIds": [
+        "trap-table-lifecycle"
+      ],
+      "status": "explained",
+      "note": "ขยายผังซ้ำโดยเน้น trap, save/restore kernel stack และ return-from-trap เพื่อลดสิทธิ์กลับผู้เรียก"
+    },
+    {
+      "page": 37,
+      "sectionIds": [
+        "switching-route"
+      ],
+      "status": "context",
+      "note": "หน้าทบทวนคำถาม 3 ข้อ เน้นวิธี OS สลับระหว่างโปรเซส"
+    },
+    {
+      "page": 38,
+      "sectionIds": [
+        "regaining-cpu"
+      ],
+      "status": "explained",
+      "note": "เหตุให้ OS กลับมาคุม: yield, blocked I/O, wait child, termination; ปัญหา infinite loop"
+    },
+    {
+      "page": 39,
+      "sectionIds": [
+        "regaining-cpu"
+      ],
+      "status": "explained",
+      "note": "timer interrupt เป็นระยะ, handler/OS regains CPU และขั้น boot ตั้ง handler/เริ่ม timer"
+    },
+    {
+      "page": 40,
+      "sectionIds": [
+        "context-save-restore"
+      ],
+      "status": "explained",
+      "note": "ขยายภาพ save CPU→Prog1 State และ restore Prog2 State→CPU; อธิบาย PC/SP และโค้ด/ข้อมูลที่คงใน memory"
+    },
+    {
+      "page": 41,
+      "sectionIds": [
+        "context-save-restore"
+      ],
+      "status": "explained",
+      "note": "ขยายผัง boot กับ timer และ A→k-stack(A)→proc_t(A), restore B/switch stack/return-from-trap→B’s PC ครบทุกขั้น"
+    }
+  ],
+  "sourceIssues": [
+    "หน้า 13 ใช้ main() เป็นตัวอย่าง first instruction และอธิบายการโหลดแบบย่อ; [อธิบายเสริม] ระบบจริงมี runtime/startup ก่อน main และอาจโหลดบางส่วนเมื่อใช้ ไม่ควรตีความว่าไฟล์มี heap/stack ที่ทำงานแล้วให้คัดมาทั้งก้อน.",
+    "หน้า 21 ใช้ void main(); คงโค้ดต้นฉบับและอธิบายเสริมว่า C แบบ hosted ที่ต้องการรูปมาตรฐานใช้ int main(void) หรือรูป int ที่รับ argc/argv (WG14 N1570 §5.1.2.2.1).",
+    "หน้า 22 ใช้คำว่า child initially exact copy; ต้องอ่านคู่หน้า 26 ว่ามี address space/PCB แยก และ [อธิบายเสริม] ไม่เหมือนทุกคุณสมบัติ เช่น PID กับค่าคืน fork ต่างกันตั้งแต่ต้น.",
+    "หน้า 23 โค้ดใช้ if(pid > 0) / else โดยไม่มีทางตรวจ pid < 0 จึงเข้า else ได้แม้ fork ล้มเหลว; คงต้นฉบับแล้วแนะนำการแยก failure. wait อยู่หลัง printf แม่ จึงไม่รับประกันลูกพิมพ์ก่อนบรรทัดแม่.",
+    "หน้า 24 มีข้อความนิยาม wait และการให้แม่รอลูกซ้ำสองชุด ไม่มีความหมายหรือบริการเพิ่มจากการซ้ำ.",
+    "หน้า 25 ภาพผลรันใช้สตริง Starting a new process with / The main process ID is / loop #0/#1 ไม่ตรงสตริงโค้ดที่แสดง จึงไม่ยืนยันว่าเป็นผลตรงตัวของโค้ดทุกบรรทัด. บทเรียนคงโค้ดและแยกวิเคราะห์ภายใต้ fork สำเร็จ.",
+    "หน้า 25 มี wait(NULL) เพียงหนึ่งครั้งต่อโปรเซส จึงไม่ใช่การรอลูกหลายตัวและลูกหลานทั้งหมด. คำแนะนำให้เปลี่ยน return 0 เป็น exit(0) ไม่แก้ข้อจำกัดนี้; return 0 จาก main แบบ int เป็นการจบปกติอยู่แล้ว.",
+    "หน้า 28 บรรทัด execlp(\"/bin/ls\", \"/home\", NULL) มีคอมเมนต์ run echo แต่ระบุโปรแกรม ls; /home อยู่ตำแหน่ง argv[0] จึงไม่ใช่อาร์กิวเมนต์เลือกโฟลเดอร์. เพิ่มตัวอย่างแก้ที่ระบุ argv[0] = ls และส่ง /home เป็นอาร์กิวเมนต์ถัดไปโดยติดป้ายอธิบายเสริม.",
+    "หน้า 28 เรียกหกรูปแบบว่า exec system calls; [อธิบายเสริม] บน Linux รายการนี้เป็นฟังก์ชันห่อ execve และ execvpe เป็นส่วนขยาย GNU จึงไม่ควรสรุปว่าเป็นชุด syscall ที่เหมือนกันทุก Unix. โค้ดไม่ตรวจผลล้มเหลวของ exec และอาจ return 0 แม้ exec ไม่สำเร็จ.",
+    "หน้า 32 ใช้คำ system calls รวมรายชื่อ API เช่น signal และ exec family เพื่อการสอน; [อธิบายเสริม] แต่ละชื่ออาจผ่านฟังก์ชันห่ออีกชั้น ไม่ใช่ทุกชื่อเป็น kernel entry แยกตรงตัว. หน้า 33 เป็นตารางความสัมพันธ์ ไม่ใช่คำรับประกันหนึ่ง library call ต่อหนึ่ง syscall.",
+    "หน้า 33 มี gets ในตารางตามแหล่งเดิม; คงชื่อเพื่อเทียบต้นฉบับ แต่ระบุว่าไม่มีขอบเขตรับข้อมูลและ C11 ถอดออกแล้ว ไม่ใช้เป็นแบบฝึกเขียนใหม่ (Linux man-pages gets(3)).",
+    "หน้า 34 หัวสไลด์เขียน read(fd, nbytes, buffer) แต่รูป POSIX/C จริงคือ read(fd, buffer, nbytes). คงคำต้นฉบับพร้อมคำแก้และแหล่ง read(2); ผัง push &buffer/stack/ที่อยู่ 32 บิตเป็นภาพตัวอย่าง ไม่ใช่ calling convention สากล.",
+    "หน้า 35–36 ผังสรุป exit แล้ว free memory/remove from process list แบบย่อ; [อธิบายเสริม] Unix อาจคงระเบียนผลจบแบบ zombie จนแม่ wait จึงไม่ใช้ผังย่อปฏิเสธสถานะ ZOMBIE ที่ปรากฏหน้า 19.",
+    "หน้า 41 ใช้ชื่อ proc_t(A/B) ในผัง ขณะที่หน้า 19 ยก struct proc ของ xv6 และชื่อรีจิสเตอร์ x86; อธิบายว่าเป็นสัญกรณ์ของระเบียนโปรเซสตามรูป ไม่อ้างว่าเป็นโค้ด/ชนิดข้อมูลเดียวกันทุกระบบ."
+  ],
+  "lab": "process"
+}
