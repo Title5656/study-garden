@@ -62,3 +62,11 @@ The historical `test-mahidol-scope.mjs` predates the delivered Node.js lessons a
 ## Workspace preservation
 
 Only ITDS211 files and necessary homepage/test totals are included in the release. Pre-existing README edits, two existing screenshot edits, the untracked Node.js screenshots and `tools/capture-readme.mjs` are preserved outside this commit. No original PDF is staged.
+
+## Follow-up visual fix (2026-10-27)
+
+Removed the redundant landing-page source/order table at the user's request and changed all twelve links to its former anchor into links to the lesson directory. Lesson text, source citations and per-page coverage remain unchanged.
+
+The landing page omitted `reader.css` and `reader.js`, which supply the shared footer's base layout and reveal controller. This left the GitHub SVG at1104px, placed Garden over the course cards and caused408px of horizontal overflow at1920px. Disabling the particle script did not fix it; supplying the base stylesheet alone restored the22px icon and eliminated overflow. All ITDS211 pages now load the base styles before footer enhancements and the shared controller after the other scripts.
+
+The earlier layout check exercised chapter topics, without checking the landing footer. New `test-itds211-footer.mjs` failed on the original landing layout, then passed34 cases covering five viewport sizes, both themes, normal/reduced motion, all twelve chapter footers and no-JavaScript fallbacks. It checks the page top, middle and footer for overflow, icon size, wordmark containment and navigation overlap. Normal-motion desktop/mobile screenshots were inspected. The existing all12-lesson browser checks and467-topic layout checks also passed; current link and asset checks pass4,454 local references and990 asset hashes.
