@@ -35,7 +35,7 @@ try {
  assert.equal(await page.locator('.itds211-error').count(),1);
  assert.equal(await page.locator('.itds211-output img').count(),0);
  await open('09');
- assert.equal(await page.locator('input[type=range]').count(),2);
+ assert.equal(await page.locator('#interactive input[type=range]').count(),2);
  assert.match(await page.locator('.itds211-output').innerText(),/4.705882/);
  await open('12');
  assert.equal(await page.locator('[data-schedule-result]').count(),4);

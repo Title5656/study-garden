@@ -82,3 +82,97 @@ body[data-subject="itds211"] .lesson-content {overflow-wrap:anywhere}
 .itds211-controls label:has(input[type="checkbox"]) {display:flex;flex-direction:row;align-items:center;gap:.5rem;flex:0 0 auto}
 .itds211-controls input[type="checkbox"] {width:auto;min-height:auto}
 [data-widget="cpu-scheduling"] .itds211-gantt-block {min-width:0;box-sizing:border-box;padding:.75rem 0}
+
+/* Keep the original page theme; color belongs to the teaching content. */
+body[data-subject="itds211"] .lesson-content {
+  --course-accent:#2454b8; --accent:#2454b8;
+  --purple:#e6edff; --sage:#d9f2ec; --peach:#ffead6;
+  --inline-teal:#08796d; --inline-orange:#a84b12; --inline-focus:#aa480c;
+}
+:root[data-theme="dark"] body[data-subject="itds211"] .lesson-content {
+  --course-accent:#8cb7ff; --accent:#8cb7ff;
+  --purple:#21385b; --sage:#123e3b; --peach:#492f22;
+  --inline-teal:#71dfcb; --inline-orange:#ffb77d; --inline-focus:#ffd19e;
+}
+body[data-subject="itds211"] .lesson-section > h2 {color:var(--accent);border-bottom:2px solid var(--line);padding-bottom:.8rem}
+body[data-subject="itds211"] .lesson-content p {line-height:1.9}
+body[data-subject="itds211"] .itds211-problem {border-inline-start-width:4px;color:var(--ink)}
+body[data-subject="itds211"] .lesson-content th {background:var(--purple);color:var(--ink)}
+body[data-subject="itds211"] .lesson-content tbody tr:nth-child(even) {background:color-mix(in srgb,var(--purple) 32%,transparent)}
+.itds211-inline-map,.itds211-inline-sim {
+  margin:1.6rem 0 1.9rem;padding:clamp(1rem,2.5vw,1.5rem);
+  border:1px solid var(--line);border-radius:18px;background:var(--paper);
+  box-shadow:0 6px 24px #10284a08;min-width:0;
+}
+.itds211-inline-map {border-top:4px solid var(--accent)}
+.itds211-inline-sim {border-top:4px solid var(--inline-teal);background:linear-gradient(150deg,var(--sage),var(--paper) 65%)}
+.itds211-inline-kicker {font-size:.76rem;font-weight:750;letter-spacing:.025em;color:var(--accent)}
+.itds211-inline-sim .itds211-inline-kicker {color:var(--inline-teal)}
+.itds211-inline-map h3,.itds211-inline-sim h3 {margin:.3rem 0 .65rem;font-size:1.2rem;line-height:1.55;color:var(--ink)}
+.itds211-map-hint {font-size:.82rem;color:var(--muted);margin:.2rem 0 1rem}
+.itds211-map-nodes {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.65rem;padding:0!important;margin:1.2rem 0!important;list-style:none}
+.itds211-map-nodes>li {min-width:0;margin:0!important;position:relative}
+.itds211-map-node,.itds211-map-label {display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;padding:.9rem;width:100%;height:100%;border:1px solid var(--line);border-radius:12px;background:var(--purple);color:var(--ink);text-align:start;font:inherit;overflow-wrap:anywhere}
+.itds211-map-node {cursor:pointer;min-height:112px;transition:background .12s,border-color .12s}
+.itds211-map-nodes>li:nth-child(3n+2) .itds211-map-node {background:var(--sage)}
+.itds211-map-nodes>li:nth-child(3n) .itds211-map-node {background:var(--peach)}
+.itds211-map-node strong {font-size:.9rem;line-height:1.4}
+.itds211-map-node>span:last-child {font-size:.76rem;line-height:1.5}
+.itds211-node-number {font:700 .7rem/1.2 ui-monospace,monospace;opacity:.85}
+.itds211-map-node[aria-pressed="true"] {background:var(--accent)!important;border-color:var(--accent);color:var(--paper);box-shadow:0 3px 0 var(--line)}
+.itds211-map-node:hover {border-color:var(--accent)}
+.itds211-map-panel {padding:1rem 1.15rem;border-radius:12px;background:var(--purple);border-inline-start:4px solid var(--accent)}
+.itds211-map-detail {margin:0;font-size:.94rem}
+.itds211-map-takeaway {margin:1rem 0 0!important;padding-top:1rem;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+.itds211-map-takeaway strong {display:block;color:var(--inline-teal);margin-bottom:.25rem}
+.itds211-inline-map:not(.is-interactive) .itds211-map-nodes {grid-template-columns:1fr}
+.itds211-inline-map:not(.is-interactive) .itds211-map-label {height:auto}
+.itds211-inline-map:not(.is-interactive) .itds211-map-detail {margin:.6rem 0 1rem}
+.itds211-inline-slider {display:block;font-weight:650;margin:1.2rem 0}
+.itds211-inline-slider>span {display:flex;justify-content:space-between;gap:1rem}
+.itds211-inline-slider [data-current] {color:var(--inline-teal);font-variant-numeric:tabular-nums}
+.itds211-inline-slider input {display:block;width:100%;min-height:44px;accent-color:var(--inline-teal);cursor:pointer}
+.itds211-sim-live output {display:block;padding:1rem;border-radius:10px;border:1px solid var(--line);background:var(--paper);font-weight:650;line-height:1.85;font-variant-numeric:tabular-nums;margin:.75rem 0}
+.itds211-inline-graphic {margin:1rem 0;font-size:.82rem}
+.itds211-inline-bar {display:grid;grid-template-columns:minmax(100px,1.2fr) 2fr 55px;gap:.6rem;align-items:center;margin:.7rem 0;min-width:0;font-size:.8rem}
+.itds211-inline-bar>div {height:19px;border-radius:5px;background:var(--purple);overflow:hidden}
+.itds211-inline-bar i {display:block;height:100%;background:var(--accent);border-radius:5px}
+.itds211-inline-bar.teal i {background:var(--inline-teal)}
+.itds211-inline-bar.orange i {background:var(--inline-orange)}
+.itds211-inline-bar b {text-align:end;font-variant-numeric:tabular-nums}
+.itds211-inline-bits {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:.35rem;margin:1rem 0}
+.itds211-inline-bits button {padding:.5rem .1rem;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);cursor:pointer;min-height:64px}
+.itds211-inline-bits small {display:block;font:11px/1.4 ui-monospace,monospace;color:var(--muted)}
+.itds211-inline-bits b {font:700 22px/1.4 ui-monospace,monospace}
+.itds211-inline-bits [aria-pressed="true"] {background:var(--accent);color:var(--paper)}
+.itds211-inline-bits [aria-pressed="true"] small {color:inherit}
+.itds211-cache-lines,.itds211-process-track {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.4rem;margin:1rem 0}
+.itds211-cache-lines>div,.itds211-process-track>span {padding:.75rem .3rem;text-align:center;background:var(--purple);border:1px solid var(--line);border-radius:9px;font-size:.8rem}
+.itds211-cache-lines small,.itds211-cache-lines strong {display:block}
+.itds211-cache-lines .is-selected,.itds211-process-track .is-selected {background:var(--inline-teal);color:var(--paper);border-color:var(--inline-teal)}
+.itds211-process-track {grid-template-columns:repeat(3,minmax(0,1fr))}
+.itds211-inline-actions {display:flex;flex-wrap:wrap;gap:.5rem}
+.itds211-inline-actions button:disabled {opacity:.45;cursor:not-allowed}
+.itds211-inline-timing {font:12px/1.6 ui-monospace,monospace;min-width:480px;width:100%}
+.itds211-inline-timing td,.itds211-inline-timing th {padding:.3rem!important;text-align:center;white-space:nowrap}
+.itds211-cell {display:block;padding:.25rem;border-radius:4px;color:var(--ink)}
+.itds211-inline-gantt {display:flex;gap:3px;overflow-x:auto;min-width:0;padding:.5rem 0}
+.itds211-inline-gantt>span {min-width:35px;padding:.6rem .15rem;text-align:center;border-radius:7px;background:var(--purple);border:1px solid var(--line)}
+.itds211-inline-gantt .job-B {background:var(--sage)}
+.itds211-inline-gantt .job-C {background:var(--peach)}
+.itds211-inline-gantt small {display:block;font-size:.65rem;white-space:nowrap}
+.itds211-inline-map button:focus-visible,.itds211-inline-sim :is(button,input):focus-visible {outline:3px solid var(--inline-focus);outline-offset:3px}
+@media(max-width:600px){
+  .itds211-map-nodes {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .itds211-map-node {min-height:104px;padding:.7rem}
+  .itds211-inline-bar {grid-template-columns:100px minmax(0,1fr) 46px;gap:.35rem}
+  .itds211-inline-map,.itds211-inline-sim {border-radius:13px}
+}
+@media(prefers-reduced-motion:reduce){.itds211-map-node{transition:none}}
+@media print{
+  .itds211-inline-map,.itds211-inline-sim {background:white;border:1px solid #888;color:black;box-shadow:none}
+  .itds211-map-detail[hidden] {display:block!important}
+  .itds211-map-detail {margin:.5rem 0}
+  .itds211-map-hint,.itds211-sim-live {display:none!important}
+  .itds211-map-node {background:white!important;color:black!important;border-color:#888}
+}

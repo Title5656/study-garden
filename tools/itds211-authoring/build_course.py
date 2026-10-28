@@ -3,6 +3,7 @@ from pathlib import Path
 from html import escape as esc
 import argparse, json, re, sys
 from visuals import write_visual
+from inline_visuals import embed_inline, validate_inline
 
 ROOT = Path(__file__).resolve().parents[2]
 AUTH = Path(__file__).resolve().parent
@@ -46,7 +47,7 @@ def prerequisite_links(number):
 def common_head(title, reader=False):
     # The shared footer depends on reader.css/js on landing pages as well.
     styles=['style','library','reader','study-halftone-footer','itds211']+([] if reader else ['universities'])
-    scripts=['core','itds211-content','app','study-halftone-footer']+(['itds211-core','itds211-labs'] if reader else [])+['reader']
+    scripts=['core','itds211-content','app','study-halftone-footer']+(['itds211-core','itds211-labs','itds211-inline'] if reader else [])+['reader']
     return '<!doctype html>\n<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5f7"><meta name="description" content="เรียน ITDS211 ภาษาไทยจากพื้นฐาน พร้อมอ้างอิงสไลด์ ตัวอย่างทีละขั้น ภาพ Interactive และคำถามทบทวน"><title>'+e(title)+' · Study Garden</title><link rel="icon" href="../../assets/favicon.png" type="image/png">'+''.join(f'<link rel="stylesheet" href="../../assets/{s}.css">' for s in styles)+''.join(f'<script defer src="../../assets/{s}.js"></script>' for s in scripts)+'</head>\n'
 
 HEADER='''<a class="skip" href="#main">ข้ามไปยังเนื้อหา</a><header class="site-header"><nav class="wrap nav" aria-label="เมนูหลัก"><a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/study-garden-logo.png" alt="" width="36" height="36" decoding="async">Study Garden</a><div class="nav-links"><a href="../../index.html#subjects">วิชาทั้งหมด</a><a class="desktop-link" href="index.html">บทเรียน</a></div><button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">☾ มืด</button></nav></header><div id="storage-notice" class="storage-notice" role="status" hidden>เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล ความคืบหน้าอาจไม่ถูกเก็บหลังปิดหน้า</div><noscript><p class="wrap note warm">เนื้อหา ตาราง คำถาม และเฉลยอ่านได้ทั้งหมดเมื่อปิด JavaScript เปิด JavaScript เพื่อใช้ Interactive, Flashcards และ Quiz</p></noscript>'''
@@ -94,7 +95,7 @@ def render_lesson(d, lessons):
     body+=section('prerequisites','2 · พื้นฐานที่ต้องรู้ก่อน','<p>[อธิบายเสริม] บทที่ช่วยปูพื้นฐาน: '+prerequisite_links(number)+'</p>'+normalize_html(d['prerequisitesHtml'])+cite(d,[1]))
     for n,s in enumerate(d['sections'],1):
         source=cite(d,s['pages'])
-        html=normalize_html(s['html'])
+        html=embed_inline(number,s['id'],normalize_html(s['html']))
         # A subsection can inherit the section's page set without losing its source.
         html=re.sub(r'(</h[34]>)',lambda m:m[0]+source,html)
         body+=section(s['id'],f'3.{n} · '+e(s['title']),'<p class="itds211-problem"><strong>'+e(s['question'])+'</strong></p>'+source+html)
@@ -143,6 +144,7 @@ def build(release=False):
     lessons=[]
     for path in sorted((AUTH/'lessons').glob('*.json')):
         d=json.loads(path.read_text(encoding='utf-8'));validate(d);lessons.append(d)
+    validate_inline(lessons)
     if release and ([d['id'] for d in lessons]!=[f'{n:02}' for n in range(1,13)] or any(c['status']=='needs-review' for d in lessons for c in d['coverage'])):
         raise ValueError('Release requires all twelve lectures and no unresolved coverage rows')
     OUT.mkdir(parents=True,exist_ok=True)
