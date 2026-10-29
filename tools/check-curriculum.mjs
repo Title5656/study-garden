@@ -29,7 +29,7 @@ for (const [course, chapters] of Object.entries(courses)) {
     assert.ok((html.match(/<figure\b/g) || []).length >= 2, `${course}/${id}: at least two explanatory figures`);
     figures += (html.match(/<figure\b/g) || []).length;
     if (course === 'itds261') {
-      for (const id of ['flashcards','quiz','sources']) assert.ok(html.includes(`id="${id}"`));
+      for (const id of ['flashcards','quiz']) assert.ok(html.includes(`id="${id}"`));
       assert.match(html, /data-mark-read/);
       assert.match(html, /software-content\.js/);
     }
@@ -54,6 +54,8 @@ function walk(dir) {
 let links = 0;
 for (const file of walk(root).filter(path => path.endsWith('.html'))) {
   const html = readFileSync(file, 'utf8');
+  assert.doesNotMatch(html, /id="(?:sources|source-inventory|coverage)"/, `${file}: public source inventory must stay removed`);
+  assert.doesNotMatch(html, /data-source-(?:file|page)=/, `${file}: public source-file controls must stay removed`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(x => x[1]);
   assert.equal(new Set(ids).size, ids.length, `${file}: duplicate IDs`);
   for (const match of html.matchAll(/\b(?:href|src|poster|data-src)="([^"]+)"/g)) {

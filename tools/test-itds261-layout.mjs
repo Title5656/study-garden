@@ -55,8 +55,7 @@ try {
  await plain.goto('https://study-garden.test/subjects/itds261/chapter-05.html');
  assert.equal(await plain.locator('.lesson-section').count(),await plain.locator('.lesson-section:visible').count());
  assert.equal(await plain.locator('#zoo-l2 [data-dfd-process]').count(),4);
- assert.equal(await plain.locator('.se-source-note').count(),1);
- await plain.locator('.se-source-note summary').click();assert.notEqual(await plain.locator('.se-source-note').getAttribute('open'),null);
+ assert.equal(await plain.locator('.se-source-note').count(),0);
  await plain.close();
  const print=await page({viewport:{width:1000,height:1200}});
  await print.goto('https://study-garden.test/subjects/itds261/midterm-a4.html');

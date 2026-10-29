@@ -101,8 +101,8 @@ try {
   assert.match(await q.innerText(),/ถูกต้อง/);
   await q.getByRole('button',{name:'ข้อต่อไป →'}).click();
   assert.match(await q.innerText(),/static/);
-  await p.goto(url+'#sources');
-  await p.locator('[data-mark-read]').click();
+  await p.goto(url+'#quiz');
+  await p.locator('[data-mark-read]').evaluate(button=>button.click());
   await p.locator('.reader-topic[href="#quiz"]').evaluate(a=>a.click());
   const final=p.locator('#quiz [data-node-quiz]');
   const answers=await p.evaluate(()=>StudyContent.itds241['09'].quiz.map(q=>q.answer));
@@ -111,8 +111,8 @@ try {
    await final.getByRole('button',{name:'ข้อต่อไป →'}).click();
   }
   assert.match(await final.innerText(),/10 \/ 10/);
-  await p.locator('.reader-topic[href="#sources"]').evaluate(a=>a.click());
-  await p.locator('[data-mark-read]').click();
+  assert.equal(await p.locator('.reader-topic[href="#sources"]').count(),0);
+  await p.locator('[data-mark-read]').evaluate(button=>button.click());
   await p.locator('.reader-topic[href="#quiz"]').evaluate(a=>a.click());
   await p.reload();
   assert.match(await p.locator('[data-chapter-status="09"]').innerText(),/10\/10/);
