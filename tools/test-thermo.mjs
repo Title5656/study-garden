@@ -38,7 +38,8 @@ for(let n=1;n<=9;n++){
  const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
  assert.equal(new Set(ids).size,ids.length,`duplicate IDs chapter ${n}`);
  assert.ok((html.match(/<figure\b/g)||[]).length>=2);assert.ok((html.match(/<li>/g)||[]).length>=3,`missing worked steps ${n}`);
- for(const must of ['id="flashcards"','id="quiz"','id="sources"','id="experiment"','id="worked-example"','data-mark-read','data-thermo-widget','id="concept-map"'])assert.ok(html.includes(must),`${n}: ${must}`);
+ for(const must of ['id="flashcards"','id="quiz"','id="experiment"','id="worked-example"','data-mark-read','data-thermo-widget','id="concept-map"'])assert.ok(html.includes(must),`${n}: ${must}`);
+ assert.ok(!html.includes('id="sources"'),`${n}: public source section is removed`);
  assert.match(html,/data-chapter="\d\d"/);
  assert.ok(html.includes('reader.js'));
  for(const q of entry.quiz){

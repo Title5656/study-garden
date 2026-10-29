@@ -1,0 +1,136 @@
+{
+  "source": "2026 - ITDS261 - L12 - Testing.pdf",
+  "pages": 42,
+  "chapter": "13",
+  "reference": "Html.html",
+  "coverage": [
+    {
+      "topic": "context",
+      "pages": [
+        1,
+        2,
+        3
+      ],
+      "section": "before-you-start"
+    },
+    {
+      "topic": "QA/QC",
+      "pages": [
+        4,
+        12
+      ],
+      "section": "sec-qa"
+    },
+    {
+      "topic": "Detection",
+      "pages": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "section": "detection"
+    },
+    {
+      "topic": "Debugging",
+      "pages": [
+        10
+      ],
+      "section": "debugging"
+    },
+    {
+      "topic": "V&V",
+      "pages": [
+        13,
+        14
+      ],
+      "section": "verification"
+    },
+    {
+      "topic": "Fault/error/failure",
+      "pages": [
+        15
+      ],
+      "section": "fault-error-failure"
+    },
+    {
+      "topic": "Testing levels",
+      "pages": [
+        7,
+        16,
+        17,
+        18,
+        19
+      ],
+      "section": "testing-levels"
+    },
+    {
+      "topic": "Black box/ECP",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "section": "ecp"
+    },
+    {
+      "topic": "BVA",
+      "pages": [
+        27,
+        28,
+        29,
+        30
+      ],
+      "section": "bva"
+    },
+    {
+      "topic": "White box",
+      "pages": [
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "section": "path-analysis"
+    },
+    {
+      "topic": "Independent paths",
+      "pages": [
+        36,
+        37
+      ],
+      "section": "independent-paths"
+    },
+    {
+      "topic": "FindLar_3",
+      "pages": [
+        38
+      ],
+      "section": "find-largest"
+    },
+    {
+      "topic": "Stopping/inspection",
+      "pages": [
+        39,
+        40,
+        41,
+        42
+      ],
+      "section": "stop-testing"
+    }
+  ],
+  "notes": [
+    "Page 26 omits age 0; page 30 last group prints >61 while its representative is 61. Use 0–11 and >=61 consistently with wording and examples.",
+    "Page 25 defines two ECP classes. Testing every allowed value is supplementary coverage, not an ECP requirement.",
+    "FindLar_3 and V-model visually verified from pages 38 and 14.",
+    "Animations and numeric defect-seeding estimates are illustrative, not quantitative claims from the slides."
+  ]
+}

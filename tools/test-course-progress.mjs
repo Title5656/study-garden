@@ -20,7 +20,7 @@ const seeds = {
   itds294: {'01':{read:true},'02':{read:true},'03':{read:true}},
   'thermo-chemical': {'01':{read:true},'02':{read:true},'03':{read:true}},
 };
-const expected = {itds211:17,itds241:40,itds261:27,itds294:30,'thermo-chemical':33};
+const expected = {itds211:17,itds241:40,itds261:25,itds294:30,'thermo-chemical':33};
 const browser = await chromium.launch({channel:'chrome',headless:true});
 const errors=[];
 try {

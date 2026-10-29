@@ -84,18 +84,7 @@ try{
  await page.reload();
  assert.match(await page.locator('[data-mark-read]').innerText(),/อ่านแล้ว/);
  await page.goto('https://study-garden.test/subjects/itds211/chapter-01.html#overview');
- await page.locator('#overview [data-source-page]').first().click();
- assert.equal(await page.locator('dialog[open]').count(),1);
- assert.match(await page.locator('[data-pdf-status]').innerText(),/หน้า PDF 1/);
- const pdfInput=page.locator('[data-pdf-file]');
- await pdfInput.setInputFiles({name:'wrong.pdf',mimeType:'application/pdf',buffer:Buffer.from('%PDF-1.4\n')});
- assert.match(await page.locator('[data-pdf-status]').innerText(),/ชื่อไฟล์ไม่ตรง/);
- await pdfInput.setInputFiles({name:'itds-210_comp_arch_Chapter00.pdf',mimeType:'application/pdf',buffer:Buffer.from('%PDF-1.4\n% local-only source fixture\n')});
- await page.waitForFunction(()=>document.querySelector('dialog iframe').src.startsWith('blob:'));
- assert.equal(await page.evaluate(async()=>{try{return(await fetch(document.querySelector('dialog iframe').src.split('#')[0])).ok}catch{return false}}),true,'the selected PDF is initially readable as a local Blob');
- await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));
- assert.equal(await page.evaluate(async()=>{try{return(await fetch(document.querySelector('dialog iframe').src.split('#')[0])).ok}catch{return false}}),true,'a source PDF must remain available when returning through the browser back/forward cache');
- await page.locator('[data-close]').click();
+ assert.equal(await page.locator('[data-source-page], [data-pdf-file], #sources, #coverage').count(),0);
  for(const theme of ['light','dark'])for(const width of [1440,390]){
   await page.setViewportSize({width,height:1000});
   await page.goto('https://study-garden.test/subjects/itds211/chapter-02.html#interactive');
@@ -109,5 +98,5 @@ try{
  assert.equal(await plain.locator('#review-answers').isVisible(),true);
  await plain.close();
  assert.deepEqual(errors,[],'no runtime errors');
- console.log('PASS: live numerical updates, invalid input, cards, quiz, progress reload, source dialog, four theme/layout screenshots and no-JS teaching.');
+ console.log('PASS: live numerical updates, invalid input, cards, quiz, progress reload, removed source controls, four theme/layout screenshots and no-JS teaching.');
 }finally{await browser.close()}

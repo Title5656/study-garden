@@ -214,32 +214,4 @@ P4 3 5</textarea></label>${field('quantum','Quantum ของ Round Robin',4,'mi
   const labs = { overview, performance, machine, numbers, cache, io, storage, pipeline, parallel, os, process, scheduling };
   document.querySelectorAll('[data-itds211-lab]').forEach(host => { try { labs[host.dataset.itds211Lab]?.(host); } catch (error) { host.textContent = `ห้องทดลอง: ${error.message}`; } });
 
-  // Files selected here remain in a browser-local Blob; there is no upload request.
-  if (document.body.dataset.sourceFile) {
-    let objectURL = null, page = 1;
-    const dialog = document.createElement('dialog'); dialog.className = 'itds211-source-dialog'; dialog.id = 'itds211-source-dialog';
-    dialog.innerHTML = `<div class="itds211-source-toolbar"><strong>เทียบกับสไลด์ต้นฉบับ</strong><button class="btn tiny" type="button" data-close>ปิด ✕</button></div><p class="itds211-source-label">${escape(document.body.dataset.sourceFile)}</p><label>เลือก PDF ต้นฉบับจากเครื่อง <input type="file" accept="application/pdf,.pdf" data-pdf-file></label><p class="itds211-source-label" data-pdf-status aria-live="polite">เลือกไฟล์เพื่อเปิดดูหน้าอ้างอิง</p><iframe title="สไลด์ต้นฉบับที่เลือกจากเครื่อง" hidden></iframe>`;
-    document.body.append(dialog);
-    const frame = dialog.querySelector('iframe'), status = dialog.querySelector('[data-pdf-status]');
-    const showPage = () => { if (objectURL) { frame.src = objectURL + '#page=' + page; frame.hidden = false; status.textContent = `เปิดหน้า PDF ${page} · ถ้าโปรแกรมอ่าน PDF ไม่เลื่อนอัตโนมัติ ให้ใส่เลขหน้านี้ในแถบของโปรแกรมอ่าน`; } else status.textContent = `ต้องการเปิดหน้า PDF ${page} · เลือกไฟล์ต้นฉบับด้านบนก่อน`; };
-    document.addEventListener('click', event => {
-      const trigger = event.target.closest('[data-source-page]'); if (!trigger) return;
-      event.preventDefault(); page = Number(trigger.dataset.sourcePage) || 1;
-      if (!dialog.open) dialog.showModal(); showPage();
-    });
-    dialog.querySelector('[data-close]').onclick = () => dialog.close();
-    dialog.querySelector('[data-pdf-file]').addEventListener('change', async event => {
-      const file = event.target.files[0]; if (!file) return;
-      if (file.name.toLocaleLowerCase() !== document.body.dataset.sourceFile.toLocaleLowerCase()) { status.textContent = 'ชื่อไฟล์ไม่ตรงกับ lecture นี้ โปรดเลือก ' + document.body.dataset.sourceFile; return; }
-      try {
-        if (!(await file.slice(0, 1024).text()).includes('%PDF-')) throw new Error('ไฟล์นี้ไม่ใช่ PDF ที่อ่านได้');
-        if (objectURL) URL.revokeObjectURL(objectURL);
-        objectURL = URL.createObjectURL(file); showPage();
-      } catch (error) { status.textContent = error.message; }
-    });
-    window.addEventListener('pagehide', event => {
-      // A cached document resumes with its existing iframe and Blob reference.
-      if (!event.persisted && objectURL) { URL.revokeObjectURL(objectURL); objectURL = null; }
-    });
-  }
 })();

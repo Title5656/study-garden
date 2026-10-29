@@ -12,8 +12,8 @@ for (const name of ['content', 'ecommerce-content', 'software-content', 'thermo-
   vm.runInContext(readFileSync(resolve(root, `assets/${name}.js`), 'utf8'), context);
 }
 const courses = context.window.StudyContent;
-assert.equal(Object.keys(courses.itds261).length, 11);
-assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 47);
+assert.equal(Object.keys(courses.itds261).length, 12);
+assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 48);
 let figures = 0;
 for (const [course, chapters] of Object.entries(courses)) {
   for (const [id, data] of Object.entries(chapters)) {
@@ -29,14 +29,14 @@ for (const [course, chapters] of Object.entries(courses)) {
     assert.ok((html.match(/<figure\b/g) || []).length >= 2, `${course}/${id}: at least two explanatory figures`);
     figures += (html.match(/<figure\b/g) || []).length;
     if (course === 'itds261') {
-      for (const id of ['flashcards','quiz','sources']) assert.ok(html.includes(`id="${id}"`));
+      for (const id of ['flashcards','quiz']) assert.ok(html.includes(`id="${id}"`));
       assert.match(html, /data-mark-read/);
       assert.match(html, /software-content\.js/);
     }
   }
 }
 const manifest = JSON.parse(readFileSync(resolve(root, 'subjects/itds261/sources.json'), 'utf8'));
-assert.equal(manifest.length, 19, 'Every in-scope ITDS261 source has an explicit role');
+assert.equal(manifest.length, 21, 'Every in-scope source has an explicit role');
 for (const entry of manifest) { assert.ok(entry.file && entry.role && entry.chapters.length); }
 const architectureSources = JSON.parse(readFileSync(resolve(root, 'subjects/itds211/sources.json'), 'utf8'));
 assert.equal(architectureSources.length, 12, 'All supplied ITDS211 source lectures are indexed');
@@ -54,6 +54,8 @@ function walk(dir) {
 let links = 0;
 for (const file of walk(root).filter(path => path.endsWith('.html'))) {
   const html = readFileSync(file, 'utf8');
+  assert.doesNotMatch(html, /id="(?:sources|source-inventory|coverage)"/, `${file}: public source inventory must stay removed`);
+  assert.doesNotMatch(html, /data-source-(?:file|page)=/, `${file}: public source-file controls must stay removed`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(x => x[1]);
   assert.equal(new Set(ids).size, ids.length, `${file}: duplicate IDs`);
   for (const match of html.matchAll(/\b(?:href|src|poster|data-src)="([^"]+)"/g)) {
@@ -71,4 +73,4 @@ for (const file of walk(root).filter(path => path.endsWith('.html'))) {
   }
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) assert.match(tag[0], /\balt="[^"]*"/, `${file}: image needs alt`);
 }
-console.log(`PASS: 5 courses, 47 chapters, 470 questions, ${figures} learning figures, 19 ITDS261 + 12 ITDS211 source files, ${links} local references.`);
+console.log(`PASS: 5 courses, 48 chapters, 480 questions, ${figures} learning figures, 21 ITDS261 + 12 ITDS211 source files, ${links} local references.`);

@@ -1739,3 +1739,219 @@ window.StudyContent.itds261 = {
     ]
   }
 };
+
+// Lecture 12 uses a new chapter ID to preserve existing saved Lab 3 progress.
+window.StudyContent.itds261["13"] = {
+  "label": "L12",
+  "title": "Lecture 12 · Testing: QA/QC, ECP, BVA และ White-box",
+  "cards": [
+    [
+      "Quality Assurance (QA)",
+      "กิจกรรมวัดและปรับปรุงคุณภาพของ product และ process (สไลด์ 4)"
+    ],
+    [
+      "Quality Control (QC)",
+      "กิจกรรมตรวจคุณภาพ product และหา faults (สไลด์ 4)"
+    ],
+    [
+      "Quality",
+      "Conforms to requirements + Fit to use (สไลด์ 12)"
+    ],
+    [
+      "Verification",
+      "Are we building the software RIGHT? เทียบกับ phase ก่อนหน้า (สไลด์ 13)"
+    ],
+    [
+      "Validation",
+      "Are we building the RIGHT software? ตอบการใช้งานและความต้องการจริงหรือไม่ (หน้า 13)"
+    ],
+    [
+      "V-Model pairs",
+      "Req↔Acceptance · HLD↔System · DD↔Integration · Coding↔Unit (สไลด์ 14)"
+    ],
+    [
+      "Fault",
+      "A static defect in the software (สไลด์ 15)"
+    ],
+    [
+      "Error",
+      "An incorrect internal state ซึ่งเป็นผลจาก fault (สไลด์ 15)"
+    ],
+    [
+      "Failure",
+      "External incorrect behavior w.r.t. requirements (สไลด์ 15)"
+    ],
+    [
+      "Testing",
+      "Dynamic verification บน FINITE set of test cases และพิสูจน์ 100% ไม่ได้ (สไลด์ 16)"
+    ],
+    [
+      "Regression testing",
+      "ตรวจว่าการแก้ไขใหม่ไม่ทำให้เกิดบั๊กใหม่ (สไลด์ 7)"
+    ],
+    [
+      "Static Analysis",
+      "หาปัญหาโดยไม่รันโปรแกรม (สไลด์ 8)"
+    ],
+    [
+      "Dynamic Analysis",
+      "หาปัญหาขณะรันโปรแกรม (สไลด์ 9)"
+    ],
+    [
+      "Debugging",
+      "Identify → Reproduce → Locate → Fix → Test again (สไลด์ 10)"
+    ],
+    [
+      "Formal Methods",
+      "ใช้คณิตศาสตร์พิสูจน์คุณสมบัติ (สไลด์ 11)"
+    ],
+    [
+      "Black-box",
+      "Behavioral/Functional และสร้าง test จาก spec (สไลด์ 20)"
+    ],
+    [
+      "ECP",
+      "แบ่ง input เป็นกลุ่มสมมูล แล้วใช้ตัวแทนเทส (สไลด์ 22)"
+    ],
+    [
+      "BVA",
+      "เทส boundary, +1, −1 เพราะขอบ error-prone (สไลด์ 27)"
+    ],
+    [
+      "White-box",
+      "Glass-box/Structural ใช้ control structure ของโค้ด (สไลด์ 31)"
+    ],
+    [
+      "Linearly independent paths",
+      "แต่ละ path นำ edge ใหม่อย่างน้อย 1 เส้น (สไลด์ 36)"
+    ],
+    [
+      "Cyclomatic number",
+      "สำหรับ control-flow graph เชื่อมต่อเดียวที่ใช้ binary decisions: V(G) = จำนวน decisions + 1"
+    ],
+    [
+      "2ⁿ",
+      "2ⁿ เป็นจำนวน logical paths สำหรับ n binary decisions ที่เรียงต่อกันและทุก combination เป็นไปได้; ไม่ใช้เหมารวมกับ if ซ้อนหรือ loop"
+    ],
+    [
+      "Defect seeding",
+      "ฝังบั๊กปลอมเพื่อประเมินว่ายังเหลือบั๊กจริงเท่าไร (สไลด์ 39)"
+    ],
+    [
+      "Problem find rate",
+      "จำนวนปัญหาที่พบต่อชั่วโมง; ภาพหน้า 40 เพิ่มแล้วค่อยลดลง ไม่ใช่ข้อพิสูจน์ว่าไม่มี defect"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "ทีมกำหนดนโยบายให้ review ทุกครั้งก่อน merge ต่างจากการตรวจโค้ดรุ่นนี้อย่างไร?",
+      "options": [
+        "นโยบายช่วย QA ส่วนการตรวจรุ่นนี้ช่วย QC",
+        "ทั้งคู่เป็นชื่อระดับ testing",
+        "QA ตรวจเฉพาะ input",
+        "QC คือการอบรมทีม"
+      ],
+      "answer": 0,
+      "explanation": "นโยบายปรับกระบวนการจึงช่วย QA ส่วนการตรวจผลิตภัณฑ์รุ่นนี้หา fault เป็น QC; QA/QC เป็นเป้าหมายของกิจกรรม ไม่ใช่ระดับการทดสอบ และ QA ไม่ได้ดูเฉพาะ input (หน้า 4)"
+    },
+    {
+      "q": "สร้างรถยนต์ตรง specification แต่ผู้ใช้ต้องการจักรยาน สรุปอะไรได้?",
+      "options": [
+        "ผ่านทั้ง Verification และ Validation",
+        "ผ่าน Verification แต่ไม่ผ่าน Validation",
+        "ไม่ผ่าน Verification แต่ผ่าน Validation",
+        "ไม่มีความต่างระหว่างสองคำ"
+      ],
+      "answer": 1,
+      "explanation": "ตรงข้อกำหนดเดิมจึงผ่าน verification ในตัวอย่างนี้ แต่ไม่ตอบ intended usage จึงไม่ผ่าน validation; การตรง spec ไม่รับประกันว่า spec ตรงความต้องการ (หน้า 13)"
+    },
+    {
+      "q": "โค้ดข้ามตัวแรกทำให้ sum ภายในผิด แต่ยังไม่แสดงผล คำว่า sum ผิดเป็นอะไร?",
+      "options": [
+        "Fault",
+        "Failure",
+        "Error",
+        "Test case"
+      ],
+      "answer": 2,
+      "explanation": "Error คือสถานะภายในผิด; fault คือ defect ในโค้ด ส่วน failure คือพฤติกรรมผิดที่สังเกตได้ภายนอก และ test case คือกรณีตรวจ (หน้า 15)"
+    },
+    {
+      "q": "ข้อใดต้องสังเกตโปรแกรมขณะรันตามตัวอย่าง Dynamic Analysis?",
+      "options": [
+        "ตรวจตัวแปรที่ไม่ใช้",
+        "อ่าน coding standard",
+        "อ่าน code inspection checklist",
+        "วัด code coverage จากการรัน"
+      ],
+      "answer": 3,
+      "explanation": "Coverage analysis วัดส่วนที่ถูกทำงานขณะรัน จึงเป็น dynamic analysis; unused variables และการตรวจมาตรฐาน/อ่านโค้ดทำได้โดยไม่รัน (หน้า 8–9)"
+    },
+    {
+      "q": "ช่องรับจำนวนเต็ม 1–1000 ชุดใดเป็น ECP ที่ครอบคลุมทุก class?",
+      "options": [
+        "0, 500, 1001",
+        "1, 500, 1000",
+        "500 เพียงค่าเดียว",
+        "0, 1, 2"
+      ],
+      "answer": 0,
+      "explanation": "0 แทนกลุ่มต่ำกว่า 1, 500 แทนกลุ่ม valid, 1001 แทนกลุ่มสูงกว่า 1000; ตัวเลือกอื่นขาด invalid อย่างน้อยหนึ่งกลุ่ม (หน้า 24)"
+    },
+    {
+      "q": "BVA แบบ reduced ของช่องจำนวนเต็ม 1–1000 ตามสไลด์คือชุดใด?",
+      "options": [
+        "1, 500, 1000",
+        "0, 1, 1000, 1001",
+        "0, 2, 999, 1001",
+        "75, 253, 414"
+      ],
+      "answer": 1,
+      "explanation": "หน้า 29 ลดเหลือขอบสองฝั่ง: 0 invalid, 1 valid, 1000 valid, 1001 invalid; ชุดเต็มเพิ่ม 2 และ 999 แต่ห้ามตัด 1 และ 1000 ซึ่งเป็นขอบจริง"
+    },
+    {
+      "q": "ราคาตั๋วอายุ 11, 12, 60, 61 ตามเกณฑ์ที่บทเรียนใช้คือข้อใด?",
+      "options": [
+        "ฟรี, ฟรี, 200, 200",
+        "100, 100, 200, 100",
+        "ฟรี, 100, 200, 100",
+        "ฟรี, 100, 100, 100"
+      ],
+      "answer": 2,
+      "explanation": "ต่ำกว่า 12 ฟรี; 12–17 จ่าย 100; 18–60 จ่าย 200; มากกว่า 60 จ่าย 100 บาท ดังนั้น 12 ไม่ฟรี และ 60 ยังเป็น 200 (หน้า 26, 30; มีหมายเหตุการพิมพ์ขอบในสรุป)"
+    },
+    {
+      "q": "มี binary decisions 3 จุดเรียงต่อกัน และทุก combination เป็นไปได้: logical / independent paths เท่าไร?",
+      "options": [
+        "3 / 4",
+        "4 / 8",
+        "8 / 8",
+        "8 / 4"
+      ],
+      "answer": 3,
+      "explanation": "logical paths = 2³ = 8; cyclomatic number = 3+1 = 4 สำหรับกราฟนี้ ต้องระบุเงื่อนไขว่าเรียงต่อกันและทุก combination เป็นไปได้ ไม่ใช้ 2³ กับ if ซ้อนทุกกรณี (หน้า 37)"
+    },
+    {
+      "q": "FindLar_3 ใช้ input (2, 7, 9) จะผ่านทางไหนและคืนค่าอะไร?",
+      "options": [
+        "D1=F, D3=F → คืน 9",
+        "D1=T, D2=T → คืน 2",
+        "D1=F, D3=T → คืน 7",
+        "รันทุก decision แล้วคืน 9"
+      ],
+      "answer": 0,
+      "explanation": "2 ≥ 7 เป็น false จึงเข้า D3; 7 ≥ 9 เป็น false จึงคืน n3=9 ไม่รัน D2 เพราะอยู่ในอีก branch ของ if ซ้อน (หน้า 38)"
+    },
+    {
+      "q": "เหตุใดอัตราพบปัญหาลดลงยังไม่พอให้รับรองว่าหยุดทดสอบได้?",
+      "options": [
+        "เพราะต้องทดสอบไปตลอดเสมอ",
+        "อาจยังมีส่วนเสี่ยงที่เคสเดิมไม่ครอบคลุม",
+        "เพราะ Inspection ใช้กับ requirements ไม่ได้",
+        "เพราะ coverage 100% พิสูจน์ว่าไม่มี defect"
+      ],
+      "answer": 1,
+      "explanation": "อัตราลดลงอาจสะท้อนคุณภาพดีขึ้นหรือชุดทดสอบที่ไม่เข้าถึงปัญหา จึงต้องดู planned tests, การแก้ปัญหา และความเสี่ยงคงเหลือ; inspection ใช้กับ intermediate artifacts ได้ และ coverage ไม่พิสูจน์ความถูกต้องทั้งหมด (หน้า 39–41 พร้อมคำอธิบายเสริม)"
+    }
+  ]
+};

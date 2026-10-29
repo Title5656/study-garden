@@ -34,14 +34,16 @@ async function newPage(options={}) {
  return page;
 }
 try {
- await test('Home search exposes ITDS261, course index exposes 11 chapters',async()=>{
+ await test('Home search exposes ITDS261, course index exposes two exam folders',async()=>{
   const page=await newPage({viewport:{width:1440,height:1000}});
   await page.goto(base+'/index.html');
   assert.equal(await page.locator('.subject-folder').count(),5);
   await page.locator('#subject-search').fill('ITDS261');
   assert.equal(await page.locator('.subject-folder:visible').count(),1);
   await page.locator('.subject-folder:visible').click();
-  assert.equal(await page.locator('.glass-folder').count(),11);
+  await page.waitForURL('**/subjects/itds261/index.html');
+  assert.equal(await page.locator('.folder-card').count(),2);
+  assert.equal(await page.locator('a[href="midterm.html"],a[href="final.html"]').count(),2);
   if (out) await page.screenshot({path:resolve(out,'course-desktop.png')});
   await page.close();
  });
@@ -91,7 +93,7 @@ try {
   assert.equal(await page.locator('.explanation:visible').count(),10);
   await page.locator('#quiz-retry').click();
   assert.equal(await page.locator('.quiz-option input:checked').count(),0);
-  await page.locator('.reader-topic[href="#sources"]').click();
+  assert.equal(await page.locator('.reader-topic[href="#sources"]').count(),0);
   await page.locator('[data-mark-read]').click();
   await page.reload();
   assert.equal(await page.locator('[data-mark-read]').getAttribute('aria-pressed'),'true');

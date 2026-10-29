@@ -84,6 +84,11 @@ export const ART_PRESETS                               = {
     colors: ["#071d25", "#0e5260", "#198989", "#6ac6ae", "#d4f2d2", "#4f9c9b", "#173c50"],
     scale: 0.7, warp: 3.8, angle: -0.3, gloss: 0.52, veins: 0.35,
   },
+  rose: {
+    style: "marble",
+    colors: ["#39102c", "#8e305a", "#d26c9c", "#f3bad3", "#fff0e9", "#ab6288", "#571a46"],
+    scale: 0.74, warp: 3.1, angle: 1.2, gloss: 0.45, veins: 0.35,
+  },
 }
 
 /** `#rgb` or `#rrggbb` to a triple. Anything unreadable comes back mid-grey. */
@@ -329,7 +334,7 @@ function chunk(type, data) {
   const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(Buffer.concat([name, data])));
   return Buffer.concat([length, name, data, crc]);
 }
-for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37], ['cobalt', 41], ['citrus', 43], ['coral', 47], ['lagoon', 53]]) {
+for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37], ['cobalt', 41], ['citrus', 43], ['coral', 47], ['lagoon', 53], ['rose', 59]]) {
   const job = createArtJob(640, 520, ART_PRESETS[preset], seed);
   while (!job.step(40)) {}
   const header = Buffer.alloc(13);

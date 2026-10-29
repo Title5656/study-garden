@@ -17,34 +17,23 @@ try {
   page.on('response', r=>{if(r.status()===404)errors.push(r.url());});
   await page.goto('https://study-garden.test/subjects/itds261/index.html');
   await page.evaluate(t=>document.documentElement.dataset.theme=t,theme);
-  assert.equal(await page.locator('.folder-card').count(),11);
-  assert.equal(await page.locator('.folder-card').evaluateAll(cards => cards.filter(card => {
-    const front = card.querySelector('.folder-front').getBoundingClientRect();
-    const title = card.querySelector('.folder-label strong').getBoundingClientRect();
-    return title.bottom > front.bottom - 12 || title.left < front.left || title.right > front.right - 16;
-  }).length), 0, 'Long lecture titles fit inside their folder fronts');
+  assert.equal(await page.locator('.folder-card').count(),2);
   assert.equal(await page.locator('.se-guide,.folder-topics,.se-scope-badge,.badge-extra,.se-scope-note').count(),0);
-  assert.equal(await page.locator('[data-chapter-status]').count(),11);
+  assert.equal(await page.locator('a[href="midterm.html"],a[href="final.html"]').count(),2);
   assert.equal(await page.locator('.footer-reveal, footer video, .garden-wordmark-canvas').count(),3,'Course footer restores the shared artwork and Garden wordmark');
   assert.equal(await page.locator('#footer a[href="#main"]').count(),1,'Keep back-to-top navigation');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   await page.locator('#subject-search').fill('Requirements');
   assert.ok(await page.locator('.folder-card:visible').count()>0);
   await page.locator('#subject-search').fill('');
-  if(out) {
-   await page.screenshot({path:resolve(out,`index-${width}-${theme}.png`)});
-   if(width===375) {
-    await page.locator('.folder-card').nth(4).screenshot({path:resolve(out,`folder-l6-${theme}.png`)});
-    await page.locator('.folder-card').nth(10).screenshot({path:resolve(out,`folder-recap-${theme}.png`)});
-   }
-  }
+  if(out) await page.screenshot({path:resolve(out,`index-${width}-${theme}.png`)});
   for (let n=1;n<=11;n++) {
    await page.goto(`https://study-garden.test/subjects/itds261/chapter-${String(n).padStart(2,'0')}.html`);
    assert.equal(await page.locator('.badge-extra,.se-scope-badge,.se-scope-note').count(),0);
    const ids = await page.locator('[id]').evaluateAll(xs=>xs.map(x=>x.id));
    assert.equal(new Set(ids).size,ids.length,`chapter ${n}: unique ids`);
    assert.ok(ids.indexOf('key-takeaways')>ids.indexOf('common-confusions'));
-   assert.equal(await page.locator('.se-source-note').count(),1);
+   assert.equal(await page.locator('.se-source-note').count(),0);
    assert.equal(await page.locator('#starting-point').count(),1,`chapter ${n}: beginner starting point`);
    assert.equal(await page.locator('.footer-reveal, footer video, .garden-wordmark-canvas').count(),3,'Chapter footer restores the shared artwork and Garden wordmark');
    assert.equal(await page.locator('#quiz .quiz-question').count(),10);
