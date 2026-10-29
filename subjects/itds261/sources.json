@@ -139,5 +139,20 @@
     "chapters": [
       "05"
     ]
+  },
+  {
+    "file": "2026 - ITDS261 - L12 - Testing.pdf",
+    "pages": 42,
+    "role": "แหล่งหลัก Lecture 12 Testing; ไม่เผยแพร่ต้นฉบับ",
+    "chapters": [
+      "13"
+    ]
+  },
+  {
+    "file": "Html.html",
+    "role": "ต้นแบบ interactive objects; ตรวจเนื้อหากับ PDF และปรับให้ใช้ธีม/reader ของเว็บ",
+    "chapters": [
+      "13"
+    ]
   }
 ]

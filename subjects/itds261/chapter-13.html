@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="สรุป ITDS261 ภาษาไทย พร้อมภาพอธิบาย แบบฝึกหัด แนวคำตอบ Flashcards และ Quiz">
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>Lecture 12 · Testing · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.png?v=66f8b58bffb5" type="image/png" />
+    <link rel="stylesheet" href="../../assets/style.css?v=d204abbcaf44" />
+    <link rel="stylesheet" href="../../assets/library.css?v=233f4707023e" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    <script defer src="../../assets/core.js?v=02afe1c9497e"></script>
+    <script defer src="../../assets/software-content.js?v=cd13cb7a22cc"></script>
+<script defer src="../../assets/app.js?v=09983bed0bae"></script>
+  <link rel="stylesheet" href="../../assets/reader.css?v=bfe6e1349d0f">
+<link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
+
+<script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
+<script defer src="../../assets/reader.js?v=29b5239a98c3"></script>
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
+<link rel="stylesheet" href="../../assets/software.css?v=2876f117c9a4">
+
+
+<link rel="stylesheet" href="../../assets/testing-lab.css?v=df8a66c3dd74">
+<script defer src="../../assets/testing-lab.js?v=16e077fb58f9"></script>
+</head>
+  <body data-subject="itds261" data-chapter="13"><a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
+    <header class="site-header">
+      <nav class="wrap nav" aria-label="เมนูหลัก">
+        <a class="brand" href="../../index.html"
+          ><img class="brand-mark" src="../../assets/study-garden-logo.png?v=4d3c7e4e5b15" alt="" width="36" height="36" decoding="async">Study Garden</a
+        >
+        <div class="nav-links">
+          <a href="../../index.html#subjects">วิชาทั้งหมด</a
+          ><a class="desktop-link" href="index.html"
+            >บทเรียน</a
+          >
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">
+          ☾ มืด
+        </button>
+      </nav>
+    </header>
+    <div id="storage-notice" class="storage-notice" role="status" hidden>
+      เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล
+      ความคืบหน้าในหน้านี้จะไม่ถูกเก็บหลังปิดหน้า
+    </div>
+    <noscript
+      ><p class="wrap note warm">
+        เปิด JavaScript เพื่อใช้กิจกรรม Flashcard และ Quiz
+        เนื้อหาสรุปยังอ่านได้ตามปกติ
+      </p></noscript
+    >
+    <main id="main" class="wrap"><nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS261</a><span>/</span><a href="final.html">Final</a><span>/</span><span>Lecture 12</span></nav><header class="chapter-hero"><div class="eyebrow">CHAPTER 13 · LECTURE 12</div><h1>Testing: จากข้อกำหนดสู่หลักฐานคุณภาพ</h1><p>อ่านให้เข้าใจ ทดลองให้เห็นภาพ แล้วออกแบบ test cases ด้วยตัวเอง — QA/QC, ECP, BVA และ White-box Testing</p><div class="tags"><span class="pill">12 หัวข้อทดลอง · Flashcards 24 · Quiz 10</span><span class="tag" data-chapter-status="13">ยังไม่ได้อ่าน</span></div></header><div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#before-you-start">เริ่มต้น: ทดสอบอะไร และรู้ได้อย่างไรว่าผ่าน?</a><a href="#sec-qa">Quality · QA และ QC</a><a href="#detection">6 เทคนิคตรวจข้อผิดพลาด</a><a href="#debugging">Debugging: จากอาการไปถึงสาเหตุ</a><a href="#verification">Verification vs Validation</a><a href="#fault-error-failure">Fault → Error → Failure</a><a href="#testing-levels">Testing และระดับการทดสอบ</a><a href="#ecp">Black-box · Equivalence Class Partitioning</a><a href="#bva">Boundary Value Analysis · ตั๋วอุทยาน</a><a href="#path-analysis">White-box · Path Analysis</a><a href="#independent-paths">Independent Paths และ Cyclomatic Number</a><a href="#find-largest">Exercise · FindLar_3</a><a href="#stop-testing">หยุดทดสอบเมื่อไร? · Inspection</a><a href="#key-takeaways">สรุปบทเรียนก่อนสอบ</a><div class="toc-tools"><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz</a></div></aside><article class="lesson-content"><section class="lesson-section" id="before-you-start"><div class="section-kicker">LECTURE 12 · หน้า 3–42</div><h2>ก่อนเริ่มบทนี้: ทดสอบอะไร และรู้ได้อย่างไรว่าผ่าน?</h2><p>การทดสอบเริ่มจาก <strong>ความคาดหวังที่ตรวจสอบได้</strong> เช่น “อายุ 12 ปีต้องได้ราคาตั๋ว 100 บาท” จากนั้นเตรียม input รันระบบ และเปรียบเทียบ actual result กับ expected result เมื่อผลไม่ตรง เราพบ failure แต่ยังต้องหาสาเหตุและแก้ไขด้วย debugging</p><p>บทนี้ต่อจาก <a href="chapter-09.html">Implementation และ Code Review</a> และ <a href="chapter-10.html">Version Control</a> เพื่อออกแบบ test cases และเก็บหลักฐานคุณภาพของแต่ละเวอร์ชัน</p><dl><dt><strong>Test case</strong></dt><dd>ข้อมูลตั้งต้น ขั้นตอน/input และผลที่คาดหวัง ซึ่งทำซ้ำและตัดสินผ่าน/ไม่ผ่านได้</dd><dt><strong>Test suite</strong></dt><dd>ชุดของ test cases ที่ใช้ร่วมกันเพื่อตรวจเป้าหมายหนึ่ง</dd><dt><strong>Coverage</strong></dt><dd>สัดส่วนสิ่งที่ถูกทดสอบตามเกณฑ์ที่ระบุ เช่น branches; ไม่ใช่เปอร์เซ็นต์ความถูกต้องของโปรแกรม</dd><dt><strong>Test oracle</strong></dt><dd>หลักที่ใช้ตัดสินผล เช่น specification หรือผลคำนวณที่ยืนยันแล้ว (คำอธิบายเสริม)</dd></dl><figure class="testing-summary-figure"><div class="testing-flow"><b>กำหนด Expected</b><span>→</span><b>เลือก Input</b><span>→</span><b>รันและเทียบ Actual</b><span>→</span><b>วิเคราะห์ / แก้ / ทดสอบซ้ำ</b></div><figcaption>การทดสอบบอกว่าพฤติกรรมผิดจากที่คาดตรงไหน ส่วน debugging ช่วยค้นหาว่าเพราะอะไร</figcaption></figure><p class="note">แหล่งหลัก: 2026 - ITDS261 - L12 - Testing.pdf หน้า 3–42 · กิจกรรมดัดแปลงจาก HTML ตัวอย่างที่ผู้เรียนให้มา · กล่อง “อธิบายเสริม” เป็นตัวอย่างหรือการขยายความ ไม่ใช่ข้อความจากสไลด์โดยตรง</p></section>
+<section class="lesson-section" id="sec-qa"><div class="section-kicker">LECTURE 12 · หน้า 4, 12</div><h2>Quality · QA และ QC</h2><p><strong>Quality</strong> ต้องทั้งตรงข้อกำหนด (conforms to requirements) และเหมาะกับการใช้จริง (fit to use) ส่วน <strong>QA</strong> คือกิจกรรมวัดและปรับปรุงคุณภาพทั้งผลิตภัณฑ์และกระบวนการ และ <strong>QC</strong> คือกิจกรรมตรวจคุณภาพผลิตภัณฑ์และค้นหา faults ทั้งสองต้องอาศัยกระบวนการ เครื่องมือ และทีมที่ดี</p><p>เช่น การกำหนดนโยบาย review ก่อน merge ช่วยปรับกระบวนการ (QA) ขณะที่ตรวจโค้ดของรุ่นนี้เพื่อหาข้อผิดพลาดเป็น QC กิจกรรมเดียวกันจึงเกี่ยวข้องกับทั้งสองได้ ขึ้นอยู่กับจุดประสงค์ ไม่ควรจำว่า QA คือชื่อคนและ QC คือชื่อเครื่องมือ</p><div class="testing-lab">
+  <div class="card">
+    <h3>What is "Quality"? <span class="sl">สไลด์ 12</span></h3>
+    <div class="grid">
+      <div class="flip" role="button" tabindex="0" aria-label="พลิกการ์ด Quality" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" onclick="this.classList.toggle('on')"><div class="fi"><div class="face front">📏 Conforms to requirements<small>คลิกเพื่อพลิก</small></div><div class="face back">ตรงตามข้อกำหนดที่เขียนไว้<br><br>👔 ตัดเสื้อได้ตรงไซซ์ที่วัดไว้</div></div></div>
+      <div class="flip" role="button" tabindex="0" aria-label="พลิกการ์ด Quality" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" onclick="this.classList.toggle('on')"><div class="fi"><div class="face front">🙆 Fit to use<small>คลิกเพื่อพลิก</small></div><div class="face back">ใช้งานได้จริง ตอบโจทย์ผู้ใช้<br><br>👔 ใส่แล้วขยับตัวได้สบาย</div></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>QA vs QC <span class="sl">สไลด์ 4</span></h3>
+    <div class="why">❓ <b>ทำไมต้องมีทั้งคู่:</b> ถ้ารอตรวจตอนงานเสร็จอย่างเดียว เจอปัญหาก็ต้องรื้อใหม่ แต่ถ้าดูแลแค่กระบวนการโดยไม่ตรวจของจริง ก็ไม่รู้ว่างานออกมาดีจริงไหม</div>
+    <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table><tr><th></th><th>🛡️ Quality Assurance (QA)</th><th>🔍 Quality Control (QC)</th></tr>
+    <tr><td>นิยาม</td><td>all activities designed to <b>measure and improve</b> quality in a <b>product and process</b></td><td>activities designed to <b>verify</b> the quality of the <b>product</b> and <b>detect faults</b></td></tr>
+    <tr><td>ลักษณะ</td><td>ป้องกันและปรับปรุงกระบวนการ</td><td>ตรวจจับของเสีย</td></tr>
+    <tr><td>🍜 ร้านก๋วยเตี๋ยว</td><td>กำหนดสูตรมาตรฐาน อบรมพนักงาน</td><td>ชิมทุกชามก่อนเสิร์ฟ</td></tr></table></div>
+    <p>📌 ทั้งสองอย่างต้องอาศัย <b>good process, tools and team</b></p>
+  </div>
+  <div class="card">
+    <h3>🏭 โรงงานจำลอง: ลองปรับ QA และ QC ด้วยตัวเอง</h3>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 760 235" id="factory">
+      <rect x="10" y="20" width="185" height="150" rx="14" fill="var(--soft)" stroke="#a5b4fc" stroke-width="2"/>
+      <text x="102" y="42" text-anchor="middle" class="svgt" font-weight="800" font-size="14">Process (กระบวนการ)</text>
+      <circle class="gear" cx="70" cy="95" r="24" fill="none" stroke="#6366f1" stroke-width="10" stroke-dasharray="7 5"/><circle cx="70" cy="95" r="9" fill="#6366f1"/>
+      <circle class="gear r" cx="120" cy="125" r="18" fill="none" stroke="#8b5cf6" stroke-width="9" stroke-dasharray="6 4"/><circle cx="120" cy="125" r="6" fill="#8b5cf6"/>
+      <circle class="gear" cx="150" cy="78" r="14" fill="none" stroke="#a78bfa" stroke-width="8" stroke-dasharray="5 4"/>
+      <g id="qaShield"><path d="M102,52 l40,12 v28 c0,26 -18,40 -40,48 c-22,-8 -40,-22 -40,-48 v-28z" fill="rgba(79,70,229,.25)" stroke="#4f46e5" stroke-width="3"/><text x="102" y="108" text-anchor="middle" font-size="16" font-weight="800" fill="#4f46e5">QA</text></g>
+      <line x1="195" y1="140" x2="700" y2="140" stroke="#475569" stroke-width="12" stroke-linecap="round"/>
+      <line class="belt" x1="195" y1="140" x2="700" y2="140" stroke="#94a3b8" stroke-width="4"/>
+      <g id="qcStation"><rect x="452" y="40" width="56" height="26" rx="8" fill="#0891b2"/><text x="480" y="58" text-anchor="middle" fill="#fff" font-weight="800" font-size="14">QC</text>
+        <circle cx="480" cy="92" r="17" fill="rgba(56,189,248,.25)" stroke="#0891b2" stroke-width="5"/><line x1="480" y1="66" x2="480" y2="75" stroke="#0891b2" stroke-width="5"/></g>
+      <circle id="qcFlash" cx="480" cy="120" r="30" fill="#ef4444" opacity="0"/>
+      <text x="480" y="225" text-anchor="middle" font-size="22">🗑️</text><text x="515" y="222" class="svgm" font-size="12">คัดทิ้ง</text>
+      <text x="728" y="135" text-anchor="middle" font-size="30">🧑</text><text x="728" y="160" text-anchor="middle" class="svgm" font-size="12">ลูกค้า</text>
+      <g id="fItems"></g>
+    </svg></div>
+    <div class="two">
+      <div>
+        <p>🛡️ <b>ระดับ QA</b> (ยิ่งดี ของเสียยิ่งเกิดน้อย): <b id="qaV">20</b>%</p>
+        <input type="range" id="qaLv" aria-label="ระดับ QA" min="0" max="100" value="20" oninput="qaUpd()">
+        <p><label><input type="checkbox" id="qcOn" checked onchange="qaUpd()"> 🔍 เปิดด่าน <b>QC</b> (ตรวจของก่อนถึงลูกค้า)</label></p>
+        <button class="btn sm" id="factory-toggle" onclick="toggleFactory()" aria-pressed="false">▶ เริ่มโรงงาน</button><button class="btn ghost sm" onclick="fReset()">↺ ล้างสถิติ</button>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div class="stat">ผลิตแล้ว<b id="sMade">0</b></div><div class="stat">ของเสียที่เกิด<b id="sBad" style="color:var(--warn)">0</b></div>
+        <div class="stat">QC จับได้<b id="sCaught" style="color:#0891b2">0</b></div><div class="stat">หลุดถึงลูกค้า 😱<b id="sEsc" style="color:var(--bad)">0</b></div>
+      </div>
+    </div>
+    <p class="qbox" id="fMsg">ลองปิด QC แล้วดูว่าของเสียไปถึงลูกค้ากี่ชิ้น จากนั้นลองเพิ่ม QA ดูว่าของเสียเกิดน้อยลงไหม</p>
+    <div class="extra">ตัวเลขในโรงงานนี้เป็นการจำลองเพื่อให้เห็นภาพ: <b>QA ลดของเสียที่ต้นทาง</b> (ป้องกัน) ส่วน <b>QC จับของเสียก่อนส่งออก</b> (ตรวจจับ) ใช้คู่กันจึงได้ผลดีที่สุด</div>
+  </div>
+  <div class="card"><h3>🎮 ลากการ์ดไปใส่กล่อง: เป็น QA หรือ QC?</h3><div id="g_qa"></div></div>
+</div></section>
+<section class="lesson-section" id="detection"><div class="section-kicker">LECTURE 12 · หน้า 5–11</div><h2>6 เทคนิคตรวจข้อผิดพลาด</h2><p>เลือกเทคนิคให้ตรงหลักฐานที่ต้องการ: <strong>Code review</strong> อ่านโค้ดก่อนรัน; <strong>Testing</strong> รันแล้วเทียบผล; <strong>Static analysis</strong> ใช้เครื่องมือวิเคราะห์โดยไม่รัน; <strong>Dynamic analysis</strong> ตรวจพฤติกรรมขณะรัน; <strong>Debugging</strong> ไล่หาสาเหตุหลังพบอาการ; <strong>Formal methods</strong> ใช้คณิตศาสตร์ตรวจคุณสมบัติที่กำหนด</p><p>Inspection ตรวจตามเกณฑ์อย่างเป็นระบบ, peer review ให้เพื่อนพัฒนาช่วยตรวจ, walkthrough ให้ผู้เขียนพาอธิบายทีละขั้น เทคนิคเหล่านี้เสริมกัน: การไม่พบปัญหาจาก static analysis ไม่ได้แปลว่า runtime จะไม่มี failure และ formal verification รับรองเฉพาะคุณสมบัติภายใต้แบบจำลอง/สมมติฐานที่ใช้</p><div class="testing-lab">
+  <div class="card">
+    <h3>🧰 กล่องเครื่องมือหาบั๊ก: คลิกเครื่องมือแต่ละชิ้น</h3>
+    <div class="grid" id="tools" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))"></div>
+    <div id="toolInfo" class="card" style="margin-top:12px;background:var(--soft)"></div>
+  </div>
+  <div class="card">
+    <h3>👀 เห็นความต่าง: Static vs Dynamic Analysis <span class="sl">สไลด์ 8–9</span></h3>
+    <div class="two">
+      <div><div class="tag" style="background:#0891b2">⏸ Static: ไม่รันโปรแกรม</div>
+        <pre class="code scanbox" style="margin-top:8px"><span class="ln">int total = 0;</span><span class="ln">int unused = 5;      <span class="flag">⚠ unused variable</span></span><span class="ln">for (x : items)</span><span class="ln">   total += x;</span><span class="ln">return total;</span><span class="ln">print("done");       <span class="flag">⚠ unreachable code</span></span></pre>
+        <p class="muted">เครื่องมือ "สแกน" อ่านโค้ดเฉย ๆ เหมือนโปรแกรมตรวจคำผิด</p></div>
+      <div><div class="tag" style="background:#dc2626">▶ Dynamic: ขณะโปรแกรมรันอยู่</div>
+        <div class="card" style="margin-top:8px">
+          <p style="margin:0">💾 Memory ที่ใช้ <small class="muted">(เพิ่มขึ้นเรื่อย ๆ ไม่ลดลง = memory leak!)</small></p><div class="membar"><div></div></div>
+          <p style="margin:8px 0 0">⚡ CPU / Performance monitoring</p>
+          <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 300 60"><polyline class="spark" fill="none" stroke="#4f46e5" stroke-width="3" points="0,50 30,40 60,45 90,20 120,30 150,10 180,35 210,25 240,40 270,15 300,30"/></svg></div>
+        </div>
+        <p class="muted">ต้อง "ทำงานจริง" ถึงจะเห็น เหมือนหมอวัดคลื่นหัวใจตอนวิ่งบนลู่</p></div>
+    </div>
+  </div>
+  <div class="card"><h3>🎮 ลากการ์ด: Static หรือ Dynamic?</h3><p class="muted">กฎง่าย ๆ: ต้องรันโปรแกรมไหมถึงจะเห็นปัญหา?</p><div id="g_sd"></div></div>
+</div></section>
+<section class="lesson-section" id="debugging"><div class="section-kicker">LECTURE 12 · หน้า 10</div><h2>Debugging: จากอาการไปถึงสาเหตุ</h2><p>ลำดับตามสไลด์คือ <strong>Identify failure → Reproduce → Locate cause → Fix defect → Test again</strong> อย่ารีบเปลี่ยนโค้ดเพียงเพราะเห็นผลผิด: เก็บ input ที่ทำให้เกิดซ้ำก่อน แล้วใช้ breakpoint, step execution, ดูตัวแปร, logging/tracing หรือ stack trace เพื่อตามหาจุดเริ่มผิด</p><p>ตัวอย่างเสริมนี้รวมราคาสินค้าด้วย loop ที่ใช้ <code>i &lt;= prices.length</code> จึงอ่านเลยท้าย array จนได้ NaN แก้เป็น <code>i &lt; prices.length</code> แล้วทดสอบทั้งเคสเดิมและเคสอื่นเพื่อตรวจ regression</p><div class="testing-lab">
+  <div class="card">
+    <p><b>นิยาม:</b> Locate and identify the <b>cause</b> of a failure <b>after</b> an error has been observed คือหาต้นเหตุหลังจากเห็นอาการผิดแล้ว</p>
+    <p>⚠️ <b>Testing ≠ Debugging:</b> Testing = "พบว่ามีปัญหา" · Debugging = "หาว่าเกิดจากตรงไหน แล้วแก้"</p>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 760 110" id="dbgFlow"></svg></div>
+    <p class="muted" style="text-align:center">คลิกกล่องเพื่อข้ามไปขั้นนั้นได้ · เทคนิค: Breakpoints · Step-by-step execution · Variable inspection · Logging/tracing · Stack-trace analysis</p>
+  </div>
+  <div class="card" id="dbgStage" aria-live="polite"></div>
+</div></section>
+<section class="lesson-section" id="verification"><div class="section-kicker">LECTURE 12 · หน้า 13–14</div><h2>Verification vs Validation</h2><p><strong>Verification — “Are we building the software right?”</strong> ตรวจว่าสิ่งส่งมอบของระยะนี้ตรงข้อกำหนดจากระยะก่อนหน้าหรือไม่ ส่วน <strong>Validation — “Are we building the right software?”</strong> ตรวจว่าผลิตภัณฑ์ตอบการใช้งานและความต้องการจริงหรือไม่ สร้างรถยนต์ตรง spec ทุกอย่างยังไม่ตอบโจทย์คนที่ต้องการจักรยาน</p><p>หน้า 13 ให้นิยาม validation ในช่วงท้ายการพัฒนา แต่การรับ feedback จากผู้ใช้ระหว่างทางก็ช่วยตรวจความต้องการได้ (อธิบายเสริม) คู่ในภาพหน้า 14 คือ Requirements ↔ Acceptance, High-level design ↔ System, Detailed design ↔ Integration และ Coding ↔ Unit ไม่ควรสรุปว่า verification ทำได้แค่ไม่รันโปรแกรม หรือ validation คือการทดสอบอย่างเดียว</p><div class="testing-lab">
+  <div class="two">
+    <div class="card"><h3>🔧 Verification</h3><p class="qbox">"Are we building the software <u>right</u>?"</p><p>ตรวจว่าผลงานของ phase หนึ่งตรงกับ requirements ที่กำหนดใน <b>phase ก่อนหน้า</b></p><p>🏗️ ผู้รับเหมาเช็กว่าก่อผนังตรงตามแบบแปลน</p></div>
+    <div class="card"><h3>🎯 Validation</h3><p class="qbox">"Are we building the <u>right</u> software?"</p><p>ประเมินซอฟต์แวร์<b>ตอนท้ายของการพัฒนา</b> ว่าตรงกับการใช้งานที่ตั้งใจไว้</p><p>🏠 เจ้าของบ้านเข้าอยู่จริง แล้วพบว่าตอบโจทย์ครอบครัวไหม</p></div>
+  </div>
+  <div class="card">
+    <h3>🚲 ทดลอง: ลูกค้าอยากได้ "จักรยาน"</h3>
+    <div class="extra">สถานการณ์สมมติ ช่วยให้เห็นว่า Verification กับ Validation ผ่านหรือไม่ผ่านแยกกันได้</div>
+    <p><button class="btn sm" id="vvS" onclick="vvSpec=!vvSpec;vvUpd()"></button> <button class="btn sm" id="vvB" onclick="vvBuild=!vvBuild;vvUpd()"></button></p>
+    <div class="three">
+      <div class="vvbox"><div class="em">🚲</div><b>ลูกค้าต้องการ</b><br>จักรยาน</div><div class="arr2">➜</div>
+      <div class="vvbox"><div class="em" id="vvSE"></div><b>Spec / Requirements เขียนว่า</b><br><span id="vvST"></span></div><div class="arr2">➜</div>
+      <div class="vvbox"><div class="em" id="vvBE"></div><b>ของที่สร้างออกมา</b><br><span id="vvBT"></span></div>
+    </div>
+    <div class="two" style="margin-top:12px"><div class="qbox" id="vvVer"></div><div class="qbox" id="vvVal"></div></div>
+  </div>
+  <div class="card">
+    <h3>🔷 V-Model: Validation and Verification Activities <span class="sl">สไลด์ 14</span></h3>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 760 300" id="vSvg"></svg></div>
+    <button class="btn" onclick="vAnim()">▶ ดูลำดับการไหลของงาน</button>
+    <p class="qbox" id="vTxt">คลิกกล่องใดก็ได้เพื่อดูว่าจับคู่กับอะไร</p>
+    <div class="extra">Test ระดับบนสุด (Acceptance) เทียบกับ Requirements ของผู้ใช้ จึงมีลักษณะเป็น <b>Validation</b> ส่วน test ระดับล่างที่เทียบกับเอกสาร design จะมีลักษณะเป็น <b>Verification</b></div>
+  </div>
+  <div class="card"><h3>🎮 ลากการ์ด: Verification หรือ Validation?</h3><div id="g_vv"></div></div>
+<div class="card"><h3>เลือกคู่ V-Model ด้วยแป้นพิมพ์</h3><button class="btn sm" onclick="vPick(0)">Requirements</button><button class="btn sm" onclick="vPick(1)">High-level design</button><button class="btn sm" onclick="vPick(2)">Detailed design</button><button class="btn sm" onclick="vPick(3)">Coding</button></div></div></section>
+<section class="lesson-section" id="fault-error-failure"><div class="section-kicker">LECTURE 12 · หน้า 15</div><h2>Fault → Error → Failure</h2><p><strong>Fault</strong> คือ defect ที่อยู่ในซอฟต์แวร์ เช่น เขียน loop เริ่มที่ index 1 แทน 0; <strong>Error</strong> คือสถานะภายในผิด เช่น sum ขาดค่าตัวแรก; <strong>Failure</strong> คือพฤติกรรมภายนอกผิดจากข้อกำหนด เช่น แสดงค่าเฉลี่ยประมาณ 26.67 ทั้งที่ควรเป็น 30 สำหรับ [10, 20, 60]</p><p>Fault ไม่จำเป็นต้องแสดงเป็น failure ทุกครั้ง: ต้องรันถึงส่วนที่ผิด เกิดสถานะผิด และผลนั้นส่งต่อจนสังเกตได้ ลอง [0, 20, 60] จะเห็นว่าแม้ข้ามตัวแรก โค้ดยังให้ค่าเฉลี่ยถูกในกรณีนี้ จึงใช้ผลผ่านเพียงครั้งเดียวรับรองโค้ดทั้งหมดไม่ได้</p><div class="testing-lab">
+  <div class="card">
+    <div class="three">
+      <div class="vvbox"><div class="em">🔧</div><b>Fault</b><br><small>A <b>static defect</b> in the software<br>จุดผิดที่อยู่นิ่ง ๆ ในโค้ด</small></div><div class="arr2">➜<br><small>ถูกรัน</small></div>
+      <div class="vvbox"><div class="em">🧠</div><b>Error</b><br><small>An <b>incorrect internal state</b> (manifestation of some fault)<br>สถานะภายในผิด</small></div><div class="arr2">➜<br><small>ส่งผลออกมา</small></div>
+      <div class="vvbox"><div class="em">📺</div><b>Failure</b><br><small><b>External</b>, incorrect behavior w.r.t. requirements<br>ผู้ใช้เห็นว่าผิด</small></div>
+    </div>
+    <p>📌 Faults in software ≈ <b>design mistakes</b> in hardware · 📌 <b>Software does not degrade</b> (ซอฟต์แวร์ไม่เสื่อมตามเวลา โค้ดไม่สึกหรอแบบฮาร์ดแวร์ แต่การแก้โค้ดหรือเปลี่ยนสภาพแวดล้อมอาจทำให้เกิดปัญหาใหม่)</p>
+    <p>🚗 <b>Analogy:</b> ออกแบบวงจรเบรกผิด (fault) → แรงดันน้ำมันเบรกผิด (error) → รถเบรกไม่อยู่ (failure)</p>
+  </div>
+  <div class="card">
+    <h3>🧪 Lab: ดูบั๊กเดินทางจากโค้ดไปถึงหน้าจอ</h3>
+    <div class="extra">โค้ดตัวอย่างแต่งขึ้นเพื่อให้เห็นภาพ</div>
+    <p>ใส่ตัวเลข (คั่นด้วย ,): <input type="text" id="avgIn" aria-label="ตัวเลขสำหรับหาค่าเฉลี่ย คั่นด้วยจุลภาค" value="10,20,30" style="width:170px"> <button class="btn" onclick="runFault()">▶ Run</button>
+      <button class="btn ghost sm" onclick="$('avgIn').value='0,20,30';runFault()">ลอง 0,20,30</button></p>
+    <div class="two" style="grid-template-columns:1.2fr 1fr 1fr">
+      <div><h4>1️⃣ โค้ด (Fault)</h4><pre class="code"><span class="ln">function average(arr) {</span><span class="ln">  let sum = 0;</span><span class="ln warn">  for (let i = 1; ...; i++) // ❌ ควรเป็น 0</span><span class="ln">    sum += arr[i];</span><span class="ln">  return sum / arr.length;</span><span class="ln">}</span></pre></div>
+      <div><h4>2️⃣ หน่วยความจำ (Error)</h4><div id="fArr" class="arr"></div>
+        <div class="mem"><div>i = <b id="fI">–</b></div><div>sum = <b id="fSum">0</b></div><div>sum ที่ควรได้ = <b id="fExp">–</b></div></div></div>
+      <div><h4>3️⃣ หน้าจอ (Failure)</h4><div class="phone"><div class="scr" id="fScr">กด Run</div></div></div>
+    </div>
+    <div id="fMsg2"></div>
+  </div>
+</div></section>
+<section class="lesson-section" id="testing-levels"><div class="section-kicker">LECTURE 12 · หน้า 7, 16–19</div><h2>Testing และระดับการทดสอบ</h2><p>Testing คือการตรวจพฤติกรรมขณะโปรแกรมทำงานด้วย <strong>test cases จำนวนจำกัด</strong> ที่เลือกจาก execution domain เพื่อประเมินคุณภาพและหา defect ให้แก้ก่อนปล่อย ไม่สามารถรับรองว่าไม่มี defect ทุกกรณีได้</p><p><strong>Unit</strong> ตรวจฟังก์ชัน/คลาส; <strong>Integration</strong> ตรวจการทำงานร่วมกัน; <strong>System</strong> ตรวจระบบครบชุด; <strong>Acceptance</strong> ตรวจความต้องการผู้ใช้/ธุรกิจ ส่วน <strong>Regression</strong> คือการทดสอบหลังเปลี่ยนแปลงเพื่อหาผลกระทบใหม่ ใช้ได้หลายระดับ ไม่ใช่ขั้นที่ทำครั้งเดียวแล้วจบ</p><p>หน้า 18–19 แยกคำถามสี่มุม: ใครทดสอบ (programmer/tester/user), ทดสอบอะไร (unit/function/system/UI), ทำไมทดสอบ (acceptance/conformance/configuration/performance/stress), และเลือกเคสอย่างไร (intuition/spec/code/เคสเดิม/ความรู้เรื่อง faults)</p><div class="testing-lab">
+  <div class="card">
+    <p><b>Purpose:</b> ประเมินคุณภาพของผลิตภัณฑ์ และปรับปรุงโดยหา defect แล้วแก้ <b>ก่อน release</b></p>
+    <p><b>นิยาม:</b> Dynamic (running-program) verification of program's behavior on a <b>finite set of test cases</b> selected from execution domain</p>
+    <p class="qbox">⚠️ Testing can't prove product 100% works</p>
+  </div>
+  <div class="card">
+    <h3>🔬 ทดลอง: ทำไมเทสแล้วพิสูจน์ไม่ได้ 100%?</h3>
+    <p>แต่ละจุด = input 1 ค่าที่เป็นไปได้ (ของจริงมีเป็นล้าน) ในนี้ซ่อน <b>บั๊กไว้ 3 จุด</b> ที่คุณมองไม่เห็น</p>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 680 290" id="dom"></svg></div>
+    <p>จำนวน test cases ต่อรอบ: <b id="domKV">10</b></p><input type="range" id="domK" aria-label="จำนวนเคสที่จะสุ่มทดสอบ" min="1" max="60" value="10" oninput="$('domKV').textContent=this.value">
+    <button class="btn" onclick="domTest()">🧪 สุ่มเทส</button><button class="btn ghost" onclick="DOM.rev=true;domDraw()">👁️ เปิดเฉลยบั๊ก</button><button class="btn ghost" onclick="domNew()">↺ เริ่มใหม่</button>
+    <p class="qbox" id="domMsg">กด "สุ่มเทส" เพื่อเริ่ม</p>
+    <div class="extra">Testing แสดงได้ว่า <b>"มีบั๊ก"</b> แต่แสดงไม่ได้ว่า <b>"ไม่มีบั๊ก"</b> เพราะเทสได้แค่จำนวนจำกัด (finite) 🥚 เหมือนสุ่มตรวจไข่ 10 ฟองจากล้านฟอง</div>
+  </div>
+  <div class="card">
+    <h3>🎯 ระดับการทดสอบ (คลิกวงกลม) <span class="sl">สไลด์ 7</span></h3>
+    <div class="two"><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 300 280" id="lvSvg"></svg></div><div><p class="qbox" id="lvTxt">คลิกวงกลมเพื่อดูรายละเอียด</p>
+      <button class="btn ghost" onclick="lvReg()">🔁 แล้ว Regression testing ล่ะ?</button></div></div>
+  </div>
+  <div class="card">
+    <h3>🧱 Progression of Testing <span class="sl">สไลด์ 17</span></h3>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center" id="pgSteps"></div>
+    <div class="pgarea" id="pgArea"></div>
+    <div style="text-align:center"><button class="btn" onclick="pgNext()">ประกอบขั้นถัดไป ▶</button></div>
+    <p class="muted" style="text-align:center">เหมือนต่อ LEGO: เช็กทีละก้อน → ประกอบเป็นชิ้น → ประกอบเป็นรถทั้งคัน</p>
+  </div>
+  <div class="card">
+    <h3>Testing Techniques: Who · What · Why · How <span class="sl">สไลด์ 18–19</span></h3>
+    <div class="grid">
+      <div class="vvbox"><div class="em">👥</div><b>Who tests</b><br>Programmers · Testers · Users</div>
+      <div class="vvbox"><div class="em">📦</div><b>What is tested</b><br>Unit · Functional · Integration/system · User interface</div>
+      <div class="vvbox"><div class="em">🎯</div><b>Why test</b><br>Acceptance · Conformance · Configuration · Performance · Stress</div>
+      <div class="vvbox"><div class="em">🛠️</div><b>How (test cases)</b><br>Intuition · Specification based (<b>black-box</b>) · Code based (<b>white-box</b>) · Existing cases (<b>regression</b>) · Faults</div>
+    </div>
+  </div>
+</div></section>
+<section class="lesson-section" id="ecp"><div class="section-kicker">LECTURE 12 · หน้า 20–26</div><h2>Black-box · Equivalence Class Partitioning</h2><p><strong>Black-box</strong> ออกแบบ test จาก specification และ interface โดยไม่จำเป็นต้องใช้โครงสร้างภายใน หาได้ทั้งฟังก์ชันขาด/ผิด, interface, โครงสร้างข้อมูลหรือฐานข้อมูลภายนอก, พฤติกรรม/ประสิทธิภาพ และ initialization/termination</p><p><strong>ECP</strong> แบ่ง input เป็นกลุ่มที่คาดว่าพบข้อผิดพลาดแบบเดียวกัน แล้วเลือกตัวแทนแต่ละกลุ่ม รวมกลุ่ม invalid ด้วย เช่น อายุจำนวนเต็ม 18–56 แบ่งเป็น ≤17, 18–56, ≥57 เลือก 10, 30, 60 ได้ สมมติฐาน “ตัวแทนสะท้อนกลุ่ม” ไม่ใช่หลักฐานว่าสมาชิกอื่นถูกทั้งหมด</p><p>Exercise 1: 1–1000 เลือก 0 → Invalid, 500 → Valid, 1001 → Invalid ส่วน Exercise 2 หน้า 25 แบ่งเป็น <strong>สอง classes</strong>: {75, 253, 414} กับค่าอื่น ตัวแทน 75 และ 100 จึงตรง ECP ตามสไลด์ การทดสอบทั้งสามค่าที่อนุญาตเป็นการเพิ่มความมั่นใจ ไม่ใช่ข้อบังคับของ ECP</p><div class="testing-lab">
+  <div class="card">
+    <h3>📦 เปิดฝากล่องดู!</h3>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 700 220" id="bwSvg">
+      <text x="60" y="100" text-anchor="middle" class="svgt" font-weight="800">Input</text><text x="60" y="122" text-anchor="middle" font-size="22">🪙</text>
+      <line x1="100" y1="110" x2="222" y2="110" stroke="#4f46e5" stroke-width="5"/><path d="M222,100 L238,110 L222,120z" fill="#4f46e5"/>
+      <rect id="bwBox" x="240" y="25" width="220" height="170" rx="18" fill="#0f172a" stroke="#4f46e5" stroke-width="4" style="transition:.5s"/>
+      <g id="bwIn" opacity="0" style="transition:.5s">
+        <polygon points="350,45 395,72 350,99 305,72" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/><text x="350" y="77" text-anchor="middle" font-size="12" font-weight="700" fill="#1e293b">coin ok?</text>
+        <line x1="320" y1="90" x2="295" y2="140" stroke="#16a34a" stroke-width="3"/><line x1="380" y1="90" x2="405" y2="140" stroke="#dc2626" stroke-width="3"/>
+        <rect x="255" y="140" width="80" height="30" rx="6" fill="#bbf7d0"/><text x="295" y="160" text-anchor="middle" font-size="12" fill="#1e293b">give drink</text>
+        <rect x="365" y="140" width="80" height="30" rx="6" fill="#fecaca"/><text x="405" y="160" text-anchor="middle" font-size="12" fill="#1e293b">return coin</text>
+      </g>
+      <text id="bwQ" x="350" y="125" text-anchor="middle" font-size="60" fill="#fff" style="transition:.4s">?</text>
+      <line x1="460" y1="110" x2="582" y2="110" stroke="#4f46e5" stroke-width="5"/><path d="M582,100 L598,110 L582,120z" fill="#4f46e5"/>
+      <text x="640" y="100" text-anchor="middle" class="svgt" font-weight="800">Output</text><text x="640" y="122" text-anchor="middle" font-size="22">🥤</text>
+    </svg></div>
+    <div style="text-align:center"><button class="btn" id="bwBtn" onclick="bwToggle()">🔓 เปิดฝากล่อง (White-box)</button></div>
+    <div id="bwTxt" class="qbox"></div>
+    <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table><tr><th></th><th>⬛ Black-box</th><th>⬜ White-box</th></tr>
+      <tr><td>ชื่ออื่น</td><td>Behavioral / Functional testing</td><td>Glass-box / Structural testing</td></tr>
+      <tr><td>ดูโค้ดไหม</td><td>❌ ดูแค่ input/output ที่ interface</td><td>✅ ดูตรรกะภายใน (control structure)</td></tr>
+      <tr><td>สร้าง test จาก</td><td>Specification (functional requirements)</td><td>Code</td></tr>
+      <tr><td>เทคนิค</td><td>ECP, BVA</td><td>Path analysis</td></tr></table></div>
+    <p><b>Black-box หา error ได้:</b> incorrect or missing functions · interface errors · errors in data structures / external database access · behavior or performance errors · initialization and termination errors <span class="sl">สไลด์ 20</span></p>
+  </div>
+  <div class="card">
+    <h3>🍲 Equivalence Class Partitioning (ECP) <span class="sl">สไลด์ 22</span></h3>
+    <div class="why">❓ <b>แก้ปัญหาอะไร:</b> input มีเป็นล้านค่า เทสทุกค่าไม่ไหว จึง <b>แบ่ง input เป็นกลุ่มที่โปรแกรมทำงานเหมือนกัน</b> (equivalent) แล้วใช้ <b>representative (ตัวแทน)</b> กลุ่มละ 1 ค่า เป็นเทคนิค specification-based, black-box</div>
+    <p>🍲 เหมือนชิมแกงหม้อใหญ่ ตักชิมช้อนเดียวก็รู้รสทั้งหม้อ</p>
+    <h4>ตัวอย่าง: Finding the largest number (ลองใส่ตัวเลข)</h4>
+    <p>First <input type="number" id="lgA" aria-label="จำนวนแรก" value="10" oninput="lgUpd()"> Second <input type="number" id="lgB" aria-label="จำนวนที่สอง" value="7" oninput="lgUpd()"></p>
+    <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table id="lgT"></table></div>
+  </div>
+  <div class="card">
+    <h3>🛠️ ECP + BVA Generator (เส้นจำนวน) <span class="sl">สไลด์ 23, 24, 29</span></h3>
+    <p>ช่วงที่ valid: <input type="number" id="rMin" aria-label="ค่าต่ำสุดของช่วงจำนวนเต็ม" value="18" oninput="nlUpd()"> ถึง <input type="number" id="rMax" aria-label="ค่าสูงสุดของช่วงจำนวนเต็ม" value="56" oninput="nlUpd()">
+      <button class="btn sm on" id="mEcp" onclick="nlMode='ecp';nlUpd()">ECP</button><button class="btn sm ghost" id="mBva" onclick="nlMode='bva';nlUpd()">BVA</button></p>
+    <p class="muted">ค่าเริ่มต้น 18–56 คือสไลด์ 23 · ลองเปลี่ยนเป็น 1–1000 (Exercise 1, 4)</p>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 760 215" id="nl"></svg></div>
+    <p>👉 ลากตัวชี้เพื่อลองค่า: <b id="prV"></b> <span id="prR"></span></p><input type="range" id="probe" aria-label="ค่าที่ทดลองบนเส้นจำนวน" oninput="nlUpd()">
+    <div class="testing-table" id="nlTab" aria-live="polite"></div>
+  </div>
+  <div class="card">
+    <h3>📝 Exercises ECP <span class="sl">สไลด์ 24–26</span></h3>
+    <p><b>Ex 1:</b> input 1–1000</p>
+    <div style="display:flex;border-radius:10px;overflow:hidden;color:#fff;font-weight:700;text-align:center"><div style="flex:1;background:#dc2626;padding:8px">≤ 0<br>Invalid</div><div style="flex:2;background:#16a34a;padding:8px">1 – 1000<br>Valid</div><div style="flex:1;background:#dc2626;padding:8px">≥ 1001<br>Invalid</div></div>
+    <p><b>Ex 2:</b> รับเฉพาะ 75, 253, 414</p>
+    <div style="display:flex;border-radius:10px;overflow:hidden;color:#fff;font-weight:700;text-align:center"><div style="flex:1;background:#16a34a;padding:8px">75<br>Valid</div><div style="flex:1;background:#16a34a;padding:8px">253<br>Valid</div><div style="flex:1;background:#16a34a;padding:8px">414<br>Valid</div><div style="flex:2;background:#dc2626;padding:8px">Other values<br>Invalid</div></div>
+    <div class="extra">หน้า 25 จัด valid เป็นหนึ่ง class และค่าอื่นเป็นอีก class; การลองทั้ง 75, 253, 414 เป็นการเพิ่มความครอบคลุมภายในกลุ่ม ไม่ใช่ข้อบังคับของ ECP</div>
+    <p><b>Ex 3:</b> ค่าเข้าอุทยาน: children under 12 = Free · adults 18–60 = 200 Baht · under 18 และ older than 60 = 100 Baht</p>
+    <div style="display:flex;border-radius:10px;overflow:hidden;color:#fff;font-weight:700;text-align:center;font-size:.9rem"><div style="flex:1;background:#dc2626;padding:8px">&lt; 0<br>Invalid</div><div style="flex:1;background:#0ea5e9;padding:8px">1 – 11<br>Free</div><div style="flex:1;background:#f59e0b;padding:8px">12 – 17<br>100</div><div style="flex:1;background:#16a34a;padding:8px">18 – 60<br>200</div><div style="flex:1;background:#7c3aed;padding:8px">&gt; 60<br>100</div></div>
+    <p class="muted">💡 สไลด์ 26 เขียนช่องฟรีเป็น 1–11 แต่สไลด์ 30 นับ 0–11 เป็น Free (อายุ 0 คือทารก) หน้าถัดไปใช้แบบสไลด์ 30</p>
+  </div>
+</div><div class="testing-lab"><div class="card"><h3>จัดกลุ่ม: Black-box หรือ White-box?</h3><div id="g_bw"></div></div></div></section>
+<section class="lesson-section" id="bva"><div class="section-kicker">LECTURE 12 · หน้า 27–30</div><h2>Boundary Value Analysis · ตั๋วอุทยาน</h2><p><strong>BVA</strong> เน้นจุดเปลี่ยนกลุ่มที่มักเขียน &lt;, ≤, &gt;, ≥ ผิด เริ่มจาก ECP แล้วเลือกค่าขอบและค่าข้างเคียง สำหรับจำนวนเต็ม 1–1000 ชุดเต็มรอบขอบคือ <strong>0, 1, 2, 999, 1000, 1001</strong>; reduced ตามหน้า 29 คือ <strong>0, 1, 1000, 1001</strong> พร้อม expected results: Invalid, Valid, Valid, Invalid</p><p>ค่าข้างเคียง ±1 ใช้กับตัวอย่างจำนวนเต็ม หากเป็นทศนิยมต้องระบุความละเอียดก่อน BVA ต้องมีค่าที่เรียงลำดับและมีขอบเขต ไม่ใช้ ±1 กับหมวดหมู่ที่ไม่มีลำดับโดยตรง</p><div class="note warm"><strong>หมายเหตุจากต้นฉบับ:</strong> หน้า 26 พิมพ์กลุ่มฟรีเป็น 1–11 และหน้า 30 พิมพ์กลุ่มท้ายเป็น &gt;61 แต่ข้อความโจทย์และตัวอย่างให้ “อายุต่ำกว่า 12 ฟรี” และ “มากกว่า 60 จ่าย 100” บทนี้จึงใช้จำนวนเต็ม <strong>&lt;0 invalid, 0–11 ฟรี, 12–17 = 100, 18–60 = 200, ≥61 = 100 บาท</strong> โดยยึดอายุ 0 และ 61 จากตัวอย่างหน้า 30</div><p>Reduced suite สำหรับตั๋ว: <strong>−1, 0, 11, 12, 17, 18, 60, 61</strong> ได้ผล Invalid, ฟรี, ฟรี, 100, 100, 200, 200, 100 ตามลำดับ “ครบ 8 ขอบ” หมายถึงครบชุดเป้าหมายนี้ ไม่ใช่ทดสอบ input ที่เป็นไปได้ทั้งหมด</p><div class="testing-lab">
+  <div class="card">
+    <div class="why">❓ <b>แก้ปัญหาอะไร:</b> <b>Boundaries are error-prone</b> โปรแกรมเมอร์มักพลาดตรงขอบ เช่น เขียน &lt; แทน &lt;= จึงต้องเทสที่ <b>boundary, boundary+1, boundary−1</b> ไม่ใช่แค่สมาชิกในกลุ่ม · <b>Best for ordinal values</b> (ค่าที่เรียงลำดับได้)</div>
+    <p>🎢 ป้าย "สูงไม่เกิน 120 cm" พนักงานต้องระวังคนสูง 119/120/121 cm ไม่ใช่คนสูง 90 cm</p>
+  </div>
+  <div class="card">
+    <h3>🎬 แอนิเมชัน 3 ขั้น: Age Classification Problem <span class="sl">สไลด์ 28</span></h3>
+    <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" onclick="bvStage(0)">① All Cases</button><button class="btn sm" onclick="bvStage(1)">② Belonging Cases</button><button class="btn sm" onclick="bvStage(2)">③ Reduced Class</button></div>
+    <p class="qbox" id="bvTxt"></p>
+    <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table id="bvT"></table></div>
+  </div>
+  <div class="card">
+    <h3>🎟️ เกม: ออกแบบ Test Suite ตั๋วอุทยาน <span class="sl">สไลด์ 30</span></h3>
+    <p>ภารกิจ: เลือกอายุให้ครอบคลุม <b>ทุก class</b> (ECP) และ <b>ทุกขอบ</b> (BVA) ด้วยจำนวน test น้อยที่สุด</p>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 760 110" id="tkSvg"></svg></div>
+    <input type="range" id="age" aria-label="อายุสำหรับตั๋วอุทยาน" min="-5" max="90" value="20" oninput="tkUpd()">
+    <div class="ticket"><div class="av" id="tkAv"></div><div><div>อายุ <b id="tkAge"></b> ปี · กลุ่ม <span id="tkCls"></span></div><div class="pr" id="tkPr"></div><div id="tkBd" class="muted"></div></div></div>
+    <button class="btn" onclick="tkAdd()">➕ เพิ่มอายุนี้เป็น test case</button><button class="btn ghost" onclick="suite=[];tkSuite()">ล้าง</button>
+    <p><b>Test suite:</b> <span id="tkList" class="muted"></span></p>
+    <p>Equivalence classes (5)</p><div class="meter"><div id="mC"></div></div><div id="pC"></div>
+    <p>Boundary values (8: −1, 0, 11, 12, 17, 18, 60, 61)</p><div class="meter"><div id="mB"></div></div><div id="pB"></div>
+    <div id="tkMsg" aria-live="polite"></div>
+    <details><summary><b>ดูเฉลยตารางสไลด์ 30</b></summary>
+      <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table><tr><th>Class</th><th>All Cases</th><th>Belonging</th><th>Reduced</th><th>Expected</th></tr>
+      <tr><td>Invalid (&lt;0)</td><td>-1, 0</td><td>-1</td><td>-1</td><td>Error: Invalid Age</td></tr>
+      <tr><td>0-11</td><td>-1, 0, 1, 10, 11, 12</td><td>0, 1, 10, 11</td><td>0, 11</td><td>Free</td></tr>
+      <tr><td>12-17</td><td>11, 12, 13, 16, 17, 18</td><td>12, 13, 16, 17</td><td>12, 17</td><td>100</td></tr>
+      <tr><td>18-60</td><td>17, 18, 19, 59, 60, 61</td><td>18, 19, 59, 60</td><td>18, 60</td><td>200</td></tr>
+      <tr><td>"&gt;61" ในสไลด์ (หมายถึง ≥61)</td><td>60, 61</td><td>61</td><td>61</td><td>100</td></tr></table></div></details>
+  </div>
+  <div class="card">
+    <h3>ECP vs BVA</h3>
+    <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table><tr><th></th><th>ECP</th><th>BVA</th></tr><tr><td>เลือกค่า</td><td>ตัวแทนกลุ่ม (ค่าไหนก็ได้ในกลุ่ม)</td><td>ค่าที่ขอบ ±1</td></tr><tr><td>แนวคิด</td><td>ค่าในกลุ่มเดียวกันให้ผลเหมือนกัน</td><td>ขอบคือจุดที่พลาดบ่อย</td></tr><tr><td>ใช้คู่กัน</td><td colspan="2">✅ แบ่งกลุ่มด้วย ECP แล้วเทสขอบด้วย BVA</td></tr></table></div>
+  </div>
+</div></section>
+<section class="lesson-section" id="path-analysis"><div class="section-kicker">LECTURE 12 · หน้า 31–35</div><h2>White-box · Path Analysis</h2><p><strong>White-box</strong> ใช้ control structure และรายละเอียดโค้ดเพื่อเลือกเคส ครอบคลุมเส้นทางอิสระ, true/false ของ decisions, ขอบเขต loop และความถูกต้องของข้อมูลภายใน หน้า 32 เรียงระดับจาก logical paths → independent paths → branch → statement coverage</p><p><strong>Statement coverage</strong> ดูว่าคำสั่งถูกทำงานหรือยัง; <strong>Branch coverage</strong> ดูว่าทางออก true/false ของแต่ละ decision ถูกใช้หรือยัง; <strong>Path coverage</strong> ดูลำดับเส้นทางทั้งหมด 100% statements ไม่รับรองทุก branch และ 100% branches ก็ไม่รับรองทุกการจับคู่เป็น path</p><p>Simple if มีสองทาง: S1–C1–S3 กับ S1–C1–S2–S3 ส่วน loop มี basis สองทาง: ไม่เข้าลูป และเข้าหนึ่งรอบแล้วออก แต่การทดสอบจริงควรเพิ่มหลายรอบและค่าขอบด้วย (อธิบายเสริม)</p><div class="testing-lab">
+  <div class="card">
+    <p><b>White-box</b> (Glass-box / Structural): ตรวจรายละเอียดเชิงขั้นตอน ใช้ <b>control structure</b> สร้าง test case เพื่อ:</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+      <div class="vvbox">🛤️ ผ่านทุก <b>independent path</b></div><div class="vvbox">🔀 ทุก <b>logical decision</b> ทั้ง true/false</div><div class="vvbox">🔁 รันทุก <b>loop</b> ที่ขอบเขตของมัน</div><div class="vvbox">🗃️ ผ่าน internal <b>data structures</b></div></div>
+    <p><b>Path analysis</b> <span class="sl">สไลด์ 32</span>: วิเคราะห์จำนวน path แล้วเลือกว่าจะเทส path ไหน · Coverage: Logical paths · Independent paths · <b>Branch coverage</b> (ทุกทางแยกถูกเลือกทั้ง T/F) · <b>Statement coverage</b> (ทุกบรรทัดถูกรันอย่างน้อย 1 ครั้ง)</p>
+    <p class="muted">📖 ปูพื้นฐาน: <b>S</b> = statement (กล่องคำสั่ง) · <b>C</b> = condition (ข้าวหลามตัด/ทางแยก) · ตัวเลขบนลูกศร = segment/edge</p>
+  </div>
+  <div class="card"><h3>(a) Path Analysis พื้นฐาน: if <span class="sl">สไลด์ 33</span></h3><div class="two"><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg id="f33"></svg></div><div id="p33"></div></div></div>
+  <div class="card"><h3>(b) Example with a CASE Structure <span class="sl">สไลด์ 34</span></h3><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg id="f34"></svg></div><div id="p34"></div><p class="muted">3 decisions → 4 paths (= 3 + 1)</p></div>
+  <div class="card"><h3>(c) Example with a Loop <span class="sl">สไลด์ 35</span></h3><div class="two"><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg id="f35"></svg></div><div id="p35"></div></div>
+    <div class="extra">loop วนกี่รอบก็ได้ จำนวน path จริงจึงอาจไม่จำกัด เราจึงเลือกเทสแค่ชุด linearly independent paths</div></div>
+</div></section>
+<section class="lesson-section" id="independent-paths"><div class="section-kicker">LECTURE 12 · หน้า 36–37</div><h2>Independent Paths และ Cyclomatic Number</h2><p>ตามวิธีในหน้า 36 ให้เลือกแต่ละ path ที่เพิ่ม edge ใหม่อย่างน้อยหนึ่งเส้นเมื่อเทียบกับชุดก่อนหน้า สำหรับกราฟเชื่อมต่อเดียวที่ใช้ binary decisions จำนวนเส้นทางอิสระเป็น <strong>V(G) = จำนวน decision nodes + 1</strong> ส่วนสูตรทั่วไป <strong>E − N + 2</strong> สำหรับกราฟเชื่อมต่อเดียวเป็นคำอธิบายเสริม</p><p><strong>2ⁿ ไม่ใช่สูตรนับทุกโปรแกรม:</strong> ใช้กับ n binary decisions เรียงต่อกัน เมื่อทุก combination เป็นไปได้ ตัวอย่างหน้า 37 มี 3 decisions ต่อกัน → 8 logical paths แต่ 4 independent paths ถ้าเป็น if ซ้อน บาง decision จะไม่ถูกเข้าถึงในรอบนั้น หรือเงื่อนไขสัมพันธ์กัน จำนวน feasible paths อาจน้อยกว่า 2ⁿ และ loop อาจทำให้มี paths ไม่จำกัด</p><div class="testing-lab">
+  <div class="card">
+    <p><b>ขั้นตอน:</b> ① คำนวณจำนวน independent paths = <b>#Decision nodes + 1</b> · ② List ทุก path ที่เป็นไปได้ · ③ เลือกชุดที่ linearly independent</p>
+    <p class="qbox">นิยาม: ชุดของ path เป็น linearly independent ถ้า <b>แต่ละ path นำ edge ใหม่อย่างน้อย 1 เส้นเข้ามา</b></p>
+  </div>
+  <div class="card">
+    <h3>🎮 Matrix สไลด์ 36: คลิก path เพื่อสร้างชุด independent</h3>
+    <div class="extra">ผังงานนี้วาดขึ้นจากตาราง matrix ในสไลด์ เพื่อให้เห็นภาพว่า edge ใดอยู่ตรงไหน</div>
+    <div class="two"><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg id="f36"></svg></div><div><div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table id="mx36"></table></div><div id="b36"></div></div></div>
+  </div>
+  <div class="card">
+    <h3>🎮 สไลด์ 37: 3 decisions เรียงกัน มี 8 paths แต่ independent มีแค่ 4</h3>
+    <div class="two"><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg id="f37"></svg></div><div id="b37"></div></div>
+  </div>
+  <div class="card">
+    <h3>🌳 2ⁿ vs Cyclomatic number <span class="sl">สไลด์ 37</span></h3>
+    <p>n binary decisions <b>เรียงต่อกัน (sequential)</b> → total logical paths = <b>2ⁿ</b> · Cyclomatic number = <b>decisions + 1</b></p>
+    <p>จำนวน decisions (n): <b id="nv">3</b></p><input type="range" min="1" max="10" value="3" id="nd" aria-label="จำนวน binary decisions" oninput="treeUpd()">
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 700 250" id="tree"></svg></div>
+    <p>Total paths = 2<sup id="nv2"></sup> = <b id="tp" style="color:#f59e0b"></b> <span id="b1" style="display:inline-block;height:20px;background:#f59e0b;border-radius:4px;vertical-align:middle;transition:.4s"></span></p>
+    <p>Cyclomatic number = n + 1 = <b id="ip" style="color:var(--ok)"></b> <span id="b2" style="display:inline-block;height:20px;background:#16a34a;border-radius:4px;vertical-align:middle;transition:.4s"></span></p>
+    <p class="muted">💡 2ⁿ เพิ่มแบบระเบิด แต่ n+1 เพิ่มทีละ 1 จึงใช้ independent paths เป็นชุดทดสอบพื้นฐาน แต่ยังต้องเลือกเคสตามความเสี่ยงและข้อกำหนดเพิ่มเติม · ⚠️ ถ้า if <b>ซ้อนกัน</b> จะไม่ใช่ 2ⁿ (ดู FindLar_3)</p>
+  </div>
+</div></section>
+<section class="lesson-section" id="find-largest"><div class="section-kicker">LECTURE 12 · หน้า 38</div><h2>Exercise · FindLar_3</h2><p>หน้า 38 ให้โค้ดหาค่าสูงสุดจาก n1, n2, n3 โดยใช้ ≥ ทั้งสาม decision ถ้า n1 ≥ n2 จะไปเปรียบเทียบ n1 กับ n3; ไม่เช่นนั้นเปรียบเทียบ n2 กับ n3 จึงเป็น <strong>if ซ้อน 4 เส้นทาง ไม่ใช่ 8</strong> กิจกรรมแปลงรูปแบบโค้ดให้อ่านง่าย โดยคงตรรกะจากสไลด์</p><div class="table-scroll"><div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table><thead><tr><th>Path</th><th>เงื่อนไข</th><th>Input ตัวอย่าง</th><th>Expected</th></tr></thead><tbody><tr><td>P1</td><td>D1=T, D2=T</td><td>5, 3, 1</td><td>5</td></tr><tr><td>P2</td><td>D1=T, D2=F</td><td>5, 3, 9</td><td>9</td></tr><tr><td>P3</td><td>D1=F, D3=T</td><td>2, 7, 4</td><td>7</td></tr><tr><td>P4</td><td>D1=F, D3=F</td><td>2, 7, 9</td><td>9</td></tr></tbody></table></div></div><p>เพิ่ม equality case เช่น (5, 5, 5), ค่าติดลบ และกรณีเท่ากันสองตัว ถึง coverage ครบแล้วก็ยังอาจมีข้อผิดพลาดอื่นได้</p><div class="testing-lab">
+  <div class="card">
+    <p>ภารกิจ 🎯: หา input ที่ทำให้ผ่าน <b>ทุก path</b> · มี 3 decisions (D1, D2, D3) → <b>3 + 1 = 4 independent paths</b></p>
+    <div class="extra">โค้ดนี้เป็น if <b>ซ้อนกัน (nested)</b> ไม่ใช่เรียงกัน จึงมี 4 paths จริง ไม่ใช่ 2³ = 8</div>
+    <div class="two"><pre class="code" id="flCode"></pre><div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg id="fFL"></svg></div></div>
+    <p style="margin-top:12px">n1 <input type="number" id="n1" aria-label="n1" value="5"> n2 <input type="number" id="n2" aria-label="n2" value="3"> n3 <input type="number" id="n3" aria-label="n3" value="1">
+      <button class="btn" onclick="runFL()">▶ Run</button><button class="btn ghost sm" onclick="hintFL()">💡 ใบ้</button><button class="btn ghost sm" onclick="resetFL()">↺ รีเซ็ต</button></p>
+    <p class="qbox" id="flRes" aria-live="polite">ใส่ตัวเลขแล้วกด Run</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <div><b>Path coverage</b><div class="meter"><div id="mP"></div></div><div id="pP"></div></div>
+      <div><b>Branch coverage</b><div class="meter"><div id="mBr"></div></div><div id="pBr"></div></div>
+      <div><b>Statement coverage</b><div class="meter"><div id="mS"></div></div><div id="pS" class="muted"></div></div>
+    </div>
+  </div>
+</div></section>
+<section class="lesson-section" id="stop-testing"><div class="section-kicker">LECTURE 12 · หน้า 39–42</div><h2>หยุดทดสอบเมื่อไร? · Inspection</h2><p>หน้า 39 เสนอว่าเมื่อรัน planned cases ครบและแก้ปัญหาที่พบแล้ว จึงพิจารณาหยุด รวมถึงดูช่วงที่ไม่พบ error เพิ่มหรือใช้ defect seeding แต่ <strong>ไม่พบ error ใหม่ไม่ได้พิสูจน์ว่าไม่มี error</strong> อาจเป็นเพราะเทสซ้ำชุดเดิมหรือยังไม่เข้าถึงส่วนเสี่ยง ต้องตรวจ exit criteria และความเสี่ยงที่เหลือด้วย (อธิบายเสริม)</p><p>Problem find rate คือจำนวนปัญหาที่พบต่อชั่วโมง กราฟหน้า 40 เพิ่มแล้วค่อยลดลง ไม่ใช่การรับประกันว่าทุกโครงการมีรูปทรงเดียวกัน ส่วน <strong>defect seeding</strong> ใส่ defect ที่ทราบจำนวนเพื่อประเมินความสามารถในการค้นหา สูตรในกิจกรรมเป็นส่วนเสริมและสมมติว่าบั๊กที่ฝังกับบั๊กจริงมีโอกาสถูกพบใกล้กัน ถ้าไม่พบบั๊กที่ฝังเลยจะคำนวณสัดส่วนนี้ไม่ได้</p><p><strong>Inspection</strong> ใช้กับ requirements, design และโค้ด ช่วยเจอ defect เร็วและแลกเปลี่ยนความรู้ ส่วน <strong>execution-based testing</strong> ต้องมีโค้ดที่รันได้และเห็นพฤติกรรมจริง ตารางหน้า 41 เปรียบเทียบต้นทุนเชิงแนวโน้ม ไม่ใช่กฎว่าการแก้ทุกบั๊กต้องแพงเสมอ ทั้งสองกิจกรรมช่วย verification และ validation ได้ตามสิ่งที่ใช้เป็นเกณฑ์</p><div class="testing-lab">
+  <div class="card">
+    <p><b>Simple answer:</b> หยุดเมื่อ <b>รัน test ที่วางแผนไว้ครบทั้งหมด</b> และ <b>แก้ปัญหาที่พบครบแล้ว</b></p>
+    <p><b>Other techniques:</b> ① Stop when you are not finding any more errors · ② Defect seeding</p>
+  </div>
+  <div class="card">
+    <h3>📈 Problem Find Rate <span class="sl">สไลด์ 40</span></h3>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 700 250" id="frSvg"></svg></div>
+    <p>เลื่อนเวลา: <b id="frV"></b></p><input type="range" id="frD" aria-label="วันของการทดสอบ" min="0" max="5.5" step="0.05" value="0.6" oninput="frDraw()">
+    <p class="qbox" id="frMsg"></p>
+    <div class="extra">ตอนเริ่ม ทีมเพิ่งเรียนรู้ระบบและเตรียมการเทส จึงเจอบั๊กน้อย จากนั้นอัตราเพิ่มขึ้นจนสูงสุด แล้วค่อยลดลงเพราะบั๊กที่เหลือน้อยลง เมื่ออัตราต่ำมากต่อเนื่องจึงเป็นสัญญาณให้พิจารณาหยุด</div>
+  </div>
+  <div class="card">
+    <h3>🥚 บ่อจำลอง Defect Seeding</h3>
+    <div class="extra">จงใจฝังบั๊กปลอม (seeded) ที่รู้จำนวนไว้ ถ้าทีมเจอบั๊กปลอมได้ x% ก็น่าจะเจอบั๊กจริงราว x% เช่นกัน<br>สูตร: บั๊กจริงทั้งหมด ≈ บั๊กจริงที่เจอ × จำนวนที่ฝัง ÷ บั๊กปลอมที่เจอ</div>
+    <p>ฝังบั๊กปลอม <input type="number" id="dsS" aria-label="จำนวน defect ที่ฝัง" value="20" min="1" max="40"> ตัว <button class="btn sm" onclick="dsNew()">🌱 สร้างบ่อใหม่</button></p>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 700 230" id="dsSvg"></svg></div>
+    <p><span style="color:#2563eb">🔵 = บั๊กปลอมที่เจอ</span> · <span style="color:#dc2626">🐞 = บั๊กจริงที่เจอ</span> · วงโปร่ง = บั๊กปลอมที่ยังไม่เจอ (เรารู้เพราะเราฝังเอง)</p>
+    <button class="btn" onclick="dsRound()">🧪 เทส 1 รอบ</button><button class="btn ghost" onclick="DS.rev=true;dsDraw()">👁️ เปิดเฉลยบั๊กจริง</button>
+    <div id="dsOut" aria-live="polite" class="qbox"></div>
+  </div>
+  <div class="card">
+    <h3>🔍 Inspections vs 🧪 Testing <span class="sl">สไลด์ 41</span></h3>
+    <p><button class="btn sm" id="itI" onclick="itMode='i';itDraw()">🔍 Inspection ใช้ได้ตรงไหน?</button><button class="btn sm ghost" id="itT" onclick="itMode='t';itDraw()">🧪 Testing ใช้ได้ตรงไหน?</button></p>
+    <div class="testing-diagram" tabindex="0" role="region" aria-label="แผนภาพ เลื่อนซ้ายขวาเพื่อดูรายละเอียด"><svg viewBox="0 0 760 210" id="itSvg"></svg></div>
+    <p class="qbox" id="itTxt"></p>
+    <div class="testing-table" tabindex="0" role="region" aria-label="ตาราง เลื่อนซ้ายขวาเพื่ออ่าน"><table><tr><th>Inspections</th><th>Testing</th></tr>
+      <tr><td>Cost-effective</td><td>Finds errors cheaper, but <b>correcting them is expensive</b></td></tr>
+      <tr><td>Can be applied to <b>intermediate artifacts</b></td><td>Can <b>only be applied to code</b></td></tr>
+      <tr><td><b>Catches defects early</b></td><td>Catches defects <b>late</b> (after implementation)</td></tr>
+      <tr><td>Helps disseminate knowledge about project and best practices</td><td><b>Necessary to gauge quality</b></td></tr></table></div>
+  </div>
+  <div class="card"><h3>🎮 ลากการ์ด: Inspection หรือ Testing?</h3><div id="g_it"></div></div>
+  <div class="card"><h3>📌 Summary <span class="sl">สไลด์ 42</span></h3><p>Concepts of verification and validation · Various testing techniques · Testing and inspections for verification/validation</p></div>
+</div></section>
+<section class="lesson-section" id="key-takeaways"><h2>ก่อนสอบ: เลือกเทคนิคและอธิบายเหตุผลให้ได้</h2><figure class="testing-summary-figure"><div class="testing-flow"><b>Spec → Black-box</b><b>Classes → ECP</b><b>ขอบกลุ่ม → BVA</b><b>Code → White-box</b></div><figcaption>เลือกวิธีตามสิ่งที่โจทย์ให้: ความต้องการ ช่วงข้อมูล หรือโครงสร้างโค้ด</figcaption></figure><ol><li>แยกเป้าหมาย QA/QC และ Verification/Validation โดยใช้ตัวอย่างได้</li><li>ชี้ว่าอะไรเป็น fault, internal error และ external failure</li><li>เขียน test case พร้อม expected result ไม่ใช่แค่รายชื่อ input</li><li>หา ECP ทั้ง valid/invalid แล้วทำ BVA ที่ขอบเปลี่ยนพฤติกรรม</li><li>นับ decision nodes แล้วแยก independent paths ออกจาก logical paths</li><li>อย่าใช้ coverage 100% หรืออัตราพบบั๊กลดลงแทนหลักฐานว่าไม่มี defect</li></ol><details><summary>ลองตอบ: age 18–56 ใช้ ECP และ BVA ต่างกันอย่างไร?</summary><p>ECP เช่น 10, 30, 60 เป็นตัวแทนสามกลุ่ม ส่วน BVA แบบเต็ม 17, 18, 19, 55, 56, 57 เน้นรอบขอบ; reduced คือ 17, 18, 56, 57 ต้องระบุว่าจะใช้รูปแบบไหน และบอกผล valid/invalid ทุกค่า</p></details></section><section class="lesson-section" id="flashcards">
+            <h2>Flashcards</h2>
+            <p class="muted small">
+              กดที่การ์ด หรือใช้ Enter / Space เพื่อดูคำอธิบาย
+            </p>
+            <button
+              id="flashcard"
+              class="flashcard"
+              aria-pressed="false"
+              aria-labelledby="flash-label flash-text"
+              aria-describedby="flash-instruction"
+            >
+              <small id="flash-label">คำศัพท์</small
+              ><span
+                id="flash-text"
+                class="flashcard-term"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><small id="flash-instruction">แตะเพื่อพลิก ↻</small>
+            </button>
+            <div class="flash-controls">
+              <button class="btn tiny" id="flash-prev">← ใบก่อน</button
+              ><span
+                id="flash-position"
+                class="small muted"
+                aria-live="polite"
+              ></span
+              ><button class="btn tiny" id="flash-next">ใบถัดไป →</button>
+            </div>
+          </section>
+          <section class="lesson-section" id="quiz">
+            <h2>Quiz ท้ายบท · 10 ข้อ</h2>
+            <p class="quiz-intro">
+              เลือกคำตอบที่ถูกที่สุดเพียงข้อเดียว ตอบครบแล้วกดตรวจ
+              คะแนนที่ดีที่สุดจะเก็บไว้ในเบราว์เซอร์นี้ พร้อมเฉลยและเหตุผลทุกข้อ
+            </p>
+            <form id="quiz-form">
+              <div id="quiz-questions"></div>
+              <p id="quiz-count" class="small muted" aria-live="polite">
+                ตอบแล้ว 0 / 10 ข้อ
+              </p>
+              <p id="quiz-error" class="error-text" role="alert"></p>
+              <div class="actions">
+                <button id="quiz-submit" class="btn primary" type="submit">
+                  ตรวจคำตอบ →</button
+                ><button id="quiz-retry" class="btn" type="button" hidden>
+                  ทำใหม่ ↻
+                </button>
+              </div>
+              <div id="quiz-result" class="quiz-result" tabindex="-1" hidden>
+                <h3 id="quiz-score"></h3>
+                <p id="quiz-message"></p>
+              </div>
+            </form>
+          </section>
+          <button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-10.html">← Lecture 11</a><a class="btn primary" href="index.html">กลับไปเลือกบทเรียน →</a></nav></article></div></main><div class="footer-reveal">
+      <div class="footer-stage">
+        <div class="footer-curtain">
+          <a class="footer-reveal-link" href="#footer" aria-label="เลื่อนลงเพื่อดูส่วนท้ายเว็บไซต์">SCROLL DOWN TO REVEAL</a>
+        </div>
+        <footer id="footer" class="site-footer motion-footer garden-footer" aria-label="ส่วนท้ายเว็บไซต์">
+
+          <div class="wrap footer-content">
+            <div class="footer-art" aria-hidden="true">
+              <img src="../../assets/ascii/ink-garden.jpg?v=df253ede8012" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+              <video data-src="../../assets/ascii/ink-garden.mp4?v=42821eac656a" poster="../../assets/ascii/ink-garden.jpg?v=df253ede8012" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+            </div>
+            <h2 class="footer-contact-title">GitHub</h2>
+            <a class="footer-contact" href="https://github.com/Title5656" target="_blank" rel="noopener noreferrer" aria-label="GitHub ของ Title5656 (เปิดแท็บใหม่)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.64 1.23 3.29.94.1-.73.39-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.8 10.8 0 0 1 12 6.15c.96 0 1.92.13 2.82.38 2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+              <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
+              <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
+              <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
+              <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>
+            </nav>
+            <div class="footer-wordmark" aria-hidden="true"><span class="garden-wordmark-label">Garden</span></div>
+          </div>
+          <div class="wrap footer-bottom"><a href="../../index.html">Study Garden © 2026</a><div class="footer-controls"><button class="footer-motion-toggle" type="button" aria-label="หยุดภาพเคลื่อนไหว" aria-pressed="false" hidden>
+            <svg class="art-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg class="art-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+          </button><a class="footer-back-top" href="#main" aria-label="กลับด้านบน">↑</a></div></div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

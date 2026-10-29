@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "scope": "Bibliographic inventory of locally supplied course documents. Original files are excluded from this repository and website; filenames, hashes and chapter mappings are retained for attribution only.",
-  "original_file_count": 40,
-  "total_bytes": 391313708,
-  "chapter_count": 25,
+  "original_file_count": 42,
+  "total_bytes": 393264795,
+  "chapter_count": 26,
   "files": [
     {
       "course": "itds241",
@@ -403,6 +403,26 @@
       "sha256": "6988936b11ba6e3ce586e8c2f0502a958c8d3316c8df54e1b96e27fe02d95c5e",
       "chapters": [
         "08"
+      ],
+      "published": false
+    },
+    {
+      "course": "itds261",
+      "file": "2026 - ITDS261 - L12 - Testing.pdf",
+      "bytes": 1821683,
+      "sha256": "20a287d99a586a84d240cf29c0acdcc7f4d25bb88f9cdd6f19ceeb548a95c706",
+      "chapters": [
+        "13"
+      ],
+      "published": false
+    },
+    {
+      "course": "itds261",
+      "file": "Html.html",
+      "bytes": 129404,
+      "sha256": "f6267e534cd9e553421f10942d1679acf2fb547ee2437e17380879ce970fe34d",
+      "chapters": [
+        "13"
       ],
       "published": false
     }
