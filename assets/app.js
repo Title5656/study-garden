@@ -12,6 +12,8 @@
   const examChapterIds = document.body.dataset.examChapters?.split(',');
   const chapterIds = Object.keys(subjectContent).filter(id => !examChapterIds || examChapterIds.includes(id)).sort();
   const data = subjectContent[chapter];
+  const chapterLabel = (id, course = subject) =>
+    window.StudyContent?.[course]?.[id]?.label || `บท ${Number(id)}`;
   const charts = [];
   const memory = {};
 
@@ -214,7 +216,7 @@
   }
   const progressChart = makeChart(
     $("#progress-chart"),
-    chapterIds.map((id) => "บท " + Number(id)),
+    chapterIds.map((id) => chapterLabel(id)),
     chapterIds.map((id) => scoreValue(progressEntry(id).best)),
     "คะแนนดีที่สุด / 10",
     10,
@@ -258,7 +260,7 @@
       $("#score-summary").textContent = allChapters
         .map(({course, id}) => {
           const score = scoreValue(progressEntry(id, course).best);
-          return `${courses.length > 1 ? course.toUpperCase() + " · " : ""}บท ${Number(id)}: ${score === null ? "ยังไม่ทำ quiz" : score + "/10"}`;
+          return `${courses.length > 1 ? course.toUpperCase() + " · " : ""}${chapterLabel(id, course)}: ${score === null ? "ยังไม่ทำ quiz" : score + "/10"}`;
         })
         .join(" · ");
     }

@@ -258,7 +258,11 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 .palette-dusk { --folder-accent: #bf81a9; --folder-art: url('folder-dusk.png?v=8547a0ec9253'); }
 .palette-verdant { --folder-accent: #7aa789; --folder-art: url('folder-verdant.png?v=aaa62364535d'); }
 .palette-honey { --folder-accent: #cfab62; --folder-art: url('folder-honey.png?v=6b9f89a388e9'); }
-.art-indigo, .art-dusk, .art-verdant, .art-honey { background-image: var(--folder-art); background-color: var(--folder-accent); }
+.palette-cobalt { --folder-accent: #338dad; --folder-art: url('folder-cobalt.png?v=81d47027961d'); }
+.palette-citrus { --folder-accent: #a5ad40; --folder-art: url('folder-citrus.png?v=463b64d6eed6'); }
+.palette-coral { --folder-accent: #e27167; --folder-art: url('folder-coral.png?v=57887160128d'); }
+.palette-lagoon { --folder-accent: #349c91; --folder-art: url('folder-lagoon.png?v=815bd3011e45'); }
+.art-indigo, .art-dusk, .art-verdant, .art-honey, .art-cobalt, .art-citrus, .art-coral, .art-lagoon { background-image: var(--folder-art); background-color: var(--folder-accent); }
 :root .folder-card .sheet-one { background-image: linear-gradient(180deg, #10182728, #101827a0), var(--folder-art); background-size: cover; color: #fff; }
 :root .folder-card .sheet-two { background-image: linear-gradient(135deg, #0d182a40, #16283c96), var(--folder-art); background-position: 75% 20%; background-size: 160%; color: #fff; }
 .folder-card .sheet-one > span, .folder-card .sheet-two > span { border-color: #ffffff40; }

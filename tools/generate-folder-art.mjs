@@ -64,6 +64,26 @@ export const ART_PRESETS                               = {
     gloss: 0.5,
     veins: 0.5,
   },
+  cobalt: {
+    style: "streak",
+    colors: ["#071529", "#174278", "#2079a9", "#65d0dc", "#c7f4ee", "#326790", "#101a43"],
+    scale: 0.72, warp: 2.1, angle: -0.9, gloss: 0.42, veins: 0,
+  },
+  citrus: {
+    style: "marble",
+    colors: ["#161e11", "#456536", "#a4b64b", "#f0dd68", "#fff4b4", "#819c54", "#203b2b"],
+    scale: 0.72, warp: 3.5, angle: 0.95, gloss: 0.4, veins: 0.48,
+  },
+  coral: {
+    style: "streak",
+    colors: ["#421b37", "#9b3551", "#e76459", "#ffab73", "#ffe1b9", "#cc6380", "#592c59"],
+    scale: 0.67, warp: 2.4, angle: 0.5, gloss: 0.38, veins: 0,
+  },
+  lagoon: {
+    style: "marble",
+    colors: ["#071d25", "#0e5260", "#198989", "#6ac6ae", "#d4f2d2", "#4f9c9b", "#173c50"],
+    scale: 0.7, warp: 3.8, angle: -0.3, gloss: 0.52, veins: 0.35,
+  },
 }
 
 /** `#rgb` or `#rrggbb` to a triple. Anything unreadable comes back mid-grey. */
@@ -309,7 +329,7 @@ function chunk(type, data) {
   const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(Buffer.concat([name, data])));
   return Buffer.concat([length, name, data, crc]);
 }
-for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37]]) {
+for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37], ['cobalt', 41], ['citrus', 43], ['coral', 47], ['lagoon', 53]]) {
   const job = createArtJob(640, 520, ART_PRESETS[preset], seed);
   while (!job.step(40)) {}
   const header = Buffer.alloc(13);

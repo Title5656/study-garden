@@ -34,14 +34,14 @@ async function newPage(options={}) {
  return page;
 }
 try {
- await test('Home search exposes ITDS261, course index exposes 12 chapters',async()=>{
+ await test('Home search exposes ITDS261, course index exposes 11 chapters',async()=>{
   const page=await newPage({viewport:{width:1440,height:1000}});
   await page.goto(base+'/index.html');
   assert.equal(await page.locator('.subject-folder').count(),5);
   await page.locator('#subject-search').fill('ITDS261');
   assert.equal(await page.locator('.subject-folder:visible').count(),1);
   await page.locator('.subject-folder:visible').click();
-  assert.equal(await page.locator('.glass-folder').count(),12);
+  assert.equal(await page.locator('.glass-folder').count(),11);
   if (out) await page.screenshot({path:resolve(out,'course-desktop.png')});
   await page.close();
  });

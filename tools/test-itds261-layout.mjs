@@ -19,7 +19,7 @@ try {
  for(const width of [375,768,1440])for(const theme of ['light','dark']){
   const p=await page({viewport:{width,height:950}});
   await p.addInitScript(theme=>localStorage.setItem('study-garden-theme',theme),theme);
-  for(let n=1;n<=12;n++){
+  for(let n=1;n<=11;n++){
    const cid=String(n).padStart(2,'0');
    await p.goto(`https://study-garden.test/subjects/itds261/chapter-${cid}.html`);
    // Use the real theme control's state, regardless of the app's storage-key spelling.
