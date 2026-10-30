@@ -22,6 +22,9 @@
     let artworkPaused = false;
     let scheduled = false;
     let covered = false;
+    const tracksLayout = "ResizeObserver" in window;
+    let revealTop = 0;
+    let offscreen = false;
     function artworkCanPlay() {
       if (!artwork || reducedMotion.matches || printMedia.matches || document.hidden || artworkPaused) return false;
       const bounds = artwork.getBoundingClientRect();
@@ -98,6 +101,9 @@
       scheduled = false;
       const enabled = document.body.dataset.readerMode !== "paged" && !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
       reveal.classList.toggle("reveal-enabled", enabled);
+      const bounds = reveal.getBoundingClientRect();
+      revealTop = scrollY + bounds.top;
+      offscreen = bounds.top >= innerHeight;
       if (!enabled) {
         covered = false;
         if (footer.inert) footer.inert = false;
@@ -105,7 +111,6 @@
         updateArtwork();
         return;
       }
-      const bounds = reveal.getBoundingClientRect();
       const distance = bounds.height - innerHeight;
       const progress = Math.min(1, Math.max(0, -bounds.top / Math.max(1, distance)));
       // Ordinary page scrolling cannot change a fully covered footer. Still read
@@ -134,6 +139,12 @@
     }
     let scrollOnly = true;
     function scheduleReveal(fromScroll = false) {
+      // No animation frame or geometry read is needed while scrolling content
+      // far above the footer. Body resize invalidates the cached position, and
+      // the 600px lead-in resumes live geometry reads before the reveal appears.
+      // Instant scroll jumps enter the live path immediately as well.
+      if (fromScroll === true && tracksLayout && offscreen &&
+          scrollY + innerHeight + 600 < revealTop) return;
       scrollOnly = scrollOnly && fromScroll === true;
       if (!scheduled) {
         scheduled = true;
@@ -149,7 +160,7 @@
     reducedMotion.addEventListener("change", updateReveal);
     printMedia.addEventListener("change", updateReveal);
     // Topic changes alter the document height even when the viewport stays still.
-    if ("ResizeObserver" in window) new ResizeObserver(scheduleReveal).observe(document.body);
+    if (tracksLayout) new ResizeObserver(scheduleReveal).observe(document.body);
     reveal.querySelector(".footer-reveal-link")?.addEventListener("click", event => {
       if (!reveal.classList.contains("reveal-enabled") || event.button !== 0 ||
           event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
