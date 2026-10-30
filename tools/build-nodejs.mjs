@@ -2,6 +2,7 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
+import {enhanceLesson} from './install-final-learning.mjs';
 const {marked}=await import(process.env.STUDY_GARDEN_MARKED || 'marked');
 const root=fileURLToPath(new URL('../',import.meta.url));
 const read=p=>readFileSync(resolve(root,p),'utf8');
@@ -123,7 +124,7 @@ html+=`<aside class="toc" aria-label="สารบัญบทเรียน"><
 html+=pages.map(p=>`<section class="lesson-section" id="${p.id}"${p.category==='practice'?' data-reader-category="practice"':''}>${p.chapter?`<p class="node-chapter-label">บท ${p.chapter} · ${escape(p.chapterTitle)}</p>`:''}<h2>${md(p.title).replace(/^<p>|<\/p>\n?$/g,'')}</h2>${p.body}</section>`).join('\n');
 html+='<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-08.html">← บทก่อนหน้า</a><a class="btn primary" href="index.html">กลับไปดูความคืบหน้า →</a></nav></article></div></main>';
 html+=template.slice(template.indexOf('<div class="footer-reveal">'));
-write('subjects/itds241/chapter-09.html',html);
+write('subjects/itds241/chapter-09.html',enhanceLesson(html,'itds241/09'));
 // Add the chapter to the existing content registry, so all course dashboards see it.
 const registry=read('assets/content.js').replace(/\n\/\* Node\.js Part I registry \*\/[\s\S]*$/,'');
 const partII=read('assets/content.js').match(/\/\* Node\.js Part II registry \*\/[\s\S]*?\/\* End Node\.js Part II registry \*\//)?.[0] || '';

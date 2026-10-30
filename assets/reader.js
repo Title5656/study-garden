@@ -191,6 +191,7 @@
     section, index, id: section.id,
     title: section.querySelector("h2").textContent.trim().replace(/^\d+\s*[·./](?!\d)\s*/, ""),
     category: ["flashcards", "quiz", "sources"].includes(section.id) ? section.id
+      : document.body.dataset.readerInline === "true" ? "learn"
       : section.dataset.readerCategory === "practice" || activities[subject]?.[chapter]?.includes(section.id) ? "practice" : "learn",
   }));
   const activeCategories = categories.filter(group => topics.some(topic => topic.category === group.id));
@@ -358,7 +359,13 @@
   });
   function restore() {
     const topic = topicFromHash();
-    if (topic) show(topic, true);
+    if (topic) {
+      show(topic, true);
+      if (document.body.dataset.readerInline === 'true') {
+        let target;try {target=document.getElementById(decodeURIComponent(location.hash.slice(1)));} catch {}
+        if(target && target!==topic.section) target.scrollIntoView({block:'start',behavior:'instant'});
+      }
+    }
     else if (!location.hash) show(topics[0], true);
   }
   // Back/Forward restores saved reading coordinates, not a potentially stale

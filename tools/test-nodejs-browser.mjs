@@ -126,7 +126,7 @@ try {
   await p.close();
  }
  const p=await useLocalFiles(await browser.newPage({javaScriptEnabled:false}),root);
- await p.goto(url); assert.ok(await p.locator('.lesson-section:visible').count()>25,'no-JS reading fallback');
+ await p.goto(url); assert.equal(await p.locator('.lesson-section:visible').count(),11,'no-JS reading fallback keeps all grouped topics');
  await p.close();
  const blocked=await useLocalFiles(await browser.newPage(),root);
  await blocked.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new Error('Storage blocked');}}));

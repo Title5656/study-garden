@@ -1,0 +1,27 @@
+/* Scoped learning aids: no animation, points economy or changes to other readers. */
+.fl-guide,.fl-lab,.fl-checks {border:1px solid var(--line);border-radius:16px;background:var(--paper);padding:clamp(16px,3vw,26px);margin:20px 0;color:var(--ink)}
+.fl-guide>p {margin-top:0}.fl-guide details>ol {padding-left:24px}.fl-guide li {margin:14px 0}.fl-guide li p {margin:3px 0;color:var(--muted)}
+.fl-guide a,.fl-checks a {text-decoration:underline;text-underline-offset:4px}
+.fl-predict,.fl-bridge {padding:14px 18px;border-left:3px solid var(--accent);background:var(--purple);border-radius:0 10px 10px 0}
+.fl-task {color:var(--muted)}.fl-worked {margin:18px 0}.fl-limit {font-size:.9rem;color:var(--muted);line-height:1.7}
+.fl-lab:empty {display:none}
+.fl-controls {display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin-bottom:18px}
+.fl-controls label {display:grid;gap:5px;flex:1 1 180px;min-width:0;font-size:.95rem}
+.fl-controls select,.fl-controls input {width:100%;min-width:0;max-width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.fl-lab button,.fl-checks button {min-height:44px;white-space:normal}
+.fl-lab :focus-visible,.fl-checks :focus-visible,.fl-guide :focus-visible {outline:3px solid var(--accent);outline-offset:3px}
+.fl-result {padding:14px 16px;background:var(--sage);border-radius:10px;line-height:1.8;margin:16px 0}.fl-result:empty {display:none}
+.fl-dependencies {display:flex;gap:8px;align-items:center;justify-content:center;margin:20px 0}
+.fl-client-stack {display:grid;gap:10px;flex:1}.fl-component {border:1px solid var(--line);border-radius:10px;padding:12px 8px;text-align:center;font-size:.9rem;overflow-wrap:anywhere;flex:1;min-width:0}
+.fl-affected {border:2px solid var(--accent);background:var(--purple);font-weight:600}.fl-arrow {font-size:1.2rem;flex:none}
+.fl-lab figure {margin:16px 0}.fl-lab figcaption {font-size:.9rem;color:var(--muted);margin:10px 0}
+.fl-lab pre {font-size:.9rem;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;line-height:1.7}
+.fl-cases {overflow-x:auto}.fl-cases table {width:100%;border-collapse:collapse;font-size:.9rem}.fl-cases th,.fl-cases td {padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}.fl-cases caption {text-align:left;margin-bottom:8px}
+.fl-history {text-align:center}.fl-history>p {margin:8px 0}.fl-commit {padding:12px;border:1px solid var(--line);background:var(--bg);border-radius:10px;text-align:left}.fl-commit pre {margin:6px 0 0;padding:10px}.fl-fork {display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fl-progress {font-weight:600;margin:0 0 6px}.fl-checks fieldset {border:0;margin:0;padding:0;min-width:0}.fl-checks legend {font-weight:600;margin-bottom:14px;line-height:1.8}
+.fl-option {display:flex;align-items:flex-start;gap:12px;padding:13px;border:1px solid var(--line);border-radius:10px;margin:10px 0;cursor:pointer}.fl-option input {flex:none;accent-color:var(--accent);width:18px;height:18px;margin-top:6px}.fl-option:has(input:checked) {background:var(--purple);border-color:var(--accent)}
+.fl-checks form>button {margin-top:12px}.fl-checks .fl-controls {margin-top:16px}.fl-checks summary,.fl-guide summary,.fl-worked summary {cursor:pointer;min-height:32px}
+.fl-enhanced .fl-check-fallback {display:none}.fl-checks [hidden],.fl-lab [hidden] {display:none!important}
+@media(max-width:480px){.fl-dependencies {gap:4px}.fl-component {font-size:.8rem;padding:10px 4px}.fl-arrow {font-size:1rem}.fl-cases th,.fl-cases td {padding:8px 4px;font-size:.8rem}.fl-fork {gap:8px}.fl-commit {padding:8px}.fl-controls {gap:10px}}
+@media print{.fl-lab,.fl-check-ui {display:none!important}.fl-enhanced .fl-check-fallback {display:block}.fl-guide,.fl-checks {border:1px solid #aaa;padding:12px;break-inside:auto}.fl-guide details>*,.fl-worked>*,.fl-check-fallback details>* {display:block!important}.fl-guide summary,.fl-worked summary {font-weight:bold}.fl-limit {color:#444}}
+@media print{.fl-guide details::details-content,.fl-worked::details-content,.fl-check-fallback details::details-content{display:block;content-visibility:visible}}

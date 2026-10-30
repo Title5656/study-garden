@@ -11,7 +11,7 @@ try{
   const p=await useLocalFiles(await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'}),root);p.on('pageerror',e=>errors.push(e.message));
   await p.addInitScript(t=>localStorage.setItem('study-garden:theme',JSON.stringify(t)),theme);await p.goto(url);
   assert.equal(await p.locator('.lesson-section:visible').count(),1);
-  const ids=await p.locator('.lesson-section').evaluateAll(es=>es.map(e=>e.id));assert.ok(ids.length>=25);
+  const ids=await p.locator('.lesson-section').evaluateAll(es=>es.map(e=>e.id));assert.deepEqual(ids,['before-start','p2-foundation','p2-project','p2-routing','p2-assets','p2-routers','p2-forms','p2-recap','flashcards','quiz']);
   for(const id of ids){await p.evaluate(id=>location.hash=id,id);await p.waitForFunction(id=>!document.getElementById(id).hidden,id);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id);}
   await p.goto(url+'#p2-form');const form=p.locator('[data-express-lab="form"]');
   if(width===1440&&theme==='light'){
@@ -36,6 +36,6 @@ try{
   await p.goto(url+'#p2-form');if(process.argv.includes('--capture')){mkdirSync(resolve(root,'docs/screenshots/express'),{recursive:true});await p.screenshot({path:resolve(root,`docs/screenshots/express/${width}-${theme}.png`)});}
   await p.close();
  }
- const p=await useLocalFiles(await browser.newPage({javaScriptEnabled:false}),root);await p.goto(url);assert.ok(await p.locator('.lesson-section:visible').count()>=25);assert.equal(await p.locator('#quiz details').count(),10);
+ const p=await useLocalFiles(await browser.newPage({javaScriptEnabled:false}),root);await p.goto(url);assert.equal(await p.locator('.lesson-section:visible').count(),10);assert.equal(await p.locator('#quiz details').count(),10);
  assert.deepEqual(errors,[]);console.log('PASS: Part II pages, six responsive themes, routing/forms, flashcards, independent quiz scoring, print and no-JS.');
 }finally{await browser.close();}

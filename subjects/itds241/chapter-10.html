@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="th">
-  <head>
+  <head><!-- final-learning:start --><link rel="stylesheet" href="../../assets/final-learning.css?v=5219ff8cd787"><script defer src="../../assets/final-learning-core.js?v=d92e61896010"></script><!-- final-learning:end -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -21,10 +21,10 @@
   <link rel="stylesheet" href="../../assets/reader.css?v=bfe6e1349d0f">
 <link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
 <script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script>
-<script defer src="../../assets/reader.js?v=29b5239a98c3"></script>
+<script defer src="../../assets/reader.js?v=e9459a54f0b1"></script>
 <link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
-<link rel="stylesheet" href="../../assets/nodejs.css?v=2d1c727f3499"><script defer src="../../assets/nodejs-core.js?v=88ca2f055df3"></script><script defer src="../../assets/nodejs.js?v=cfa30e738330"></script><script defer src="../../assets/express-core.js?v=7a89393c97be"></script><script defer src="../../assets/express-labs.js?v=9e47f407c85f"></script></head>
-  <body data-subject="itds241" data-chapter="10" data-reader-mode="paged">
+<link rel="stylesheet" href="../../assets/nodejs.css?v=2d1c727f3499"><script defer src="../../assets/nodejs-core.js?v=88ca2f055df3"></script><script defer src="../../assets/nodejs.js?v=5b876dd46dc1"></script><script defer src="../../assets/express-core.js?v=7a89393c97be"></script><script defer src="../../assets/express-labs.js?v=b7ad702e5ed9"></script><!-- final-learning:start --><link rel="stylesheet" href="../../assets/inline-learning.css?v=9c1da9c520e4"><script defer src="../../assets/final-learning.js?v=e2fae47a38f5"></script><script defer src="../../assets/inline-learning.js?v=78f1285d0d6c"></script><!-- final-learning:end --></head>
+  <body data-subject="itds241" data-chapter="10" data-reader-mode="paged" data-reader-inline="true">
     <a class="skip" href="#main">ข้ามไปยังเนื้อหา</a>
     <header class="site-header">
       <nav class="wrap nav" aria-label="เมนูหลัก">
@@ -57,14 +57,14 @@
         <a href="../../index.html">วิชาทั้งหมด</a><span>/</span
         ><a href="index.html">ITDS241</a><span>/</span><span>บทที่ 10</span>
       </nav>
-      <header class="chapter-hero"><div class="eyebrow">CHAPTER 10 · LECTURE 10</div><h1>Node.js Part II · Express</h1><p>สร้าง server จัด routes และรับฟอร์ม GET/POST ทีละเรื่อง</p><div class="tags"><span class="tag" data-chapter-status="10">ยังไม่ได้อ่าน</span><span class="node-muted">30 หน้าสั้น · 6 กิจกรรม · Quiz 10 ข้อ</span></div></header>
+      <header class="chapter-hero"><div class="eyebrow">CHAPTER 10 · LECTURE 10</div><h1>Node.js Part II · Express</h1><p>สร้าง server จัด routes และรับฟอร์ม GET/POST ทีละเรื่อง</p><div class="tags"><span class="tag" data-chapter-status="10">ยังไม่ได้อ่าน</span><span class="node-muted">8 หัวข้อเรียน · ทดลองไปพร้อมเนื้อหา · Quiz 10 ข้อ</span></div></header>
       <div class="lesson-layout">
-        <aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#before-start">ก่อนเริ่มบทนี้</a><a href="#p2-topic-1">1.1 ทบทวน HTTP server</a><a href="#p2-topic-2">1.2 จาก if/else ไปสู่ routing</a><a href="#p2-topic-3">2.1 Express ช่วยอะไร</a><a href="#p2-template">ลองทำ · Template กับข้อมูล</a><a href="#p2-topic-5">2.2 เตรียมโครงการด้วย npm</a><a href="#p2-topic-6">2.3 Express server แรก</a><a href="#p2-topic-7">2.4 npm start และ nodemon</a><a href="#p2-setup">ลองทำ · ตั้งโครงการทีละขั้น</a><a href="#p2-topic-9">3.1 Route = HTTP method + path</a><a href="#p2-topic-10">3.2 ส่งไฟล์ HTML ด้วย sendFile</a><a href="#p2-topic-11">3.3 404 และลำดับ middleware</a><a href="#p2-middleware">ลองทำ · ลำดับ middleware</a><a href="#p2-topic-13">4.1 Static files คืออะไร</a><a href="#p2-topic-14">4.2 เปลี่ยน mount path</a><a href="#p2-static">ลองทำ · URL ไปหาไฟล์ใด</a><a href="#p2-topic-16">5.1 แยก Router เป็นหมวด</a><a href="#p2-route">ลองทำ · Method และ modular routes</a><a href="#p2-topic-18">6.1 วงจรการทำงานของฟอร์ม</a><a href="#p2-topic-19">6.2 action, method และ name</a><a href="#p2-topic-20">7.1 ฟอร์ม GET → req.query</a><a href="#p2-topic-21">8.1 ฟอร์ม POST → req.body</a><a href="#p2-topic-22">8.2 เลือก parser ให้ตรงข้อมูล</a><a href="#p2-form">ลองทำ · ส่งฟอร์ม GET/POST</a><a href="#p2-topic-24">สรุปท้ายบท · สิ่งที่ต้องจำ</a><a href="#p2-topic-25">จุดที่มักสับสนก่อนสอบ</a><a href="#p2-topic-26">ลองอธิบายด้วยตัวเอง</a><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz ท้ายบท · 10 ข้อ</a></aside><article class="lesson-content"><section class="lesson-section" id="before-start"><h2>ก่อนเริ่มบทนี้</h2><p>ต่อจาก <a href="chapter-09.html">Node.js Part I</a> ซึ่งสร้าง server ด้วย <code>http</code> บทนี้ใช้ <strong>Express</strong> ช่วยจัด route และรับข้อมูลจากฟอร์ม ตัวอย่างเป็น CommonJS และใช้พอร์ต 3000 ยกเว้นตัวอย่าง modular routes ที่สไลด์ใช้ 3030</p>
+        <aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#before-start">ก่อนเริ่มบทนี้</a><a href="#p2-foundation">Express ช่วยอะไรบน Node.js?</a><a href="#p2-project">สร้างโครงการและเปิด server</a><a href="#p2-routing">Routing และ Middleware · ใครได้ตอบ request?</a><a href="#p2-assets">Static files · จาก URL ไปถึงไฟล์</a><a href="#p2-routers">Router · แบ่งเส้นทางโดยไม่หลง prefix</a><a href="#p2-forms">ฟอร์มเดินทางอย่างไร? · GET, POST และ parser</a><a href="#p2-recap">เชื่อมภาพรวม · อ่าน request ให้เป็น</a><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz ท้ายบท · 10 ข้อ</a></aside><article class="lesson-content"><section class="lesson-section" id="before-start"><h2>ก่อนเริ่มบทนี้</h2><!-- final-learning:start --><div class="fl-guide"><p><strong>เมื่อจบบทนี้:</strong> ตาม method, path และข้อมูลของ request ผ่าน middleware จนถึง response แล้วหาจุดที่ต้องแก้ได้</p><details><summary>เลือกเส้นทางเรียน · อ่านใหม่หรือทบทวน</summary><p>อ่านครั้งแรกตามลำดับด้านล่าง ทบทวนให้เลือกหัวข้อที่ยังอธิบายไม่ได้ กิจกรรมเป็นตัวช่วย: คาดการณ์หนึ่งอย่าง → เปลี่ยนตัวแปร → อธิบายผล แล้วค่อยไปต่อ ไม่จำเป็นต้องทำทุกกิจกรรมในรอบเดียว</p><ol><li><a href="#p2-topic-1">HTTP เดิม → Express → template</a><p>แยก runtime, framework และการสร้าง HTML จากข้อมูล</p></li><li><a href="#p2-topic-5">npm → server → start/nodemon</a><p>รู้ว่าแต่ละคำสั่งสร้างหรือติดตั้งอะไร และเมื่อใด server ต้อง restart</p></li><li><a href="#p2-topic-9">Method/path → sendFile → middleware/404</a><p>หาว่า handler ใดตอบ และ response จบก่อนถึง route หรือไม่</p></li><li><a href="#p2-topic-13">Static mount → Router prefix</a><p>สร้าง URL จาก mount path โดยไม่เอาชื่อโฟลเดอร์ public มาต่อซ้ำ</p></li><li><a href="#p2-topic-18">Form → action/method/name → GET/POST → parser</a><p>ระบุว่าข้อมูลอยู่ใน query หรือ body และต้อง parse อย่างไร</p></li></ol><p><a href="#learn-transfer">ลองโจทย์ประยุกต์ 2 ข้อ</a> หรือใช้ Flashcards / Quiz เดิมเมื่อต้องการทบทวนเพิ่ม</p></details></div><!-- final-learning:end --><p>ต่อจาก <a href="chapter-09.html">Node.js Part I</a> ซึ่งสร้าง server ด้วย <code>http</code> บทนี้ใช้ <strong>Express</strong> ช่วยจัด route และรับข้อมูลจากฟอร์ม ตัวอย่างเป็น CommonJS และใช้พอร์ต 3000 ยกเว้นตัวอย่าง modular routes ที่สไลด์ใช้ 3030</p>
 <p>เป้าหมาย: สร้าง Express server → แยก method/path → ส่ง HTML และ static files → แยก Router → รับ GET/POST อย่างถูกต้อง</p>
 <p>คำศัพท์ก่อนใช้: <strong>framework</strong> = ชุดเครื่องมือช่วยสร้างแอป, <strong>route</strong> = กฎเลือก handler ตามคำขอ, <strong>middleware</strong> = ฟังก์ชันที่อยู่ระหว่างทางของ request, <strong>payload</strong> = ข้อมูลที่ส่งมาพร้อมคำขอ</p>
 <p>อ้างอิง PDF หน้า 1–4; Cookies/Session, Environment variables และ Database ปรากฏใน Outline แต่ไฟล์นี้ยังไม่สอนรายละเอียด จึงไม่เพิ่มเป็นเนื้อหาหลัก</p>
 </section>
-<section class="lesson-section" id="p2-topic-1"><h2>1.1 ทบทวน HTTP server</h2><p>Node.js คือ runtime บน V8 รัน JavaScript นอกเบราว์เซอร์ ไม่มี DOM แบบ <code>window</code>/<code>document</code> แต่ทำงานกับ HTTP และไฟล์ได้ตามสิทธิ์ process การไม่มี cookie store แบบ browser ไม่ได้แปลว่า server รับ Cookie headers ไม่ได้</p>
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-foundation"><h2>Express ช่วยอะไรบน Node.js?</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-1%22 --><div class="il-topic" id="p2-topic-1" data-inline-source><h3 data-inline-heading>1.1 ทบทวน HTTP server</h3><!-- inline-heading:end --><p>Node.js คือ runtime บน V8 รัน JavaScript นอกเบราว์เซอร์ ไม่มี DOM แบบ <code>window</code>/<code>document</code> แต่ทำงานกับ HTTP และไฟล์ได้ตามสิทธิ์ process การไม่มี cookie store แบบ browser ไม่ได้แปลว่า server รับ Cookie headers ไม่ได้</p>
 <p>Server รับ <strong>request</strong> แล้วส่ง <strong>response</strong> เป็นข้อความ HTML หรือ JSON การเปิด <code>/</code> อาจตามมาด้วย <code>/favicon.ico</code> อีกคำขอหนึ่ง ซึ่ง browser เป็นผู้ขอเอง</p>
 <pre><code class="language-js">const http = require(&#39;http&#39;);
 http.createServer((req, res) =&gt; {
@@ -75,22 +75,22 @@ http.createServer((req, res) =&gt; {
 </code></pre>
 <p>จุดต้องจำ: <code>req</code> คือคำขอ ส่วน <code>res</code> คือเครื่องมือตอบกลับ ต้องจบ response ให้ครบ</p>
 <p>อ้างอิง PDF หน้า 5–9</p>
-</section>
-<section class="lesson-section" id="p2-topic-2"><h2>1.2 จาก if/else ไปสู่ routing</h2><p>ใน Part I เราเทียบ <code>req.url</code> กับ <code>/</code>, <code>/shabu</code>, <code>/bbq</code> แล้วอ่านไฟล์ HTML ด้วย <code>fs.readFile</code> หากไม่ตรงส่ง 404</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-2%22 --><div class="il-topic" id="p2-topic-2" data-inline-source><h3 data-inline-heading>1.2 จาก if/else ไปสู่ routing</h3><!-- inline-heading:end --><p>ใน Part I เราเทียบ <code>req.url</code> กับ <code>/</code>, <code>/shabu</code>, <code>/bbq</code> แล้วอ่านไฟล์ HTML ด้วย <code>fs.readFile</code> หากไม่ตรงส่ง 404</p>
 <p>เมื่อเส้นทางมากขึ้น การรวม if/else ไว้ที่เดียวดูแลยาก Express ช่วยเขียนแต่ละ handler แยกกันได้ แต่ยังทำงานบน Node.js ไม่ได้แทนที่ runtime</p>
 <figure><div class="node-diagram"><span>Request: method + path</span><i>→</i><span>เลือก handler</span><i>→</i><span>Response</span></div><figcaption>แผนภาพวาดใหม่: routing ตัดสินว่าจะเรียกโค้ดส่วนใด</figcaption></figure>
 
 <p>จุดสับสน: 404 หมายถึงไม่มี resource/route ที่ตรง ไม่ได้แปลว่า server ดับเสมอไป</p>
 <p>อ้างอิง PDF หน้า 10–13</p>
-</section>
-<section class="lesson-section" id="p2-topic-3"><h2>2.1 Express ช่วยอะไร</h2><p>Express เป็น web application framework สำหรับ Node.js ช่วยจัด routing, middleware และการสร้าง API เราเลือกติดตั้งเครื่องมืออื่นเพิ่มตามงานได้</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-3%22 --><div class="il-topic" id="p2-topic-3" data-inline-source><h3 data-inline-heading>2.1 Express ช่วยอะไร</h3><!-- inline-heading:end --><p>Express เป็น web application framework สำหรับ Node.js ช่วยจัด routing, middleware และการสร้าง API เราเลือกติดตั้งเครื่องมืออื่นเพิ่มตามงานได้</p>
 <p><strong>Template engine</strong> เช่น EJS หรือ Pug รับ template กับข้อมูล แล้วสร้าง HTML ส่งให้ client ตัวอย่างแนวคิด: ชื่อผู้ใช้ในข้อมูลเปลี่ยน → ข้อความใน HTML ที่สร้างเปลี่ยน ไม่จำเป็นต้องเขียน HTML ใหม่ทุกคน</p>
 <figure><div class="node-diagram"><span>Template + data</span><i>→</i><span>Template engine</span><i>→</i><span>HTML → Browser</span></div><figcaption>แผนภาพวาดใหม่: template engine ทำงานฝั่ง server ก่อนส่ง HTML</figcaption></figure>
 
 <p>อ้างอิง PDF หน้า 14–16</p>
-</section>
-<section class="lesson-section" id="p2-template" data-reader-category="practice"><h2>ลองทำ · Template กับข้อมูล</h2><div class="node-lab" data-express-lab="template"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div></section>
-<section class="lesson-section" id="p2-topic-5"><h2>2.2 เตรียมโครงการด้วย npm</h2><p><strong>npm</strong> เป็นเครื่องมือจัดการแพ็กเกจ เริ่มจากโฟลเดอร์งานเปล่าแล้วสั่งตามลำดับ</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-template%22%20data-reader-category%3D%22practice%22 --><div class="il-topic" id="p2-template" data-inline-source><h3 data-inline-heading>Template กับข้อมูล</h3><!-- inline-heading:end --><!-- final-learning:start --><p class="fl-predict"><strong>ลองคิดก่อน:</strong> ถ้า template เดิม แต่ชื่อในข้อมูลเปลี่ยน ต้องเขียนหน้า HTML ใหม่ทั้งหน้าหรือไม่?</p><p class="fl-task">เปลี่ยนชื่อและดูผลข้อความ แยกส่วน template ที่คงเดิมจากข้อมูลที่เปลี่ยน</p><!-- final-learning:end --><div class="node-lab" data-express-lab="template"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div><!-- final-learning:start --><details class="fl-worked"><summary>ทำแล้วดูเหตุผล</summary><p>Template engine รวมโครงกับข้อมูล การ escape ต้องเหมาะกับบริบท; ตัวอย่างนี้แสดงข้อความ ไม่ได้รัน EJS/Pug จริง</p></details><!-- final-learning:end --></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-project"><h2>สร้างโครงการและเปิด server</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-5%22 --><div class="il-topic" id="p2-topic-5" data-inline-source><h3 data-inline-heading>2.2 เตรียมโครงการด้วย npm</h3><!-- inline-heading:end --><p><strong>npm</strong> เป็นเครื่องมือจัดการแพ็กเกจ เริ่มจากโฟลเดอร์งานเปล่าแล้วสั่งตามลำดับ</p>
 <pre><code class="language-sh">mkdir myFirstExpress
 cd myFirstExpress
 npm init -y
@@ -100,8 +100,8 @@ npm install --save-dev nodemon
 <p><code>package.json</code> เก็บข้อมูลโครงการ scripts และ dependencies ส่วน <code>package-lock.json</code> บันทึก dependency tree เพื่อให้ติดตั้งซ้ำได้สอดคล้องกัน <code>node_modules</code> คือแพ็กเกจที่ติดตั้ง ไม่ควรแก้โค้ดในนั้นเป็นโค้ดแอปของเรา</p>
 <p>เสริมความเข้าใจ: เก็บ nodemon ใน devDependencies เพราะใช้ช่วยพัฒนา รูป output/เลขเวอร์ชันในสไลด์ต่างช่วงเวลากัน จึงไม่ต้องให้ตรงภาพ ขอให้เข้าใจหน้าที่ของคำสั่ง</p>
 <p>อ้างอิง PDF หน้า 17–20</p>
-</section>
-<section class="lesson-section" id="p2-topic-6"><h2>2.3 Express server แรก</h2><p>สร้างไฟล์ <code>app.cjs</code> เพื่อระบุชัดว่าใช้ CommonJS (สไลด์ใช้ <code>app.js</code> ในโครงการ CommonJS)</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-6%22 --><div class="il-topic" id="p2-topic-6" data-inline-source><h3 data-inline-heading>2.3 Express server แรก</h3><!-- inline-heading:end --><p>สร้างไฟล์ <code>app.cjs</code> เพื่อระบุชัดว่าใช้ CommonJS (สไลด์ใช้ <code>app.js</code> ในโครงการ CommonJS)</p>
 <pre><code class="language-js">const express = require(&#39;express&#39;);
 const app = express();
 const port = 3000;
@@ -114,8 +114,8 @@ app.listen(port, () =&gt; {
 </code></pre>
 <p><code>require</code> นำเข้าแพ็กเกจ, <code>express()</code> สร้างแอป, <code>app.get</code> ลงทะเบียน handler สำหรับ GET และ <code>app.listen</code> เริ่มฟังพอร์ต ทดสอบด้วย <code>http://localhost:3000/</code> หยุดด้วย Ctrl+C</p>
 <p>อ้างอิง PDF หน้า 21–22</p>
-</section>
-<section class="lesson-section" id="p2-topic-7"><h2>2.4 npm start และ nodemon</h2><p>กำหนด scripts ใน <code>package.json</code> แล้วสั่ง <code>npm start</code> แทนการจำคำสั่งยาว</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-7%22 --><div class="il-topic" id="p2-topic-7" data-inline-source><h3 data-inline-heading>2.4 npm start และ nodemon</h3><!-- inline-heading:end --><p>กำหนด scripts ใน <code>package.json</code> แล้วสั่ง <code>npm start</code> แทนการจำคำสั่งยาว</p>
 <pre><code class="language-json">{
   &quot;scripts&quot;: {
     &quot;start&quot;: &quot;node app.cjs&quot;,
@@ -126,9 +126,9 @@ app.listen(port, () =&gt; {
 <p>นี่เป็นส่วน scripts สำหรับใส่ใน package.json เดิม ไม่ใช่ให้ลบ dependencies ออก ใช้ <code>npm run dev</code> ระหว่างพัฒนา nodemon ตรวจไฟล์เปลี่ยนและ restart server ให้ ส่วน <code>node</code> ปกติต้องหยุดแล้วรันใหม่เองเมื่อแก้โค้ด</p>
 <p>โครงงานตัวอย่างมี <code>app.cjs</code>, <code>package.json</code>, <code>package-lock.json</code>, <code>html/shabu.html</code>, <code>html/bbq.html</code>, <code>public/mystyle.css</code> และ <code>public/images/sample.png</code></p>
 <p>อ้างอิง PDF หน้า 23–24; scripts dev เป็นส่วนเสริมเพื่อแยกการพัฒนา</p>
-</section>
-<section class="lesson-section" id="p2-setup" data-reader-category="practice"><h2>ลองทำ · ตั้งโครงการทีละขั้น</h2><div class="node-lab" data-express-lab="setup"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div></section>
-<section class="lesson-section" id="p2-topic-9"><h2>3.1 Route = HTTP method + path</h2><p><code>GET /product/add</code> กับ <code>POST /product/add</code> เป็นคนละ route แม้ path เหมือนกัน การเปิด address bar ใช้ GET จึงไม่ใช่วิธีทดสอบ POST handler โดยตรง</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-setup%22%20data-reader-category%3D%22practice%22 --><div class="il-topic" id="p2-setup" data-inline-source><h3 data-inline-heading>ตั้งโครงการทีละขั้น</h3><!-- inline-heading:end --><!-- final-learning:start --><p class="fl-predict"><strong>ลองคิดก่อน:</strong> npm install express กับ npm start มีหน้าที่เดียวกันหรือไม่?</p><p class="fl-task">เดินขั้นตั้งโครงการ แล้วบอกว่าแต่ละขั้นเปลี่ยนไฟล์ ติดตั้ง package หรือเริ่ม process</p><!-- final-learning:end --><div class="node-lab" data-express-lab="setup"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div><!-- final-learning:start --><details class="fl-worked"><summary>ทำแล้วดูเหตุผล</summary><p>package.json อธิบายโครงการและ scripts; package-lock.json เก็บ dependency tree; nodemon เป็นตัวช่วย restart ระหว่างพัฒนา</p></details><!-- final-learning:end --></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-routing"><h2>Routing และ Middleware · ใครได้ตอบ request?</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-9%22 --><div class="il-topic" id="p2-topic-9" data-inline-source><h3 data-inline-heading>3.1 Route = HTTP method + path</h3><!-- inline-heading:end --><p><code>GET /product/add</code> กับ <code>POST /product/add</code> เป็นคนละ route แม้ path เหมือนกัน การเปิด address bar ใช้ GET จึงไม่ใช่วิธีทดสอบ POST handler โดยตรง</p>
 <pre><code class="language-js">const router = express.Router();
 router.get(&#39;/&#39;, (req, res) =&gt; res.send(&#39;Homepage&#39;));
 router.get(&#39;/shabu&#39;, (req, res) =&gt; res.send(&#39;Shabu&#39;));
@@ -139,8 +139,8 @@ app.use(router);
 </code></pre>
 <p><code>express.Router()</code> ใช้ R ตัวใหญ่ สร้าง router object แล้วนำไปต่อกับแอปด้วย <code>app.use</code> Middleware เข้าถึง <code>req</code>, <code>res</code> และมักรับ <code>next</code> เพื่อส่งต่อไปขั้นถัดไป</p>
 <p>อ้างอิง PDF หน้า 25–27</p>
-</section>
-<section class="lesson-section" id="p2-topic-10"><h2>3.2 ส่งไฟล์ HTML ด้วย sendFile</h2><pre><code class="language-js">const path = require(&#39;path&#39;);
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-10%22 --><div class="il-topic" id="p2-topic-10" data-inline-source><h3 data-inline-heading>3.2 ส่งไฟล์ HTML ด้วย sendFile</h3><!-- inline-heading:end --><pre><code class="language-js">const path = require(&#39;path&#39;);
 router.get(&#39;/shabu&#39;, (req, res) =&gt; {
   res.sendFile(path.join(__dirname, &#39;html&#39;, &#39;shabu.html&#39;));
 });
@@ -149,8 +149,8 @@ router.get(&#39;/shabu&#39;, (req, res) =&gt; {
 <p>เมนู HTML ต้องชี้ endpoint เช่น <code>&lt;a href=&quot;/shabu&quot;&gt;Shabu&lt;/a&gt;</code> ไม่จำเป็นต้องใช้ชื่อไฟล์บนดิสก์เป็น URL</p>
 <p>จุดต้องจำ: เส้นทางบนเว็บ <code>/shabu</code> กับตำแหน่งไฟล์ <code>html/shabu.html</code> เป็นคนละสิ่ง ส่วน <code>__dirname</code> เป็นค่าประจำ module ใน CommonJS ไม่ใช่ global ของทุกระบบ module</p>
 <p>อ้างอิง PDF หน้า 28–29 และ 31</p>
-</section>
-<section class="lesson-section" id="p2-topic-11"><h2>3.3 404 และลำดับ middleware</h2><p>วาง handler สำหรับ route ที่รู้จักก่อน แล้ววาง fallback ท้ายสุด</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-11%22 --><div class="il-topic" id="p2-topic-11" data-inline-source><h3 data-inline-heading>3.3 404 และลำดับ middleware</h3><!-- inline-heading:end --><p>วาง handler สำหรับ route ที่รู้จักก่อน แล้ววาง fallback ท้ายสุด</p>
 <pre><code class="language-js">router.get(&#39;/shabu&#39;, (req, res) =&gt; res.send(&#39;Shabu&#39;));
 router.use((req, res) =&gt; {
   res.status(404).send(&#39;Invalid Path&#39;);
@@ -159,9 +159,9 @@ router.use((req, res) =&gt; {
 <p>หากวาง fallback นี้ก่อน route แล้วส่ง response ทันที คำขอจะจบก่อนถึง <code>/shabu</code> เพราะไม่ได้เรียก <code>next()</code> อย่าเรียก <code>next()</code> ต่อหลังส่งคำตอบจบโดยไม่มีเหตุผล เพราะอาจเกิดการตอบซ้ำ</p>
 <p>เสริมความเข้าใจ: unlike การเทียบ <code>req.url === &#39;/bbq&#39;</code> ใน Part I, Express ปกติจับ route แบบไม่แยกตัวพิมพ์ใหญ่เล็กและไม่เคร่ง trailing slash (ปรับตั้งค่าได้) และ query string ไม่ใช่ส่วนของ route path</p>
 <p>อ้างอิง PDF หน้า 30; พฤติกรรมค่าเริ่มต้นตรวจประกอบเอกสาร Express</p>
-</section>
-<section class="lesson-section" id="p2-middleware" data-reader-category="practice"><h2>ลองทำ · ลำดับ middleware</h2><div class="node-lab" data-express-lab="middleware"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div></section>
-<section class="lesson-section" id="p2-topic-13"><h2>4.1 Static files คืออะไร</h2><p>ไฟล์ CSS, รูป และ JavaScript ฝั่ง browser ต้องให้ server ส่งได้ด้วย การส่งหน้า HTML สำเร็จไม่ได้รับประกันว่า URL ของ resource ข้างในจะถูกต้อง</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-middleware%22%20data-reader-category%3D%22practice%22 --><div class="il-topic" id="p2-middleware" data-inline-source><h3 data-inline-heading>ลำดับ middleware</h3><!-- inline-heading:end --><!-- final-learning:start --><p class="fl-predict"><strong>ลองคิดก่อน:</strong> ถ้า 404 middleware ตอบก่อน routes จะมี route ที่ถูกต้องช่วยแก้คำตอบได้อีกหรือไม่?</p><p class="fl-task">ส่ง GET /product/add สองครั้ง โดยเปลี่ยนตำแหน่ง 404 เพียงอย่างเดียว</p><!-- final-learning:end --><div class="node-lab" data-express-lab="middleware"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div><!-- final-learning:start --><details class="fl-worked"><summary>ทำแล้วดูเหตุผล</summary><p>middleware ทำงานตามลำดับ เมื่อจบ response แล้วไม่ส่งต่อ route ด้านหลังจึงไม่ถูกเรียก; middleware ที่ไม่ตอบต้อง next() หากต้องการให้สายงานเดินต่อ</p></details><!-- final-learning:end --></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-assets"><h2>Static files · จาก URL ไปถึงไฟล์</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-13%22 --><div class="il-topic" id="p2-topic-13" data-inline-source><h3 data-inline-heading>4.1 Static files คืออะไร</h3><!-- inline-heading:end --><p>ไฟล์ CSS, รูป และ JavaScript ฝั่ง browser ต้องให้ server ส่งได้ด้วย การส่งหน้า HTML สำเร็จไม่ได้รับประกันว่า URL ของ resource ข้างในจะถูกต้อง</p>
 <pre><code class="language-js">app.use(express.static(path.join(__dirname, &#39;public&#39;)));
 </code></pre>
 <p>หากมี <code>public/mystyle.css</code> และ <code>public/images/sample.png</code> จะเรียกจากหน้า HTML ได้ดังนี้</p>
@@ -170,16 +170,16 @@ router.use((req, res) =&gt; {
 </code></pre>
 <p>ชื่อ <code>public</code> เป็นตำแหน่งบนดิสก์ ไม่ใช่ส่วนหนึ่งของ URL เมื่อ mount ที่ <code>/</code> เส้นทางที่เริ่ม <code>/</code> อิง root ของเว็บไซต์ ส่วน relative URL เช่น <code>../public/...</code> จะถูก browser resolve จาก URL ของหน้าปัจจุบันก่อน</p>
 <p>อ้างอิง PDF หน้า 32–34</p>
-</section>
-<section class="lesson-section" id="p2-topic-14"><h2>4.2 เปลี่ยน mount path</h2><pre><code class="language-js">app.use(&#39;/assets&#39;, express.static(path.join(__dirname, &#39;public&#39;)));
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-14%22 --><div class="il-topic" id="p2-topic-14" data-inline-source><h3 data-inline-heading>4.2 เปลี่ยน mount path</h3><!-- inline-heading:end --><pre><code class="language-js">app.use(&#39;/assets&#39;, express.static(path.join(__dirname, &#39;public&#39;)));
 </code></pre>
 <p>เมื่อ mount ที่ <code>/assets</code> ไฟล์เดิมจะอยู่ที่ <code>/assets/mystyle.css</code> และ <code>/assets/images/sample.png</code> ชื่อ mount ไม่จำเป็นต้องตรงกับโฟลเดอร์จริง</p>
 <p>จุดสับสน: ถ้า router ที่อยู่ก่อน static middleware ส่ง 404 ปิดคำขอแล้ว static จะไม่มีโอกาสทำงาน จัด static middleware ก่อน fallback ที่กินทุกเส้นทาง</p>
 <p>เสริมความเข้าใจ: เปิดเผยเฉพาะ directory ที่ตั้งใจเผยแพร่ อย่าใช้โฟลเดอร์โครงการทั้งหมดเป็น public</p>
 <p>อ้างอิง PDF หน้า 33–34 และเอกสาร Express เรื่อง mount path</p>
-</section>
-<section class="lesson-section" id="p2-static" data-reader-category="practice"><h2>ลองทำ · URL ไปหาไฟล์ใด</h2><div class="node-lab" data-express-lab="static"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div></section>
-<section class="lesson-section" id="p2-topic-16"><h2>5.1 แยก Router เป็นหมวด</h2><p>เมื่อแอปโต แบ่งเส้นทางเป็นหมวด product และ user แทน router เดียวที่รวมทุกอย่าง</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-static%22%20data-reader-category%3D%22practice%22 --><div class="il-topic" id="p2-static" data-inline-source><h3 data-inline-heading>URL ไปหาไฟล์ใด</h3><!-- inline-heading:end --><!-- final-learning:start --><p class="fl-predict"><strong>ลองคิดก่อน:</strong> mount /assets ไปที่ public แล้วไฟล์ public/images/sample.png ต้องใช้ URL ใด?</p><p class="fl-task">ลอง /assets/images/sample.png เทียบกับ /assets/public/images/sample.png</p><!-- final-learning:end --><div class="node-lab" data-express-lab="static"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div><!-- final-learning:start --><details class="fl-worked"><summary>ทำแล้วดูเหตุผล</summary><p>mount เป็น prefix ฝั่ง URL ส่วน public เป็น directory ฝั่ง server จึงไม่นำชื่อ public มาต่อใน URL อีกครั้ง</p></details><!-- final-learning:end --></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-routers"><h2>Router · แบ่งเส้นทางโดยไม่หลง prefix</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-16%22 --><div class="il-topic" id="p2-topic-16" data-inline-source><h3 data-inline-heading>5.1 แยก Router เป็นหมวด</h3><!-- inline-heading:end --><p>เมื่อแอปโต แบ่งเส้นทางเป็นหมวด product และ user แทน router เดียวที่รวมทุกอย่าง</p>
 <pre><code class="language-js">const product = express.Router();
 const user = express.Router();
 product.get(&#39;/&#39;, (req, res) =&gt; res.send(&#39;Product root&#39;));
@@ -191,15 +191,15 @@ app.use(&#39;/user&#39;, user);
 </code></pre>
 <p>สูตรจำ: <strong>mount prefix + path ใน router = path ที่ผู้ใช้เรียก</strong> เช่น <code>/product</code> + <code>/add</code> = <code>/product/add</code> ส่วน route <code>/</code> ของ product ใช้เข้าที่ <code>/product</code></p>
 <p>อ้างอิง PDF หน้า 35–38 (ตัวอย่างนี้ในสไลด์ใช้พอร์ต 3030)</p>
-</section>
-<section class="lesson-section" id="p2-route" data-reader-category="practice"><h2>ลองทำ · Method และ modular routes</h2><div class="node-lab" data-express-lab="route"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div></section>
-<section class="lesson-section" id="p2-topic-18"><h2>6.1 วงจรการทำงานของฟอร์ม</h2><p>Form คือพื้นที่ที่ผู้ใช้กรอกข้อมูล วงจรทั่วไปคือ GET เพื่อขอหน้าฟอร์ม → ผู้ใช้กรอก → ส่ง GET/POST → server ตรวจข้อมูล → ถ้าไม่ผ่านแสดงฟอร์มพร้อมค่าเดิมและข้อผิดพลาด ถ้าผ่านทำงานที่ต้องการ แล้วอาจ redirect ไปหน้าสำเร็จ</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-route%22%20data-reader-category%3D%22practice%22 --><div class="il-topic" id="p2-route" data-inline-source><h3 data-inline-heading>Method และ modular routes</h3><!-- inline-heading:end --><!-- final-learning:start --><p class="fl-predict"><strong>ลองคิดก่อน:</strong> Router มี /add และ mount ที่ /product ถ้าส่ง POST ไปยัง GET route จะตรงหรือไม่?</p><p class="fl-task">เทียบ GET กับ POST ที่ /product/add และเปลี่ยนเป็น /user/add</p><!-- final-learning:end --><div class="node-lab" data-express-lab="route"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div><!-- final-learning:start --><details class="fl-worked"><summary>ทำแล้วดูเหตุผล</summary><p>ต้องตรงทั้ง HTTP method และ path ที่รวม prefix แล้ว ไม่ใช่ตรงข้อความ /add อย่างเดียว</p></details><!-- final-learning:end --></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-forms"><h2>ฟอร์มเดินทางอย่างไร? · GET, POST และ parser</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-18%22 --><div class="il-topic" id="p2-topic-18" data-inline-source><h3 data-inline-heading>6.1 วงจรการทำงานของฟอร์ม</h3><!-- inline-heading:end --><p>Form คือพื้นที่ที่ผู้ใช้กรอกข้อมูล วงจรทั่วไปคือ GET เพื่อขอหน้าฟอร์ม → ผู้ใช้กรอก → ส่ง GET/POST → server ตรวจข้อมูล → ถ้าไม่ผ่านแสดงฟอร์มพร้อมค่าเดิมและข้อผิดพลาด ถ้าผ่านทำงานที่ต้องการ แล้วอาจ redirect ไปหน้าสำเร็จ</p>
 <figure><div class="node-diagram"><span>GET ฟอร์ม</span><i>→</i><span>กรอกและส่ง</span><i>→</i><span>ตรวจบน server</span><i>→</i><span>ผิด: ฟอร์มเดิม / ถูก: ทำงานและ redirect</span></div><figcaption>วาดใหม่จากวงจรหน้า 41; redirect เป็นรูปแบบทั่วไป ไม่ใช่สิ่งที่ทุก handler ทำให้อัตโนมัติ</figcaption></figure>
 
 <p>ตรวจบน browser ด้วย <code>required</code> หรือ JS ช่วยเรื่องประสบการณ์ใช้งาน แต่ <strong>server ต้องตรวจข้อมูลเองด้วย</strong> เพราะ client validation ถูกข้ามได้ ไม่ใช่ตรวจเฉพาะเมื่อใช้ฐานข้อมูลเท่านั้น</p>
 <p>อ้างอิง PDF หน้า 39–41; การเน้นตรวจ server ทุกครั้งเป็นคำอธิบายเสริม</p>
-</section>
-<section class="lesson-section" id="p2-topic-19"><h2>6.2 action, method และ name</h2><pre><code class="language-html">&lt;form action=&quot;/form-get&quot; method=&quot;GET&quot;&gt;
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-19%22 --><div class="il-topic" id="p2-topic-19" data-inline-source><h3 data-inline-heading>6.2 action, method และ name</h3><!-- inline-heading:end --><pre><code class="language-html">&lt;form action=&quot;/form-get&quot; method=&quot;GET&quot;&gt;
   &lt;label&gt;First name &lt;input name=&quot;fname&quot; required&gt;&lt;/label&gt;
   &lt;label&gt;Last name &lt;input name=&quot;lname&quot; required&gt;&lt;/label&gt;
   &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
@@ -213,8 +213,8 @@ app.use(&#39;/user&#39;, user);
 </ul>
 <p>มี <code>id=&quot;fname&quot;</code> อย่างเดียวไม่ทำให้ server ได้ <code>fname</code> ต้องกำหนด <code>name</code> ด้วย การแสดงฟอร์มใช้ route <code>GET /my-form</code> ที่ <code>sendFile</code> หน้า HTML กลับมา</p>
 <p>อ้างอิง PDF หน้า 42–46</p>
-</section>
-<section class="lesson-section" id="p2-topic-20"><h2>7.1 ฟอร์ม GET → req.query</h2><p>เมื่อส่งชื่อ John และนามสกุล Doe ด้วย GET จะได้ URL ลักษณะนี้</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-20%22 --><div class="il-topic" id="p2-topic-20" data-inline-source><h3 data-inline-heading>7.1 ฟอร์ม GET → req.query</h3><!-- inline-heading:end --><p>เมื่อส่งชื่อ John และนามสกุล Doe ด้วย GET จะได้ URL ลักษณะนี้</p>
 <pre><code class="language-text">/form-get?fname=John&amp;lname=Doe
 </code></pre>
 <pre><code class="language-js">router.get(&#39;/form-get&#39;, (req, res) =&gt; {
@@ -226,8 +226,8 @@ app.use(&#39;/user&#39;, user);
 <p>ชื่อ property ต้องตรง <code>name</code> ใน input ส่วน method และ path ของ handler ต้องตรง form GET เหมาะกับการค้นหาหรือกรองข้อมูล ไม่ควรใช้เปลี่ยนข้อมูลสำคัญบน server</p>
 <p>เสริมความเข้าใจ: อย่าใส่รหัสผ่านใน query string เพราะ URL อาจเข้า browser history, logs และระบบอื่น</p>
 <p>อ้างอิง PDF หน้า 46–48</p>
-</section>
-<section class="lesson-section" id="p2-topic-21"><h2>8.1 ฟอร์ม POST → req.body</h2><p>เปลี่ยน HTML เป็น <code>action=&quot;/form-post&quot; method=&quot;POST&quot;</code> ข้อมูลไปใน request body ฟอร์ม HTML ปกติใช้ <code>application/x-www-form-urlencoded</code> ไม่ได้กลายเป็น JSON เอง</p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-21%22 --><div class="il-topic" id="p2-topic-21" data-inline-source><h3 data-inline-heading>8.1 ฟอร์ม POST → req.body</h3><!-- inline-heading:end --><p>เปลี่ยน HTML เป็น <code>action=&quot;/form-post&quot; method=&quot;POST&quot;</code> ข้อมูลไปใน request body ฟอร์ม HTML ปกติใช้ <code>application/x-www-form-urlencoded</code> ไม่ได้กลายเป็น JSON เอง</p>
 <pre><code class="language-js">router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 router.post(&#39;/form-post&#39;, (req, res) =&gt; {
@@ -241,8 +241,8 @@ router.post(&#39;/form-post&#39;, (req, res) =&gt; {
 </code></pre>
 <p>วาง parser ก่อน handler ที่อ่าน <code>req.body</code> โดย <code>express.urlencoded()</code> อ่าน urlencoded และ <code>express.json()</code> อ่าน JSON ตาม Content-Type ไม่จำเป็นต้องติดตั้ง body-parser เพิ่มสำหรับตัวอย่างนี้</p>
 <p>อ้างอิง PDF หน้า 49–51; ตรวจข้อมูลและตอบ JSON เป็นส่วนเสริมเพื่อแสดงแนวทางที่ปลอดภัยกว่าการสะท้อนข้อความเป็น HTML</p>
-</section>
-<section class="lesson-section" id="p2-topic-22"><h2>8.2 เลือก parser ให้ตรงข้อมูล</h2><div class="table-wrap" tabindex="0" aria-label="ตารางทบทวน"><table>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-22%22 --><div class="il-topic" id="p2-topic-22" data-inline-source><h3 data-inline-heading>8.2 เลือก parser ให้ตรงข้อมูล</h3><!-- inline-heading:end --><div class="table-wrap" tabindex="0" aria-label="ตารางทบทวน"><table>
 <thead>
 <tr>
 <th>ข้อมูลที่เข้า</th>
@@ -269,14 +269,14 @@ router.post(&#39;/form-post&#39;, (req, res) =&gt; {
 <p><code>req.body</code> ยังเป็นข้อมูลที่ไม่เชื่อถือ ต้องตรวจชนิด/รูปแบบก่อนใช้ ไม่ควรสมมติว่ามี property เสมอ และ <code>express.json()</code> ไม่ใช่ parser สำหรับ upload ไฟล์</p>
 <p>จุดสับสน: POST ไม่ได้เข้ารหัสข้อมูลให้อัตโนมัติ ควรใช้ HTTPS ทั้ง GET และ POST เมื่อรับส่งข้อมูลจริง</p>
 <p>อ้างอิง PDF หน้า 50–52; ข้อจำกัด parser และ HTTPS เป็นคำอธิบายเสริม</p>
-</section>
-<section class="lesson-section" id="p2-form" data-reader-category="practice"><h2>ลองทำ · ส่งฟอร์ม GET/POST</h2><div class="node-lab" data-express-lab="form"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div></section>
-<section class="lesson-section" id="p2-topic-24"><h2>สรุปท้ายบท · สิ่งที่ต้องจำ</h2><p>Express ทำงานบน Node.js: <code>express()</code> → route/middleware → <code>listen()</code></p>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-form%22%20data-reader-category%3D%22practice%22 --><div class="il-topic" id="p2-form" data-inline-source><h3 data-inline-heading>ส่งฟอร์ม GET/POST</h3><!-- inline-heading:end --><!-- final-learning:start --><p class="fl-predict"><strong>ลองคิดก่อน:</strong> ข้อมูล JSON จะเข้า req.body ได้หรือไม่ ถ้าใช้ urlencoded parser หรือวาง parser หลัง handler?</p><p class="fl-task">เปลี่ยนทีละอย่าง: Content-Type → parser → ตำแหน่ง → name ของ input แล้วอ่านเส้นทางข้อมูล</p><!-- final-learning:end --><div class="node-lab" data-express-lab="form"><p>เปิด JavaScript เพื่อทดลองแบบจำลอง เนื้อหาข้างต้นอ่านได้ตามปกติ</p></div><!-- final-learning:start --><details class="fl-worked"><summary>ทำแล้วดูเหตุผล</summary><p>parser ต้องอยู่ก่อน handler และรับ Content-Type นั้น ตัวอย่าง handler เลือกคืน 400 เมื่อข้อมูลไม่ครบเอง ไม่ใช่สถานะที่ Express คืนให้อัตโนมัติทุกกรณี</p></details><!-- final-learning:end --></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
+<!-- inline-group:open --><section class="lesson-section il-group" id="p2-recap"><h2>เชื่อมภาพรวม · อ่าน request ให้เป็น</h2><!-- inline-group:body --><!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-24%22 --><div class="il-topic" id="p2-topic-24" data-inline-source><h3 data-inline-heading>สรุปท้ายบท · สิ่งที่ต้องจำ</h3><!-- inline-heading:end --><p>Express ทำงานบน Node.js: <code>express()</code> → route/middleware → <code>listen()</code></p>
 <p>Router เลือกตาม method + path; <code>app.use(&#39;/product&#39;, router)</code> เพิ่ม prefix ให้ทุก route ในหมวดนั้น วาง 404 หลัง routes และ static ที่ต้องการให้เข้าถึง</p>
 <p><code>res.sendFile</code> ส่ง HTML แต่ resource ที่ HTML อ้างถึงต้องมี URL ที่ server ให้บริการ เช่น static middleware</p>
 <p>GET อ่าน <code>req.query</code>; POST body อ่าน <code>req.body</code> หลัง parser ที่ตรงชนิดข้อมูล ชื่อ key มาจาก <code>name</code> ของ input และ server ต้องตรวจข้อมูลก่อนใช้</p>
-</section>
-<section class="lesson-section" id="p2-topic-25"><h2>จุดที่มักสับสนก่อนสอบ</h2><ol>
+<!-- final-learning:start --><div class="il-embedded" id="learn-transfer"><h3>เช็กความเข้าใจ · ใช้กับสถานการณ์ใหม่</h3><div class="fl-checks" data-final-checks><div class="fl-check-ui" hidden></div><div class="fl-check-fallback"><p><strong>POST ส่ง JSON และ handler อยู่ก่อน express.json() ข้อมูลยังไม่พร้อม ควรแก้อย่างไร?</strong></p><ul><li>ย้าย express.json() ไปก่อน handler และตรวจข้อมูลที่รับ</li><li>เปลี่ยนชื่อ req.body เป็น req.query</li><li>เพิ่ม 404 middleware ไว้ข้างหน้า</li></ul><details><summary>คำตอบและเหตุผล</summary><p>ย้าย express.json() ไปก่อน handler และตรวจข้อมูลที่รับ — การรับ JSON ต้องผ่าน JSON parser ก่อนที่ handler จะอ่าน body จากนั้น handler ยังต้องตรวจค่าตามกติกาของแอป</p><a href="#p2-form">กลับไปทบทวนแนวคิด</a></details><p><strong>app.use(&quot;/assets&quot;, express.static(&quot;public&quot;)) และมี public/logo.png ต้องขอ URL ใด?</strong></p><ul><li>/public/logo.png</li><li>/assets/public/logo.png</li><li>/assets/logo.png</li></ul><details><summary>คำตอบและเหตุผล</summary><p>/assets/logo.png — ตัด mount prefix /assets แล้วค้น logo.png ภายใน directory public ชื่อ directory ไม่ใช่ส่วนหนึ่งของ URL โดยอัตโนมัติ</p><a href="#p2-static">กลับไปทบทวนแนวคิด</a></details></div><script type="application/json">[{"id":"form-parser","q":"POST ส่ง JSON และ handler อยู่ก่อน express.json() ข้อมูลยังไม่พร้อม ควรแก้อย่างไร?","options":["ย้าย express.json() ไปก่อน handler และตรวจข้อมูลที่รับ","เปลี่ยนชื่อ req.body เป็น req.query","เพิ่ม 404 middleware ไว้ข้างหน้า"],"answer":0,"why":"การรับ JSON ต้องผ่าน JSON parser ก่อนที่ handler จะอ่าน body จากนั้น handler ยังต้องตรวจค่าตามกติกาของแอป","link":"p2-form"},{"id":"mount-path","q":"app.use(\"/assets\", express.static(\"public\")) และมี public/logo.png ต้องขอ URL ใด?","options":["/public/logo.png","/assets/public/logo.png","/assets/logo.png"],"answer":2,"why":"ตัด mount prefix /assets แล้วค้น logo.png ภายใน directory public ชื่อ directory ไม่ใช่ส่วนหนึ่งของ URL โดยอัตโนมัติ","link":"p2-static"}]</script></div></div><!-- final-learning:end --></div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-25%22 --><div class="il-topic" id="p2-topic-25" data-inline-source><h3 data-inline-heading>จุดที่มักสับสนก่อนสอบ</h3><!-- inline-heading:end --><ol>
 <li><code>express.Router()</code> ไม่ใช่ <code>express.router()</code></li>
 <li>Browser address bar ส่ง GET ไม่ใช่ POST</li>
 <li>mount <code>/assets</code> ไม่ได้แปลว่ามีโฟลเดอร์ชื่อ assets จริง</li>
@@ -286,11 +286,11 @@ router.post(&#39;/form-post&#39;, (req, res) =&gt; {
 <li>POST ซ่อนข้อมูลจาก URL แต่ไม่ได้แทน HTTPS</li>
 <li>Cookies/Session/Database ยังไม่สอนใน PDF Part II นี้</li>
 </ol>
-</section>
-<section class="lesson-section" id="p2-topic-26"><h2>ลองอธิบายด้วยตัวเอง</h2><details><summary>ทำไม GET /product/add ไม่ตรง POST /product/add?</summary><p>เพราะ routing พิจารณาทั้ง HTTP method และ path ต้องกำหนด handler ให้ตรงทั้งสองส่วน</p></details>
+</div><!-- inline-source:end -->
+<!-- inline-source:%20class%3D%22lesson-section%22%20id%3D%22p2-topic-26%22 --><div class="il-topic" id="p2-topic-26" data-inline-source><h3 data-inline-heading>ลองอธิบายด้วยตัวเอง</h3><!-- inline-heading:end --><details><summary>ทำไม GET /product/add ไม่ตรง POST /product/add?</summary><p>เพราะ routing พิจารณาทั้ง HTTP method และ path ต้องกำหนด handler ให้ตรงทั้งสองส่วน</p></details>
 <details><summary>ถ้ารูปใน HTML ไม่ขึ้นแต่หน้า HTML ขึ้น ควรตรวจอะไร?</summary><p>ตรวจ URL ของรูปที่ browser ขอ ตำแหน่งไฟล์ใน public, mount prefix ของ static และลำดับ middleware ก่อน fallback</p></details>
 <details><summary>ฟอร์ม POST ส่ง fname แล้ว req.body ยังไม่มีค่า ควรตรวจอะไร?</summary><p>ตรวจ name ของ input, Content-Type, parser ที่ใช้ และว่า parser อยู่ก่อน POST handler หรือไม่ รวมถึง action/method ต้องตรง route</p></details>
-<details><summary>ทำไมตรวจ required บน browser แล้วยังต้องตรวจ server?</summary><p>ผู้ใช้สามารถส่ง request ตรงโดยไม่ผ่านฟอร์มหรือข้ามการตรวจบน browser ได้ จึงต้องตรวจข้อมูลที่ขอบเขต server เสมอ</p></details></section>
+<details><summary>ทำไมตรวจ required บน browser แล้วยังต้องตรวจ server?</summary><p>ผู้ใช้สามารถส่ง request ตรงโดยไม่ผ่านฟอร์มหรือข้ามการตรวจบน browser ได้ จึงต้องตรวจข้อมูลที่ขอบเขต server เสมอ</p></details></div><!-- inline-source:end --><!-- inline-group:close --></section><!-- inline-group:end -->
 <section class="lesson-section" id="flashcards"><h2>Flashcards</h2><p>กดพลิกคำศัพท์เพื่อทบทวน</p><button id="flashcard" class="flashcard" aria-pressed="false"><span id="flash-label"></span><strong id="flash-text"></strong></button><div class="node-controls"><button class="btn" id="flash-prev">← ก่อนหน้า</button><span id="flash-position" aria-live="polite"></span><button class="btn" id="flash-next">ถัดไป →</button></div></section>
 <section class="lesson-section" id="quiz"><h2>Quiz ท้ายบท · 10 ข้อ</h2><p>แบบฝึกทบทวนที่เรียบเรียงเพิ่ม ไม่ใช่ข้อสอบทางการ</p><div class="node-quiz" data-node-quiz data-quiz-key="p2-final" data-final-quiz><div class="node-quiz-fallback"><p>Express ต่างจาก Node.js อย่างไร?</p><ul><li>เป็น framework ที่ทำงานบน Node.js</li><li>เป็น browser engine</li><li>แทนระบบปฏิบัติการ</li><li>เป็นฐานข้อมูล</li></ul><details><summary>ดูเฉลย</summary><p>เป็น framework ที่ทำงานบน Node.js · Node.js คือ runtime ส่วน Express ช่วยจัดการ web application และ routing บน runtime นั้น</p></details><p>คำสั่งใดสร้าง package.json แบบใช้ค่าเริ่มต้น?</p><ul><li>npm start</li><li>npm install nodemon</li><li>npm init -y</li><li>node app.cjs</li></ul><details><summary>ดูเฉลย</summary><p>npm init -y · npm init -y สร้างข้อมูลโครงการตามค่าเริ่มต้น ไม่ได้เริ่ม server หรือติดตั้ง Express</p></details><p>สั่ง npm start แล้วทำงานจากที่ใด?</p><ul><li>ชื่อโฟลเดอร์ html</li><li>scripts.start ใน package.json</li><li>คำสั่งใน CSS</li><li>req.body</li></ul><details><summary>ดูเฉลย</summary><p>scripts.start ใน package.json · npm start เรียกคำสั่ง start ที่กำหนดใน scripts เช่น node app.cjs หรือ nodemon app.cjs</p></details><p>มีเพียง router.get(&quot;/add&quot;, handler) การส่ง POST /add จะตรงหรือไม่?</p><ul><li>ตรงทุก method</li><li>ตรงเมื่อมี query</li><li>ตรงถ้ามีพอร์ต 3000</li><li>ไม่ตรง เพราะ method ต่างกัน</li></ul><details><summary>ดูเฉลย</summary><p>ไม่ตรง เพราะ method ต่างกัน · Route ผูกทั้ง method และ path การกำหนด GET ไม่ได้สร้าง POST handler ให้เอง</p></details><p>ต้องการส่งไฟล์ HTML ด้วย absolute path ใช้อะไร?</p><ul><li>res.sendFile(path.join(__dirname,&quot;html&quot;,&quot;shabu.html&quot;))</li><li>req.query(&quot;shabu.html&quot;)</li><li>express.json(&quot;shabu.html&quot;)</li><li>npm start html</li></ul><details><summary>ดูเฉลย</summary><p>res.sendFile(path.join(__dirname,&quot;html&quot;,&quot;shabu.html&quot;)) · sendFile ใช้ส่งไฟล์ ส่วน path.join กับ __dirname ให้ absolute path ในตัวอย่าง CommonJS นี้</p></details><p>วาง middleware ส่ง 404 ก่อน routes และไม่เรียก next() จะเกิดอะไรขึ้น?</p><ul><li>ส่งต่อทุก route</li><li>ทำให้ทุก route เป็น GET</li><li>คำขอจบก่อนถึง route ที่อยู่หลัง</li><li>ติดตั้ง router เพิ่ม</li></ul><details><summary>ดูเฉลย</summary><p>คำขอจบก่อนถึง route ที่อยู่หลัง · Middleware ประมวลผลตามลำดับ เมื่อส่ง response จบแล้วและไม่ส่งต่อ handler หลังจากนั้นจะไม่ทำงาน</p></details><p>mount static ที่ /assets และมี public/mystyle.css ต้องขอ URL ใด?</p><ul><li>/public/mystyle.css</li><li>/assets/mystyle.css</li><li>/assets/public/mystyle.css</li><li>/mystyle.css เท่านั้น</li></ul><details><summary>ดูเฉลย</summary><p>/assets/mystyle.css · URL ใช้ mount prefix ตามด้วย path ภายใน public โดยไม่รวมชื่อโฟลเดอร์ public อีกครั้ง</p></details><p>mount product router ที่ /product และ route ภายในคือ /add จะใช้ path ใด?</p><ul><li>/add/product</li><li>/product/product/add</li><li>/add</li><li>/product/add</li></ul><details><summary>ดูเฉลย</summary><p>/product/add · Mount prefix รวมกับ route ภายในทำให้ endpoint เป็น /product/add แยกจาก /user/add ของ router อื่น</p></details><p>GET form มี input name=&quot;fname&quot; ควรอ่านค่าจากไหน?</p><ul><li>req.query.fname</li><li>req.body เสมอ</li><li>res.fname</li><li>input.id บน server</li></ul><details><summary>ดูเฉลย</summary><p>req.query.fname · GET form ส่งคู่ name/value ใน query string จึงอ่านจาก req.query และต้องตรวจค่าก่อนใช้งาน</p></details><p>ฟอร์ม HTML POST แบบปกติต้องใช้ parser ใดก่อน handler?</p><ul><li>express.static()</li><li>express.Router() อย่างเดียว</li><li>express.urlencoded()</li><li>express.json() อย่างเดียว</li></ul><details><summary>ดูเฉลย</summary><p>express.urlencoded() · Form ปกติส่ง application/x-www-form-urlencoded จึงใช้ urlencoded ส่วน JSON parser รับ JSON ตาม Content-Type</p></details></div><script type="application/json">[{"q":"Express ต่างจาก Node.js อย่างไร?","options":["เป็น framework ที่ทำงานบน Node.js","เป็น browser engine","แทนระบบปฏิบัติการ","เป็นฐานข้อมูล"],"answer":0,"explanation":"Node.js คือ runtime ส่วน Express ช่วยจัดการ web application และ routing บน runtime นั้น"},{"q":"คำสั่งใดสร้าง package.json แบบใช้ค่าเริ่มต้น?","options":["npm start","npm install nodemon","npm init -y","node app.cjs"],"answer":2,"explanation":"npm init -y สร้างข้อมูลโครงการตามค่าเริ่มต้น ไม่ได้เริ่ม server หรือติดตั้ง Express"},{"q":"สั่ง npm start แล้วทำงานจากที่ใด?","options":["ชื่อโฟลเดอร์ html","scripts.start ใน package.json","คำสั่งใน CSS","req.body"],"answer":1,"explanation":"npm start เรียกคำสั่ง start ที่กำหนดใน scripts เช่น node app.cjs หรือ nodemon app.cjs"},{"q":"มีเพียง router.get(\"/add\", handler) การส่ง POST /add จะตรงหรือไม่?","options":["ตรงทุก method","ตรงเมื่อมี query","ตรงถ้ามีพอร์ต 3000","ไม่ตรง เพราะ method ต่างกัน"],"answer":3,"explanation":"Route ผูกทั้ง method และ path การกำหนด GET ไม่ได้สร้าง POST handler ให้เอง"},{"q":"ต้องการส่งไฟล์ HTML ด้วย absolute path ใช้อะไร?","options":["res.sendFile(path.join(__dirname,\"html\",\"shabu.html\"))","req.query(\"shabu.html\")","express.json(\"shabu.html\")","npm start html"],"answer":0,"explanation":"sendFile ใช้ส่งไฟล์ ส่วน path.join กับ __dirname ให้ absolute path ในตัวอย่าง CommonJS นี้"},{"q":"วาง middleware ส่ง 404 ก่อน routes และไม่เรียก next() จะเกิดอะไรขึ้น?","options":["ส่งต่อทุก route","ทำให้ทุก route เป็น GET","คำขอจบก่อนถึง route ที่อยู่หลัง","ติดตั้ง router เพิ่ม"],"answer":2,"explanation":"Middleware ประมวลผลตามลำดับ เมื่อส่ง response จบแล้วและไม่ส่งต่อ handler หลังจากนั้นจะไม่ทำงาน"},{"q":"mount static ที่ /assets และมี public/mystyle.css ต้องขอ URL ใด?","options":["/public/mystyle.css","/assets/mystyle.css","/assets/public/mystyle.css","/mystyle.css เท่านั้น"],"answer":1,"explanation":"URL ใช้ mount prefix ตามด้วย path ภายใน public โดยไม่รวมชื่อโฟลเดอร์ public อีกครั้ง"},{"q":"mount product router ที่ /product และ route ภายในคือ /add จะใช้ path ใด?","options":["/add/product","/product/product/add","/add","/product/add"],"answer":3,"explanation":"Mount prefix รวมกับ route ภายในทำให้ endpoint เป็น /product/add แยกจาก /user/add ของ router อื่น"},{"q":"GET form มี input name=\"fname\" ควรอ่านค่าจากไหน?","options":["req.query.fname","req.body เสมอ","res.fname","input.id บน server"],"answer":0,"explanation":"GET form ส่งคู่ name/value ใน query string จึงอ่านจาก req.query และต้องตรวจค่าก่อนใช้งาน"},{"q":"ฟอร์ม HTML POST แบบปกติต้องใช้ parser ใดก่อน handler?","options":["express.static()","express.Router() อย่างเดียว","express.urlencoded()","express.json() อย่างเดียว"],"answer":2,"explanation":"Form ปกติส่ง application/x-www-form-urlencoded จึงใช้ urlencoded ส่วน JSON parser รับ JSON ตาม Content-Type"}]</script></div></section>
 <button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-09.html">← Node.js Part I</a><a class="btn primary" href="final.html">กลับไปเลือกบทใน Final →</a></nav></article></div></main><div class="footer-reveal">

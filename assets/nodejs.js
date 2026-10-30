@@ -41,11 +41,20 @@
   root.append(el('p','ส่งงานหลายงาน แล้วกดเดินเวลา เปรียบเทียบจำนวนที่รอรับเรื่อง: I/O รอภายนอกได้ แต่ Computation ที่รันบน main thread ยังบล็อกแม้เลือก Non-blocking'));
   const mode=select(root,'โหมด',[['nonblocking','Non-blocking I/O'],['blocking','Blocking I/O']]);
   const kind=select(root,'ชนิดงาน',[['io','I/O — สุ่ม File System / Database'],['cpu','Computation — JS บน main thread']]);
+  kind.options[0].textContent='I/O — File System / Database';
+  const duration=input(root,'เวลาของ request ใหม่ (1–4 ขั้น)','3','data-task-duration');duration.type='number';duration.min='1';duration.max='4';duration.step='1';
   const nodes=diagram(root,['Requests','Event loop / JS','I/O: OS / worker pool','Response']);
+  const lanes=el('div',undefined,'il-runway');root.append(lanes);
   let tasks=[],tick=0,number=0;const c=controls(root),o=output(root);
   const cpuBusy=()=>tasks.some(t=>t.kind==='cpu'&&t.state==='active');
   function render(){
    const waiting=tasks.filter(t=>t.state==='waiting').length;
+   lanes.replaceChildren();
+   for(const [name,states] of [['รอรับเรื่อง',['waiting']],['กำลังทำงาน',['active']],['รอ callback',['ready']],['ตอบแล้ว',['done']]]){
+    const lane=el('div',undefined,'il-lane');lane.append(el('h4',name));const items=tasks.filter(t=>states.includes(t.state));
+    if(!items.length)lane.append(el('small','ยังไม่มีงาน'));
+    for(const t of items){const job=el('div','Request '+t.id,'il-job');job.append(el('small',(t.kind==='cpu'?'CPU · บล็อก JS':'I/O')+(t.state==='active'?' · เหลือ '+t.left:'')));lane.append(job);}lanes.append(lane);
+   }
    o.textContent=`เวลา ${tick} · request ที่รอคิว: ${waiting}\n`+tasks.map(t=>{
     const state=t.state==='done'?'ตอบกลับแล้ว':t.state==='waiting'?'รอเธรดรับเรื่อง':t.state==='ready'?'I/O เสร็จ รอ callback บน JS thread':`${t.kind==='cpu'?'กำลังคำนวณ JS (บล็อกเธรด)':'กำลังทำ I/O'} (เหลือ ${t.left})`;
     return `Request ${t.id} → ${t.unit} · ${state}`;
@@ -62,7 +71,8 @@
   }
   button('ส่ง request ใหม่',()=>{
    if(tasks.length>=8){o.textContent+='\nครบ 8 งานแล้ว กดเริ่มใหม่เพื่อทดลองรอบใหม่';return;}
-   number++;tasks.push({id:number,kind:kind.value,unit:kind.value==='cpu'?'Computation (main thread)':['File System','Database'][Math.floor(Math.random()*2)],left:1+Math.floor(Math.random()*4),state:'waiting'});start();render();
+   if(!duration.value||!duration.checkValidity()){o.textContent='กำหนดเวลาเป็นจำนวนเต็ม 1–4 ขั้นก่อนส่ง request';return;}
+   number++;tasks.push({id:number,kind:kind.value,unit:kind.value==='cpu'?'Computation (main thread)':['File System','Database'][(number-1)%2],left:Number(duration.value),state:'waiting'});start();render();
   },c);
   button('เดินเวลา 1 ขั้น',()=>{
    tick++;
@@ -96,8 +106,19 @@
   i.addEventListener('input',render);render();
  }
  function asyncOrder(root) {
-  const mode=select(root,'รูปแบบการอ่าน',[['parallel','Async parallel'],['sync','Sync'],['nested','Nested callback']]);const chart=el('figure');root.append(chart);const o=output(root);
-  button('รันโปรแกรม',()=>{const durations=Array.from({length:3},()=>50+Math.floor(Math.random()*251)),timeline=core.asyncTimeline(durations,mode.value),max=Math.max(...timeline.map(t=>t.end));chart.replaceChildren();for(const t of [...timeline].sort((a,b)=>a.id-b.id)){const row=el('div',undefined,'node-timeline-row'),track=el('div',undefined,'node-timeline-track'),bar=el('span',undefined,'node-timeline-bar');bar.style.left=t.start/max*100+'%';bar.style.width=t.duration/max*100+'%';track.append(bar);row.append(el('span','README'+t.id),track);chart.append(row);}chart.append(el('figcaption','เวลาไปทางขวา · '+max+' ms (จำลอง)'));o.textContent=timeline.map(t=>`${t.end} ms → console.log(README${t.id})`).join('\n')+'\n'+(mode.value==='sync'?'Sync: เธรดถูกบล็อกขณะรอแต่ละไฟล์':mode.value==='nested'?'Nested callback: เริ่มไฟล์ถัดไปเมื่อไฟล์ก่อนจบ; ไม่บล็อกระหว่างรอ แต่โค้ดซ้อน':'Parallel: เริ่มพร้อมกัน; งานที่เสร็จก่อนแสดงก่อน ลำดับอาจเหมือนเดิมได้ในบางรอบ');},root);
+  const mode=select(root,'รูปแบบการอ่าน',[['parallel','Async parallel'],['sync','Sync'],['nested','Nested callback']]);
+  const c=controls(root),times=[300,100,200].map((value,i)=>{const n=input(c,'README'+(i+1)+' เวลา (ms)',String(value));n.type='number';n.min='1';n.max='1000';n.step='1';return n;});
+  const chart=el('figure');root.append(chart);const o=output(root);
+  button('รันโปรแกรม',()=>{
+   if(times.some(n=>!n.value||!n.checkValidity())){chart.replaceChildren();o.textContent='ใส่เวลาจำนวนเต็ม 1–1000 ms ให้ครบทุกไฟล์';return;}
+   const timeline=core.asyncTimeline(times.map(n=>Number(n.value)),mode.value),max=Math.max(...timeline.map(t=>t.end));chart.replaceChildren();
+   for(const t of [...timeline].sort((a,b)=>a.id-b.id)){const row=el('div',undefined,'node-timeline-row'),track=el('div',undefined,'node-timeline-track'),bar=el('span',undefined,'node-timeline-bar');bar.style.left=t.start/max*100+'%';bar.style.width=t.duration/max*100+'%';track.append(bar);row.append(el('span','README'+t.id),track);chart.append(row);}
+   chart.append(el('figcaption','เวลาไปทางขวา · 0 ถึง '+max+' ms (จำลอง; ไม่รวม overhead)'));
+   o.textContent=timeline.map(t=>`${t.start}–${t.end} ms → อ่าน README${t.id}; console.log เมื่อ ${t.end} ms`).join('\n')+'\n'+(mode.value==='sync'?'Sync: เธรดถูกบล็อกขณะรอแต่ละไฟล์':mode.value==='nested'?'Nested callback: เริ่มไฟล์ถัดไปเมื่อไฟล์ก่อนจบ; ไม่บล็อกระหว่างรอ แต่โค้ดซ้อน':'Parallel: เริ่มพร้อมกัน; งานที่เสร็จก่อนแสดงก่อน เวลาที่เท่ากันไม่ได้รับประกันลำดับ callback จริง');
+  },root);
+  button('คืนเวลาเริ่มต้น',()=>{times.forEach((n,i)=>n.value=String([300,100,200][i]));chart.replaceChildren();o.textContent='คืนเวลา 300, 100, 200 ms แล้ว กดรันเพื่อเปรียบเทียบอีกครั้ง';},root);
+  function invalidate(){chart.replaceChildren();o.textContent='ค่าตั้งเปลี่ยนแล้ว ลองคาดการณ์ลำดับแล้วกดรันโปรแกรม';}
+  mode.addEventListener('change',invalidate);times.forEach(n=>n.addEventListener('input',invalidate));
  }
  function serverBuilder(root) {
   root.append(el('p','เรียงขั้นตอนด้วยปุ่มขึ้น/ลง หรือ drag แล้วกด Run ขั้นตอบ response อยู่ภายใน callback ของ createServer และจะทำงานหลัง listen เมื่อมี request'));
