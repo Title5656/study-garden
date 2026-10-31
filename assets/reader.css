@@ -307,3 +307,8 @@ body[data-chapter] .reader-course { background: transparent; border: 0; padding:
   body[data-chapter] .lesson-section { padding: 12pt 0; }
   .trace-controls,.trace-actions { display: none; }
 }
+
+/* Scroll-idle mode (see library.css): footer glass buttons skip their blur while the page is moving. */
+html.is-scrolling .footer-contact, html.is-scrolling .footer-pill, html.is-scrolling .footer-back-top {
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}

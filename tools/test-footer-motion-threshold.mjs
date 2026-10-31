@@ -1,4 +1,5 @@
-// Exercise native video playback and reverse-scroll races around the 80% gate.
+// Exercise native video playback and reverse-scroll races around the end-of-page gate
+// (footer motion runs only when the page is scrolled to the very bottom, progress 1).
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { useLocalFiles } from './local-browser-fixture.mjs';
@@ -40,15 +41,15 @@ try {
         events: window.motionEvents,
       }));
     };
-    for (const progress of [.2, .5, .799, .8]) {
+    for (const progress of [.2, .5, .8, .95]) {
       const state = await move(progress);
-      assert.ok(state.progress <= .8);
+      assert.ok(state.progress <= .95);
       assert.equal(state.paused, true, `${path}: video must pause at ${state.progress}`);
       assert.equal(state.active, false, 'ambient motion must stay paused');
       assert.equal(state.playing, false, 'original still image must be visible');
-      assert.equal(state.src, null, 'video must not load before the first >80% opening');
+      assert.equal(state.src, null, 'video must not load before the first end-of-page opening');
     }
-    await move(.82);
+    await move(1);
     await page.waitForFunction(() => !document.querySelector('video').paused && document.querySelector('.footer-art').classList.contains('is-playing'));
     if (path.startsWith('subjects/')) {
       assert.equal(await page.locator('.garden-wordmark-canvas').count(), 1);
@@ -58,23 +59,41 @@ try {
       await page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
       await page.mouse.move(0, 0);
       await page.waitForFunction(count => window.gardenPaints > count, beforeBurst);
-      await move(.79);
+      // The 120px stop boundary intentionally keeps motion active close to
+      // the bottom; use actual pixels rather than a viewport-dependent ratio.
+      await page.evaluate(async () => {
+        scrollTo({ top: document.documentElement.scrollHeight - innerHeight - 140, behavior: 'instant' });
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      });
       const stopped = await page.evaluate(() => window.gardenPaints);
       await page.evaluate(async () => {
         for (let i = 0; i < 10; i++) await new Promise(requestAnimationFrame);
       });
-      assert.equal(await page.evaluate(() => window.gardenPaints), stopped, 'canvas must stop drawing below 80%');
-      await move(.82);
+      assert.equal(await page.evaluate(() => window.gardenPaints), stopped, 'canvas must stop drawing away from the page end');
+      await move(1);
       await page.waitForFunction(count => window.gardenPaints > count, stopped);
     }
+    const endOffset = async pixels => page.evaluate(async pixels => {
+      scrollTo({ top: document.documentElement.scrollHeight - innerHeight - pixels, behavior: 'instant' });
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      return document.querySelector('.motion-footer').classList.contains('is-motion-active');
+    }, pixels);
+    assert.equal(await endOffset(60), true, 'active footer tolerates small scroll jitter');
+    assert.equal(await endOffset(140), false, 'motion stops outside 120px');
+    assert.equal(await endOffset(60), false, 'stopped motion waits for the 8px start boundary');
+    assert.equal(await endOffset(3), true, 'motion restarts within 8px');
     await page.locator('.footer-motion-toggle').click();
-    assert.equal((await move(.9)).paused, true, 'manual pause takes priority');
+    assert.equal((await move(1)).paused, true, 'manual pause takes priority');
+    await endOffset(140);
+    await endOffset(60);
     await page.locator('.footer-motion-toggle').click();
+    assert.equal(await page.locator('video').evaluate(el => el.paused), true, 'unpausing must respect a reset end boundary');
+    await endOffset(3);
     await page.waitForFunction(() => !document.querySelector('video').paused);
     const reversed = await move(.5);
     assert.equal(reversed.paused, true);
     assert.equal(reversed.playing, false);
-    // A queued media event from an earlier play cannot reveal video below 80%.
+    // A queued media event from an earlier play cannot reveal video away from the page end.
     await page.evaluate(() => document.querySelector('video').dispatchEvent(new Event('playing')));
     assert.equal(await page.locator('.footer-art').evaluate(el => el.classList.contains('is-playing')), false);
     const count = (await move(.3)).events;
@@ -82,7 +101,7 @@ try {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.evaluate(() => scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
     assert.equal(await page.locator('video').evaluate(el => el.paused), true);
-    console.log('PASS:', path, '80% gate, reverse scroll, delayed event, pause and reduced motion');
+    console.log('PASS:', path, 'end-of-page gate, reverse scroll, delayed event, pause and reduced motion');
     await page.close();
   }
 } finally { await browser.close(); }

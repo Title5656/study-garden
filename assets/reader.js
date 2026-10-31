@@ -1,6 +1,14 @@
 /* Progressive enhancement: keep every lesson available without JavaScript and in print. */
 (function () {
   "use strict";
+  // Restore backdrop blur after scrolling settles; avoid toggling per frame.
+  const rootElement = document.documentElement;
+  let scrollIdleTimer = 0;
+  window.addEventListener("scroll", () => {
+    rootElement.classList.add("is-scrolling");
+    clearTimeout(scrollIdleTimer);
+    scrollIdleTimer = setTimeout(() => rootElement.classList.remove("is-scrolling"), 150);
+  }, { passive: true });
   // Read one complete topic at a time across every course.
   if (document.querySelector(".lesson-content > .lesson-section") && document.querySelector(".toc")) {
     document.body.dataset.readerMode = "paged";
@@ -25,10 +33,17 @@
     const tracksLayout = "ResizeObserver" in window;
     let revealTop = 0;
     let offscreen = false;
+    // Start at the page end; a wider stopping boundary avoids scroll jitter.
+    let footerAtEnd = false;
+    function reachedPageEnd() {
+      const pixelsLeft = rootElement.scrollHeight - (scrollY + innerHeight);
+      footerAtEnd = footerAtEnd ? pixelsLeft < 120 : pixelsLeft < 8;
+      return footerAtEnd;
+    }
     function motionAllowed() {
+      const atEnd = reachedPageEnd();
       return !reducedMotion.matches && !printMedia.matches && !document.hidden && !artworkPaused &&
-        (!reveal.classList.contains("reveal-enabled") ||
-         Number(reveal.style.getPropertyValue("--reveal-progress")) > 0.8);
+        atEnd;
     }
     function artworkCanPlay(visibleTop) {
       if (!artwork || !motionAllowed()) return false;
@@ -339,17 +354,36 @@
     }
   }
   const readingHistoryKey = "studyGardenReading";
+  let saveTimer = 0;
+  const readingPositions = new Map();
+  let readingEntrySerial = 0;
+  const newReadingEntry = () => `${Date.now()}-${++readingEntrySerial}`;
+  function adoptReadingEntry() {
+    const state = history.state && typeof history.state === "object" ? history.state : {};
+    if (state[readingHistoryKey]?.entry) return state[readingHistoryKey].entry;
+    const entry = newReadingEntry();
+    // Native fragment navigation creates entries outside navigate(). Persist
+    // their identity immediately; coordinate writes can still wait for idle.
+    history.replaceState({ ...state, [readingHistoryKey]: { ...state[readingHistoryKey], entry } }, "");
+    return entry;
+  }
+  let readingEntry = adoptReadingEntry();
+  function captureReadingPosition() {
+    const position = { url: location.href, x: scrollX, y: scrollY, entry: readingEntry };
+    readingPositions.set(readingEntry, position);
+    return position;
+  }
   // Native restoration may retain the initial fragment position instead of the
   // position reached by scrolling. Save each entry explicitly, including entry 1.
   history.scrollRestoration = "manual";
   function rememberReadingPosition() {
+    clearTimeout(saveTimer);
+    saveTimer = 0;
     const state = history.state && typeof history.state === "object" ? history.state : {};
-    history.replaceState({ ...state, [readingHistoryKey]: {
-      url: location.href, x: scrollX, y: scrollY,
-    } }, "");
+    history.replaceState({ ...state, [readingHistoryKey]: captureReadingPosition() }, "");
   }
   function restoreReadingPosition() {
-    const saved = history.state?.[readingHistoryKey];
+    const saved = readingPositions.get(readingEntry) || history.state?.[readingHistoryKey];
     if (!saved || saved.url !== location.href) return false;
     window.scrollTo({left: saved.x, top: saved.y, behavior: "instant"});
     return true;
@@ -357,7 +391,10 @@
   function navigate(topic) {
     if (!topic) return;
     rememberReadingPosition();
-    if (location.hash !== "#" + topic.id) history.pushState(null, "", "#" + topic.id);
+    if (location.hash !== "#" + topic.id) {
+      history.pushState(null, "", "#" + topic.id);
+      readingEntry = newReadingEntry();
+    }
     show(topic, true);
     rememberReadingPosition();
   }
@@ -390,6 +427,10 @@
   // fragment. Explicit fragment changes remain separate from history traversal.
   let restoredHistoryUrl = null;
   window.addEventListener("popstate", () => {
+    // A pending save belongs to the entry we just left, not the restored entry.
+    clearTimeout(saveTimer);
+    saveTimer = 0;
+    readingEntry = adoptReadingEntry();
     restoredHistoryUrl = location.href;
     show(topicFromHash() || topics[0]);
     if (!restoreReadingPosition()) restore();
@@ -400,28 +441,47 @@
       return;
     }
     restoredHistoryUrl = null;
+    readingEntry = adoptReadingEntry();
     restore();
   });
   document.body.classList.add("reader-ready");
   show(topicFromHash() || topics[0]);
-  window.addEventListener("pageshow", restoreReadingPosition);
+  window.addEventListener("pageshow", () => {
+    restoreReadingPosition();
+    rememberReadingPosition();
+  });
   // Follow ordinary scrolling without adding history entries or moving focus.
   // A single animation frame coalesces scroll events; no polling or animation.
   let readingFrame = 0;
+  function rememberSoon() {
+    captureReadingPosition();
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(rememberReadingPosition, 150);
+  }
+  window.addEventListener('pagehide', rememberReadingPosition);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) rememberReadingPosition();
+  });
+  let scrollPaddingTop = null;
+  const sectionMargins = new Map();
+  window.addEventListener('resize', () => { scrollPaddingTop = null; sectionMargins.clear(); });
+  function marginOf(section) {
+    if (!sectionMargins.has(section)) sectionMargins.set(section, parseFloat(getComputedStyle(section).scrollMarginTop) || 0);
+    return sectionMargins.get(section);
+  }
   window.addEventListener('scroll', () => {
-    if (paged) { rememberReadingPosition(); return; }
+    if (paged) { rememberSoon(); return; }
     if (readingFrame) return;
     readingFrame = requestAnimationFrame(() => {
       readingFrame = 0;
       let visible = topics[0];
-      const scrollPadding = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+      if (scrollPaddingTop === null) scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
       for (const topic of topics) {
-        const margin = parseFloat(getComputedStyle(topic.section).scrollMarginTop) || 0;
-        if (topic.section.getBoundingClientRect().top > Math.max(170, scrollPadding + margin + 2)) break;
+        if (topic.section.getBoundingClientRect().top > Math.max(170, scrollPaddingTop + marginOf(topic.section) + 2)) break;
         visible = topic;
       }
       if (visible !== current) show(visible);
-      rememberReadingPosition();
+      rememberSoon();
     });
   }, {passive: true});
 })();
