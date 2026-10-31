@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "scope": "Bibliographic inventory of locally supplied course documents. Original files are excluded from this repository and website; filenames, hashes and chapter mappings are retained for attribution only.",
-  "original_file_count": 41,
-  "total_bytes": 393136944,
-  "chapter_count": 25,
+  "original_file_count": 44,
+  "total_bytes": 407044209,
+  "chapter_count": 28,
   "files": [
     {
       "course": "itds241",
@@ -414,6 +414,36 @@
         "13"
       ],
       "published": false
+    },
+    {
+      "course": "itds241",
+      "file": "69-1-ITDS241-Lecture11-Node.js-Part-III.pdf",
+      "bytes": 10093363,
+      "sha256": "873e321d1a9a6c22ccea9c262b2d3dbc86ccd1ab206024a27ada14ef44170a51",
+      "chapters": [
+        "11"
+      ],
+      "published": false
+    },
+    {
+      "course": "itds241",
+      "file": "ITDS241-Lecture12-Web Services.pdf",
+      "bytes": 1561420,
+      "sha256": "7c8a75e39dfa984cba63945b061b846d43f90db6b83b51c676f2c6e53fe74f8f",
+      "chapters": [
+        "12"
+      ],
+      "published": false
+    },
+    {
+      "course": "itds241",
+      "file": "ITDS241-Lecture13-Web Services with Node.js.pdf",
+      "bytes": 2252482,
+      "sha256": "e37b57662e9b634f2e640c634043aae1a358b2356a0647467a7ba8aa26543c3a",
+      "chapters": [
+        "13"
+      ],
+      "published": false
     }
   ],
   "chapters": [
@@ -679,6 +709,30 @@
       "page": "subjects/itds261/chapter-13.html",
       "originals": [],
       "source_note": "Lecture 12 Testing; source coverage is recorded in docs/itds261-l12-source-map.json."
+    },
+    {
+      "course": "itds241",
+      "chapter": "11",
+      "title": "L11 · Node.js Part III · Study Garden",
+      "page": "subjects/itds241/chapter-11.html",
+      "originals": [],
+      "source_note": "Lecture 11; local source retained outside website repository. Coverage: docs/webservices-source-map.json."
+    },
+    {
+      "course": "itds241",
+      "chapter": "12",
+      "title": "L12 · Web Services · Study Garden",
+      "page": "subjects/itds241/chapter-12.html",
+      "originals": [],
+      "source_note": "Lecture 12; local source retained outside website repository. Coverage: docs/webservices-source-map.json."
+    },
+    {
+      "course": "itds241",
+      "chapter": "13",
+      "title": "L13 · Web Services with Node.js · Study Garden",
+      "page": "subjects/itds241/chapter-13.html",
+      "originals": [],
+      "source_note": "Lecture 13; local source retained outside website repository. Coverage: docs/webservices-source-map.json."
     }
   ],
   "published_file_count": 0

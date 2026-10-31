@@ -20,7 +20,7 @@ const seeds = {
   itds294: {'01':{read:true},'02':{read:true},'03':{read:true}},
   'thermo-chemical': {'01':{read:true},'02':{read:true},'03':{read:true}},
 };
-const expected = {itds211:17,itds241:40,itds261:25,itds294:30,'thermo-chemical':33};
+const expected = {itds211:17,itds241:25,itds261:25,itds294:30,'thermo-chemical':33};
 const browser = await chromium.launch({channel:'chrome',headless:true});
 const errors=[];
 try {
@@ -72,13 +72,13 @@ try {
   assert.notEqual(await ring.evaluate(el=>getComputedStyle(el).color),lightColor,'accent follows theme toggle');
   // Real read/unread actions must refresh the ring without a reload.
   await page.locator('[data-mark-read]').evaluate(el=>el.click());
-  assert.equal(await ring.innerText(),'20%');
+  assert.equal(await ring.innerText(),'13%');
   await page.locator('[data-mark-read]').evaluate(el=>el.click());
   assert.equal(await ring.innerText(),'0%');
   // Another tab writes the existing storage key; mounted readers update too.
   const other = await useLocalFiles(await page.context().newPage(),root);
   await other.goto(base+'subjects/itds241/chapter-09.html');
-  await other.evaluate(()=>localStorage.setItem('study-garden:itds241',JSON.stringify(Object.fromEntries(['06','07','08','09','10'].map(id=>[id,{read:true}])))));
+  await other.evaluate(()=>localStorage.setItem('study-garden:itds241',JSON.stringify(Object.fromEntries(['06','07','08','09','10','11','12','13'].map(id=>[id,{read:true}])))));
   await page.waitForFunction(()=>document.querySelector('[role="progressbar"]').textContent==='100%');
   await page.reload(); assert.equal(await ring.innerText(),'100%');
   await page.evaluate(()=>{window.StudyContent.itds241={};window.dispatchEvent(new Event('pageshow'));});
@@ -88,7 +88,7 @@ try {
   await blocked.addInitScript(()=>{Storage.prototype.getItem=Storage.prototype.setItem=()=>{throw new Error('Storage disabled');};});
   await blocked.goto(base+'subjects/itds241/chapter-06.html');
   await blocked.locator('[data-mark-read]').evaluate(el=>el.click());
-  assert.equal(await blocked.locator('.reader-course [role="progressbar"]').innerText(),'20%','uses existing memory fallback');
+  assert.equal(await blocked.locator('.reader-course [role="progressbar"]').innerText(),'13%','uses existing memory fallback');
   assert.deepEqual(errors,[]);
   console.log('PASS: read/unread, cross-tab updates, reload, 0%/100%, empty course, blocked storage');
 } finally { await browser.close(); }

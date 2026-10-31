@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="th">
+  <head><!-- final-learning:start --><!-- final-learning:end -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="L13 Web Services with Node.js: สร้างและทดสอบ Student API แล้วเชื่อม CORS, JWT และ HTTP client พร้อมคำอธิบาย ตัวอย่าง และแบบทดลองในเนื้อหา">
+    <meta name="theme-color" content="#f5f5f7" />
+    <title>L13 · Web Services with Node.js · Study Garden</title>
+    <link rel="icon" href="../../assets/favicon.png?v=66f8b58bffb5" type="image/png" />
+    <link rel="stylesheet" href="../../assets/style.css?v=d204abbcaf44" />
+    <link rel="stylesheet" href="../../assets/library.css?v=6c532589def9" />
+    <!-- ไฟล์ธรรมดาใช้ defer เพื่อรอ DOM โดยไม่ต้อง build หรือใช้ module -->
+    
+    
+
+    
+
+  <link rel="stylesheet" href="../../assets/reader.css?v=bfe6e1349d0f">
+<link rel="stylesheet" href="../../assets/study-halftone-footer.css?v=f64e254471e5">
+
+
+<link rel="stylesheet" href="../../assets/learning-visuals.css?v=8628a89a3cb7">
+<!-- final-learning:start --><!-- final-learning:end --><script defer src="../../assets/core.js?v=02afe1c9497e"></script><script defer src="../../assets/content.js?v=00fa63a29bbe"></script><script defer src="../../assets/app.js?v=4aecc5e73f9e"></script><script defer src="../../assets/study-halftone-footer.js?v=bc9eefbb8407"></script><script defer src="../../assets/reader.js?v=123b57dcf3cb"></script><script defer src="../../assets/webservices-lab.js?v=98baf1c52106"></script><link rel="stylesheet" href="../../assets/webservices-lab.css?v=912df835a5d9"></head>
+  <body data-subject="itds241" data-chapter="13"><a class="skip" href="#main">ข้ามไปยังเนื้อหา</a><header class="site-header"><nav class="wrap nav" aria-label="เมนูหลัก"><a class="brand" href="../../index.html">Study Garden</a><div class="nav-links"><a href="index.html">Web Technologies</a><a href="final.html">Final</a></div><button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">☾ มืด</button></nav></header><div id="storage-notice" class="storage-notice" role="status" hidden>เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล</div><noscript><p class="wrap note">เนื้อหาและตัวอย่างอ่านได้ครบ เปิด JavaScript เพื่อทดลองและทำ Quiz แบบตรวจคะแนน</p></noscript><main id="main" class="wrap"><nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS241</a><span>/</span><a href="final.html">Final</a><span>/</span><span>L13</span></nav><header class="chapter-hero"><div class="eyebrow">L13 · LECTURE 13</div><h1>Web Services with Node.js</h1><p>สร้างและทดสอบ Student API แล้วเชื่อม CORS, JWT และ HTTP client</p><div class="tags"><span class="tag" data-chapter-status="13">ยังไม่ได้อ่าน</span><span class="pill">Flashcards 10 · Quiz 10</span></div></header><div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#start">เชื่อม UI → Web service → MySQL</a><a href="#contract">สัญญา Student API: ชื่อฟิลด์ต้องตรงกัน</a><a href="#crud">ลอง CRUD แล้วดูข้อมูลก่อน–หลัง</a><a href="#server">อ่านโค้ด service เป็นลำดับ ไม่ข้าม validation</a><a href="#postman">ทดสอบให้รู้ว่าเสียที่สัญญาหรือ client</a><a href="#cors">CORS: ใครอนุญาตให้ browser อ่าน response</a><a href="#jwt">JWT: อ่าน payload ได้ ไม่ได้แปลว่าเชื่อถือได้</a><a href="#axios">Node.js เป็นผู้เรียกบริการอื่นได้ด้วย Axios</a><a href="#debug">ใช้ debugger ไล่ request ตามหลักฐาน</a><a href="#recap">เชื่อมสาเหตุกับจุดตรวจที่ถูกต้อง</a><a href="#flashcards">Flashcards</a><a href="#quiz">Quiz · 10 ข้อ</a></aside><article class="lesson-content"><section class="lesson-section" id="start"><p class="section-kicker">L13 · หน้า PDF 3–15</p><h2>เชื่อม UI → Web service → MySQL</h2><p>เมื่อเข้าใจ HTTP และ REST แล้ว เราจะให้ฟอร์มนักศึกษาสั่งเพิ่ม อ่าน แก้ และลบข้อมูลผ่าน Express โดยใช้ JSON เป็นสัญญาระหว่าง client กับ service บทนี้ควรอ่านหลัง L11–L12 เพื่อแยกความผิดพลาดของ body, SQL, CORS และ token ออกจากกันได้</p><figure><div class="ws-flow"><b>Student form / Postman<br>method + URL + JSON</b><span aria-hidden="true">→</span><b>Express service<br>parse → validate → route</b><span aria-hidden="true">→</span><b>MySQL<br>SQL → rows/result</b></div><figcaption>อ่านตามลูกศรเพื่อเชื่อมบทบาทและลำดับการทำงาน</figcaption></figure><p>เตรียม database และ student table ก่อน ติดตั้ง express, dotenv, mysql2 และ nodemon แล้วตั้ง .env สำหรับ host/user/password/database ไฟล์ studentservices.js ในสไลด์รวม connection และ CRUD; browser ไม่ควรเชื่อม MySQL ตรงหรือได้รับรหัสผ่าน DB</p><pre><code>npm init -y
+npm install express dotenv mysql2 cors jsonwebtoken axios
+npm install --save-dev nodemon</code></pre><p class="ws-note">เรียบเรียงจาก ITDS241-Lecture13-Web Services with Node.js.pdf โดยอ้างเลขหน้า PDF (อาจต่างจากเลขสไลด์ที่พิมพ์อยู่) ตัวอย่างและแบบทดลองที่เสริมมีคำอธิบายกำกับ ไม่ใช่ข้อสอบทางการ</p></section>
+<section class="lesson-section" id="contract"><p class="section-kicker">L13 · หน้า PDF 14–26</p><h2>สัญญา Student API: ชื่อฟิลด์ต้องตรงกัน</h2><p>สไลด์ใช้ <code>POST /student</code>, <code>PUT /student</code>, <code>DELETE /student</code>, <code>GET /student/:id</code> และ <code>GET /students</code> โดย response มี error, data, message ให้ client อ่านความหมายตรงกัน ใน POST/PUT ข้อมูลห่อใน student; DELETE ส่ง student_id ใน body</p><div class="ws-table" tabindex="0" role="region" aria-label="ตารางเปรียบเทียบ เลื่อนเพื่ออ่าน"><table><thead><tr><th>คำขอตามสไลด์</th><th>แหล่ง input</th><th>ผล SQL</th></tr></thead><tbody><tr><td>POST /student</td><td>req.body.student</td><td>INSERT → affectedRows</td></tr><tr><td>PUT /student</td><td>student object + ID</td><td>UPDATE → affectedRows</td></tr><tr><td>DELETE /student</td><td>req.body.student_id</td><td>DELETE → affectedRows</td></tr><tr><td>GET /student/:id</td><td>req.params.id</td><td>SELECT → rows[0]</td></tr><tr><td>GET /students</td><td>ไม่มี ID</td><td>SELECT → array ของแถว</td></tr></tbody></table></div><pre><code>{
+  &quot;student&quot;: {
+    &quot;STU_ID&quot;: 2,
+    &quot;STU_FNAME&quot;: &quot;Mali&quot;,
+    &quot;STU_LNAME&quot;: &quot;Example&quot;,
+    &quot;STU_AGE&quot;: 20
+  }
+}</code></pre><p class="ws-note">จุดแก้จากต้นฉบับ: หน้า PDF 19 อ่าน req.body.student.student_id แต่ body ตัวอย่างใช้ STU_ID ต้องเลือกชื่อเดียวกันและเช็ก student ก่อนเข้าถึง field บทเรียนส่วนถัดไปใช้ /students/:id และ id/name ที่ย่อเพื่อสอนการเปลี่ยนสถานะ จึงไม่ใช่ endpoint เดียวกับสไลด์ และไม่ใช่ API จริงที่กำลังรัน</p></section>
+<section class="lesson-section" id="crud"><p class="section-kicker">L13 · หน้า PDF 16–26</p><h2>ลอง CRUD แล้วดูข้อมูลก่อน–หลัง</h2><p><strong>CRUD</strong> คือ Create/Read/Update/Delete ซึ่งสัมพันธ์กับ INSERT/SELECT/UPDATE/DELETE การตอบ success ต้องสะท้อนสิ่งที่เกิดขึ้น เช่น SELECT ไม่พบแถวควรอธิบายว่าไม่พบ ส่วน id ซ้ำเป็นคนละเหตุผลกับ body ไม่ครบ</p><p>ลอง GET id 1 → POST id 2 → เปลี่ยนชื่อด้วย PUT → DELETE id 2 แล้วลบซ้ำ คาดการณ์ทั้ง status และข้อมูลที่เหลือ แบบจำลองเลือกสถานะ 201/400/404/409 เพื่อให้แยกเหตุผลได้ สไลด์หลาย route ใช้ค่าเริ่มต้น 200 แม้เป็นการสร้าง</p><div class="ws-lab" data-ws-lab="crud"><h3>Student API ในหน่วยความจำ</h3><label>HTTP method<select name="method"><option value="GET">GET /students/:id</option><option value="POST">POST /students</option><option value="PUT">PUT /students/:id</option><option value="DELETE">DELETE /students/:id</option></select></label><div class="ws-columns"><label>Student ID<input name="id" type="number" value="2" min="1"></label><label>ชื่อ (สำหรับ POST/PUT)<input name="student" value="Mali" maxlength="80"></label></div><div class="ws-controls"><button class="btn" type="button" data-ws-action="send">ส่งคำขอจำลอง</button><button class="btn" type="button" data-ws-action="reset">เริ่มใหม่</button></div><h4>ข้อมูลที่มีอยู่</h4><pre data-db>[{"id":1,"name":"Nida"}]</pre><p role="status" aria-live="polite">เริ่มต้นมี Nida id 1; POST id 2 ได้ 201 และเพิ่มแถว แต่ POST id 2 ซ้ำได้ 409</p><small>แบบจำลองเพื่อเรียนรู้บนหน้านี้ ไม่ส่งข้อมูลจริง ไม่เชื่อม server หรือฐานข้อมูล และไม่บันทึกข้อมูลส่วนบุคคล</small></div><p>GET ไม่เปลี่ยนข้อมูล PUT ในแบบจำลองแทนข้อมูล id/name ทั้งชุด DELETE ซ้ำอาจตอบ 404 แต่ resource ยังคงหายไปจึงไม่ขัดกับ idempotence ระบบจริงยังมี concurrent requests, constraints และ transactions ที่แบบจำลองนี้ไม่ได้จำลอง</p></section>
+<section class="lesson-section" id="server"><p class="section-kicker">L13 · หน้า PDF 15–25</p><h2>อ่านโค้ด service เป็นลำดับ ไม่ข้าม validation</h2><p>ก่อนอ่าน req.body ต้องมี express.json() ก่อน routes; ก่อนส่ง SQL ต้องตรวจรูปข้อมูล แล้วส่ง input แยกด้วย placeholders ตัวอย่างต่อไปเป็น GET ที่ใช้ schema student ตามสไลด์ และใช้ Promise API ของ mysql2 เพื่อเห็นลำดับ await ชัดเจน</p><pre><code>// server.cjs: ตั้ง MYSQL_* ใน .env และเตรียมตาราง student ก่อน
+require(&#x27;dotenv&#x27;).config();
+const express = require(&#x27;express&#x27;);
+const mysql = require(&#x27;mysql2/promise&#x27;);
+const app = express();
+app.use(express.json());
+const db = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+});
+app.get(&#x27;/student/:id&#x27;, async (req, res, next) =&gt; {
+  if (!/^[1-9][0-9]*$/.test(req.params.id))
+    return res.status(400).json({ error: true, message: &#x27;Invalid id&#x27; });
+  const id = Number(req.params.id);
+  if (!Number.isSafeInteger(id))
+    return res.status(400).json({ error: true, message: &#x27;Invalid id&#x27; });
+  try {
+    const [rows] = await db.execute(
+      &#x27;SELECT STU_ID, STU_FNAME, STU_LNAME, STU_AGE FROM student WHERE STU_ID = ?&#x27;,
+      [id]
+    );
+    if (!rows.length)
+      return res.status(404).json({ error: true, message: &#x27;Student not found&#x27; });
+    res.json({ error: false, data: rows[0], message: &#x27;Student retrieved&#x27; });
+  } catch (err) { next(err); }
+});
+app.use((err, req, res, next) =&gt; {
+  res.status(500).json({ error: true, message: &#x27;Service operation failed&#x27; });
+});
+app.listen(Number(process.env.PORT || 3000));</code></pre><p>POST ต้องตรวจ object และอนุญาตเฉพาะ STU_ID, STU_FNAME, STU_LNAME, STU_AGE แทนรับทุก key ไปใส่ SQL; UPDATE ต้องระบุ WHERE ให้ตรง record; DELETE ต้องตรวจ affectedRows; อย่า throw ใน callback แล้วคาดว่า Express จะจับให้เอง ให้ next(err) ไป error middleware</p><pre><code>// รูป SQL สำหรับเขียน: ใช้ค่าที่ผ่าน validation แล้วเท่านั้น
+INSERT INTO student (STU_ID, STU_FNAME, STU_LNAME, STU_AGE) VALUES (?, ?, ?, ?)
+UPDATE student SET STU_FNAME = ?, STU_LNAME = ?, STU_AGE = ? WHERE STU_ID = ?
+DELETE FROM student WHERE STU_ID = ?</code></pre></section>
+<section class="lesson-section" id="postman"><p class="section-kicker">L13 · หน้า PDF 27–37</p><h2>ทดสอบให้รู้ว่าเสียที่สัญญาหรือ client</h2><p>ใน Postman สร้าง request เลือก method ใส่ URL ให้ตรง ถ้าเป็น JSON เลือก body แบบ raw/JSON และ Content-Type: application/json แล้วส่ง ตรวจ status, headers และ body รวมถึงตรวจฐานข้อมูลหลังคำขอเขียน อย่าทดสอบเพียง 200 หนึ่งครั้ง</p><div class="ws-table" tabindex="0" role="region" aria-label="ตารางเปรียบเทียบ เลื่อนเพื่ออ่าน"><table><thead><tr><th>กรณี</th><th>สิ่งที่ควรตรวจ</th></tr></thead><tbody><tr><td>GET ID ที่มี / ไม่มี</td><td>ได้ record ถูกคน / ไม่พบตามสัญญา</td></tr><tr><td>POST ข้อมูลครบ / ขาด field</td><td>เพิ่มได้ / ได้ error โดยไม่เพิ่มแถว</td></tr><tr><td>POST ID ซ้ำ</td><td>แจ้ง conflict โดยไม่สร้างซ้ำ</td></tr><tr><td>PUT / DELETE</td><td>ข้อมูลเปลี่ยนหรือลบเฉพาะ ID เป้าหมาย</td></tr><tr><td>token ผิด / หมดอายุ</td><td>ถูกหยุดก่อน query ที่ป้องกัน</td></tr></tbody></table></div><p>ฝั่งฟอร์มอ่านค่าจาก input แล้วเรียก service แบบ asynchronous เมื่อรับ data แล้วจึงใส่ค่ากลับฟอร์ม ต้องตรวจ error/not-found ก่อนเข้าถึง data.STU_ID ไม่เช่นนั้นจะเกิดข้อผิดพลาดซ้ำที่ UI</p><pre><code>async function callStudentWS(url, method, sentData) {
+  const options = { method, headers: { Accept: &#x27;application/json&#x27; } };
+  if (sentData !== undefined &amp;&amp; method !== &#x27;GET&#x27;) {
+    options.headers[&#x27;Content-Type&#x27;] = &#x27;application/json&#x27;;
+    options.body = JSON.stringify(sentData);
+  }
+  const response = await fetch(url, options);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const result = await response.json();
+  if (result.error) throw new Error(result.message);
+  return result;
+}
+// ตัวอย่าง: จับข้อผิดพลาดก่อนอัปเดต UI
+callStudentWS(&#x27;/student/4&#x27;, &#x27;GET&#x27;).then(result =&gt; {
+  document.querySelector(&#x27;#student-name&#x27;).value = result.data.STU_FNAME;
+}).catch(err =&gt; { console.error(err.message); });</code></pre></section>
+<section class="lesson-section" id="cors"><p class="section-kicker">L13 · หน้า PDF 38–43</p><h2>CORS: ใครอนุญาตให้ browser อ่าน response</h2><p><strong>Origin</strong> ประกอบด้วย scheme, host และ port เช่น http://localhost:3100 กับ http://localhost:3000 ต่าง origin แม้ host เหมือนกัน Same-origin policy จำกัดการอ่านข้อมูลข้าม origin ของ scripts; CORS ให้ server ประกาศสิ่งที่อนุญาตผ่าน headers ไม่ใช่สิทธิ์ที่ client เปิดเองได้</p><pre><code>const cors = require(&#x27;cors&#x27;);
+app.use(cors({
+  origin: &#x27;http://localhost:3100&#x27;,
+  methods: [&#x27;GET&#x27;, &#x27;POST&#x27;, &#x27;PUT&#x27;, &#x27;DELETE&#x27;]
+})); // วางก่อน routes
+// หรือกำหนดเฉพาะ route: app.get(&#x27;/student/:id&#x27;, cors(options), handler)</code></pre><p>app.use(cors()) ตาม demo เปิดอ่านแบบทั่วไปกว้างกว่า allowlist คำขอบางประเภท เช่น PUT, JSON POST หรือ Authorization header ต้องมี <strong>preflight OPTIONS</strong> ก่อนจริง ถ้า preflight ไม่ผ่าน browser ไม่ส่งคำขอจริง แต่ simple request อาจถึง server ก่อนถูกบล็อกการอ่าน response Postman/Node ไม่อยู่ภายใต้ CORS แบบ browser จึงอาจเรียกได้แม้หน้าเว็บอ่านไม่ได้</p><div class="ws-lab" data-ws-lab="cors"><h3>พอร์ตเดียวกันไหม แล้วอ่านได้หรือไม่?</h3><label>Origin ของหน้าเว็บ<select name="origin"><option value="http://localhost:3100">http://localhost:3100</option><option value="http://localhost:3000">http://localhost:3000</option><option value="https://localhost:3000">https://localhost:3000</option></select></label><label>Access-Control-Allow-Origin จาก API<select name="allow"><option value="none">ไม่มี header</option><option value="http://localhost:3100">http://localhost:3100</option><option value="*">*</option></select></label><label><input name="credentials" type="checkbox"> ส่ง credentials (สมมติ server ให้ Allow-Credentials: true)</label><p role="status" aria-live="polite">หน้าเว็บพอร์ต 3100 เรียก API พอร์ต 3000 ต้องได้รับ CORS headers ที่ถูกต้อง</p><small>แบบจำลองเพื่อเรียนรู้บนหน้านี้ ไม่ส่งข้อมูลจริง ไม่เชื่อม server หรือฐานข้อมูล และไม่บันทึกข้อมูลส่วนบุคคล</small></div><p>เมื่อส่ง credentials ข้าม origin จะใช้ Allow-Origin: * ไม่ได้ ต้องระบุ origin และ allow-credentials ให้ถูก แบบจำลองตรวจเฉพาะ origin/credentials ของ response และสมมติ preflight ผ่านเมื่อจำเป็น ไม่ได้ทดสอบเครือข่ายจริง CORS ไม่แทน authentication, authorization หรือ CSRF protection</p></section>
+<section class="lesson-section" id="jwt"><p class="section-kicker">L13 · หน้า PDF 44–61</p><h2>JWT: อ่าน payload ได้ ไม่ได้แปลว่าเชื่อถือได้</h2><p><strong>Authentication</strong> ตรวจว่าเป็นใคร ส่วน <strong>authorization</strong> ตรวจว่าทำอะไรได้ ใน token-based flow ผู้ใช้ login → server ตรวจ credentials → ออก token → client ส่ง Authorization: Bearer token ทุกครั้ง → middleware ตรวจ → จึงเข้า handler</p><figure><div class="ws-flow"><b>Header<br>ชนิด + algorithm</b><span aria-hidden="true">→</span><b>Payload<br>claims เช่น sub / exp</b><span aria-hidden="true">→</span><b>Signature<br>ตรวจการแก้ไข</b></div><figcaption>อ่านตามลูกศรเพื่อเชื่อมบทบาทและลำดับการทำงาน</figcaption></figure><p>JWT แบบ signed token ที่สไลด์สอนมีสามส่วนคั่นด้วยจุด header.payload.signature; header/payload เป็น Base64URL จึงอ่านได้ ลายเซ็นช่วยตรวจความถูกต้องและการแก้ไข ไม่ใช่การปกปิดข้อมูล Claims มี registered เช่น iss, sub, aud, exp, iat; public ที่ตั้งแบบไม่ชนกัน และ private ที่คู่สื่อสารตกลงร่วมกัน ห้ามใส่รหัสผ่านลง payload</p><pre><code>const jwt = require(&#x27;jsonwebtoken&#x27;);
+// ทำหลังตรวจ credentials สำเร็จ โดยใช้ user จากแหล่งที่เชื่อถือได้
+const token = jwt.sign({ sub: String(user.id) }, process.env.JWT_SECRET, {
+  algorithm: &#x27;HS256&#x27;, expiresIn: &#x27;1h&#x27;, issuer: &#x27;student-api&#x27;, audience: &#x27;student-ui&#x27;
+});
+function authorize(req, res, next) {
+  const header = req.headers.authorization || &#x27;&#x27;;
+  const match = /^Bearer ([^ ]+)$/.exec(header);
+  if (!match) return res.status(401).json({ error: true, message: &#x27;Token required&#x27; });
+  try {
+    req.auth = jwt.verify(match[1], process.env.JWT_SECRET, {
+      algorithms: [&#x27;HS256&#x27;], issuer: &#x27;student-api&#x27;, audience: &#x27;student-ui&#x27;
+    });
+    next();
+  } catch {
+    res.status(401).json({ error: true, message: &#x27;Invalid or expired token&#x27; });
+  }
+}
+// app.get(&#x27;/students&#x27;, authorize, handler);</code></pre><p class="ws-note">โค้ดนี้เป็นส่วนประกอบ ไม่ใช่ระบบ login ครบชุด ต้องกำหนด user จากการตรวจ credentials ก่อน sign และตั้ง JWT_SECRET ฝั่ง server สไลด์ /signin รับ email/userid จาก body แล้ว sign เพื่อสาธิต จึงยังไม่พิสูจน์ตัวตน; อย่าใช้รูปนั้นเป็น login จริง หน้า PDF 65 ยังสลับลำดับ method/token ของ callStudentWS ให้รักษาลำดับอาร์กิวเมนต์ให้ตรงกับนิยาม</p><div class="ws-lab" data-ws-lab="token"><h3>แยก token ใช้ไม่ได้ กับไม่มีสิทธิ์</h3><label>หลักฐานที่ส่ง<select name="token"><option value="missing">ไม่ส่ง token</option><option value="valid">token ที่ตรวจผ่านและยังไม่หมดอายุ</option><option value="expired">token หมดอายุ</option><option value="tampered">payload ถูกแก้ ลายเซ็นไม่ผ่าน</option></select></label><label><input name="forbidden" type="checkbox"> ผู้ใช้นี้ไม่มีสิทธิ์อ่านรายการ</label><p role="status" aria-live="polite">ไม่ส่ง token ได้ 401; token ผ่านแต่ไม่มีสิทธิ์ได้ 403</p><small>แบบจำลองเพื่อเรียนรู้บนหน้านี้ ไม่ส่งข้อมูลจริง ไม่เชื่อม server หรือฐานข้อมูล และไม่บันทึกข้อมูลส่วนบุคคล</small></div><p>ฝั่ง client ส่ง headers: { Authorization: 'Bearer ' + token } การเลือกที่เก็บ token มีข้อแลกเปลี่ยน: local/sessionStorage อ่านได้ด้วย JavaScript จึงเสี่ยงถูกขโมยเมื่อมี XSS; HttpOnly cookie จำกัดการอ่านด้วย JS แต่ต้องออกแบบ SameSite/CSRF และ credentials; เก็บใน memory ลดการคงค้างแต่ refresh แล้วหาย JWT ไม่ได้แก้ปัญหาเหล่านี้เอง และ logout ที่ client ลบ token ไม่ทำให้ token ที่ถูกคัดลอกหมดอายุทันที</p></section>
+<section class="lesson-section" id="axios"><p class="section-kicker">L13 · หน้า PDF 67–78</p><h2>Node.js เป็นผู้เรียกบริการอื่นได้ด้วย Axios</h2><p>บริการหนึ่งอาจเรียกอีกบริการ เช่นค้นสูตรอาหารหรือเรียก Student WS <strong>Axios</strong> เป็น HTTP client สำหรับ browser/Node ใช้ get/delete โดย config เป็นอาร์กิวเมนต์ที่สอง ส่วน post/put/patch รับ data ก่อน config เมื่อได้ response ตัวข้อมูลอยู่ใน response.data ต่างจาก fetch ที่ต้องเรียก response.json()</p><pre><code>const axios = require(&#x27;axios&#x27;);
+async function getStudents() {
+  try {
+    const response = await axios.get(&#x27;http://localhost:3000/students&#x27;, {
+      headers: { Authorization: `Bearer ${process.env.ACCESS_TOKEN}` },
+      timeout: 5000
+    });
+    console.log(response.data);
+  } catch (err) {
+    console.error(err.response ? `HTTP ${err.response.status}` : &#x27;Network/timeout error&#x27;);
+  }
+}
+getStudents();</code></pre><p>ตัวอย่าง spoonacular ส่ง query, number และ apiKey ผ่าน config.params แทนต่อ URL เอง; เก็บ API key ใน environment ฝั่ง server ไม่ใส่ source ที่ส่งให้ browser ความพร้อมใช้และข้อจำกัดของบริการภายนอกเป็นอีกเรื่อง ตัวบทไม่เรียก API จริง</p><pre><code>const response = await axios.get(
+  &#x27;https://api.spoonacular.com/recipes/complexSearch&#x27;,
+  { params: { query: &#x27;pizza&#x27;, number: 20, apiKey: process.env.SPOONACULAR_API_KEY }, timeout: 5000 }
+);
+console.table(response.data.results);</code></pre><p class="ws-note">Axios มีการแปลง JSON, timeout, cancellation และกลไกช่วย XSRF ตาม configuration แต่ไม่ใช่การป้องกัน CSRF อัตโนมัติทั้งระบบ ต้องออกแบบฝั่ง server ด้วย ส่วนแพ็กเกจ HTTP clients อื่นในสไลด์เป็นรายการตัวอย่าง ไม่ใช่ข้อกำหนดว่าต้องติดตั้งทั้งหมด</p></section>
+<section class="lesson-section" id="debug"><p class="section-kicker">L13 · หน้า PDF 79–83</p><h2>ใช้ debugger ไล่ request ตามหลักฐาน</h2><p>เปิดโฟลเดอร์ Node project ใน VS Code → Run and Debug → สร้าง launch.json สำหรับ Node แล้วตั้ง program ให้ตรง entry point เช่น server.cjs ตั้ง breakpoint ที่รับ request, ก่อน query และก่อนส่ง response เพื่อดูค่าจริง</p><pre><code>{
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [{
+    &quot;type&quot;: &quot;node&quot;, &quot;request&quot;: &quot;launch&quot;, &quot;name&quot;: &quot;Student API&quot;,
+    &quot;program&quot;: &quot;${workspaceFolder}/server.cjs&quot;,
+    &quot;skipFiles&quot;: [&quot;&lt;node_internals&gt;/**&quot;]
+  }]
+}</code></pre><p>ส่ง request เดิมจาก Postman ดู req.params/req.body, step over validation, ดู rows หรือ err หลัง await แล้วดู status ที่ส่งออกมา ถ้าข้อมูลว่างให้แยก “query สำเร็จแต่ไม่พบแถว” จาก “connection/query ล้มเหลว” ถ้า Postman ได้แต่ browser ไม่ได้ ให้ดู origin, preflight และ response headers ก่อนสรุปว่า SQL เสีย</p></section>
+<section class="lesson-section" id="recap"><p class="section-kicker">L13 · หน้า PDF 8–82</p><h2>เชื่อมสาเหตุกับจุดตรวจที่ถูกต้อง</h2><div class="ws-table" tabindex="0" role="region" aria-label="ตารางเปรียบเทียบ เลื่อนเพื่ออ่าน"><table><thead><tr><th>อาการ</th><th>เริ่มตรวจ</th></tr></thead><tbody><tr><td>req.body ว่าง</td><td>Content-Type, JSON.stringify และตำแหน่ง express.json()</td></tr><tr><td>PUT ไม่ได้ ID</td><td>STU_ID เทียบกับ student_id และ body shape</td></tr><tr><td>404 ไม่พบคน</td><td>route, id, rows.length</td></tr><tr><td>Postman ได้ แต่ browser อ่านไม่ได้</td><td>origin, preflight, CORS headers</td></tr><tr><td>401</td><td>Bearer header, signature, expiry, issuer/audience</td></tr><tr><td>403</td><td>สิทธิ์ของผู้ใช้ที่ตรวจตัวตนผ่านแล้ว</td></tr></tbody></table></div><p>สิ่งที่ควรอธิบายได้หลังบทนี้คือ request หนึ่งผ่าน parser → CORS/การตรวจสิทธิ์ตามลำดับ middleware → validation → query → response อย่างไร และแต่ละจุดผิดแล้วควรส่งผลแบบใด คำตอบต้องเชื่อมกับสัญญา API ไม่ใช่ท่องเพียงชื่อ package</p><p>เอกสารทางการสำหรับตรวจพฤติกรรมและอ่านต่อ: <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS">MDN CORS</a> · <a href="https://github.com/auth0/node-jsonwebtoken">jsonwebtoken</a> · <a href="https://axios-http.com/docs/intro">Axios</a></p></section>
+<section class="lesson-section" id="flashcards"><h2>Flashcards</h2><p>ทบทวนเสริมหลังอ่านคำอธิบาย</p><button id="flashcard" class="flashcard" type="button" aria-pressed="false"><span id="flash-label"></span><strong id="flash-text"></strong></button><div class="ws-controls"><button class="btn" id="flash-prev">← ก่อนหน้า</button><span id="flash-position" aria-live="polite"></span><button class="btn" id="flash-next">ถัดไป →</button></div><noscript><details><summary>CRUD</summary><p>Create/Read/Update/Delete สัมพันธ์กับ INSERT/SELECT/UPDATE/DELETE</p></details><details><summary>express.json()</summary><p>parser JSON body ต้องวางก่อน handler ที่อ่าน req.body</p></details><details><summary>req.params / req.body</summary><p>ค่าจาก path parameters / body ที่ parse แล้ว</p></details><details><summary>CORS origin</summary><p>scheme + host + port ตรงกันจึงเป็น origin เดียวกัน</p></details><details><summary>Preflight</summary><p>OPTIONS ตรวจการอนุญาตก่อนคำขอจริงบางประเภท</p></details><details><summary>JWT signature</summary><p>ตรวจความถูกต้องและการแก้ไข ไม่ใช่เข้ารหัส payload</p></details><details><summary>sign / verify</summary><p>สร้าง token / ตรวจ token ตาม key และเงื่อนไข</p></details><details><summary>401 / 403</summary><p>ไม่มีหลักฐานตัวตนที่ใช้ได้ / รู้ตัวตนแต่ไม่มีสิทธิ์</p></details><details><summary>Axios response.data</summary><p>ข้อมูล body ที่ client แปลงให้ ไม่ต้อง response.json() แบบ fetch</p></details><details><summary>Breakpoint</summary><p>หยุดที่จุดโค้ดเพื่อดูค่าและเส้นทางจริงของ request</p></details></noscript></section>
+<section class="lesson-section" id="quiz"><h2>Quiz · 10 ข้อ</h2><p>แบบฝึกทบทวนที่เรียบเรียงเพิ่ม ไม่ใช่ข้อสอบทางการ ตอบแล้วดูเหตุผลและลองใหม่ได้</p><form id="quiz-form"><p id="quiz-count" aria-live="polite">ตอบแล้ว 0 / 10 ข้อ</p><div id="quiz-questions"></div><p id="quiz-error" role="alert"></p><button class="btn primary" id="quiz-submit" type="submit">ตรวจคำตอบ</button><button class="btn" id="quiz-retry" type="button" hidden>ลองใหม่</button></form><div id="quiz-result" tabindex="-1" hidden><h3 id="quiz-score"></h3><p id="quiz-message"></p></div><noscript><details><summary>ต้องวางอะไรก่อน route ที่อ่าน JSON body?</summary><p>express.json() · JSON parser ต้องทำงานก่อน handler จึงอ่าน req.body ได้</p></details><details><summary>body ใช้ STU_ID แต่ handler อ่าน student_id จะเกิดอะไร?</summary><p>อาจได้ undefined เพราะ key ไม่ตรง · ชื่อ field เป็นส่วนของสัญญา ต้องใช้ให้ตรงและตรวจ parent object ก่อน</p></details><details><summary>localhost:3100 กับ localhost:3000 เป็น origin เดียวไหม?</summary><p>ไม่ใช่เพราะ port ต่าง · Origin รวม scheme, host และ port ไม่ใช่แค่ host</p></details><details><summary>CORS แทน authentication ได้ไหม?</summary><p>ไม่ได้ · CORS ควบคุมการอ่านโดย browser ไม่ใช่พิสูจน์ตัวตนหรือสิทธิ์</p></details><details><summary>JWT payload อ่านได้หรือไม่ใน signed JWT ที่เรียน?</summary><p>ได้ เพราะ encoding ไม่ใช่ encryption · Header/payload เป็น Base64URL ลายเซ็นช่วยตรวจความถูกต้องไม่ปกปิดข้อมูล</p></details><details><summary>JWT verify ต้องตรวจสิ่งใด?</summary><p>ลายเซ็นและเงื่อนไข เช่นอายุ/issuer/audience · Token มีรูปถูกยังปลอมได้ ต้อง verify และตรวจ claims ตามสัญญา</p></details><details><summary>token ผ่านแต่ไม่มีสิทธิ์ ควรตอบสถานะใดตามบทเรียน?</summary><p>403 · 403 แยกผู้ใช้ที่ตรวจตัวตนผ่านแล้วแต่ไม่อนุญาตทำรายการ</p></details><details><summary>Axios ได้ข้อมูล body จากไหน?</summary><p>response.data · Axios แปลงข้อมูลให้ตามรูปแบบที่รองรับ ส่วน fetch ใช้ body-reading methods</p></details><details><summary>GET ID ไม่มีแถวควรทำอะไรก่อน data.STU_ID?</summary><p>ตรวจ not-found/error · ต้องแยกไม่พบข้อมูลจากผลสำเร็จที่มี record เพื่อไม่ให้ UI อ่าน undefined</p></details><details><summary>Postman เรียกได้แต่ browser อ่านไม่ได้ควรเริ่มตรงไหน?</summary><p>ตรวจ CORS/origin/preflight · Postman ไม่ถูกจำกัด CORS เหมือน scripts ใน browser จึงช่วยแยกชั้นที่ผิดได้</p></details></noscript></section>
+<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-12.html">← L12</a><a class="btn primary" href="final.html">กลับไป Final →</a></nav></article></div></main><div class="footer-reveal">
+      <div class="footer-stage">
+        <div class="footer-curtain">
+          <a class="footer-reveal-link" href="#footer" aria-label="เลื่อนลงเพื่อดูส่วนท้ายเว็บไซต์">SCROLL DOWN TO REVEAL</a>
+        </div>
+        <footer id="footer" class="site-footer motion-footer garden-footer" aria-label="ส่วนท้ายเว็บไซต์">
+
+          <div class="wrap footer-content">
+            <div class="footer-art" aria-hidden="true">
+              <img src="../../assets/ascii/ink-garden.jpg?v=df253ede8012" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+              <video data-src="../../assets/ascii/ink-garden.mp4?v=42821eac656a" poster="../../assets/ascii/ink-garden.jpg?v=df253ede8012" muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture></video>
+            </div>
+            <h2 class="footer-contact-title">GitHub</h2>
+            <a class="footer-contact" href="https://github.com/Title5656" target="_blank" rel="noopener noreferrer" aria-label="GitHub ของ Title5656 (เปิดแท็บใหม่)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.1c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1.01 1.73 2.64 1.23 3.29.94.1-.73.39-1.23.72-1.51-2.5-.29-5.13-1.25-5.13-5.57 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .95-.3 3.1 1.15A10.8 10.8 0 0 1 12 6.15c.96 0 1.92.13 2.82.38 2.15-1.45 3.1-1.15 3.1-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.33-2.64 5.28-5.15 5.56.4.35.76 1.03.76 2.09v3.1c0 .3.2.65.78.54A11.25 11.25 0 0 0 12 .75Z"/></svg>
+              <span>Title5656</span><span class="footer-contact-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav class="footer-actions" aria-label="เลือกวิชา">
+<a class="footer-pill" href="../../subjects/itds261/index.html">ITDS261</a>
+              <a class="footer-pill" href="../../subjects/itds241/index.html">ITDS241</a>
+              <a class="footer-pill" href="../../subjects/itds294/index.html">ITDS294</a>
+              <a class="footer-pill" href="../../index.html">วิชาทั้งหมด</a>
+            </nav>
+            <div class="footer-wordmark" aria-hidden="true"><span class="garden-wordmark-label">Garden</span></div>
+          </div>
+          <div class="wrap footer-bottom"><a href="../../index.html">Study Garden © 2026</a><div class="footer-controls"><button class="footer-motion-toggle" type="button" aria-label="หยุดภาพเคลื่อนไหว" aria-pressed="false" hidden>
+            <svg class="art-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+            <svg class="art-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+          </button><a class="footer-back-top" href="#main" aria-label="กลับด้านบน">↑</a></div></div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

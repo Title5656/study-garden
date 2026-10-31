@@ -334,8 +334,12 @@ function chunk(type, data) {
   const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(Buffer.concat([name, data])));
   return Buffer.concat([length, name, data, crc]);
 }
-for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37], ['cobalt', 41], ['citrus', 43], ['coral', 47], ['lagoon', 53], ['rose', 59]]) {
-  const job = createArtJob(640, 520, ART_PRESETS[preset], seed);
+const webtech=process.argv.includes('--webtech');
+const variants=webtech ? [['cobalt',106,'06'],['verdant',207,'07'],['honey',308,'08'],['rose',409,'09'],['coral',510,'10'],['indigo',611,'11'],['citrus',712,'12'],['lagoon',813,'13'],['glacier',914,'midterm'],['ember',1015,'final']] : [['aurora', 3], ['glacier', 7], ['ember', 11], ['dusk', 19], ['verdant', 23], ['indigo', 29], ['honey', 37], ['cobalt', 41], ['citrus', 43], ['coral', 47], ['lagoon', 53], ['rose', 59]];
+for (const [preset, seed, id] of variants) {
+  const original=ART_PRESETS[preset];
+  const art=webtech?{...original,angle:original.angle+(seed%7)*.31,warp:original.warp+(seed%3)*.38,scale:.5+(seed%6)*.09}:original;
+  const job = createArtJob(640, 520, art, seed);
   while (!job.step(40)) {}
   const header = Buffer.alloc(13);
   header.writeUInt32BE(job.width, 0); header.writeUInt32BE(job.height, 4);
@@ -345,6 +349,6 @@ for (const [preset, seed] of [['aurora', 3], ['glacier', 7], ['ember', 11], ['du
     Buffer.from(job.pixels.subarray(y * job.width * 4, (y + 1) * job.width * 4)).copy(scan, y * (job.width * 4 + 1) + 1);
   }
   const png = Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]), chunk('IHDR', header), chunk('IDAT', deflateSync(scan)), chunk('IEND', Buffer.alloc(0))]);
-  writeFileSync(new URL('../assets/folder-' + preset + '.png', import.meta.url), png);
+  writeFileSync(new URL('../assets/folder-' + (webtech?'webtech-'+id:preset) + '.png', import.meta.url), png);
   console.log(preset + ': ' + png.length + ' bytes');
 }

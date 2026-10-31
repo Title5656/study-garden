@@ -1,0 +1,150 @@
+[
+  {
+    "lecture": "L11",
+    "file": "69-1-ITDS241-Lecture11-Node.js-Part-III.pdf",
+    "sections": [
+      {
+        "id": "start",
+        "title": "จากเว็บที่ตอบได้ สู่เว็บที่จำสถานะได้",
+        "pdf_pages": "2–11"
+      },
+      {
+        "id": "config",
+        "title": "ตั้งค่าโครงการโดยไม่ผูกกับเครื่อง",
+        "pdf_pages": "9–14"
+      },
+      {
+        "id": "cookies",
+        "title": "Cookie เชื่อม request ได้อย่างไร",
+        "pdf_pages": "15–29"
+      },
+      {
+        "id": "session",
+        "title": "Session: browser ถือบัตร ส่วนข้อมูลอยู่ server",
+        "pdf_pages": "30–34"
+      },
+      {
+        "id": "database",
+        "title": "ทำไมต้องมีฐานข้อมูลนอก session",
+        "pdf_pages": "35–44"
+      },
+      {
+        "id": "sql",
+        "title": "จาก request ผ่าน query กลับเป็น JSON",
+        "pdf_pages": "39–50"
+      },
+      {
+        "id": "recap",
+        "title": "เลือกที่เก็บให้ตรงอายุและหน้าที่",
+        "pdf_pages": "12–50"
+      }
+    ]
+  },
+  {
+    "lecture": "L12",
+    "file": "ITDS241-Lecture12-Web Services.pdf",
+    "sections": [
+      {
+        "id": "start",
+        "title": "จากหน้าเว็บสำหรับคน สู่บริการสำหรับโปรแกรม",
+        "pdf_pages": "4–11, 55–58"
+      },
+      {
+        "id": "http",
+        "title": "HTTP: แยกบรรทัดแรก header และ body",
+        "pdf_pages": "12–31"
+      },
+      {
+        "id": "storage",
+        "title": "Cookie, localStorage และ sessionStorage ต่างกันตรงไหน",
+        "pdf_pages": "37–44"
+      },
+      {
+        "id": "json",
+        "title": "JSON เป็นข้อความ จึงส่งและเก็บโครงสร้างได้",
+        "pdf_pages": "32–36, 45–54"
+      },
+      {
+        "id": "services",
+        "title": "Web service, SOAP และ REST",
+        "pdf_pages": "55–60"
+      },
+      {
+        "id": "rest",
+        "title": "ข้อจำกัด REST: แต่ละข้อแก้ปัญหาอะไร",
+        "pdf_pages": "61–76"
+      },
+      {
+        "id": "methods",
+        "title": "เลือก method และเข้าใจ idempotent",
+        "pdf_pages": "68–73"
+      },
+      {
+        "id": "clients",
+        "title": "XHR และ Fetch: ได้ response ไม่เท่ากับสำเร็จ",
+        "pdf_pages": "77–89"
+      },
+      {
+        "id": "recap",
+        "title": "อ่านสัญญาบริการให้ครบก่อนเขียน client",
+        "pdf_pages": "5–89"
+      }
+    ]
+  },
+  {
+    "lecture": "L13",
+    "file": "ITDS241-Lecture13-Web Services with Node.js.pdf",
+    "sections": [
+      {
+        "id": "start",
+        "title": "เชื่อม UI → Web service → MySQL",
+        "pdf_pages": "3–15"
+      },
+      {
+        "id": "contract",
+        "title": "สัญญา Student API: ชื่อฟิลด์ต้องตรงกัน",
+        "pdf_pages": "14–26"
+      },
+      {
+        "id": "crud",
+        "title": "ลอง CRUD แล้วดูข้อมูลก่อน–หลัง",
+        "pdf_pages": "16–26"
+      },
+      {
+        "id": "server",
+        "title": "อ่านโค้ด service เป็นลำดับ ไม่ข้าม validation",
+        "pdf_pages": "15–25"
+      },
+      {
+        "id": "postman",
+        "title": "ทดสอบให้รู้ว่าเสียที่สัญญาหรือ client",
+        "pdf_pages": "27–37"
+      },
+      {
+        "id": "cors",
+        "title": "CORS: ใครอนุญาตให้ browser อ่าน response",
+        "pdf_pages": "38–43"
+      },
+      {
+        "id": "jwt",
+        "title": "JWT: อ่าน payload ได้ ไม่ได้แปลว่าเชื่อถือได้",
+        "pdf_pages": "44–61"
+      },
+      {
+        "id": "axios",
+        "title": "Node.js เป็นผู้เรียกบริการอื่นได้ด้วย Axios",
+        "pdf_pages": "67–78"
+      },
+      {
+        "id": "debug",
+        "title": "ใช้ debugger ไล่ request ตามหลักฐาน",
+        "pdf_pages": "79–83"
+      },
+      {
+        "id": "recap",
+        "title": "เชื่อมสาเหตุกับจุดตรวจที่ถูกต้อง",
+        "pdf_pages": "8–82"
+      }
+    ]
+  }
+]

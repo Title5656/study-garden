@@ -1,0 +1,15 @@
+/* Only ITDS241 gets this artwork and title treatment. Names wrap, never truncate. */
+body[data-subject="itds241"] [data-webtech-art="06"]{--folder-art:url('folder-webtech-06.png?v=34bc3d966246');--folder-accent:#338dad}
+body[data-subject="itds241"] [data-webtech-art="07"]{--folder-art:url('folder-webtech-07.png?v=9fea04665251');--folder-accent:#6e9c59}
+body[data-subject="itds241"] [data-webtech-art="08"]{--folder-art:url('folder-webtech-08.png?v=e978a012b764');--folder-accent:#d8a33f}
+body[data-subject="itds241"] [data-webtech-art="09"]{--folder-art:url('folder-webtech-09.png?v=2b0a0e774278');--folder-accent:#d074ad}
+body[data-subject="itds241"] [data-webtech-art="10"]{--folder-art:url('folder-webtech-10.png?v=4fa58892f1cc');--folder-accent:#e87868}
+body[data-subject="itds241"] [data-webtech-art="11"]{--folder-art:url('folder-webtech-11.png?v=000e00c3d21f');--folder-accent:#8f89db}
+body[data-subject="itds241"] [data-webtech-art="12"]{--folder-art:url('folder-webtech-12.png?v=5588447d2ead');--folder-accent:#b6ba4c}
+body[data-subject="itds241"] [data-webtech-art="13"]{--folder-art:url('folder-webtech-13.png?v=aa26369b52d4');--folder-accent:#58b6a4}
+body[data-subject="itds241"] [data-exam-folder="midterm"]{--folder-art:url('folder-webtech-midterm.png?v=319a321e9bdc');--folder-accent:#a9bdcf}
+body[data-subject="itds241"] [data-exam-folder="final"]{--folder-art:url('folder-webtech-final.png?v=dce3bae25067');--folder-accent:#ef6548}
+body[data-subject="itds241"] .folder-back{background-image:var(--folder-art);background-color:var(--folder-accent)}
+body[data-subject="itds241"] [data-chapter-folder] .folder-label strong{font-size:clamp(.85rem,1.25vw,1.08rem);line-height:1.3;letter-spacing:-.015em;overflow-wrap:normal;word-break:normal;white-space:normal;text-overflow:clip;display:block;-webkit-line-clamp:unset;max-height:none}
+body[data-subject="itds241"] [data-chapter-folder] .folder-meta{font-size:.61rem}
+@media(max-width:500px){body[data-subject="itds241"] [data-chapter-folder] .folder-label strong{font-size:1.03rem}}

@@ -127,7 +127,7 @@ html+=template.slice(template.indexOf('<div class="footer-reveal">'));
 write('subjects/itds241/chapter-09.html',enhanceLesson(html,'itds241/09'));
 // Add the chapter to the existing content registry, so all course dashboards see it.
 const registry=read('assets/content.js').replace(/\n\/\* Node\.js Part I registry \*\/[\s\S]*$/,'');
-const partII=read('assets/content.js').match(/\/\* Node\.js Part II registry \*\/[\s\S]*?\/\* End Node\.js Part II registry \*\//)?.[0] || '';
+const partII=[read('assets/content.js').match(/\/\* Node\.js Part II registry \*\/[\s\S]*?\/\* End Node\.js Part II registry \*\//)?.[0] || '',read('assets/content.js').match(/\/\* Web services registry \*\/[\s\S]*?\/\* End Web services registry \*\//)?.[0] || ''].join('\n');
 write('assets/content.js',registry+'\n/* Node.js Part I registry */\nwindow.StudyContent.itds241["09"] = '+JSON.stringify({cards,quiz:finalQuiz},null,2)+';\n'+partII+'\n');
 write('docs/nodejs-part1-pages.json',JSON.stringify(pages.map(({id,title,chapter,category})=>({id,title,chapter,category})),null,2)+'\n');
 console.log(`Generated chapter 09: ${pages.length} pages, ${cards.length} flashcards, 10 final quiz questions.`);

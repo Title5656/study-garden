@@ -32,9 +32,9 @@ let html=template.slice(0,template.indexOf('<aside class="toc"'))
  .replace('</head>','<script defer src="../../assets/express-core.js"></script><script defer src="../../assets/express-labs.js"></script></head>');
 html+=`<aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2>${pages.map(p=>`<a href="#${p.id}">${esc(p.title)}</a>`).join('')}</aside><article class="lesson-content">`;
 html+=pages.map(p=>`<section class="lesson-section" id="${p.id}"${p.practice?' data-reader-category="practice"':''}><h2>${esc(p.title)}</h2>${p.body}</section>`).join('\n');
-html+='<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-09.html">← Node.js Part I</a><a class="btn primary" href="final.html">กลับไปเลือกบทใน Final →</a></nav></article></div></main>';
+html+='<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-09.html">← Node.js Part I</a><a class="btn primary" href="chapter-11.html">L11 · Node.js Part III →</a></nav></article></div></main>';
 html+=template.slice(template.indexOf('<div class="footer-reveal">'));write('subjects/itds241/chapter-10.html',enhanceLesson(html,'itds241/10'));
-const registry=read('assets/content.js').replace(/\n\/\* Node\.js Part II registry \*\/[\s\S]*?\/\* End Node\.js Part II registry \*\/\n?/,'');
+const registry=read('assets/content.js').replace(/\n\/\* Node\.js Part II registry \*\/[\s\S]*?\/\* End Node\.js Part II registry \*\/\n?/,'').replace(/\n\/\* Webtech labels \*\/[\s\S]*?\/\* End Webtech labels \*\/\n?/,'');
 write('assets/content.js',registry+'\n/* Node.js Part II registry */\nwindow.StudyContent.itds241["10"] = '+JSON.stringify({cards,quiz},null,2)+';\n/* End Node.js Part II registry */\n');
 write('docs/nodejs-part2-pages.json',JSON.stringify(pages.map(({id,title,practice})=>({id,title,practice})),null,2));
 console.log(`Built Part II: ${pages.length} pages, 6 labs, ${cards.length} cards, ${quiz.length} questions.`);

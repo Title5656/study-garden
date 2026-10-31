@@ -867,3 +867,486 @@ window.StudyContent.itds241["10"] = {
   ]
 };
 /* End Node.js Part II registry */
+/* Web services registry */
+window.StudyContent.itds241["11"] = {
+  "label": "L11",
+  "cards": [
+    [
+      "Environment variable",
+      "คู่ชื่อ/ค่าที่แยก configuration ออกจากโค้ด อ่านผ่าน process.env"
+    ],
+    [
+      "Set-Cookie / Cookie",
+      "response ขอให้ browser เก็บ / request ส่งค่าที่เข้าเงื่อนไขกลับ"
+    ],
+    [
+      "cookie-parser",
+      "อ่าน Cookie header เป็น req.cookies ไม่ใช่ตัวจัดเก็บ session"
+    ],
+    [
+      "maxAge",
+      "อายุ cookie หน่วยมิลลิวินาทีใน Express"
+    ],
+    [
+      "Session ID",
+      "กุญแจอ้างอิงสถานะบน server ไม่ใช่ข้อมูล session ทั้งก้อน"
+    ],
+    [
+      "MemoryStore",
+      "session store ในหน่วยความจำสำหรับพัฒนา restart แล้วข้อมูลหาย"
+    ],
+    [
+      "MySQL Server / Workbench",
+      "ระบบฐานข้อมูล / เครื่องมือจัดการฐานข้อมูล"
+    ],
+    [
+      "SQL placeholder",
+      "ตำแหน่งค่าที่แยกจากข้อความ SQL ไม่ต่อ input ตรง ๆ"
+    ],
+    [
+      "affectedRows",
+      "จำนวนแถวที่ผลการเขียนรายงาน ไม่ใช่แถวข้อมูล SELECT"
+    ],
+    [
+      "dotenv",
+      "โหลดค่าจาก .env เข้า process.env ก่อนใช้งาน"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "ติดตั้ง dotenv ใช้คำสั่งใด?",
+      "options": [
+        "npm init dotenv",
+        "npm install dotenv",
+        "node dotenv init",
+        "npm start dotenv"
+      ],
+      "answer": 1,
+      "explanation": "npm install เพิ่มแพ็กเกจ ส่วน npm init สร้าง package.json"
+    },
+    {
+      "q": "server ขอให้ browser เก็บ cookie ผ่านอะไร?",
+      "options": [
+        "req.body",
+        "Cookie ใน response",
+        "Set-Cookie ใน response",
+        "SQL INSERT"
+      ],
+      "answer": 2,
+      "explanation": "Set-Cookie อยู่ใน response ส่วน Cookie ส่งกลับใน request ตามเงื่อนไข"
+    },
+    {
+      "q": "cookie-parser ช่วยอะไร?",
+      "options": [
+        "สร้าง MySQL",
+        "เข้ารหัสทุก cookie",
+        "เก็บ session ใน DB",
+        "แปลง Cookie header เป็น req.cookies"
+      ],
+      "answer": 3,
+      "explanation": "การอ่าน req.cookies ต้องมี parser แต่การส่ง cookie ไม่ต้องอาศัย parser"
+    },
+    {
+      "q": "maxAge: 360000 เท่ากับกี่นาที?",
+      "options": [
+        "6",
+        "60",
+        "360",
+        "0.36"
+      ],
+      "answer": 0,
+      "explanation": "Express ใช้มิลลิวินาที: 360000 / 1000 / 60 = 6 นาที"
+    },
+    {
+      "q": "express-session เก็บข้อมูล numviews ที่ไหนโดยแนวทางนี้?",
+      "options": [
+        "URL",
+        "server store",
+        "CSS",
+        "ตัว cookie ทั้ง object"
+      ],
+      "answer": 1,
+      "explanation": "cookie ถือ session ID ส่วน numviews อยู่ใน server store"
+    },
+    {
+      "q": "restart server ที่ใช้ MemoryStore แล้วจะเกิดอะไร?",
+      "options": [
+        "MySQL หาย",
+        "cookie ทุกเว็บหาย",
+        "ข้อมูล session ในหน่วยความจำหาย",
+        "JS ถูกลบ"
+      ],
+      "answer": 2,
+      "explanation": "MemoryStore อยู่ใน process ของ server และไม่ใช่ข้อมูลถาวร"
+    },
+    {
+      "q": "dotenv.config() ควรเรียกเมื่อไร?",
+      "options": [
+        "หลัง query เสร็จ",
+        "หลัง res.send",
+        "ก่อนอ่าน process.env ที่พึ่ง .env",
+        "เฉพาะ browser"
+      ],
+      "answer": 2,
+      "explanation": "ต้องโหลด configuration ก่อนนำค่ามาสร้าง connection หรือ session"
+    },
+    {
+      "q": "SELECT ไม่พบแถว ผลปกติเป็นอะไร?",
+      "options": [
+        "อาร์เรย์ว่าง",
+        "affectedRows 1",
+        "ลบตาราง",
+        "401 เสมอ"
+      ],
+      "answer": 0,
+      "explanation": "SELECT สำเร็จแต่ไม่พบข้อมูลต่างจาก query ล้มเหลว"
+    },
+    {
+      "q": "ตัวเลือกใดตรงกับวันหมดอายุ cookie ใน Express?",
+      "options": [
+        "expire: 100",
+        "expires: new Date(...)",
+        "expiry: true",
+        "ttl: 6"
+      ],
+      "answer": 1,
+      "explanation": "expires รับ Date ส่วน maxAge รับอายุเป็นมิลลิวินาที"
+    },
+    {
+      "q": "ทำไมไม่ควรเช็กแค่มี cookie tokenID แล้วให้ผ่าน?",
+      "options": [
+        "cookie อ่านไม่ได้เสมอ",
+        "MySQL ไม่รู้จัก cookie",
+        "cookie ใช้ได้แค่ CSS",
+        "ผู้ใช้แก้ข้อมูล client ได้ ต้องตรวจหลักฐาน"
+      ],
+      "answer": 3,
+      "explanation": "การมีชื่อ cookie ไม่พิสูจน์ว่า server ออกหลักฐานที่ถูกต้องและยังใช้ได้"
+    }
+  ]
+};
+window.StudyContent.itds241["12"] = {
+  "label": "L12",
+  "cards": [
+    [
+      "Web service / API",
+      "Web service คือ API ผ่านเครือข่าย; API อาจเป็น interface ภายในเครื่อง"
+    ],
+    [
+      "3-tier",
+      "แยก presentation, application และ data management"
+    ],
+    [
+      "Accept / Content-Type",
+      "รูป response ที่รับได้ / ชนิด body ของข้อความนั้น"
+    ],
+    [
+      "localStorage",
+      "เก็บ string ต่อ origin ไม่ส่ง HTTP อัตโนมัติและไม่มีวันหมดอายุใน API"
+    ],
+    [
+      "sessionStorage",
+      "เก็บ string แยกตาม origin และ tab; refresh ยังอยู่"
+    ],
+    [
+      "JSON.stringify / JSON.parse",
+      "ค่า → JSON text / JSON text → ค่า"
+    ],
+    [
+      "REST",
+      "architectural style ที่มี constraints ไม่ใช่ protocol หรือ JSON"
+    ],
+    [
+      "HATEOAS",
+      "response ให้ links เพื่อค้นทางไปทรัพยากร/การเปลี่ยนสถานะ"
+    ],
+    [
+      "Idempotent",
+      "ทำคำขอเดิมซ้ำแล้วผลที่ตั้งใจต่อสถานะเหมือนทำครั้งเดียว"
+    ],
+    [
+      "fetch + response.json",
+      "รอ Response ก่อน แล้วรออ่าน/parse body อีกครั้ง"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "API ทุกตัวต้องใช้เครือข่ายไหม?",
+      "options": [
+        "ต้องใช้เสมอ",
+        "เฉพาะ JSON",
+        "ไม่จำเป็น",
+        "ต้องมี MySQL"
+      ],
+      "answer": 2,
+      "explanation": "API อาจเรียกใน process หรือเครื่องเดียว ส่วน web service ต้องผ่านเครือข่าย"
+    },
+    {
+      "q": "Content-Type บอกอะไร?",
+      "options": [
+        "ชนิด body ของข้อความ",
+        "ชื่อคนส่ง",
+        "อายุ session",
+        "จำนวน API"
+      ],
+      "answer": 0,
+      "explanation": "Accept บอกรูป response ที่รับได้ แต่ Content-Type บอกชนิด body ที่ส่ง"
+    },
+    {
+      "q": "ข้อมูลใดส่งกลับ HTTP อัตโนมัติเมื่อเข้าเงื่อนไข?",
+      "options": [
+        "localStorage",
+        "ตัวแปร let",
+        "sessionStorage",
+        "Cookie"
+      ],
+      "answer": 3,
+      "explanation": "browser ส่ง cookie ตามขอบเขตและนโยบาย ส่วน storage ไม่ส่งเอง"
+    },
+    {
+      "q": "ปิด tab แล้วโดยทั่วไปข้อมูลใดจบตาม tab?",
+      "options": [
+        "ฐานข้อมูล",
+        "sessionStorage",
+        "ไฟล์ .env",
+        "source code"
+      ],
+      "answer": 1,
+      "explanation": "sessionStorage ผูกกับ page session ของ tab ไม่ใช่ session store บน server"
+    },
+    {
+      "q": "ข้อความใดเป็น JSON ที่ถูกต้อง?",
+      "options": [
+        "{name:\"Mali\"}",
+        "{\"name\":\"Mali\",}",
+        "{\"name\":\"Mali\"}",
+        "{name:undefined}"
+      ],
+      "answer": 2,
+      "explanation": "JSON ต้องใช้ double quotes และไม่รับ trailing comma/undefined"
+    },
+    {
+      "q": "REST คืออะไร?",
+      "options": [
+        "รูปแบบสถาปัตยกรรม",
+        "protocol แทน HTTP",
+        "package ของ Express",
+        "รูปแบบฐานข้อมูล"
+      ],
+      "answer": 0,
+      "explanation": "REST วาง constraints ของระบบ ส่วน HTTP/JSON เป็นสิ่งที่นำมาใช้ได้"
+    },
+    {
+      "q": "ข้อใดเป็น constraint ทางเลือก?",
+      "options": [
+        "Stateless",
+        "Uniform interface",
+        "Client–server",
+        "Code on demand"
+      ],
+      "answer": 3,
+      "explanation": "Code on demand เป็น optional constraint ไม่จำเป็นทุกบริการ"
+    },
+    {
+      "q": "DELETE ซ้ำแล้ว 200 ตามด้วย 404 ยัง idempotent ได้หรือไม่?",
+      "options": [
+        "ไม่ได้เด็ดขาด",
+        "ได้ ถ้าผลต่อ resource ยังคือถูกลบ",
+        "ได้เฉพาะไม่มี body",
+        "ต้องตอบ 200 เท่านั้น"
+      ],
+      "answer": 1,
+      "explanation": "idempotence ดูผลที่ตั้งใจต่อสถานะ ไม่ใช่ status code เหมือนกัน"
+    },
+    {
+      "q": "Fetch ได้ HTTP 404 จะเป็นอย่างไรโดยปกติ?",
+      "options": [
+        "reject อัตโนมัติเสมอ",
+        "ลบ localStorage",
+        "resolve เป็น Response ที่ ok=false",
+        "retry เองเสมอ"
+      ],
+      "answer": 2,
+      "explanation": "ต้องตรวจ response.ok/status เอง HTTP error ต่างจาก network failure"
+    },
+    {
+      "q": "REST stateless ห้ามเก็บตารางนักศึกษาหรือไม่?",
+      "options": [
+        "ไม่ห้าม resource state",
+        "ห้ามฐานข้อมูลทุกแบบ",
+        "ห้าม JSON",
+        "ห้าม server"
+      ],
+      "answer": 0,
+      "explanation": "ไม่พึ่ง conversation context ของคำขอก่อน แต่ยังเก็บ resource state ได้"
+    }
+  ]
+};
+window.StudyContent.itds241["13"] = {
+  "label": "L13",
+  "cards": [
+    [
+      "CRUD",
+      "Create/Read/Update/Delete สัมพันธ์กับ INSERT/SELECT/UPDATE/DELETE"
+    ],
+    [
+      "express.json()",
+      "parser JSON body ต้องวางก่อน handler ที่อ่าน req.body"
+    ],
+    [
+      "req.params / req.body",
+      "ค่าจาก path parameters / body ที่ parse แล้ว"
+    ],
+    [
+      "CORS origin",
+      "scheme + host + port ตรงกันจึงเป็น origin เดียวกัน"
+    ],
+    [
+      "Preflight",
+      "OPTIONS ตรวจการอนุญาตก่อนคำขอจริงบางประเภท"
+    ],
+    [
+      "JWT signature",
+      "ตรวจความถูกต้องและการแก้ไข ไม่ใช่เข้ารหัส payload"
+    ],
+    [
+      "sign / verify",
+      "สร้าง token / ตรวจ token ตาม key และเงื่อนไข"
+    ],
+    [
+      "401 / 403",
+      "ไม่มีหลักฐานตัวตนที่ใช้ได้ / รู้ตัวตนแต่ไม่มีสิทธิ์"
+    ],
+    [
+      "Axios response.data",
+      "ข้อมูล body ที่ client แปลงให้ ไม่ต้อง response.json() แบบ fetch"
+    ],
+    [
+      "Breakpoint",
+      "หยุดที่จุดโค้ดเพื่อดูค่าและเส้นทางจริงของ request"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "ต้องวางอะไรก่อน route ที่อ่าน JSON body?",
+      "options": [
+        "express.json()",
+        "res.send()",
+        "axios.get()",
+        "JWT payload"
+      ],
+      "answer": 0,
+      "explanation": "JSON parser ต้องทำงานก่อน handler จึงอ่าน req.body ได้"
+    },
+    {
+      "q": "body ใช้ STU_ID แต่ handler อ่าน student_id จะเกิดอะไร?",
+      "options": [
+        "Express แปลงให้เอง",
+        "MySQL สร้าง ID เสมอ",
+        "อาจได้ undefined เพราะ key ไม่ตรง",
+        "CORS เปลี่ยน key"
+      ],
+      "answer": 2,
+      "explanation": "ชื่อ field เป็นส่วนของสัญญา ต้องใช้ให้ตรงและตรวจ parent object ก่อน"
+    },
+    {
+      "q": "localhost:3100 กับ localhost:3000 เป็น origin เดียวไหม?",
+      "options": [
+        "เป็นเสมอ",
+        "ไม่ใช่เพราะ port ต่าง",
+        "เป็นถ้าใช้ JSON",
+        "ขึ้นกับ JWT"
+      ],
+      "answer": 1,
+      "explanation": "Origin รวม scheme, host และ port ไม่ใช่แค่ host"
+    },
+    {
+      "q": "CORS แทน authentication ได้ไหม?",
+      "options": [
+        "ได้ถ้า *",
+        "ได้เมื่อใช้ POST",
+        "ได้เฉพาะ MySQL",
+        "ไม่ได้"
+      ],
+      "answer": 3,
+      "explanation": "CORS ควบคุมการอ่านโดย browser ไม่ใช่พิสูจน์ตัวตนหรือสิทธิ์"
+    },
+    {
+      "q": "JWT payload อ่านได้หรือไม่ใน signed JWT ที่เรียน?",
+      "options": [
+        "อ่านไม่ได้เพราะเข้ารหัสเสมอ",
+        "ได้ เพราะ encoding ไม่ใช่ encryption",
+        "อ่านได้แค่ root",
+        "ได้หลังลบ secret"
+      ],
+      "answer": 1,
+      "explanation": "Header/payload เป็น Base64URL ลายเซ็นช่วยตรวจความถูกต้องไม่ปกปิดข้อมูล"
+    },
+    {
+      "q": "JWT verify ต้องตรวจสิ่งใด?",
+      "options": [
+        "เพียงมีจุดสองจุด",
+        "เพียง decode ได้",
+        "ลายเซ็นและเงื่อนไข เช่นอายุ/issuer/audience",
+        "เฉพาะสี header"
+      ],
+      "answer": 2,
+      "explanation": "Token มีรูปถูกยังปลอมได้ ต้อง verify และตรวจ claims ตามสัญญา"
+    },
+    {
+      "q": "token ผ่านแต่ไม่มีสิทธิ์ ควรตอบสถานะใดตามบทเรียน?",
+      "options": [
+        "200",
+        "201",
+        "401",
+        "403"
+      ],
+      "answer": 3,
+      "explanation": "403 แยกผู้ใช้ที่ตรวจตัวตนผ่านแล้วแต่ไม่อนุญาตทำรายการ"
+    },
+    {
+      "q": "Axios ได้ข้อมูล body จากไหน?",
+      "options": [
+        "response.data",
+        "response.json() เสมอ",
+        "req.params",
+        "process.env.body"
+      ],
+      "answer": 0,
+      "explanation": "Axios แปลงข้อมูลให้ตามรูปแบบที่รองรับ ส่วน fetch ใช้ body-reading methods"
+    },
+    {
+      "q": "GET ID ไม่มีแถวควรทำอะไรก่อน data.STU_ID?",
+      "options": [
+        "ตั้ง 200 เสมอ",
+        "ตรวจ not-found/error",
+        "ลบ DB",
+        "sign token ใหม่"
+      ],
+      "answer": 1,
+      "explanation": "ต้องแยกไม่พบข้อมูลจากผลสำเร็จที่มี record เพื่อไม่ให้ UI อ่าน undefined"
+    },
+    {
+      "q": "Postman เรียกได้แต่ browser อ่านไม่ได้ควรเริ่มตรงไหน?",
+      "options": [
+        "เขียน SQL ใหม่ทันที",
+        "เปลี่ยนฐานข้อมูล",
+        "ตรวจ CORS/origin/preflight",
+        "ลบ package.json"
+      ],
+      "answer": 2,
+      "explanation": "Postman ไม่ถูกจำกัด CORS เหมือน scripts ใน browser จึงช่วยแยกชั้นที่ผิดได้"
+    }
+  ]
+};
+/* End Web services registry */
+/* Webtech labels */
+window.StudyContent.itds241["10"].label = "L10";
+window.StudyContent.itds241["11"].label = "L11";
+window.StudyContent.itds241["12"].label = "L12";
+window.StudyContent.itds241["13"].label = "L13";
+window.StudyContent.itds241["06"].label = "L6";
+window.StudyContent.itds241["07"].label = "L7";
+window.StudyContent.itds241["08"].label = "ECMAScript";
+window.StudyContent.itds241["09"].label = "L9";
+/* End Webtech labels */

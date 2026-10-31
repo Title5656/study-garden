@@ -1,20 +1,24 @@
 // Regenerate the two exam folders from the course registry; future chapters go in Final.
 import {readFileSync,writeFileSync} from 'node:fs';
 import vm from 'node:vm';
+import {webtechFolders} from './webtech-folders.mjs';
 const root=new URL('../',import.meta.url);
 const read=p=>readFileSync(new URL(p,root),'utf8');
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 const context={window:{}};vm.createContext(context);vm.runInContext(read('assets/content.js'),context);
 const content=context.window.StudyContent.itds241;
+for(const [id,meta] of Object.entries(webtechFolders)) if(content[id])content[id].label=meta.label;
+const registry=read('assets/content.js').replace(/\n\/\* Webtech labels \*\/[\s\S]*?\/\* End Webtech labels \*\/\n?/,'\n').trimEnd();
+writeFileSync(new URL('assets/content.js',root),registry+'\n/* Webtech labels */\n'+Object.entries(webtechFolders).map(([id,meta])=>`window.StudyContent.itds241["${id}"].label = ${JSON.stringify(meta.label)};`).join('\n')+'\n/* End Webtech labels */\n');
 const midtermIds=new Set(['06','07','08']);
 const chapters=Object.entries(content).sort(([a],[b])=>a.localeCompare(b)).map(([id,data])=>{
  const html=read(`subjects/itds241/chapter-${id}.html`);
  const title=html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1].replace(/<[^>]*>/g,'').replaceAll('&amp;','&') || `บทที่ ${Number(id)}`;
- return {id,data,title};
+ return {id,data,...(webtechFolders[id] || {label:`L${Number(id)}`,title})};
 });
 const groups=[
  {id:'midterm',label:'Midterm',thai:'สอบกลางภาค',palette:'aurora',chapters:chapters.filter(c=>midtermIds.has(c.id)),topics:'JavaScript · Functions · Objects · DOM · Events · ECMAScript · Promise · Async / Await'},
- {id:'final',label:'Final',thai:'สอบปลายภาค',palette:'indigo',chapters:chapters.filter(c=>!midtermIds.has(c.id)),topics:'Node.js · Module · File System · HTTP'},
+ {id:'final',label:'Final',thai:'สอบปลายภาค',palette:'indigo',chapters:chapters.filter(c=>!midtermIds.has(c.id)),topics:'Node.js · Express · Cookies · Session · MySQL · HTTP · JSON · REST · CORS · JWT'},
 ];
 const back='M0 56A22 22 0 0 1 22 34L146 34C170 34 172 0 198 0L318 0A22 22 0 0 1 340 22L340 250A22 22 0 0 1 318 272L22 272A22 22 0 0 1 0 250Z';
 const front='M0 22A22 22 0 0 1 22 0L118 0C144 0 146 32 172 32L318 32A22 22 0 0 1 340 54L340 176A22 22 0 0 1 318 198L22 198A22 22 0 0 1 0 176Z';
@@ -42,6 +46,7 @@ function folder(group) {
 </article>`;
 }
 let index=read('subjects/itds241/index.html');
+if(!index.includes('assets/webtech-folders.css')) index=index.replace('</head>','<link rel="stylesheet" href="../../assets/webtech-folders.css">\n</head>');
 if(!index.includes('<link rel="stylesheet" href="../../assets/exam-folders.css')) index=index.replace('</head>','<link rel="stylesheet" href="../../assets/exam-folders.css">\n</head>');
 index=index.replace('<body data-subject="itds241">','<body data-subject="itds241" data-exam-library>');
 const grid=/<div class="folder-grid(?: subject-grid)?">[\s\S]*?(?=<p id="search-empty")/;
@@ -59,12 +64,15 @@ function examFolder(group) {
   .replace(/<p class="folder-topics">[\s\S]*?<\/p>/,'');
 }
 function chapterFolder(c,group) {
- let result=folder({...group,id:c.id,label:escape(c.title),thai:`บทที่ ${Number(c.id)}`,chapters:[c]});
+ let result=folder({...group,palette:c.palette || group.palette,id:c.id,label:c.title,thai:c.label,topics:c.title,chapters:[c]});
  result=result.replace('data-exam-folder=','data-chapter-folder=')
-  .replace(/<span class="folder-code">[^<]*<\/span>/,`<span class="folder-code">ITDS241 / ${c.id}</span>`)
+  .replace(/<span class="folder-code">[^<]*<\/span>/,`<span class="folder-code">${escape(c.label)}</span>`)
   .replace(/<span class="folder-meta">[^<]*<\/span>/,`<span class="folder-meta">${c.data.cards.length} cards · ${c.data.quiz.length} คำถาม</span>`)
   .replace(/<nav class="folder-files"[\s\S]*?<\/nav>/,`<nav class="folder-files" aria-label="เนื้อหาบท ${Number(c.id)}"><a href="chapter-${c.id}.html"><span>สรุปบทเรียน</span><span>↗</span></a><a href="chapter-${c.id}.html#flashcards"><span>Flashcards <small>${c.data.cards.length} ใบ</small></span><span>↗</span></a><a href="chapter-${c.id}.html#quiz"><span>Quiz <small>${c.data.quiz.length} ข้อ</small></span><span>↗</span></a></nav>`)
-  .replace(/<div class="folder-caption">[\s\S]*?<\/div>/,`<div class="folder-caption"><a href="chapter-${c.id}.html">บทที่ ${Number(c.id)} <span>↗</span></a><span data-chapter-status="${c.id}">ยังไม่ได้อ่าน</span></div>`);
+  .replace(/<div class="folder-caption">[\s\S]*?<\/div>/,`<div class="folder-caption"><a href="chapter-${c.id}.html">${escape(c.label)} <span>↗</span></a><span data-chapter-status="${c.id}">ยังไม่ได้อ่าน</span></div>`)
+  .replace(/<p class="folder-topics">[\s\S]*?<\/p>/,'')
+  .replace('<article class=',`<article data-webtech-art="${c.id}" class=`)
+  .replace(`เนื้อหาบท ${Number(c.id)}`,`เนื้อหา ${escape(c.label)}`);
  return result;
 }
 for(const group of groups) {
