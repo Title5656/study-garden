@@ -25,22 +25,29 @@
     const tracksLayout = "ResizeObserver" in window;
     let revealTop = 0;
     let offscreen = false;
-    function artworkCanPlay() {
-      if (!artwork || reducedMotion.matches || printMedia.matches || document.hidden || artworkPaused) return false;
+    function motionAllowed() {
+      return !reducedMotion.matches && !printMedia.matches && !document.hidden && !artworkPaused &&
+        (!reveal.classList.contains("reveal-enabled") ||
+         Number(reveal.style.getPropertyValue("--reveal-progress")) > 0.8);
+    }
+    function artworkCanPlay(visibleTop) {
+      if (!artwork || !motionAllowed()) return false;
       const bounds = artwork.getBoundingClientRect();
-      const visibleTop = reveal.classList.contains("reveal-enabled")
+      if (typeof visibleTop !== "number") visibleTop = reveal.classList.contains("reveal-enabled")
         ? Math.max(0, curtain.getBoundingClientRect().bottom) : 0;
       return bounds.bottom > visibleTop && bounds.top < innerHeight && bounds.bottom > 0;
     }
-    function updateArtwork() {
-      const bounds = footer.getBoundingClientRect();
-      const visible = bounds.top < innerHeight && bounds.bottom > 0 &&
-        (!reveal.classList.contains("reveal-enabled") ||
-         Number(reveal.style.getPropertyValue("--reveal-progress")) > 0.08);
-      const canPlay = artworkCanPlay();
-      footer.classList.toggle("is-motion-active",
-        visible && !reducedMotion.matches && !printMedia.matches && !document.hidden && !artworkPaused);
-      footer.dispatchEvent(new CustomEvent("footer-motion-change"));
+    function updateArtwork(visibleTop) {
+      // Below the opening threshold there is no media geometry to measure.
+      const allowed = motionAllowed();
+      const bounds = allowed ? footer.getBoundingClientRect() : null;
+      const active = allowed && bounds.top < innerHeight && bounds.bottom > 0;
+      const canPlay = active && artworkCanPlay(visibleTop);
+      const wasActive = footer.classList.contains("is-motion-active");
+      footer.classList.toggle("is-motion-active", active);
+      // Active canvases still need clipping updates; inactive ones only need
+      // the transition notification that cancels their pending frame.
+      if (active || wasActive !== active) footer.dispatchEvent(new CustomEvent("footer-motion-change"));
       if (!video) return;
       const toggleHidden = reducedMotion.matches || printMedia.matches;
       if (motionToggle.hidden !== toggleHidden) motionToggle.hidden = toggleHidden;
@@ -49,7 +56,7 @@
         if (artwork.classList.contains("is-playing")) artwork.classList.remove("is-playing");
         return;
       }
-      // Fetch the small baked animation only after the curtain uncovers the art.
+      // Fetch the baked animation only after the opening threshold is crossed.
       if (!video.getAttribute("src")) video.src = video.dataset.src;
       if (video.paused) video.play().catch(() => artwork.classList.remove("is-playing"));
     }
@@ -131,7 +138,7 @@
         const rect = link.getBoundingClientRect();
         return rect.top < visibleTop || rect.bottom > visibleBottom;
       });
-      updateArtwork();
+      updateArtwork(visibleTop);
       if (footer.inert !== (progress === 0)) footer.inert = progress === 0;
       footerLinks.forEach((link, index) => {
         if (link.inert !== linkStates[index]) link.inert = linkStates[index];

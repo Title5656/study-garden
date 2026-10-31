@@ -255,6 +255,12 @@ class HalftoneCanvas {
     return [...swatch.getImageData(0, 0, 1, 1).data].slice(0, 3);
   }
   syncActivity() {
+      if (!this.intersecting || document.hidden || !this.footer.classList.contains('is-motion-active')) {
+        this.visible = false;
+        cancelAnimationFrame(this.frame);
+        this.frame = 0;
+        return;
+      }
     const reveal = this.footer.closest('.footer-reveal');
     const coveredTop = reveal.classList.contains('reveal-enabled')
       ? Math.max(0, reveal.querySelector('.footer-curtain').getBoundingClientRect().bottom) : 0;
