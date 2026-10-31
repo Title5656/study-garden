@@ -124,7 +124,7 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 .glass-folder { position: relative; }
 .glass-folder summary { display: block; cursor: pointer; list-style: none; border-radius: 15px; -webkit-tap-highlight-color: transparent; }
 .glass-folder summary::-webkit-details-marker { display: none; }
-.folder-object { display: block; height: auto; aspect-ratio: 340 / 326; position: relative; perspective: 1000px; isolation: isolate; filter: drop-shadow(0 18px 12px #15172418); }
+.folder-object { display: block; height: auto; aspect-ratio: 340 / 326; position: relative; perspective: 1000px; isolation: isolate; }
 .folder-back { position: absolute; inset: 16.56% 0 0; border-radius: 0; clip-path: url(#folder-back-shape); background-size: cover; background-position: center; box-shadow: inset 0 0 40px #ffffff18; }
 .art-aurora { background-image: url('folder-aurora.png?v=129e9c1177b0'); background-color: #9a7382; }
 .art-glacier { background-image: url('folder-glacier.png?v=17e6db5accbf'); background-color: #aabccc; }
@@ -137,7 +137,7 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 .sheet-one { transform: translate(-4%, -12%) rotate(-3deg); }
 .sheet-two { transform: translate(4%, -7%) rotate(2deg); background: linear-gradient(150deg, #f1f4ff, #bdc9dd); }
 .sheet-three { transform: translate(0, 0) rotate(-1deg); }
-.folder-front { display: flex; align-items: flex-end; position: absolute; inset: 39.26% 0 0; z-index: 2; padding: 23px; border: 0; border-radius: 0; clip-path: url(#folder-front-shape); background: linear-gradient(140deg, #ffffff90, #f5f5fb55 55%, #ffffff7a); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); box-shadow: inset 0 -18px 40px #ffffff20; transform-origin: bottom center; transition: transform .6s cubic-bezier(.2,.8,.2,1), background .3s; }
+.folder-front { display: flex; align-items: flex-end; position: absolute; inset: 39.26% 0 0; z-index: 2; padding: 23px; border: 0; border-radius: 0; clip-path: url(#folder-front-shape); background: #fafafe73; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); transform-origin: bottom center; transition: transform .6s cubic-bezier(.2,.8,.2,1), background .3s; }
 .folder-label { display: flex; flex-direction: column; min-width: 0; width: 100%; padding-right: 22px; color: #292a34; text-shadow: 0 1px 6px #ffffff60; }
 .folder-code { font-size: .58rem; letter-spacing: .08em; font-weight: 600; opacity: .78; }
 .folder-label strong { font-size: clamp(.95rem, 1.45vw, 1.15rem); line-height: 1.35; font-weight: 600; letter-spacing: -.035em; margin: 8px 0 9px; }
@@ -175,7 +175,7 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 .chapter-hero { padding-bottom: 28px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
 .lesson-section { border-radius: 12px; }
 .note { border-radius: 8px; }
-:root[data-theme="dark"] .folder-front { background: linear-gradient(140deg, #818aab78, #382b3d60 55%, #a2abc25c); box-shadow: inset 0 -28px 40px #090e2440; }
+:root[data-theme="dark"] .folder-front { background: #676a8a66; }
 :root[data-theme="dark"] .folder-label { color: #f4f4f7; text-shadow: 0 1px 8px #10111860; }
 :root[data-theme="dark"] .folder-meta { color: #d0d2df; }
 :root[data-theme="dark"] .folder-key { background: #ffffff15; border-color: #ffffff30; color: #fff; }
@@ -338,9 +338,7 @@ a.subject-folder[href]:focus-visible .folder-front { transform: rotateX(-18deg);
 }
 @media print { .folder-navigation-progress, .folder-navigation-status { display: none; } }
 
-/* Scroll-idle mode (class set by reader.js). Blurring what slides under the header and the folders is
-   recomputed on every scrolled frame, so it is switched off while the page moves and returns ~150 ms
-   after scrolling stops. The resting page looks exactly the same. Delete a rule to keep that blur always on. */
+/* Search blur pauses during scrolling; folder glass keeps one consistent,
+   plain blur with no saturation or shadow filter in both scroll states. */
 html.is-scrolling .site-header { backdrop-filter: none; -webkit-backdrop-filter: none; }
 html.is-scrolling .search-field { backdrop-filter: none; -webkit-backdrop-filter: none; }
-html.is-scrolling .folder-front { backdrop-filter: none; -webkit-backdrop-filter: none; }
