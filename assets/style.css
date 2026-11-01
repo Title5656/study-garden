@@ -56,17 +56,50 @@ html {
 }
 body {
   margin: 0;
+  isolation: isolate;
   background-color: var(--bg);
-  background-image: linear-gradient(var(--wallpaper-tint), var(--wallpaper-tint)), var(--page-wallpaper);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   color: var(--ink);
   font-family: "Segoe UI", "Leelawadee UI", Tahoma, sans-serif;
   font-size: 16px;
   line-height: 1.85;
 }
+/* A viewport layer avoids iOS fixed-background zooming. Large viewport height
+   keeps the art steady when mobile browser chrome collapses. */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(var(--wallpaper-tint), var(--wallpaper-tint)), var(--page-wallpaper) center / cover no-repeat;
+}
+/* Compose for aspect-ratio families, including iPad landscape and split view.
+   The original 16:9 artwork remains the standard landscape default. */
+@media (max-aspect-ratio: 13/20) {
+  :root { --page-wallpaper: url("background-light-mobile.webp?v=7f771700587e"); }
+  :root[data-theme="dark"] { --page-wallpaper: url("background-dark-mobile.webp?v=7d76f33a76f3"); }
+}
+@media (min-aspect-ratio: 13/20) and (max-aspect-ratio: 1/1) {
+  :root { --page-wallpaper: url("background-light-tablet.webp?v=5edf4866abc0"); }
+  :root[data-theme="dark"] { --page-wallpaper: url("background-dark-tablet.webp?v=8ce96615abf9"); }
+}
+@media (min-aspect-ratio: 1/1) and (max-aspect-ratio: 3/2) {
+  :root { --page-wallpaper: url("background-light-tablet-landscape.webp?v=daf165e97155"); }
+  :root[data-theme="dark"] { --page-wallpaper: url("background-dark-tablet-landscape.webp?v=7d3fb6cd30cb"); }
+}
+@media (min-aspect-ratio: 2/1) {
+  :root { --page-wallpaper: url("background-light-ultrawide.webp?v=2dfdd543e667"); }
+  :root[data-theme="dark"] { --page-wallpaper: url("background-dark-ultrawide.webp?v=993d771bc433"); }
+}
+/* Keep the sun/moon in frame on 32:9 screens; crop lower clouds instead. */
+@media (min-aspect-ratio: 8/3) {
+  body::before { background-position: center top; }
+}
+@media print { body::before { display: none; } }
 a {
   color: inherit;
   text-decoration: none;
