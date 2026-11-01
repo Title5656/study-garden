@@ -3,6 +3,9 @@
   color-scheme: light;
   --page-wallpaper: url("background-light.webp?v=e714c66b9e2f");
   --wallpaper-tint: #ffffff59;
+  --footer-curtain: #b4d9ee;
+  --footer-curtain-glow: #e9f4fc99;
+  --footer-curtain-ink: #294b65;
   --bg: #f5f5f7;
   --paper: #ffffff;
   --ink: #24252a;
@@ -24,6 +27,9 @@
   color-scheme: dark;
   --page-wallpaper: url("background-dark.webp?v=d4069791aee5");
   --wallpaper-tint: #00000026;
+  --footer-curtain: #14203a;
+  --footer-curtain-glow: #40557845;
+  --footer-curtain-ink: #d1dced;
   --bg: #0d0d0d;
   --paper: #171717;
   --ink: #ededed;

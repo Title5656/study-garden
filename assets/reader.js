@@ -121,7 +121,7 @@
     }
     function updateReveal(fromScroll = false) {
       scheduled = false;
-      const enabled = document.body.dataset.readerMode !== "paged" && !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
+      const enabled = !reducedMotion.matches && !printMedia.matches && innerHeight >= 580;
       reveal.classList.toggle("reveal-enabled", enabled);
       const bounds = reveal.getBoundingClientRect();
       revealTop = scrollY + bounds.top;
