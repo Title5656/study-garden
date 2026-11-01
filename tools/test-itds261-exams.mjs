@@ -33,7 +33,7 @@ try {
     await page.screenshot({path:resolve(process.env.STUDY_GARDEN_OUTPUT,`${exam}-${width}-${theme}.png`)});
    }
   }
-  assert.match(await page.locator('#score-summary').innerText(),/L12: 8\/10/);
+  assert.equal(await page.locator('#score-summary').count(), 0);
   await page.locator('[data-chapter-status="13"]').locator('..').locator('a').click();
   await page.waitForURL('**/chapter-13.html');
   assert.match(await page.locator('.breadcrumb').innerText(),/Final.*L12/s);

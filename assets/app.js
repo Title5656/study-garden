@@ -256,14 +256,6 @@
             ? "อ่านแล้ว ✓"
             : "ยังไม่ได้อ่าน";
     });
-    if ($("#score-summary")) {
-      $("#score-summary").textContent = allChapters
-        .map(({course, id}) => {
-          const score = scoreValue(progressEntry(id, course).best);
-          return `${courses.length > 1 ? course.toUpperCase() + " · " : ""}${chapterLabel(id, course)}: ${score === null ? "ยังไม่ทำ quiz" : score + "/10"}`;
-        })
-        .join(" · ");
-    }
     if (progressChart) {
       progressChart.data.datasets[0].data = ids.map((id) =>
         scoreValue(progressEntry(id).best),
