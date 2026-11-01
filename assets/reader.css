@@ -62,7 +62,7 @@ body[data-reader-mode="paged"] .reader-pager { border-top: 1px solid var(--line)
 /* One content-to-curtain gap for catalogs, exam folders and paged lessons.
    Keep spacing inside main so child margins cannot collapse into the gap. */
 @media screen {
-  :root { --page-footer-gap: 96px; }
+  :root { --page-footer-gap: 384px; }
   main:has(+ .footer-reveal) {
     display: flow-root;
     min-height: 0;
@@ -74,10 +74,10 @@ body[data-reader-mode="paged"] .reader-pager { border-top: 1px solid var(--line)
   }
 }
 @media screen and (max-width: 1100px) {
-  :root { --page-footer-gap: 64px; }
+  :root { --page-footer-gap: 256px; }
 }
 @media screen and (max-width: 540px) {
-  :root { --page-footer-gap: 48px; }
+  :root { --page-footer-gap: 192px; }
 }
 .footer-curtain { position: relative; z-index: 2; min-height: 65svh; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 0, var(--footer-curtain-glow), transparent 75%), var(--footer-curtain); color: var(--footer-curtain-ink); border-bottom: 1px solid color-mix(in srgb, var(--footer-curtain-ink) 16%, transparent); border-radius: 0 0 30px 30px; box-shadow: 0 35px 70px #00000014; }
 .footer-reveal-link { display: flex; flex-direction: column; align-items: center; gap: 32px; text-align: center; padding: 24px; color: inherit; font-size: clamp(1rem, 2.8vw, 2.6rem); font-weight: 300; letter-spacing: .24em; line-height: 1.8; }
