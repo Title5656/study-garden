@@ -50,7 +50,6 @@
   .reader-pager a[hidden] { display: none !important; }
 }
 body[data-reader-mode="paged"] .reader-pager { border-top: 1px solid var(--line); padding-top: 18px; }
-body[data-reader-mode="paged"] .footer-reveal { margin-top: 22px; }
 
 /* Only the reveal's animated elements consume progress. Avoid invalidating
    every descendant (video, SVG paths and controls) on every scroll frame. */
@@ -59,7 +58,27 @@ body[data-reader-mode="paged"] .footer-reveal { margin-top: 22px; }
   inherits: false;
   initial-value: 0;
 }
-.footer-reveal { --reveal-progress: 0; margin-top: 70px; }
+.footer-reveal { --reveal-progress: 0; margin-top: 0; }
+/* One content-to-curtain gap for catalogs, exam folders and paged lessons.
+   Keep spacing inside main so child margins cannot collapse into the gap. */
+@media screen {
+  :root { --page-footer-gap: 96px; }
+  main:has(+ .footer-reveal) {
+    display: flow-root;
+    min-height: 0;
+    margin-bottom: 0;
+    padding-bottom: var(--page-footer-gap);
+  }
+  main:has(+ .footer-reveal) > :nth-last-child(1 of :not([hidden])) {
+    margin-bottom: 0;
+  }
+}
+@media screen and (max-width: 1100px) {
+  :root { --page-footer-gap: 64px; }
+}
+@media screen and (max-width: 540px) {
+  :root { --page-footer-gap: 48px; }
+}
 .footer-curtain { position: relative; z-index: 2; min-height: 65svh; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 0, var(--footer-curtain-glow), transparent 75%), var(--footer-curtain); color: var(--footer-curtain-ink); border-bottom: 1px solid color-mix(in srgb, var(--footer-curtain-ink) 16%, transparent); border-radius: 0 0 30px 30px; box-shadow: 0 35px 70px #00000014; }
 .footer-reveal-link { display: flex; flex-direction: column; align-items: center; gap: 32px; text-align: center; padding: 24px; color: inherit; font-size: clamp(1rem, 2.8vw, 2.6rem); font-weight: 300; letter-spacing: .24em; line-height: 1.8; }
 .footer-reveal-link::after { content: ""; width: 1px; height: 110px; background: linear-gradient(currentColor, transparent); }
