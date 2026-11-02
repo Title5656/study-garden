@@ -327,6 +327,44 @@ body[data-chapter] .reader-course { background: transparent; border: 0; padding:
     column-gap: 78px;
   }
 }
+/* Keep Mahidol reading full-width on tablets, including portrait iPads.
+   Override the legacy 850px horizontal TOC and the 801px reader columns
+   together. Thermodynamics retains its existing responsive navigation. */
+@media screen and (max-width: 1100px) {
+  body.reader-ready:not([data-subject="thermo-chemical"]) .lesson-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  body.reader-ready:not([data-subject="thermo-chemical"]) .reader-sidebar {
+    display: block;
+    position: static;
+    padding: 12px;
+    max-height: none;
+    overflow: visible;
+    white-space: normal;
+    min-width: 0;
+  }
+  body.reader-ready:not([data-subject="thermo-chemical"]) :is(.reader-course, .reader-back) { display: none; }
+  body.reader-ready:not([data-subject="thermo-chemical"]) .reader-menu-toggle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: .8rem;
+    border-radius: 8px;
+  }
+  body.reader-ready:not([data-subject="thermo-chemical"]) .reader-topics { display: none; }
+  body.reader-ready:not([data-subject="thermo-chemical"]) .menu-open .reader-topics {
+    display: block;
+    max-height: 50dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 4px 0 8px;
+  }
+}
 @media screen and (max-width: 540px) {
   body[data-chapter] .lesson-content {
     padding: 18px 16px 4px;
