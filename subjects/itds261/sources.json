@@ -146,5 +146,20 @@
     "chapters": [
       "13"
     ]
+  },
+  {
+    "file": "2026 - ITDS261 - L13 - Unit, integration and system testing.pdf",
+    "pages": 40,
+    "role": "แหล่งหลัก Lecture 13; เรียบเรียงใหม่และไม่รวม PDF ต้นฉบับ",
+    "chapters": [
+      "14"
+    ]
+  },
+  {
+    "file": "lecture13-unit-integration-system-testing.html",
+    "role": "อ้างอิงแนวคิดเนื้อหาและ widgets; เขียนใหม่เพื่อใช้ shared shell ของ Study Garden",
+    "chapters": [
+      "14"
+    ]
   }
 ]

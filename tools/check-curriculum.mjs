@@ -12,8 +12,8 @@ for (const name of ['content', 'ecommerce-content', 'software-content', 'thermo-
   vm.runInContext(readFileSync(resolve(root, `assets/${name}.js`), 'utf8'), context);
 }
 const courses = context.window.StudyContent;
-assert.equal(Object.keys(courses.itds261).length, 12);
-assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 51);
+assert.equal(Object.keys(courses.itds261).length, 13);
+assert.equal(Object.values(courses).reduce((n, course) => n + Object.keys(course).length, 0), 52);
 let figures = 0;
 for (const [course, chapters] of Object.entries(courses)) {
   for (const [id, data] of Object.entries(chapters)) {
@@ -36,7 +36,7 @@ for (const [course, chapters] of Object.entries(courses)) {
   }
 }
 const manifest = JSON.parse(readFileSync(resolve(root, 'subjects/itds261/sources.json'), 'utf8'));
-assert.equal(manifest.length, 21, 'Every in-scope source has an explicit role');
+assert.equal(manifest.length, 23, 'Every in-scope source has an explicit role');
 for (const entry of manifest) { assert.ok(entry.file && entry.role && entry.chapters.length); }
 const architectureSources = JSON.parse(readFileSync(resolve(root, 'subjects/itds211/sources.json'), 'utf8'));
 assert.equal(architectureSources.length, 12, 'All supplied ITDS211 source lectures are indexed');
@@ -52,7 +52,8 @@ function walk(dir) {
   return readdirSync(dir, { withFileTypes: true }).flatMap(item => item.name === '.git' ? [] : item.isDirectory() ? walk(resolve(dir,item.name)) : [resolve(dir,item.name)]);
 }
 let links = 0;
-for (const file of walk(root).filter(path => path.endsWith('.html'))) {
+// Validate published pages, not authoring fragments whose links are relative to generated pages.
+for (const file of [resolve(root, 'index.html'), ...walk(resolve(root, 'subjects')).filter(path => path.endsWith('.html'))]) {
   const html = readFileSync(file, 'utf8');
   assert.doesNotMatch(html, /id="(?:sources|source-inventory|coverage)"/, `${file}: public source inventory must stay removed`);
   assert.doesNotMatch(html, /data-source-(?:file|page)=/, `${file}: public source-file controls must stay removed`);
@@ -73,4 +74,4 @@ for (const file of walk(root).filter(path => path.endsWith('.html'))) {
   }
   for (const tag of html.matchAll(/<img\b[^>]*>/g)) assert.match(tag[0], /\balt="[^"]*"/, `${file}: image needs alt`);
 }
-console.log(`PASS: 5 courses, 51 chapters, 510 questions, ${figures} learning figures, 21 ITDS261 + 12 ITDS211 source files, ${links} local references.`);
+console.log(`PASS: 5 courses, 52 chapters, 520 questions, ${figures} learning figures, 23 ITDS261 + 12 ITDS211 source files, ${links} local references.`);

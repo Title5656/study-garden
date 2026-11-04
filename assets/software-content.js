@@ -1955,3 +1955,218 @@ window.StudyContent.itds261["13"] = {
     }
   ]
 };
+
+window.StudyContent.itds261["14"] = {
+  "label": "L13",
+  "title": "Unit, Integration & System Testing",
+  "cards": [
+    [
+      "Unit testing",
+      "ทดสอบหน่วยเล็กสุด เช่น method โดยควบคุม dependency; เร็วและรันบ่อย (หน้า 5–6)"
+    ],
+    [
+      "Integration testing",
+      "ตรวจ interaction, interface, data flow และ dependencies ระหว่าง component ที่รวมกัน (หน้า 15)"
+    ],
+    [
+      "System testing",
+      "ตรวจระบบรวมเทียบ functional และ non-functional requirements (หน้า 18)"
+    ],
+    [
+      "Unit test ที่ดี",
+      "Focused/isolated, fast, automatable, repeatable (หน้า 6)"
+    ],
+    [
+      "JUnit",
+      "Framework สำหรับ Java มี annotations, assertions และ test runner; เชื่อม IDE/build tools ได้ (หน้า 7–9)"
+    ],
+    [
+      "JUnit checklist",
+      "Initialize → Write test cases → Write a test suite → Execute test suite (หน้า 10)"
+    ],
+    [
+      "@Test",
+      "บอก runner ว่า method นี้เรียกเป็น test ได้ (หน้า 11)"
+    ],
+    [
+      "@BeforeClass / @AfterClass",
+      "เตรียมก่อน / เก็บกวาดหลัง test ทั้ง class อย่างละครั้ง ตาม lifecycle ใน lecture (หน้า 11)"
+    ],
+    [
+      "@Before / @After",
+      "เตรียม / เก็บกวาดสำหรับแต่ละ test เพื่อไม่ให้สถานะข้ามเคสรบกวนกัน (หน้า 11)"
+    ],
+    [
+      "assertEquals vs assertSame",
+      "Equals ตรวจความเท่ากันของค่า; Same ตรวจว่าอ้าง object เดียวกัน (หน้า 12)"
+    ],
+    [
+      "assertNull vs String ว่าง",
+      "null คือไม่มี reference; \"\" ยังเป็น String object (อธิบายเสริมหน้า 12)"
+    ],
+    [
+      "Scaffolding",
+      "สิ่งช่วยจัดสภาพแวดล้อมทดสอบ เช่น stub, driver และ fixture (ขยายความตารางหน้า 16)"
+    ],
+    [
+      "Module fault ที่พบตอน integration",
+      "เป็นสัญญาณว่า unit testing ยังไม่เพียงพอ (หน้า 17)"
+    ],
+    [
+      "Interface fault ของ module ที่ถูกต้อง",
+      "ย้อนตรวจ module breakdown และ interface specification (หน้า 17)"
+    ],
+    [
+      "คู่ V-model",
+      "Requirements↔Acceptance; High-level design↔System; Detailed design↔Integration; Coding↔Unit (หน้า 19)"
+    ],
+    [
+      "Test case",
+      "ระบุ preconditions, data, steps, expected แล้วบันทึก actual/status พร้อมข้อมูลผู้รันและรุ่น (หน้า 20)"
+    ],
+    [
+      "Test report",
+      "สรุป Passed, Failed, Pending, In progress, Blocked; อัตราผ่านต้องระบุตัวหาร (หน้า 21)"
+    ],
+    [
+      "Traceability",
+      "โยง business/functional requirement กับ test IDs เพื่อหาช่องว่างและตามผลกระทบ (หน้า 22)"
+    ],
+    [
+      "Regression testing",
+      "ตรวจว่าการแก้ เพิ่ม optimize หรือ maintenance ไม่ทำพฤติกรรมเดิมเสีย (หน้า 23–24)"
+    ],
+    [
+      "คุณภาพ 8 ด้าน",
+      "Functional suitability, Performance efficiency, Compatibility, Usability, Reliability, Security, Maintainability, Portability (ภาพหน้า 25)"
+    ],
+    [
+      "Usability 5 components",
+      "Learnability, Efficiency, Memorability, Errors, Satisfaction (หน้า 27)"
+    ],
+    [
+      "Usability methods",
+      "Task-based: สังเกตการทำ task; A/B: เทียบสองแบบ; Survey: ถามประสบการณ์/ความพอใจ (หน้า 29)"
+    ],
+    [
+      "ECP vs BVA",
+      "ECP เลือกตัวแทนแต่ละกลุ่ม; BVA เน้นค่าขอบ อย่าลืม invalid และข้อขัดกันใน spec (หน้า 33–38)"
+    ],
+    [
+      "Ex8: V(G) และทาง None",
+      "นับ if/elif เต็มเป็น 4 decisions ได้ V=5; ทั้งสี่ False จบโดยไม่ return จึงได้ None (แนวคำตอบเสริมหน้า 39–40)"
+    ]
+  ],
+  "quiz": [
+    {
+      "q": "ใช้ฐานข้อมูลจริงร่วมกับ repository เพื่ออ่านข้อมูลกลับ เป็น test ระดับใด?",
+      "options": [
+        "Unit เพราะเรียก method เดียว",
+        "Integration เพราะตรวจการเชื่อมสองส่วน",
+        "System เสมอ",
+        "Regression เสมอ"
+      ],
+      "answer": 1,
+      "explanation": "ขอบเขตคือการทำงานร่วมของ repository กับฐานข้อมูลจึงเป็น Integration (หน้า 15) จำนวน method ไม่กำหนดระดับ; ยังไม่ได้ทดสอบทั้งระบบจึงไม่จำเป็นต้องเป็น System; Regression เป็นจุดประสงค์หลังเปลี่ยนแปลง ไม่ใช่คำตอบจากข้อมูลนี้"
+    },
+    {
+      "q": "ใน Student หน้า 14 เมื่อคืน firstName + \" \" + lastName ผลสอง test เป็นอย่างไร?",
+      "options": [
+        "ผ่านทั้งสอง",
+        "ไม่ผ่านทั้งสอง",
+        "Space ผ่าน; Nospace ไม่ผ่าน",
+        "Nospace ผ่าน; Space ไม่ผ่าน"
+      ],
+      "answer": 2,
+      "explanation": "มีช่องว่างใน actual จึงตรงเฉพาะ Space; Nospace คาดหวังคนละข้อความ ต้องยืนยัน requirement ก่อนแก้ (หน้า 14) อีกสามตัวเลือกไม่ตรงกับการเปรียบเทียบ String ที่ระบุ"
+    },
+    {
+      "q": "a=new String(\"abc\"), b=new String(\"abc\"); ข้อใดถูก?",
+      "options": [
+        "assertEquals ผ่าน แต่ assertSame ไม่ผ่าน",
+        "ทั้งคู่ต้องไม่ผ่าน",
+        "assertSame ผ่านแต่ assertEquals ไม่ผ่าน",
+        "a และ b เป็น null"
+      ],
+      "answer": 0,
+      "explanation": "เนื้อหาเท่ากัน แต่ new สองครั้งได้คนละ object (หน้า 12) จึง Equals ผ่านและ Same ไม่ผ่าน การเป็นคนละ object ไม่ทำให้ค่า String ต่าง และทั้งคู่ไม่ใช่ null"
+    },
+    {
+      "q": "สอง test ใน class เดียวตาม lifecycle สไลด์: @Before และ @BeforeClass รันกี่ครั้ง?",
+      "options": [
+        "1 และ 2",
+        "2 และ 2",
+        "1 และ 1",
+        "2 และ 1"
+      ],
+      "answer": 3,
+      "explanation": "@Before ทำก่อนแต่ละ test จึง 2 ครั้ง; @BeforeClass ทำก่อนทั้ง class ครั้งเดียว (หน้า 11) ตัวเลือกอื่นสลับบทบาทหรือทำให้ fixture ไม่ถูกเตรียมทุก test"
+    },
+    {
+      "q": "Module สองตัวผ่านตามสเปกของตน แต่ต่อกันแล้วหน่วยเงินผิด ควรย้อนตรวจอะไร?",
+      "options": [
+        "เปลี่ยนสี UI",
+        "Module breakdown และ interface specification",
+        "ลบ integration test",
+        "ดูเฉพาะจำนวนบรรทัดที่ถูกทดสอบ"
+      ],
+      "answer": 1,
+      "explanation": "เป็น interface fault ต้องตกลงหน่วยและสัญญาระหว่าง module (หน้า 17) สี UI ไม่เกี่ยว; ลบ test ซ่อนอาการ; coverage ไม่ยืนยันว่าสเปกสองฝั่งเข้าใจตรงกัน"
+    },
+    {
+      "q": "Passed 120, Failed 5, Pending 3, In progress 0, Blocked 2: Pass rate ในเคสที่รันจบคือ?",
+      "options": [
+        "120/130",
+        "125/130",
+        "120/125",
+        "130/130"
+      ],
+      "answer": 2,
+      "explanation": "Executed = 120+5 = 125 จึง Pass rate = 120/125 = 96% (อธิบายแบบรายงานหน้า 21) 120/130 ใช้ planned เป็นตัวหาร; 125/130 คือ execution rate; 130/130 ไม่สะท้อนผลผ่าน"
+    },
+    {
+      "q": "แก้กฎราคาแล้วตรวจว่าการคืนเงินเดิมยังถูกต้อง มีเป้าหมายหลักใด?",
+      "options": [
+        "Regression",
+        "เปลี่ยน requirement โดยอัตโนมัติ",
+        "แทนที่ unit test ทั้งหมด",
+        "พิสูจน์ว่าไม่มี bug"
+      ],
+      "answer": 0,
+      "explanation": "ตรวจผลกระทบต่อสิ่งที่เคยทำงานได้ คือ Regression (หน้า 23–24) ไม่ได้เปลี่ยน requirement ไม่ทดแทนทุกระดับ และผลผ่านไม่พิสูจน์ว่าไม่มี defect"
+    },
+    {
+      "q": "ผู้ใช้เว้นไปหนึ่งเดือนแล้วกลับมาใช้ได้คล่อง กำลังดู usability component ใด?",
+      "options": [
+        "Efficiency เท่านั้น",
+        "Functional completeness",
+        "Security",
+        "Memorability"
+      ],
+      "answer": 3,
+      "explanation": "Memorability คือกลับมาใช้แล้วฟื้นความคล่องได้ง่าย (หน้า 27) Efficiency เน้นความเร็วเมื่อใช้เป็น; completeness คือความครบของฟังก์ชัน; security คือความปลอดภัย"
+    },
+    {
+      "q": "ยอดซื้อ 500 บาทใน Exercises 6–7 ควรอธิบาย expected อย่างไร?",
+      "options": [
+        "ทุกหน้าระบุ 5% ตรงกัน",
+        "โจทย์ให้ 5% แต่ตารางเฉลยไม่ลด ต้องระบุกติกาที่ใช้",
+        "Invalid ทุกกรณี",
+        "20% ตามเฉลย"
+      ],
+      "answer": 1,
+      "explanation": "หน้า 35/37 ให้ 500–999 ลด 5% แต่หน้า 36/38 ให้ 1–500 ไม่ลด จึงต้องเปิดเผยสมมติฐาน อีกสามตัวเลือกละเลยข้อขัดแย้งหรือใส่อัตราที่ไม่ตรงทั้งสองแหล่ง"
+    },
+    {
+      "q": "Ex8 เมื่อรวมแต่ละ if/elif เป็นหนึ่ง decision มี V(G) เท่าไร และ age=0 ได้อะไร?",
+      "options": [
+        "4 และ 50",
+        "16 และ invalid exception",
+        "5 และ None",
+        "8 และ 0 บาท"
+      ],
+      "answer": 2,
+      "explanation": "กราฟที่กำหนดมี 4 decisions จึง V=5 และ age=0 ทำให้ทุกเงื่อนไข False จบโดยไม่ return จึง None (แนวคำตอบเสริมหน้า 39–40) 4 ลืม +1; 16 นับ combinations ที่ไม่เกิดเพราะ return; 8 เป็นอีกระดับกราฟเมื่อแยก predicates และโค้ดก็ไม่ได้คืน 0 บาท"
+    }
+  ]
+};

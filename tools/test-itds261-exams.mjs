@@ -19,7 +19,7 @@ try {
   },theme);
   await page.goto(base+'index.html');
   assert.equal(await page.locator('[data-read-count]').innerText(),'2');
-  for(const [exam,count,label] of [['midterm',8,'Midterm'],['final',4,'Final']]) {
+  for(const [exam,count,label] of [['midterm',8,'Midterm'],['final',5,'Final']]) {
    await page.goto(base+'index.html');
    assert.equal(await page.locator(`[data-exam-folder="${exam}"] strong`).innerText(),label);
    await page.locator(`[data-exam-folder="${exam}"] a.subject-folder`).click();
@@ -43,5 +43,5 @@ try {
   await page.close();
  }
  assert.deepEqual(errors,[]);
- console.log('PASS: Midterm/Final navigation, twelve folders, saved progress, L12 quiz and activity, mobile/desktop light/dark.');
+ console.log('PASS: Midterm/Final navigation, thirteen folders, saved progress, L12 quiz and activity, mobile/desktop light/dark.');
 } finally {await browser.close();}

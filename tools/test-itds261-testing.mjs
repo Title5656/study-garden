@@ -11,7 +11,7 @@ assert.ok(lesson.cards.length>=20);
 const html=readFileSync(new URL('../subjects/itds261/chapter-13.html',import.meta.url),'utf8');
 for(const id of ['sec-qa','debugging','ecp','bva','find-largest','flashcards','quiz']) assert.ok(html.includes(`id="${id}"`));
 const final=readFileSync(new URL('../subjects/itds261/final.html',import.meta.url),'utf8');
-assert.match(final,/data-exam-chapters="08,09,10,13"/);
+assert.match(final,/data-exam-chapters="08,09,10,13,14"/);
 assert.match(final,/href="chapter-13.html"/);
 assert.doesNotMatch(final,/ยังไม่มีเนื้อหา/);
 console.log('PASS: Testing registered, study content and Final navigation');
