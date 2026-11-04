@@ -35,21 +35,13 @@
 .reader-ready .lesson-section { padding: 28px 30px; border-radius: 16px; margin-bottom: 16px; }
 .reader-ready .lesson-section h2 { font-size: 1.4rem; }
 .reader-ready .lesson-section h2:focus { outline: none; }
-.reader-pager { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0 24px; }
-.reader-pager a:last-child { margin-left: auto; }
-.reader-pager .btn { font-size: .79rem; }
 .reader-ready [data-mark-read] { font-size: .74rem; }
-.reader-ready .chapter-end { margin-top: 22px; padding: 22px 0 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.chapter-end-label { flex-basis: 100%; font-size: .72rem; color: var(--muted); }
-.reader-ready .chapter-end .btn { font-size: .76rem; }
 
 @media screen {
   .reader-ready .lesson-section[hidden],
-  .reader-ready .chapter-end[hidden],
-  .reader-ready [data-mark-read][hidden],
-  .reader-pager a[hidden] { display: none !important; }
+  .reader-ready .chapter-end,
+  .reader-ready [data-mark-read][hidden] { display: none !important; }
 }
-body[data-reader-mode="paged"] .reader-pager { border-top: 1px solid var(--line); padding-top: 18px; }
 
 /* Only the reveal's animated elements consume progress. Avoid invalidating
    every descendant (video, SVG paths and controls) on every scroll frame. */
@@ -139,8 +131,6 @@ body[data-reader-mode="paged"] .reader-pager { border-top: 1px solid var(--line)
   .reader-category { font-size: .7rem; padding: 7px 9px; }
   .reader-position { font-size: .63rem; gap: 8px; }
   .reader-position-track { width: 60px; }
-  .reader-pager { flex-wrap: wrap; }
-  .reader-pager .btn { padding: 9px 12px; font-size: .71rem; }
   .footer-reveal-link { font-size: 1rem; letter-spacing: .2em; }
   .footer-content { padding-top: 150px; padding-bottom: 120px; }
   .footer-art { top: 18%; width: 150vw; height: 24%; opacity: .5; }
@@ -298,6 +288,58 @@ body[data-chapter] :is(td,th) { border: 0; border-bottom: 1px solid var(--line);
 body[data-chapter] .reader-sidebar { background: transparent; box-shadow: none; border: 0; border-left: 1px solid var(--line); border-radius: 0; }
 body[data-chapter] .reader-course { background: transparent; border: 0; padding: 0 8px; }
 @media screen {
+  html:has(.reader-ready) {
+    --reader-dock-clearance: calc(80px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: var(--reader-dock-clearance);
+  }
+  body.reader-ready {
+    padding-bottom: var(--reader-dock-clearance);
+  }
+  body.reader-ready #main.wrap {
+    max-width: none;
+    padding-inline: clamp(16px, 3vw, 72px);
+  }
+  .reader-ready .reader-sidebar {
+    max-height: calc(100dvh - 104px - var(--reader-dock-clearance));
+  }
+  body.reader-ready .lesson-section > :is(p, ul, ol, dl, blockquote) {
+    max-inline-size: 1120px;
+  }
+  .reader-pager {
+    position: fixed;
+    z-index: 19;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    inset-inline: 12px;
+    width: auto;
+    max-width: 820px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 12px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--paper);
+    box-shadow: 0 6px 24px #10182830;
+  }
+  .reader-chapter-links, .reader-topic-links {
+    display: grid;
+    gap: 5px;
+  }
+  .reader-chapter-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .reader-topic-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reader-pager .btn {
+    display: grid;
+    place-items: center;
+    min-height: 44px;
+    min-width: 0;
+    padding: 5px 4px;
+    font-size: .78rem;
+    line-height: 1.35;
+    text-align: center;
+    white-space: normal;
+  }
+  .reader-pager .btn[hidden] { visibility: hidden; }
   body[data-chapter] .lesson-content {
     padding: 30px 32px 8px;
     background: var(--paper);
@@ -317,14 +359,17 @@ body[data-chapter] .reader-course { background: transparent; border: 0; padding:
     box-shadow: 0 8px 24px #10182806;
   }
 }
-@media screen and (min-width: 1001px) {
-  .reader-ready .lesson-layout { gap: 48px; }
-}
-@media screen and (min-width: 1400px) {
-  body[data-chapter] .lesson-layout {
-    width: calc(100% + 48px);
-    margin-left: -48px;
-    column-gap: 78px;
+@media screen and (min-width: 1101px) {
+  body.reader-ready #main {
+    --reader-sidebar-width: clamp(220px, 18vw, 280px);
+    --reader-column-gap: clamp(20px, 2.4vw, 40px);
+  }
+  body.reader-ready #main .lesson-layout {
+    grid-template-columns: var(--reader-sidebar-width) minmax(0, 1fr);
+    gap: var(--reader-column-gap);
+  }
+  body.reader-ready #main > :is(.breadcrumb, .chapter-hero) {
+    margin-inline-start: calc(var(--reader-sidebar-width) + var(--reader-column-gap));
   }
 }
 /* Keep Mahidol reading full-width on tablets, including portrait iPads.
@@ -369,6 +414,15 @@ body[data-chapter] .reader-course { background: transparent; border: 0; padding:
   body[data-chapter] .lesson-content {
     padding: 18px 16px 4px;
     border-radius: 16px;
+  }
+}
+@media screen and (max-width: 650px) {
+  html:has(.reader-ready) {
+    --reader-dock-clearance: calc(126px + env(safe-area-inset-bottom));
+  }
+  .reader-pager {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
   }
 }
 .lesson-glossary { margin: 20px 0; }

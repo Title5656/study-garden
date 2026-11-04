@@ -237,7 +237,7 @@
   sidebar.classList.add("reader-sidebar");
   sidebar.replaceChildren();
   const back = element("a", "reader-back", "← กลับไปบทเรียนทั้งหมด");
-  back.href = "index.html";
+  back.href = document.querySelector('.breadcrumb a:is([href="midterm.html"], [href="final.html"])')?.href || "index.html";
   sidebar.append(back);
   const courseCard = element("div", "reader-course");
   courseCard.append(window.StudyApp.createCourseProgressRing(subject));
@@ -296,30 +296,37 @@
   position.append(positionText, positionBar);
   article.prepend(toolbar, position);
   const pager = element("nav", "reader-pager");
-  pager.setAttribute("aria-label", "เปลี่ยนหัวข้อ");
+  pager.setAttribute("aria-label", "การนำทางบทเรียน");
+  const chapterLinks = element("div", "reader-chapter-links");
+  const topicLinks = element("div", "reader-topic-links");
   const previous = element("a", "btn", "← หัวข้อก่อนหน้า");
   previous.dataset.readerPrevious = "";
-  const next = element("a", "btn primary");
+  const next = element("a", "btn primary", "หัวข้อถัดไป →");
   next.dataset.readerNext = "";
-  pager.append(previous, next);
-  sections.at(-1).after(pager);
+  topicLinks.append(previous, next);
 
   const chapterEnd = article.querySelector(".chapter-end");
-  const nextChapter = chapterEnd?.querySelector("a:last-child");
-  if (nextChapter) {
-    const isLast = nextChapter.getAttribute("href") === "index.html";
-    nextChapter.textContent = isLast ? "กลับไปเลือกบทเรียน ↗" : "อ่านบทถัดไป →";
-    nextChapter.dataset.completeChapter = "";
-    chapterEnd.prepend(element("span", "chapter-end-label", "อ่านบทนี้จบแล้ว?"));
-  }
-  const learningTopics = topics.filter(topic => ["learn", "practice"].includes(topic.category));
+  const chapterDestinations = [...(chapterEnd?.querySelectorAll('a[href^="chapter-"]') || [])];
+  const previousChapter = chapterDestinations.find(link => link.pathname < location.pathname);
+  const nextChapter = chapterDestinations.find(link => link.pathname > location.pathname);
+  const previousChapterLink = element("a", "btn", "← บทก่อนหน้า");
+  previousChapterLink.href = previousChapter?.href || back.href;
+  previousChapterLink.hidden = !previousChapter;
+  const catalogLink = element("a", "btn", "รายการบทเรียน");
+  catalogLink.href = back.href;
+  const nextChapterLink = element("a", "btn", "บทถัดไป →");
+  nextChapterLink.href = nextChapter?.href || back.href;
+  nextChapterLink.hidden = !nextChapter;
+  chapterLinks.append(previousChapterLink, catalogLink, nextChapterLink);
+  pager.append(chapterLinks, topicLinks);
+  article.append(pager);
   let current;
   function show(topic, focus = false) {
     current = topic;
+    const atEnd = topic.index === topics.length - 1;
     if (paged) {
-      if (chapterEnd) chapterEnd.hidden = topic.index !== topics.length - 1;
       const markRead = article.querySelector('[data-mark-read]');
-      if (markRead) markRead.hidden = topic.index !== topics.length - 1;
+      if (markRead) markRead.hidden = !atEnd;
     }
     topics.forEach(item => {
       // Keep the whole topic scrollable; Next opens the following topic.
@@ -334,17 +341,10 @@
     positionFill.style.width = `${(topic.index + 1) / topics.length * 100}%`;
     previous.hidden = topic.index === 0;
     previous.href = "#" + (topics[topic.index - 1]?.id || topic.id);
-    const atLearningEnd = topic === learningTopics.at(-1);
-    const atEnd = topic === topics.at(-1);
-    if (((!paged && atLearningEnd) || atEnd) && nextChapter) {
-      next.href = nextChapter.getAttribute("href");
-      next.textContent = nextChapter.textContent;
-      next.dataset.completeChapter = "";
-    } else {
-      next.href = "#" + topics[topic.index + 1].id;
-      next.textContent = "หัวข้อถัดไป →";
-      delete next.dataset.completeChapter;
-    }
+    next.hidden = atEnd;
+    next.href = "#" + (topics[topic.index + 1]?.id || topic.id);
+    nextChapterLink.toggleAttribute("data-complete-chapter", atEnd && !!nextChapter);
+    catalogLink.toggleAttribute("data-complete-chapter", atEnd && !nextChapter);
     if (focus) {
       closeMenu();
       const heading = topic.section.querySelector("h2");

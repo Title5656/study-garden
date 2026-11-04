@@ -7,7 +7,6 @@ body[data-reader-mode="paged"] .lesson-section[hidden] { display: none !importan
 body[data-reader-mode="paged"] .chapter-hero { padding-bottom: 8px; margin-bottom: 14px; }
 body[data-reader-mode="paged"] .chapter-hero h1 { font-size: clamp(1.8rem,3vw,2.6rem); }
 body[data-reader-mode="paged"] .chapter-hero p { margin-bottom: 6px; }
-body[data-reader-mode="paged"] .reader-pager { border-top: 1px solid var(--line); padding-top: 18px; position: sticky; bottom: 0; z-index: 3; background: var(--bg); }
 body[data-reader-mode="paged"] .chapter-end { margin-top: 8px; padding-top: 8px; }
 body[data-reader-mode="paged"] .chapter-end[hidden] { display:none; }
 .node-chapter-label { font-size: .76rem; color: var(--muted); margin-bottom: 12px; }

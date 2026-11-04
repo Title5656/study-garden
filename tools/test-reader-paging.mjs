@@ -44,7 +44,8 @@ try {
       assert.ok(await sections.first().isVisible());
       await page.goto(base + path + '#' + ids.at(-1));
       assert.ok(await sections.last().isVisible(), `${path}: direct link opens topic`);
-      assert.ok(await page.locator('.chapter-end').isVisible());
+      assert.equal(await page.locator('.chapter-end').isVisible(), false, 'the static navigation stays in the no-JS fallback');
+      assert.equal(await page.locator('[data-reader-next]').isVisible(), false, 'the last topic has no next topic');
       assert.ok(await page.locator('[data-mark-read]').isVisible());
       await page.locator('.reader-category[data-reader-category="learn"]').click();
       assert.ok(await sections.first().isVisible());
@@ -53,8 +54,15 @@ try {
       assert.ok(await sections.nth(1).isVisible());
       assert.equal(await page.locator('.lesson-content > .lesson-section:visible').count(), 1);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${path}: no horizontal overflow`);
+      const dock = page.locator('.reader-pager');
+      const beforeScroll = await dock.boundingBox();
+      assert.ok(beforeScroll.y + beforeScroll.height <= 900, `${path}: navigation is in the viewport`);
+      await page.evaluate(() => window.scrollTo({top: document.documentElement.scrollHeight, behavior: 'instant'}));
+      await settle(page);
+      assert.deepEqual(await dock.boundingBox(), beforeScroll, `${path}: navigation stays fixed when scrolling`);
       await page.emulateMedia({ media: 'print' });
       assert.equal(await page.locator('.lesson-content > .lesson-section:visible').count(), ids.length, `${path}: print includes all topics`);
+      assert.equal(await dock.isVisible(), false, `${path}: screen navigation stays out of print`);
       await page.emulateMedia({ media: 'screen' });
       checked++;
     }
