@@ -4,22 +4,14 @@ import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { useLocalFiles } from './local-browser-fixture.mjs';
 const { chromium } = await import(process.env.STUDY_GARDEN_PLAYWRIGHT || 'playwright');
-const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const browser = await chromium.launch({ channel: process.env.STUDY_GARDEN_BROWSER || 'msedge', headless: true });
 const root = fileURLToPath(new URL('../', import.meta.url));
 try {
   for (const [path, viewport] of [
     ['index.html', { width: 1920, height: 1000 }],
-    ['subjects/itds241/index.html', { width: 390, height: 844 }],
+    ['index.html', { width: 390, height: 844 }],
   ]) {
     const page = await useLocalFiles(await browser.newPage({ viewport }), root);
-    await page.addInitScript(() => {
-      window.gardenPaints = 0;
-      const clear = CanvasRenderingContext2D.prototype.clearRect;
-      CanvasRenderingContext2D.prototype.clearRect = function (...args) {
-        if (this.canvas.classList.contains('garden-wordmark-canvas')) window.gardenPaints++;
-        return clear.apply(this, args);
-      };
-    });
     await page.goto('http://study-garden.test/' + path);
     await page.evaluate(() => document.fonts.ready);
     await page.evaluate(() => {
@@ -51,28 +43,6 @@ try {
     }
     await move(1);
     await page.waitForFunction(() => !document.querySelector('video').paused && document.querySelector('.footer-art').classList.contains('is-playing'));
-    if (path.startsWith('subjects/')) {
-      assert.equal(await page.locator('.garden-wordmark-canvas').count(), 1);
-      const mark = page.locator('.footer-wordmark');
-      const bounds = await mark.boundingBox();
-      const beforeBurst = await page.evaluate(() => window.gardenPaints);
-      await page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
-      await page.mouse.move(0, 0);
-      await page.waitForFunction(count => window.gardenPaints > count, beforeBurst);
-      // The 120px stop boundary intentionally keeps motion active close to
-      // the bottom; use actual pixels rather than a viewport-dependent ratio.
-      await page.evaluate(async () => {
-        scrollTo({ top: document.documentElement.scrollHeight - innerHeight - 140, behavior: 'instant' });
-        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-      });
-      const stopped = await page.evaluate(() => window.gardenPaints);
-      await page.evaluate(async () => {
-        for (let i = 0; i < 10; i++) await new Promise(requestAnimationFrame);
-      });
-      assert.equal(await page.evaluate(() => window.gardenPaints), stopped, 'canvas must stop drawing away from the page end');
-      await move(1);
-      await page.waitForFunction(count => window.gardenPaints > count, stopped);
-    }
     const endOffset = async pixels => page.evaluate(async pixels => {
       scrollTo({ top: document.documentElement.scrollHeight - innerHeight - pixels, behavior: 'instant' });
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
@@ -97,7 +67,7 @@ try {
     await page.evaluate(() => document.querySelector('video').dispatchEvent(new Event('playing')));
     assert.equal(await page.locator('.footer-art').evaluate(el => el.classList.contains('is-playing')), false);
     const count = (await move(.3)).events;
-    assert.equal((await move(.4)).events, count, 'unchanged inactive motion must not notify canvas repeatedly');
+    assert.equal((await move(.4)).events, count, 'unchanged inactive motion must not dispatch repeated events');
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.evaluate(() => scrollTo({ top: document.body.scrollHeight, behavior: 'instant' }));
     assert.equal(await page.locator('video').evaluate(el => el.paused), true);

@@ -72,23 +72,25 @@ try {
     }
     await page.locator('#subject-search').focus();
     await page.keyboard.press('Tab');
-    assert.equal(await cards.nth(3).locator('a.subject-folder').evaluate(el => el === document.activeElement), true,
+    const nextCourse = cards.nth(3).locator('a.subject-folder');
+    assert.equal(await nextCourse.evaluate(el => el === document.activeElement), true,
       'Tab skips unavailable courses and reaches the next available course');
+    const destination = await nextCourse.evaluate(el => el.href);
     await Promise.all([
-      page.waitForURL('**/subjects/thermo-chemical/index.html'),
+      page.waitForURL(destination),
       page.keyboard.press('Enter'),
     ]);
-    assert.match(page.url(), /subjects\/thermo-chemical\/index\.html$/);
+    assert.equal(page.url(), destination);
     await page.unroute(base);
     console.log(`PASS: ${variant} availability, inert links, status, search, 6 theme/viewport combinations, available course navigation`);
   }
   await page.goto(base);
-  assert.equal(await page.locator('.subject-grid a.subject-folder[href]').count(), 4, 'All four current courses stay available');
+  assert.equal(await page.locator('.subject-grid a.subject-folder[href]').count(), 5, 'All five current courses stay available');
   assert.equal(await page.locator('.course-status').count(), 0);
   const noJS = await browser.newContext({ javaScriptEnabled: false });
   const staticPage = await useLocalFiles(await noJS.newPage(), root);
   await staticPage.goto(base);
-  assert.equal(await staticPage.locator('a.subject-folder[href]').count(), 4);
+  assert.equal(await staticPage.locator('a.subject-folder[href]').count(), 5);
   await staticPage.locator('a.subject-folder').first().click();
   assert.match(staticPage.url(), /subjects\/itds241\/index\.html$/);
   // Authors use non-link markup from the outset for unpublished courses.

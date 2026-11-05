@@ -79,13 +79,30 @@ try {
     await settle();
     assert.equal(await page.locator('.footer-reveal').evaluate(el => el.classList.contains('reveal-enabled')), false);
     await page.setViewportSize({ width, height });
-    await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+    await page.evaluate(() => {
+      document.documentElement.style.overflowAnchor = 'none';
+      const rect = document.querySelector('.footer-reveal').getBoundingClientRect();
+      scrollTo({ top: scrollY + rect.top + (rect.height - innerHeight) * .1, behavior: 'instant' });
+    });
     await settle();
-    await page.evaluate(() => { window.footerWork.activity = 0; document.querySelector('main').style.paddingBottom = '80px'; });
-    await page.waitForFunction(() => window.footerWork.activity > 0);
+    assert.equal(await page.locator('.motion-footer').evaluate(el => el.inert), false,
+      'footer is partly revealed before resizing the content');
+    const scrollBeforeResize = await page.evaluate(() => {
+      const main = document.querySelector('main');
+      const revealTop = document.querySelector('.footer-reveal').getBoundingClientRect().top;
+      const padding = parseFloat(getComputedStyle(main).paddingBottom);
+      main.style.paddingBottom = `${padding + Math.ceil(-revealTop) + 32}px`;
+      return scrollY;
+    });
+    await page.waitForFunction(() => document.querySelector('.footer-reveal').style.getPropertyValue('--reveal-progress') === '0.0000');
+    assert.equal(await page.evaluate(() => scrollY), scrollBeforeResize,
+      'body resize must update the reveal without changing the scroll position');
     assert.equal(await page.locator('.motion-footer').evaluate(el => el.inert), true,
       'body resize must refresh covered footer state without requiring scroll');
-    await page.evaluate(() => document.querySelector('main').style.removeProperty('padding-bottom'));
+    await page.evaluate(() => {
+      document.querySelector('main').style.removeProperty('padding-bottom');
+      document.documentElement.style.removeProperty('overflow-anchor');
+    });
     await settle();
     await page.locator('.footer-reveal-link').click();
     await settle();

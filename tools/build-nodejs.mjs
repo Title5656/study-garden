@@ -123,7 +123,7 @@ html=html.replace('</head>','<link rel="stylesheet" href="../../assets/nodejs.cs
 html+=`<aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2>${pages.map(p=>`<a href="#${p.id}">${escape(p.title.replaceAll('`',''))}</a>`).join('')}</aside><article class="lesson-content">`;
 html+=pages.map(p=>`<section class="lesson-section" id="${p.id}"${p.category==='practice'?' data-reader-category="practice"':''}>${p.chapter?`<p class="node-chapter-label">บท ${p.chapter} · ${escape(p.chapterTitle)}</p>`:''}<h2>${md(p.title).replace(/^<p>|<\/p>\n?$/g,'')}</h2>${p.body}</section>`).join('\n');
 html+='<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="chapter-08.html">← บทก่อนหน้า</a><a class="btn primary" href="index.html">กลับไปดูความคืบหน้า →</a></nav></article></div></main>';
-html+=template.slice(template.indexOf('<div class="footer-reveal">'));
+html+='</body></html>\n';
 write('subjects/itds241/chapter-09.html',enhanceLesson(html,'itds241/09'));
 // Add the chapter to the existing content registry, so all course dashboards see it.
 const registry=read('assets/content.js').replace(/\n\/\* Node\.js Part I registry \*\/[\s\S]*$/,'');

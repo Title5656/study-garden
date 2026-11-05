@@ -255,10 +255,9 @@ def build():
  head=template[:template.index('<body')]
  head=re.sub(r'<script\b[^>]*>[\s\S]*?</script>','',head)
  head=re.sub(r'<link[^>]*href="[^\"]*(?:nodejs|express|final-learning|inline-learning)[^\"]*"[^>]*>','',head)
- for name in ['core','content','app','study-halftone-footer','reader','webservices-lab']:
+ for name in ['core','content','app','reader','webservices-lab']:
   head=head.replace('</head>',f'<script defer src="../../assets/{name}.js"></script></head>')
  head=head.replace('</head>','<link rel="stylesheet" href="../../assets/webservices-lab.css"></head>')
- footer=template[template.index('<div class="footer-reveal">'):]
  registry={}
  for id,d in LESSONS.items():
   sections=list(d['sections'])
@@ -279,7 +278,7 @@ def build():
    if s['id']=='start':body+=note('เรียบเรียงจาก '+e(d['source'])+' โดยอ้างเลขหน้า PDF (อาจต่างจากเลขสไลด์ที่พิมพ์อยู่) ตัวอย่างและแบบทดลองที่เสริมมีคำอธิบายกำกับ ไม่ใช่ข้อสอบทางการ')
    h+=f'<section class="lesson-section" id="{s["id"]}">{source}<h2>{e(s["title"])}</h2>{body}</section>\n'
   previous=f'chapter-{int(id)-1:02}.html';nxt=f'chapter-{int(id)+1:02}.html' if id!='13' else 'final.html'
-  h+=f'<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="{previous}">← L{int(id)-1}</a><a class="btn primary" href="{nxt}">{"L"+str(int(id)+1) if id!="13" else "กลับไป Final"} →</a></nav></article></div></main>'+footer
+  h+=f'<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท"><a class="btn" href="{previous}">← L{int(id)-1}</a><a class="btn primary" href="{nxt}">{"L"+str(int(id)+1) if id!="13" else "กลับไป Final"} →</a></nav></article></div></main></body></html>\n'
   (ROOT/f'subjects/itds241/chapter-{id}.html').write_text(h,encoding='utf-8')
  content=(ROOT/'assets/content.js').read_text(encoding='utf-8')
  content=re.sub(r'\n/\* Web services registry \*/[\s\S]*?/\* End Web services registry \*/\n?','\n',content)

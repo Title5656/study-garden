@@ -41,7 +41,9 @@ async function restored(page, original) {
   assert.equal(await page.locator('.folder-navigation-progress').isVisible(), false);
   assert.equal(await page.locator('.folder-navigation-status').textContent(), '');
   assert.equal(await page.locator('.folder-card[aria-busy], .folder-card[aria-disabled]').count(), 0);
-  assert.equal(await page.locator('.folder-front[style], .folder-sheet[style]').count(), 0);
+  const frozenParts = await page.locator('.folder-front, .folder-sheet').evaluateAll(parts =>
+    parts.filter(part => part.style.transform).length);
+  assert.equal(frozenParts, 0);
 }
 async function holdNavigationFrames(page) {
   // Visual-only fixtures keep the outgoing document inspectable. CSS animations
