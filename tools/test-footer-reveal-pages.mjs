@@ -1,4 +1,4 @@
-// Catch missing/disabled curtains, including paged readers and Node-specific CSS.
+// Only the site index should have a footer or reveal curtain.
 import assert from 'node:assert/strict';
 import { readdir, mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -9,10 +9,10 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const paths = ['index.html'];
 for (const subject of await readdir(resolve(root, 'subjects'))) {
   for (const name of await readdir(resolve(root, 'subjects', subject))) {
-    if (/^(index|midterm|final|chapter-.*)\.html$/.test(name)) paths.push(`subjects/${subject}/${name}`);
+    if (name.endsWith('.html')) paths.push(`subjects/${subject}/${name}`);
   }
 }
-const browser = await chromium.launch({ channel: 'msedge', headless: true });
+const browser = await chromium.launch({ channel: process.env.STUDY_GARDEN_BROWSER || 'msedge', headless: true });
 const failures = [];
 const output = process.env.STUDY_GARDEN_OUTPUT;
 if (output) await mkdir(output, { recursive: true });
@@ -33,9 +33,19 @@ try {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     for (const path of paths) {
+      errors.length = 0;
       try {
         await page.goto('http://study-garden.test/' + path);
         await settle(page);
+        if (path !== 'index.html') {
+          assert.equal(await page.locator('footer, .footer-reveal').count(), 0, `${path}: no footer or curtain`);
+          assert.equal(await page.locator('[href*="study-halftone-footer"], [src*="study-halftone-footer"]').count(), 0,
+            `${path}: no footer-only assets`);
+          assert.deepEqual(errors, [], `${path}: no runtime errors`);
+          passed++;
+          continue;
+        }
+        assert.equal(await page.locator('footer#footer').count(), 1, 'Index keeps the site footer');
         assert.equal(await page.locator('.footer-curtain').count(), 1, `${path}: one curtain`);
         assert.equal(await page.locator('.reveal-enabled').count(), 1, `${path}: reveal enabled`);
         const curtainColor = () => page.locator('.footer-curtain').evaluate(el => getComputedStyle(el).backgroundColor);
@@ -87,12 +97,12 @@ try {
   }
   for (const options of [{ reducedMotion: 'reduce' }, { javaScriptEnabled: false }, { viewport: { width: 844, height: 390 } }]) {
     const page = await useLocalFiles(await browser.newPage({ viewport: { width: 390, height: 844 }, ...options }), root);
-    await page.goto('http://study-garden.test/subjects/itds241/chapter-09.html');
+    await page.goto('http://study-garden.test/index.html');
     assert.equal(await page.locator('.reveal-enabled').count(), 0, 'accessible static fallback');
     await page.locator('.footer-contact').scrollIntoViewIfNeeded();
     assert.equal(await page.locator('.footer-contact').evaluate(el => el.inert || !!el.closest('[inert]')), false);
     await page.close();
   }
 } finally { await browser.close(); }
-console.log(`${passed}/${paths.length * 2} page/viewport reveal cases passed; 3 fallback cases passed.`);
+console.log(`${passed}/${paths.length * 2} page/viewport footer cases passed; 3 Index fallback cases passed.`);
 if (failures.length) { console.error(failures.join('\n')); process.exitCode = 1; }

@@ -39,19 +39,11 @@ def prerequisite_links(number):
     return ', '.join('<a href="chapter-'+n+'.html">'+EXPECTED[int(n)-1][0]+'</a>' for n in DEPENDENCIES[number]) or 'เริ่มจากศูนย์ได้'
 
 def common_head(title, reader=False):
-    # The shared footer depends on reader.css/js on landing pages as well.
-    styles=['style','library','reader','study-halftone-footer','itds211']+([] if reader else ['universities'])
-    scripts=['core','itds211-content','app','study-halftone-footer']+(['itds211-core','itds211-labs','itds211-inline'] if reader else [])+['reader']
+    styles=['style','library','reader','itds211']+([] if reader else ['universities'])
+    scripts=['core','itds211-content','app']+(['itds211-core','itds211-labs','itds211-inline'] if reader else [])+['reader']
     return '<!doctype html>\n<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5f7"><meta name="description" content="เรียน ITDS211 ภาษาไทยจากพื้นฐาน พร้อมตัวอย่างทีละขั้น ภาพ Interactive และคำถามทบทวน"><title>'+e(title)+' · Study Garden</title><link rel="icon" href="../../assets/favicon.png" type="image/png">'+''.join(f'<link rel="stylesheet" href="../../assets/{s}.css">' for s in styles)+''.join(f'<script defer src="../../assets/{s}.js"></script>' for s in scripts)+'</head>\n'
 
 HEADER='''<a class="skip" href="#main">ข้ามไปยังเนื้อหา</a><header class="site-header"><nav class="wrap nav" aria-label="เมนูหลัก"><a class="brand" href="../../index.html"><img class="brand-mark" src="../../assets/study-garden-logo.png" alt="" width="36" height="36" decoding="async">Study Garden</a><div class="nav-links"><a href="../../index.html#subjects">วิชาทั้งหมด</a><a class="desktop-link" href="index.html">บทเรียน</a></div><button class="theme-toggle" data-theme-toggle aria-label="สลับโหมดสี">☾ มืด</button></nav></header><div id="storage-notice" class="storage-notice" role="status" hidden>เบราว์เซอร์ไม่อนุญาตให้บันทึกข้อมูล ความคืบหน้าอาจไม่ถูกเก็บหลังปิดหน้า</div><noscript><p class="wrap note warm">เนื้อหา ตาราง คำถาม และเฉลยอ่านได้ทั้งหมดเมื่อปิด JavaScript เปิด JavaScript เพื่อใช้ Interactive, Flashcards และ Quiz</p></noscript>'''
-
-def footer():
-    template=(ROOT/'subjects/itds261/chapter-01.html').read_text(encoding='utf-8')
-    result=template[template.index('<div class="footer-reveal">'):]
-    result=result[:result.rfind('</body>')]
-    result=result.replace('<nav class="footer-actions" aria-label="เลือกวิชา">','<nav class="footer-actions" aria-label="เลือกวิชา"><a class="footer-pill" href="index.html">ITDS211</a>')
-    return result+'</body></html>\n'
 
 def concept_figure(lesson, figure, index):
     parts=''.join('<div class="itds211-part"><b>'+f'{i+1:02}'+'</b>'+e(p)+'</div>' for i,p in enumerate(figure.get('parts',[])))
@@ -112,7 +104,7 @@ def render_lesson(d, lessons):
     if following<=12: nav+=f'<a class="btn primary" href="chapter-{following:02}.html">บทถัดไป →</a>'
     else: nav+='<a class="btn primary" href="index.html">กลับแผนที่รายวิชา →</a>'
     hero=f'<nav class="breadcrumb" aria-label="เส้นทาง"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><a href="index.html">ITDS211</a><span>/</span><span>{code}</span></nav><header class="chapter-hero"><div class="eyebrow">ITDS211 · {code} · ลำดับเรียน {int(number)} / 12</div><h1>{e(d["title"])}</h1><p>{e(d["englishTitle"])}</p><div class="tags"><span class="tag" data-chapter-status="{number}">ยังไม่ได้อ่าน</span></div></header>'
-    html=common_head(d['title'],True)+f'<body data-subject="itds211" data-chapter="{number}" data-reader-mode="paged">'+HEADER+'<main id="main" class="wrap">'+hero+'<div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#overview">ภาพรวม</a></aside><article class="lesson-content">'+body+'<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท">'+nav+'</nav></article></div></main>'+footer()
+    html=common_head(d['title'],True)+f'<body data-subject="itds211" data-chapter="{number}" data-reader-mode="paged">'+HEADER+'<main id="main" class="wrap">'+hero+'<div class="lesson-layout"><aside class="toc" aria-label="สารบัญบทเรียน"><h2>ในบทนี้</h2><a href="#overview">ภาพรวม</a></aside><article class="lesson-content">'+body+'<button class="btn soft" data-mark-read aria-pressed="false">ทำเครื่องหมายว่าอ่านแล้ว ✓</button><nav class="chapter-end" aria-label="เปลี่ยนบท">'+nav+'</nav></article></div></main></body></html>\n'
     (OUT/f'chapter-{number}.html').write_text(html,encoding='utf-8')
 
 
@@ -142,7 +134,7 @@ def build(release=False):
     ready_codes={d['code'] for d in lessons}
     missing=[code for code,_ in EXPECTED if code not in ready_codes]
     note='<p>กำลังจัดทำบทที่เหลือ: '+e(', '.join(missing))+'</p>' if missing else '<p>บทเรียน 12 บท เรียนจาก CA00–CA08 แล้วต่อ OS01–OS03</p>'
-    index=common_head('ITDS211 · Computer Architecture and Operating Systems')+'<body data-subject="itds211">'+folder_shapes()+HEADER+'<main id="main" class="wrap library-main"><nav class="breadcrumb"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><span>ITDS211</span></nav><div class="page-heading"><div><h1>ITDS211</h1><p>Computer Architecture and Operating Systems</p></div><label class="search-field"><input id="subject-search" type="search" placeholder="ค้นหาบทหรือหัวข้อ" aria-label="ค้นหาบทเรียน"></label></div><p class="itds211-intro">เริ่มจากเครื่องคอมพิวเตอร์ทำงานอย่างไร ไปถึงระบบปฏิบัติการจัดการโปรแกรมหลายงาน อ่านทีละหัวข้อ ทดลองทีละขั้น แล้วใช้คำถามท้ายบทตรวจว่าตัวเองอธิบายเหตุผลได้</p>'+note+'<div class="library-toolbar"><span class="active-tab">บทเรียน <span>'+str(len(lessons))+'</span></span><div class="reading-progress"><span>อ่านแล้ว <strong data-read-count>0</strong> / '+str(len(lessons))+' บท</span><div class="progress-bar"><span data-progress-bar></span></div></div></div><section class="folder-grid" aria-label="บทเรียนเรียงตามพื้นฐาน">'+''.join(folder(d) for d in lessons)+'</section><p id="search-empty" class="filter-empty" role="status" hidden>ไม่พบบทที่ค้นหา ลองค้นหาชื่อหัวข้อหรือ CA / OS</p></main>'+footer()
+    index=common_head('ITDS211 · Computer Architecture and Operating Systems')+'<body data-subject="itds211">'+folder_shapes()+HEADER+'<main id="main" class="wrap library-main"><nav class="breadcrumb"><a href="../../index.html">วิชาทั้งหมด</a><span>/</span><span>ITDS211</span></nav><div class="page-heading"><div><h1>ITDS211</h1><p>Computer Architecture and Operating Systems</p></div><label class="search-field"><input id="subject-search" type="search" placeholder="ค้นหาบทหรือหัวข้อ" aria-label="ค้นหาบทเรียน"></label></div><p class="itds211-intro">เริ่มจากเครื่องคอมพิวเตอร์ทำงานอย่างไร ไปถึงระบบปฏิบัติการจัดการโปรแกรมหลายงาน อ่านทีละหัวข้อ ทดลองทีละขั้น แล้วใช้คำถามท้ายบทตรวจว่าตัวเองอธิบายเหตุผลได้</p>'+note+'<div class="library-toolbar"><span class="active-tab">บทเรียน <span>'+str(len(lessons))+'</span></span><div class="reading-progress"><span>อ่านแล้ว <strong data-read-count>0</strong> / '+str(len(lessons))+' บท</span><div class="progress-bar"><span data-progress-bar></span></div></div></div><section class="folder-grid" aria-label="บทเรียนเรียงตามพื้นฐาน">'+''.join(folder(d) for d in lessons)+'</section><p id="search-empty" class="filter-empty" role="status" hidden>ไม่พบบทที่ค้นหา ลองค้นหาชื่อหัวข้อหรือ CA / OS</p></main></body></html>\n'
     (OUT/'index.html').write_text(index,encoding='utf-8')
     source_map=[{'id':d['id'],'code':d['code'],'file':d['sourceFile'],'pages':d['sourcePages'],'coverage':d['coverage'],'issues':d['sourceIssues']} for d in lessons]
     (ROOT/'docs/itds211-source-map.json').write_text(json.dumps(source_map,ensure_ascii=False,indent=2),encoding='utf-8')

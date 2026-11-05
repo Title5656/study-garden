@@ -9,7 +9,7 @@
 .a4-grid h2 { font-size: 1rem; color: var(--accent); margin: 0 0 .25rem; }
 .a4-grid p { margin: .2rem 0; }
 .a4-scope { background: var(--purple); }
-.a4-sheet footer { border-top: 1px solid var(--line); margin-top: .8rem; font-size: .72rem; }
+.a4-study-note { border-top: 1px solid var(--line); margin-top: .8rem; font-size: .72rem; }
 @media (max-width: 600px) { .a4-sheet { padding: 1rem; } .a4-grid { grid-template-columns: 1fr; } }
 @page { size: A4 portrait; margin: 9mm; }
 @media print {
@@ -20,6 +20,6 @@
   .a4-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2mm; }
   .a4-grid section { padding: 2mm; break-inside: avoid; }
   .a4-grid h2 { font-size: 10pt; }
-  .a4-source, .a4-sheet footer { font-size: 7.5pt; }
-  .a4-grid section, .a4-sheet header, .a4-sheet footer { break-inside: avoid; }
+  .a4-source, .a4-study-note { font-size: 7.5pt; }
+  .a4-grid section, .a4-sheet header, .a4-study-note { break-inside: avoid; }
 }
