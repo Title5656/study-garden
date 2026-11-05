@@ -341,8 +341,6 @@ body[data-chapter] .reader-course { background: transparent; border: 0; padding:
     padding: 30px 32px 8px;
     background: var(--paper);
     background: color-mix(in srgb, var(--paper) 90%, transparent);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
     border: 1px solid var(--line);
     border-radius: 20px;
     box-shadow: 0 12px 36px #1018280a;
